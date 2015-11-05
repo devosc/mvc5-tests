@@ -16,7 +16,7 @@
     </testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./vendor/mvc5/framework/src</directory>
+            <directory suffix=".php">./vendor/mvc5/mvc5/src</directory>
         </whitelist>
     </filter>
     <logging>

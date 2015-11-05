@@ -103,6 +103,28 @@ class ResolverTest
     /**
      *
      */
+    public function test_callback_not_callable()
+    {
+        $mock = $this->getCleanAbstractMock(Resolver::class, ['callback', 'testCallback']);
+
+        $this->setExpectedException('InvalidArgumentException');
+
+        $mock->testCallback(null);
+    }
+
+    /**
+     *
+     */
+    public function test_callback_callable()
+    {
+        $mock = $this->getCleanAbstractMock(Resolver::class, ['callback', 'testCallback']);
+
+        $this->assertInstanceOf(\Closure::class, $mock->testCallback(function(){}));
+    }
+
+    /**
+     *
+     */
     public function test_call_not_string_event()
     {
         $mock = $this->getCleanAbstractMock(Resolver::class, ['call']);
@@ -320,7 +342,32 @@ class ResolverTest
     /**
      *
      */
-    public function test_hydrate_array()
+    public function test_hydrate_array_with_param()
+    {
+        $mock = $this->getCleanAbstractMock(Resolver::class, ['hydrate', 'testHydrate']);
+
+        $mock->expects($this->once())
+             ->method('invoke');
+
+        $config = $this->getCleanMock(Config::class);
+
+        $config->expects($this->once())
+               ->method('param')
+               ->willReturn('item');
+
+        $config->expects($this->once())
+               ->method('calls')
+               ->willReturn([['set', 'foo' => 'bar']]);
+
+        $service = $this->getCleanMock(Config::class);
+
+        $this->assertInstanceOf(Config::class, $mock->testHydrate($config, $service));
+    }
+
+    /**
+     *
+     */
+    public function test_hydrate_array_without_param()
     {
         $mock = $this->getCleanAbstractMock(Resolver::class, ['hydrate', 'testHydrate']);
 
@@ -341,30 +388,15 @@ class ResolverTest
     /**
      *
      */
-    public function test_hydrate_array_args()
-    {
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['hydrate', 'testHydrate']);
-
-        $mock->expects($this->once())
-             ->method('invoke');
-
-        $config = $this->getCleanMock(Config::class);
-
-        $config->expects($this->once())
-               ->method('calls')
-               ->willReturn([['set', ['bar']]]);
-
-        $service = $this->getCleanMock(Config::class);
-
-        $this->assertInstanceOf(Config::class, $mock->testHydrate($config, $service));
-    }
-
-    /**
-     *
-     */
     public function test_hydrate_array_string_method()
     {
         $mock = $this->getCleanAbstractMock(Resolver::class, ['args', 'hydrate', 'invoke', 'signal', 'testHydrate']);
+
+        $object = new Hydrate;
+
+        $mock->expects($this->once())
+            ->method('callback')
+            ->willReturn($object);
 
         $config = $this->getCleanMock(Config::class);
 
@@ -374,7 +406,7 @@ class ResolverTest
                    ['$bar', '__invoke', 'foo' => 'foo']
                ]);
 
-        $this->assertInstanceOf(Hydrate::class, $mock->testHydrate($config, new Hydrate));
+        $this->assertInstanceOf(Hydrate::class, $mock->testHydrate($config, $object));
     }
 
     /**
@@ -384,15 +416,21 @@ class ResolverTest
     {
         $mock = $this->getCleanAbstractMock(Resolver::class, ['args', 'hydrate', 'invoke', 'signal', 'testHydrate']);
 
+        $object = new AutowireNoConstructor;
+
+        $mock->expects($this->once())
+             ->method('callback')
+             ->willReturn($object);
+
         $config = $this->getCleanMock(Config::class);
 
         $config->expects($this->once())
             ->method('calls')
             ->willReturn([
-                ['$bar', [new Hydrate, '__invoke'], 'foo' => 'foo']
+                ['$bar', [$object, '__invoke'], 'foo' => 'foo']
             ]);
 
-        $this->assertInstanceOf(AutowireNoConstructor::class, $mock->testHydrate($config, new AutowireNoConstructor));
+        $this->assertInstanceOf(AutowireNoConstructor::class, $mock->testHydrate($config, $object));
     }
 
     /**
@@ -423,6 +461,12 @@ class ResolverTest
     {
         $mock = $this->getCleanAbstractMock(Resolver::class, ['args', 'resolve', 'hydrate', 'invoke', 'signal', 'testHydrate']);
 
+        $object = new HydrateService;
+        
+        $mock->expects($this->once())
+            ->method('callback')
+            ->willReturn($object);
+
         $config = $this->getCleanMock(Config::class);
 
         $config->expects($this->once())
@@ -432,7 +476,7 @@ class ResolverTest
         $config->expects($this->once())
                ->method('calls')
                ->willReturn([
-                   ['$item', new HydrateService, 'index' => 'bar', 'foo' => 'foo']
+                   ['$item', $object, 'index' => 'bar', 'foo' => 'foo']
                ]);
 
         $this->assertEquals('foo', $mock->testHydrate($config, new \ArrayObject)['bar']);
@@ -532,7 +576,11 @@ class ResolverTest
     {
         $mock = $this->getCleanAbstractMock(Resolver::class, ['invokable', 'testInvokable']);
 
-        $this->assertInstanceOf(\Closure::class, $mock->testInvokable('@foo'));
+        $mock->expects($this->once())
+             ->method('callback')
+             ->willReturn(function(){});
+
+        $this->assertEquals(function(){}, $mock->testInvokable('@foo'));
     }
 
     /**
@@ -540,7 +588,7 @@ class ResolverTest
      */
     public function test_invokable_call_string_test()
     {
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['invokable', 'testInvokable']);
+        $mock = $this->getCleanAbstractMock(Resolver::class, ['callback', 'invokable', 'testInvokable']);
 
         $mock->expects($this->once())
              ->method('call')
@@ -556,6 +604,10 @@ class ResolverTest
     {
         $mock = $this->getCleanAbstractMock(Resolver::class, ['invokable', 'testInvokable']);
 
+        $mock->expects($this->once())
+            ->method('callback')
+            ->willReturn(['foo', 'bar']);
+
         $this->assertEquals(['foo', 'bar'], $mock->testInvokable(['foo', 'bar']));
     }
 
@@ -567,10 +619,48 @@ class ResolverTest
         $mock = $this->getCleanAbstractMock(Resolver::class, ['invokable', 'testInvokable']);
 
         $mock->expects($this->once())
+             ->method('callback')
+             ->willReturn(['foo', 'bar']);
+
+        $mock->expects($this->once())
              ->method('create')
              ->willReturn('foo');
 
         $this->assertEquals(['foo', 'bar'], $mock->testInvokable([new \stdClass, 'bar']));
+    }
+
+    /**
+     *
+     */
+    public function test_invokable_closure()
+    {
+        $mock = $this->getCleanAbstractMock(Resolver::class, ['invokable', 'testInvokable']);
+
+        $mock->expects($this->once())
+            ->method('callback')
+            ->willReturn(function(){});
+
+        $this->assertEquals(function(){}, $mock->testInvokable(function(){}));
+    }
+
+    /**
+     *
+     */
+    public function test_invokable_object()
+    {
+        $mock = $this->getCleanAbstractMock(Resolver::class, ['invokable', 'testInvokable']);
+
+        $object = new CallableObject;
+
+        $mock->expects($this->once())
+            ->method('callback')
+            ->willReturn($object);
+
+        $mock->expects($this->once())
+            ->method('create')
+            ->willReturn($object);
+
+        $this->assertEquals($object, $mock->testInvokable($object));
     }
 
     /**
@@ -582,13 +672,17 @@ class ResolverTest
 
         $mock->expects($this->once())
              ->method('signal')
-             ->willReturn('foo');
+             ->willReturn(function() {});
+
+        $mock->expects($this->once())
+            ->method('callback')
+            ->willReturn(function() {});
 
         $mock->expects($this->any())
              ->method('args')
              ->will($this->onConsecutiveCalls(function() {}, []));
 
-        $this->assertEquals('foo', $mock->testInvoke('foo'));
+        $this->assertEquals(function() {}, $mock->testInvoke(function() {}));
     }
 
     /**

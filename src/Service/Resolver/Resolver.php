@@ -45,6 +45,15 @@ abstract class Resolver
     }
 
     /**
+     * @param mixed $callback
+     * @return callable
+     */
+    public function testCallback($callback)
+    {
+        return $this->callback($callback);
+    }
+
+    /**
      * @param ChildService $config
      * @param array $args
      * @return array|callable|object|string

@@ -2,7 +2,7 @@
 
 namespace Mvc5\Test\Service\Resolver;
 
-class AutowireNoConstructor
+class CallableObject
 {
     public function __invoke()
     {
