@@ -576,11 +576,7 @@ class ResolverTest
     {
         $mock = $this->getCleanAbstractMock(Resolver::class, ['invokable', 'testInvokable']);
 
-        $mock->expects($this->once())
-             ->method('callback')
-             ->willReturn(function(){});
-
-        $this->assertEquals(function(){}, $mock->testInvokable('@foo'));
+        $this->assertInstanceOf(\Closure::class, $mock->testInvokable('@foo'));
     }
 
     /**
@@ -588,7 +584,7 @@ class ResolverTest
      */
     public function test_invokable_call_string_test()
     {
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['callback', 'invokable', 'testInvokable']);
+        $mock = $this->getCleanAbstractMock(Resolver::class, ['invokable', 'testInvokable']);
 
         $mock->expects($this->once())
              ->method('call')
@@ -618,15 +614,17 @@ class ResolverTest
     {
         $mock = $this->getCleanAbstractMock(Resolver::class, ['invokable', 'testInvokable']);
 
+        $config = [new CallableObject, 'bar'];
+
         $mock->expects($this->once())
              ->method('callback')
-             ->willReturn(['foo', 'bar']);
+             ->willReturn($config);
 
         $mock->expects($this->once())
              ->method('create')
-             ->willReturn('foo');
+             ->willReturn($config);
 
-        $this->assertEquals(['foo', 'bar'], $mock->testInvokable([new \stdClass, 'bar']));
+        $this->assertEquals($config, $mock->testInvokable($config));
     }
 
     /**
@@ -635,10 +633,6 @@ class ResolverTest
     public function test_invokable_closure()
     {
         $mock = $this->getCleanAbstractMock(Resolver::class, ['invokable', 'testInvokable']);
-
-        $mock->expects($this->once())
-            ->method('callback')
-            ->willReturn(function(){});
 
         $this->assertEquals(function(){}, $mock->testInvokable(function(){}));
     }
