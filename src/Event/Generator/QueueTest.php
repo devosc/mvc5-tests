@@ -17,11 +17,7 @@ class QueueTest
 
         $event = $this->getCleanMock(\Traversable::class);
 
-        $mock->expects($this->once())
-             ->method('traverse')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->testQueue($event));
+        $this->assertEquals($event, $mock->testQueue($event));
     }
 
     /**
@@ -38,14 +34,10 @@ class QueueTest
               ->willReturn('bar');
 
         $mock->expects($this->once())
-             ->method('traverse')
-             ->willReturn('foo');
-
-        $mock->expects($this->once())
              ->method('listeners')
-             ->willReturn(['bar' => 'baz']);
+             ->willReturn(['foo' => 'bar']);
 
-        $this->assertEquals('foo', $mock->testQueue($event));
+        $this->assertEquals(['foo' => 'bar'], $mock->testQueue($event));
     }
 
     /**
@@ -58,14 +50,10 @@ class QueueTest
         $event = 'bar';
 
         $mock->expects($this->once())
-             ->method('traverse')
-             ->willReturn('foo');
-
-        $mock->expects($this->once())
              ->method('listeners')
-             ->willReturn(['bar' => 'baz']);
+             ->willReturn(['foo' => 'bar']);
 
-        $this->assertEquals('foo', $mock->testQueue($event));
+        $this->assertEquals(['foo' => 'bar'], $mock->testQueue($event));
     }
 
     /**
@@ -75,16 +63,10 @@ class QueueTest
     {
         $mock = $this->getCleanAbstractMock(EventGenerator::class, ['queue', 'testQueue']);
 
-        $event = new \stdClass;
-
-        $mock->expects($this->once())
-             ->method('traverse')
-             ->willReturn('foo');
-
         $mock->expects($this->once())
              ->method('listeners')
-             ->willReturn(['stdClass' => 'baz']);
+             ->willReturn(['foo' => 'bar']);
 
-        $this->assertEquals('foo', $mock->testQueue($event));
+        $this->assertEquals(['foo' => 'bar'], $mock->testQueue(new \stdClass));
     }
 }

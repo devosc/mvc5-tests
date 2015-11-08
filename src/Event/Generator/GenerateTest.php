@@ -19,9 +19,15 @@ class GenerateTest
              ->method('emit')
              ->willReturn('foo');
 
+        $listener = function() {};
+
+        $mock->expects($this->once())
+             ->method('listener')
+             ->willReturn($listener);
+
         $mock->expects($this->once())
              ->method('queue')
-             ->willReturn([function() {}]);
+             ->willReturn([$listener]);
 
         $this->assertEquals('foo', $mock->testGenerate(null));
     }
@@ -39,13 +45,19 @@ class GenerateTest
               ->method('stopped')
               ->willReturn(true);
 
+        $listener = function() {};
+
         $mock->expects($this->once())
              ->method('emit')
              ->willReturn('foo');
 
         $mock->expects($this->once())
+             ->method('listener')
+             ->willReturn($listener);
+
+        $mock->expects($this->once())
              ->method('queue')
-             ->willReturn([function() {}]);
+             ->willReturn([$listener]);
 
         $this->assertEquals('foo', $mock->testGenerate($event));
     }

@@ -43,13 +43,4 @@ abstract class EventGenerator
     {
         return $this->queue($event);
     }
-
-    /**
-     * @param array|\Traversable $iterator
-     * @return mixed
-     */
-    public function testTraverse($iterator)
-    {
-        return $this->traverse($iterator);
-    }
 }
