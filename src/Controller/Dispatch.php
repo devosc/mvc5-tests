@@ -5,10 +5,10 @@
 
 namespace Mvc5\Test\Controller;
 
-use Mvc5\Controller\Dispatcher as Base;
+use Mvc5\Controller\Dispatch as Base;
 use Throwable;
 
-abstract class Dispatcher
+abstract class Dispatch
 {
     /**
      *
