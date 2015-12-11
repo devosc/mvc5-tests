@@ -1,11 +1,14 @@
 <?php
+/**
+ *
+ */
 
 namespace Mvc5\Test\Mvc;
 
-use Mvc5\Mvc\Mvc;
+use Mvc5\Test\Test\TestCase;
 use Mvc5\Response\Response;
 use Mvc5\Route\Route;
-use Mvc5\Test\Test\TestCase;
+use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class MvcTest
     extends TestCase
@@ -15,9 +18,11 @@ class MvcTest
      */
     public function test_args()
     {
-        $mock = $this->getCleanMock(ArgsMvc::class, ['args']);
+        /** @var Mvc|Mock $mock */
 
-        $this->assertTrue(is_array($mock->args()));
+        $mock = $this->getCleanMock(Mvc::class, ['args', 'argsTest']);
+
+        $this->assertTrue(is_array($mock->argsTest()));
     }
 
     /**
@@ -25,6 +30,8 @@ class MvcTest
      */
     public function test_invoke_response()
     {
+        /** @var Mvc|Mock $mock */
+
         $mock = $this->getCleanMock(Mvc::class, ['__invoke']);
 
         $mock->expects($this->once())
@@ -46,6 +53,8 @@ class MvcTest
      */
     public function test_invoke_false_response()
     {
+        /** @var Mvc|Mock $mock */
+
         $mock = $this->getCleanMock(Mvc::class, ['__invoke']);
 
         $mock->expects($this->once())
@@ -64,6 +73,8 @@ class MvcTest
      */
     public function test_invoke_route_response()
     {
+        /** @var Mvc|Mock $mock */
+
         $mock = $this->getCleanMock(Mvc::class, ['__invoke']);
 
         $mock->expects($this->once())
@@ -87,6 +98,8 @@ class MvcTest
      */
     public function test_invoke_response_response()
     {
+        /** @var Mvc|Mock $mock */
+
         $mock = $this->getCleanMock(Mvc::class, ['__invoke']);
 
         $mock->expects($this->once())

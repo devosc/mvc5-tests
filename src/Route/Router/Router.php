@@ -2,20 +2,24 @@
 
 namespace Mvc5\Test\Route\Router;
 
-use Mvc5\Route\Definition\Definition;
+use Mvc5\Route\Definition;
 use Mvc5\Route\Route;
 use Mvc5\Route\Router\Router as Base;
 
-class Router
-    extends Base
+abstract class Router
 {
+    /**
+     *
+     */
+    use Base;
+
     /**
      * @param array|Definition $definition
      * @return Definition
      */
-    public function testCreate($definition)
+    public function routeDefinitionTest($definition)
     {
-        return $this->create($definition);
+        return $this->routeDefinition($definition);
     }
 
     /**
@@ -23,7 +27,7 @@ class Router
      * @param Definition $definition
      * @return Route
      */
-    public function testDispatch(Route $route, Definition $definition)
+    public function dispatchTest(Route $route, Definition $definition)
     {
         return $this->dispatch($route, $definition);
     }
@@ -31,7 +35,7 @@ class Router
     /**
      * @return string
      */
-    public function testName()
+    public function nameTest()
     {
         return $this->name();
     }

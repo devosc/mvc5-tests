@@ -1,10 +1,15 @@
 <?php
+/**
+ *
+ */
 
 namespace Mvc5\Test\Route\Exception;
 
-use Mvc5\Route\Exception\Config;
 use Mvc5\Route\Exception\Create;
+use Mvc5\Route\Exception;
+use Mvc5\Route\Exception\Route;
 use Mvc5\Test\Test\TestCase;
+use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class CreateTest
     extends TestCase
@@ -12,23 +17,19 @@ class CreateTest
     /**
      *
      */
-    public function test__construct()
+    public function test_invoke()
     {
-        $this->assertInstanceOf(Create::class, new Create($this->getCleanMock(Config::class)));
-    }
+        /** @var Exception|Mock $route */
 
-    /**
-     *
-     */
-    public function test__invoke()
-    {
-        $route = $this->getCleanMock(Config::class);
+        $route = $this->getCleanMock(Exception::class);
 
         $route->expects($this->any())
               ->method('set');
 
+        /** @var Create|Mock $mock */
+
         $mock = $this->getCleanMock(Create::class, ['__invoke'], [$route]);
 
-        $this->assertInstanceOf(Config::class, $mock->__invoke($route, new \Exception));
+        $this->assertEquals($route, $mock->__invoke(new \Exception, new Route));
     }
 }

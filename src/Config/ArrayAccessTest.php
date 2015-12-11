@@ -1,9 +1,13 @@
 <?php
+/**
+ *
+ */
 
 namespace Mvc5\Test\Config;
 
 use Mvc5\Config\ArrayAccess;
 use Mvc5\Test\Test\TestCase;
+use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class ArrayAccessTest
     extends TestCase
@@ -13,6 +17,8 @@ class ArrayAccessTest
      */
     public function test_offsetExists()
     {
+        /** @var ArrayAccess|Mock $mock */
+
         $mock = $this->getCleanMockForTrait(ArrayAccess::class, ['offsetExists']);
 
         $mock->method('has')
@@ -26,6 +32,8 @@ class ArrayAccessTest
      */
     public function test_offsetGet()
     {
+        /** @var ArrayAccess|Mock $mock */
+
         $mock = $this->getCleanMockForTrait(ArrayAccess::class, ['offsetGet']);
 
         $mock->method('get')
@@ -39,6 +47,8 @@ class ArrayAccessTest
      */
     public function test_offsetSet()
     {
+        /** @var ArrayAccess|Mock $mock */
+
         $mock = $this->getCleanMockForTrait(ArrayAccess::class, ['offsetSet']);
 
         $mock->expects($this->once())
@@ -53,8 +63,10 @@ class ArrayAccessTest
      */
     public function test_offsetUnset()
     {
+        /** @var ArrayAccess|Mock $mock */
+
         $mock = $this->getCleanMockForTrait(ArrayAccess::class, ['offsetUnset']);
 
-        $this->assertEquals(null, $mock->offsetUnset('foo'));
+        $mock->offsetUnset('foo');
     }
 }

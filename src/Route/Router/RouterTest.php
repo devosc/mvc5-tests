@@ -2,10 +2,12 @@
 
 namespace Mvc5\Test\Route\Router;
 
-use Mvc5\Route\Config;
-use Mvc5\Route\Definition\RouteDefinition;
-use Mvc5\Route\Route;
+use Mvc5\Arg;
+use Mvc5\Route\Definition;
+use Mvc5\Route\Definition\Config;
+use Mvc5\Route\Config as Route;
 use Mvc5\Test\Test\TestCase;
+use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class RouterTest
     extends TestCase
@@ -13,25 +15,25 @@ class RouterTest
     /**
      *
      */
-    public function test__construct()
+    public function test_construct()
     {
-        $definition = $this->getCleanMock(RouteDefinition::class);
+        $definition = $this->getCleanMock(Definition::class);
 
-        $router = new Router($definition);
-
-        $this->assertInstanceOf(Router::class, $router);
+        $this->getCleanAbstractMock(Router::class, ['__construct'], [$definition]);
     }
 
     /**
      *
      */
-    public function test_create()
+    public function test_routeDefinition()
     {
-        $mock = $this->getCleanMock(Router::class, ['create', 'testCreate']);
+        /** @var Router $mock */
 
-        $definition = new RouteDefinition(['regex' => 'foo']);
+        $mock = $this->getCleanMock(Router::class, ['routeDefinition', 'routeDefinitionTest']);
 
-        $this->assertEquals($definition, $mock->testCreate($definition));
+        $definition = new Config(['regex' => 'foo']);
+
+        $this->assertEquals($definition, $mock->routeDefinitionTest($definition));
     }
 
     /**
@@ -39,13 +41,15 @@ class RouterTest
      */
     public function test_create_without_definition()
     {
-        $mock = $this->getCleanMock(Router::class, ['create', 'testCreate']);
+        /** @var Router|Mock $mock */
+
+        $mock = $this->getCleanMock(Router::class, ['routeDefinition', 'routeDefinitionTest']);
 
         $mock->expects($this->once())
              ->method('definition')
              ->willReturn('foo');
 
-        $this->assertEquals('foo', $mock->testCreate([]));
+        $this->assertEquals('foo', $mock->routeDefinitionTest([]));
     }
 
     /**
@@ -53,21 +57,27 @@ class RouterTest
      */
     public function test_dispatch()
     {
-        $definition = $this->getCleanMock(RouteDefinition::class);
+        /** @var Definition|Mock $definition */
+
+        $definition = $this->getCleanMock(Definition::class);
 
         $definition->expects($this->once())
                    ->method('children')
                    ->willReturn([]);
 
+        /** @var Route $route */
+
         $route = $this->getCleanMock(Route::class);
 
-        $mock = $this->getCleanMock(Router::class, ['dispatch', 'testDispatch']);
+        /** @var Router|Mock $mock */
+
+        $mock = $this->getCleanMock(Router::class, ['dispatch', 'dispatchTest']);
 
         $mock->expects($this->once())
              ->method('match')
              ->willReturn($route);
 
-        $this->assertEquals(null, $mock->testDispatch($route, $definition));
+        $this->assertEquals(null, $mock->dispatchTest($route, $definition));
     }
 
     /**
@@ -75,11 +85,15 @@ class RouterTest
      */
     public function test_dispatch_matched()
     {
-        $definition = $this->getCleanMock(RouteDefinition::class);
+        /** @var Definition|Mock $definition */
+
+        $definition = $this->getCleanMock(Definition::class);
 
         $definition->expects($this->once())
                    ->method('name')
                    ->willReturn('foo');
+
+        /** @var Route|Mock $route */
 
         $route = $this->getCleanMock(Route::class);
 
@@ -94,13 +108,15 @@ class RouterTest
               ->method('matched')
               ->willReturn(true);
 
-        $mock = $this->getCleanMock(Router::class, ['dispatch', 'testDispatch']);
+        /** @var Router|Mock $mock */
+
+        $mock = $this->getCleanMock(Router::class, ['dispatch', 'dispatchTest']);
 
         $mock->expects($this->once())
              ->method('match')
              ->willReturn($route);
 
-        $this->assertInstanceOf(Route::class, $mock->testDispatch($route, $definition));
+        $this->assertInstanceOf(Route::class, $mock->dispatchTest($route, $definition));
     }
 
     /**
@@ -108,25 +124,29 @@ class RouterTest
      */
     public function test_dispatch_with_children()
     {
-        $definition = $this->getCleanMock(RouteDefinition::class);
+        /** @var Definition|Mock $definition */
+
+        $definition = $this->getCleanMock(Definition::class);
 
         $definition->expects($this->once())
                    ->method('children')
                    ->willReturn(['baz' => []]);
 
-        $route = new Config;
+        $route = new Route;
 
-        $mock = $this->getCleanMock(Router::class, ['dispatch', 'testDispatch']);
+        /** @var Router|Mock $mock */
+
+        $mock = $this->getCleanMock(Router::class, ['dispatch', 'dispatchTest']);
 
         $mock->expects($this->any())
              ->method('match')
-             ->will($this->onConsecutiveCalls($route, new Config([Route::MATCHED => true])));
+             ->will($this->onConsecutiveCalls($route, new Route([Arg::MATCHED => true])));
 
         $mock->expects($this->once())
-             ->method('create')
-             ->willReturn($this->getCleanMock(RouteDefinition::class));
+             ->method('routeDefinition')
+             ->willReturn($this->getCleanMock(Definition::class));
 
-        $this->assertInstanceOf(Route::class, $mock->testDispatch($route, $definition));
+        $this->assertInstanceOf(Route::class, $mock->dispatchTest($route, $definition));
     }
 
     /**
@@ -134,28 +154,33 @@ class RouterTest
      */
     public function test_name()
     {
-        $mock = $this->getCleanMock(Router::class, ['name', 'testName'], [['name' => 'foo']]);
+        /** @var Router $mock */
 
-        $this->assertEquals('foo', $mock->testName());
+        $mock = $this->getCleanMock(Router::class, ['name', 'nameTest'], [['name' => 'foo']]);
+
+        $this->assertEquals('foo', $mock->nameTest());
     }
 
     /**
      *
      */
-    public function test__invoke()
+    public function test_invoke()
     {
+        /** @var Router|Mock $mock */
+
         $mock = $this->getCleanMock(Router::class, ['__invoke']);
 
-        $definition = $this->getCleanMock(RouteDefinition::class);
+        $definition = $this->getCleanMock(Definition::class);
 
         $mock->expects($this->once())
              ->method('dispatch')
              ->willReturn('foo');
 
         $mock->expects($this->once())
-             ->method('create')
+             ->method('routeDefinition')
              ->willReturn($definition);
 
+        /** @var Route $route */
         $route = $this->getCleanMock(Route::class);
 
         $this->assertEquals('foo', $mock->__invoke($route));
