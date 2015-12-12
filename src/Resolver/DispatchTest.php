@@ -5,26 +5,14 @@
 
 namespace Mvc5\Test\Resolver;
 
-use Mvc5\Arg;
 use Mvc5\Route\Config as Route;
+use Mvc5\Resolver\Dispatch;
 use Mvc5\Test\Test\TestCase;
 use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class DispatchTest
     extends TestCase
 {
-    /**
-     *
-     */
-    public function test_args()
-    {
-        /** @var Dispatch $mock */
-
-        $mock = $this->getCleanMock(Dispatch::class, ['args', 'argsTest']);
-
-        $this->assertEquals([Arg::EVENT => $mock], $mock->argsTest());
-    }
-
     /**
      *
      */
