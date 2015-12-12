@@ -3,9 +3,9 @@
  *
  */
 
-namespace Mvc5\Test\Model;
+namespace Mvc5\Test\Model\Template;
 
-use Mvc5\Model as Mvc5Model;
+use Mvc5\Arg;
 use Mvc5\Test\Test\TestCase;
 use PHPUnit_Framework_MockObject_MockObject as Mock;
 
@@ -19,9 +19,9 @@ class ModelTest
     {
         /** @var Model|Mock $mock */
 
-        $mock = $this->getCleanAbstractMock(Model::class, ['path', 'get'], ['foo']);
+        $mock = $this->getCleanAbstractMock(Model::class, ['template', 'get'], ['foo']);
 
-        $this->assertEquals('foo', $mock->path());
+        $this->assertEquals('foo', $mock->template());
     }
 
     /**
@@ -31,9 +31,9 @@ class ModelTest
     {
         /** @var Model|Mock $mock */
 
-        $mock = $this->getCleanAbstractMock(Model::class, ['path', 'get'], [null]);
+        $mock = $this->getCleanAbstractMock(Model::class, ['template', 'get'], [null]);
 
-        $this->assertEquals('baz', $mock->path());
+        $this->assertEquals('baz', $mock->template());
     }
 
     /**
@@ -43,68 +43,9 @@ class ModelTest
     {
         /** @var Model|Mock $mock */
 
-        $mock = $this->getCleanAbstractMock(Model::class, ['path', 'get']);
+        $mock = $this->getCleanAbstractMock(Model::class, ['template', 'get']);
 
-        $this->assertEquals(null, $mock->path());
-    }
-
-    /**
-     *
-     */
-    public function test_child()
-    {
-        /** @var Model|Mock $mock */
-
-        $mock = $this->getCleanAbstractMock(Model::class, ['child']);
-
-        $mock->expects($this->once())
-             ->method('set');
-
-        $mock->child(null);
-    }
-
-    /**
-     *
-     */
-    public function test_assigned()
-    {
-        /** @var Model|Mock $mock */
-
-        $mock = $this->getCleanAbstractMock(Model::class, ['assigned']);
-
-        $this->assertEquals([], $mock->assigned());
-    }
-
-    /**
-     *
-     */
-    public function test_model()
-    {
-        /** @var Model|Mock $mock */
-
-        $mock = $this->getCleanAbstractMock(Model::class, ['model']);
-
-        $mock->expects($this->once())
-             ->method('get')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->model());
-    }
-
-    /**
-     *
-     */
-    public function test_path()
-    {
-        /** @var Model|Mock $mock */
-
-        $mock = $this->getCleanAbstractMock(Model::class, ['path']);
-
-        $mock->expects($this->once())
-             ->method('get')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->path());
+        $this->assertEquals(null, $mock->template());
     }
 
     /**
@@ -117,10 +58,26 @@ class ModelTest
         $mock = $this->getCleanAbstractMock(Model::class, ['template']);
 
         $mock->expects($this->once())
-             ->method('set')
-             ->willReturn('foo');
+            ->method('get')
+            ->willReturn('foo');
 
-        $mock->template(null);
+        $this->assertEquals('foo', $mock->template());
+    }
+
+    /**
+     *
+     */
+    public function test_template_set()
+    {
+        /** @var Model|Mock $mock */
+
+        $mock = $this->getCleanAbstractMock(Model::class, ['template']);
+
+        $mock->expects($this->once())
+            ->method('set')
+            ->willReturn('foo');
+
+        $this->assertEquals('foo', $mock->template('foo'));
     }
 
     /**
@@ -132,31 +89,23 @@ class ModelTest
 
         $mock = $this->getCleanAbstractMock(Model::class, ['vars']);
 
-        $mock->expects($this->once())
-             ->method('path')
-             ->willReturn('foo');
-
-        $mock->expects($this->once())
-             ->method('model')
-             ->willReturn('bar');
-
-        $mock->vars([]);
+        $this->assertEquals([], $mock->vars());
     }
 
     /**
      *
      */
-    public function test_call()
+    public function test_vars_set()
     {
         /** @var Model|Mock $mock */
 
-        $mock = $this->getCleanAbstractMock(Model::class, ['__call']);
+        $mock = $this->getCleanAbstractMock(Model::class, ['vars']);
 
         $mock->expects($this->once())
-             ->method('call')
+             ->method('template')
              ->willReturn('foo');
 
-        $this->assertEquals('foo', $mock->__call(null));
+        $this->assertEquals([Arg::TEMPLATE_MODEL => 'foo', 'bar' => 'baz'], $mock->vars(['bar' => 'baz']));
     }
 
     /**

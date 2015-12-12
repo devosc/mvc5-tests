@@ -38,7 +38,7 @@ class RendererTest
     /**
      *
      */
-    public function test__invoke()
+    public function test_invoke()
     {
         /** @var Renderer|Mock $mock */
 
@@ -50,22 +50,16 @@ class RendererTest
 
         $model = $this->getCleanMock(Model::class, ['current', 'key', 'next', 'valid'], [$template, $config]);
 
-        $model->expects($this->once())
-              ->method('set');
-
-        $model->expects($this->once())
-              ->method('template');
+        $model->expects($this->any())
+              ->method('template')
+              ->willReturn($template);
 
         $model->expects($this->any())
               ->method('service');
 
         $model->expects($this->once())
-              ->method('assigned')
+              ->method('vars')
               ->willReturn([]);
-
-        $model->expects($this->any())
-              ->method('path')
-              ->willReturn($template);
 
         $service = $this->getCleanMock(Service::class);
 
@@ -92,7 +86,7 @@ class RendererTest
         $model = $this->getCleanMock(Model::class, ['current', 'key', 'next', 'valid']);
 
         $model->expects($this->any())
-              ->method('path');
+              ->method('template');
 
         $this->setExpectedException('RuntimeException');
 
@@ -112,19 +106,11 @@ class RendererTest
 
         $model = $this->getCleanMock(Model::class, ['current', 'key', 'next', 'valid'], [$template]);
 
-        $model->expects($this->once())
+        $model->expects($this->any())
               ->method('template');
 
         $model->expects($this->any())
               ->method('service');
-
-        $model->expects($this->once())
-              ->method('assigned')
-              ->willReturn([]);
-
-        $model->expects($this->any())
-              ->method('path')
-              ->willReturn($template);
 
         $vm = $this->getCleanMock(Service::class);
 
@@ -136,7 +122,7 @@ class RendererTest
              ->method('template')
              ->willReturn($template);
 
-        $this->setExpectedException('Exception');
+        $this->setExpectedException('Exception', 'Model template not found');
 
         $mock->__invoke($model);
     }

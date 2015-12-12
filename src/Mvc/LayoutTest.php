@@ -62,7 +62,7 @@ class LayoutTest
         $layout = $this->getCleanMock(LayoutModel::class);
 
         $layout->expects($this->once())
-               ->method('child');
+               ->method('model');
 
         $model = $this->getCleanMock(Model::class);
 
