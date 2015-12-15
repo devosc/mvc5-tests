@@ -69,6 +69,27 @@ class ModelTest
     /**
      *
      */
+    public function test_model_set()
+    {
+        /** @var Model|Mock $mock */
+
+        $mock = $this->getCleanMock(Model::class, ['model', 'modelTest']);
+
+        $response = $this->getCleanMock(Response::class);
+
+        $response->expects($this->once())
+                 ->method('setContent');
+
+        $mock->expects($this->once())
+             ->method('response')
+             ->willReturn($response);
+
+        $this->assertEquals('foo', $mock->modelTest('foo'));
+    }
+
+    /**
+     *
+     */
     public function test_response()
     {
         /** @var Model|Mock $mock */
@@ -76,7 +97,7 @@ class ModelTest
         $config = $this->getCleanMock(Config::class);
 
         $config->expects($this->once())
-               ->method('get')
+               ->method('offsetGet')
                ->willReturn('foo');
 
         $mock = $this->getCleanMock(Model::class, ['response', 'responseTest'], [null, $config]);
@@ -94,7 +115,7 @@ class ModelTest
         $config = $this->getCleanMock(Config::class);
 
         $config->expects($this->once())
-               ->method('get')
+               ->method('offsetGet')
                ->willReturn('foo');
 
         $mock = $this->getCleanMock(Model::class, ['route', 'routeTest'], [null, $config]);
@@ -105,62 +126,20 @@ class ModelTest
     /**
      *
      */
-    public function test_setModel()
-    {
-        /** @var Model|Mock $mock */
-
-        $mock = $this->getCleanMock(Model::class, ['setModel', 'setModelTest']);
-
-        $response = $this->getCleanMock(Response::class);
-
-        $response->expects($this->once())
-                 ->method('setContent');
-
-        $mock->expects($this->once())
-             ->method('response')
-             ->willReturn($response);
-
-        $mock->setModelTest(null);
-    }
-
-    /**
-     *
-     */
-    public function test_setResponse()
+    public function test_route_set()
     {
         /** @var Model|Mock $mock */
 
         $config = $this->getCleanMock(Config::class);
 
         $config->expects($this->once())
-               ->method('set');
+               ->method('offsetSet');
 
-        $mock = $this->getCleanMock(Model::class, ['setResponse', 'setResponseTest'], [null, $config]);
-
-        /** @var Response $response */
-
-        $response = $this->getCleanMock(Response::class);
-
-        $mock->setResponseTest($response);
-    }
-
-    /**
-     *
-     */
-    public function test_setRoute()
-    {
-        /** @var Model|Mock $mock */
-
-        $config = $this->getCleanMock(Config::class);
-
-        $config->expects($this->once())
-               ->method('set');
-
-        $mock = $this->getCleanMock(Model::class, ['setRoute', 'setRouteTest'], [null, $config]);
+        $mock = $this->getCleanMock(Model::class, ['route', 'routeTest'], [null, $config]);
 
         /** @var Route $route */
         $route = $this->getCleanMock(Route::class);
 
-        $mock->setRouteTest($route);
+        $this->assertEquals($route, $mock->routeTest($route));
     }
 }

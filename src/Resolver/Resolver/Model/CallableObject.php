@@ -8,6 +8,11 @@ class CallableObject
     {
     }
 
+    public static function test()
+    {
+        return 'foo';
+    }
+
     public static function __callStatic($name, $args = [])
     {
     }

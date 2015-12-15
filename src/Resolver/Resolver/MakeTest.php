@@ -26,7 +26,7 @@ class MakeTest
         $mock = $this->getCleanAbstractMock(Resolver::class, ['make', 'makeTest']);
 
         $mock->expects($this->once())
-            ->method('create')
+            ->method('__invoke')
             ->willReturn(new CallEvent);
 
         $this->assertInstanceOf(Autowire::class, $mock->makeTest(Autowire::class, ['foo' => 'bar']));
@@ -112,12 +112,17 @@ class MakeTest
         $event = new CallEvent;
 
         $mock->expects($this->once())
-            ->method('resolve')
-            ->willReturn($event);
+             ->method('resolve')
+             ->willReturn($event);
+
+
+        $mock->expects($this->once())
+             ->method('__invoke')
+             ->willReturn('bar');
 
         $this->assertInstanceOf(
             Autowire::class,
-            $mock->makeTest(Autowire::class, ['event' => $event], function() { return 'bar'; })
+            $mock->makeTest(Autowire::class, ['event' => $event])
         );
     }
 

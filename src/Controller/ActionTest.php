@@ -5,7 +5,6 @@
 
 namespace Mvc5\Test\Controller;
 
-use Mvc5\Controller\Action;
 use Mvc5\Test\Test\TestCase;
 use PHPUnit_Framework_MockObject_MockObject as Mock;
 
@@ -15,16 +14,32 @@ class ActionTest
     /**
      *
      */
-    public function test__invoke()
+    public function test_action()
     {
         /** @var Action|Mock $mock */
 
-        $mock = $this->getCleanMock(Action::class, ['__invoke']);
+        $mock = $this->getCleanAbstractMock(Action::class, ['action', 'actionTest']);
 
         $mock->expects($this->once())
-             ->method('action')
+             ->method('call')
              ->willReturn('foo');
 
-        $this->assertTrue('foo' == $mock->__invoke(function() {}));
+        $this->assertEquals('foo', $mock->actionTest(function() {}));
+    }
+
+    /**
+     *
+     */
+    public function test_exception()
+    {
+        /** @var Action|Mock $mock */
+
+        $mock = $this->getCleanAbstractMock(Action::class, ['exception', 'exceptionTest']);
+
+        $mock->expects($this->once())
+            ->method('call')
+            ->willReturn('foo');
+
+        $this->assertEquals('foo', $mock->exceptionTest(new \Exception, null));
     }
 }

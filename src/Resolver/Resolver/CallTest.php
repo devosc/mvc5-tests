@@ -7,6 +7,7 @@ namespace Mvc5\Test\Resolver\Resolver;
 
 use Mvc5\App;
 use Mvc5\Arg;
+use Mvc5\Test\Resolver\Resolver\Model\CallableObject;
 use Mvc5\Test\Resolver\Resolver\Model\CallEvent;
 use Mvc5\Test\Test\TestCase;
 use PHPUnit_Framework_MockObject_MockObject as Mock;
@@ -24,7 +25,7 @@ class CallTest
         $mock = $this->getCleanAbstractMock(Resolver::class, ['call']);
 
         $mock->expects($this->once())
-             ->method('trigger')
+             ->method('generate')
              ->willReturn('foo');
 
         $this->assertEquals('foo', $mock->call(new CallEvent));
@@ -105,10 +106,20 @@ class CallTest
              ->willReturn(new CallEvent);
 
         $mock->expects($this->once())
-             ->method('trigger')
+             ->method('generate')
              ->willReturn('foo');
 
         $this->assertEquals('foo', $mock->call('bar'));
+    }
+
+    /**
+     *
+     */
+    public function test_call_static()
+    {
+        /** @var Resolver|Mock $mock */
+
+        $this->assertEquals('foo', (new App)->call(CallableObject::class.'::test'));
     }
 
     /**

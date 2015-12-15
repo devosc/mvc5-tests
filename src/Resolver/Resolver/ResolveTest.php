@@ -108,15 +108,35 @@ class ResolveTest
     /**
      *
      */
-    public function test_resolve_dependency()
+    public function test_resolve_dependency_shared()
     {
         /** @var Resolver|Mock $mock */
 
         $mock = $this->getCleanAbstractMock(Resolver::class, ['resolve', 'resolveTest']);
 
         $mock->expects($this->once())
-            ->method('get')
-            ->willReturn('foo');
+             ->method('shared')
+             ->willReturn('foo');
+
+        $this->assertEquals('foo', $mock->resolveTest(new Dependency('foo')));
+    }
+
+    /**
+     *
+     */
+    public function test_resolve_dependency_create()
+    {
+        /** @var Resolver|Mock $mock */
+
+        $mock = $this->getCleanAbstractMock(Resolver::class, ['resolve', 'resolveTest']);
+
+        $mock->expects($this->once())
+             ->method('shared')
+             ->willReturn(null);
+
+        $mock->expects($this->once())
+             ->method('initialize')
+             ->willReturn('foo');
 
         $this->assertEquals('foo', $mock->resolveTest(new Dependency('foo')));
     }
@@ -241,6 +261,10 @@ class ResolveTest
         $mock->expects($this->once())
             ->method('call')
             ->willReturn('foo');
+
+        $mock->expects($this->once())
+             ->method('args')
+             ->willReturn([]);
 
         $callable = $mock->resolveTest(new Invoke('foo'));
 

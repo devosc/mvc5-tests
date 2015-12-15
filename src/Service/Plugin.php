@@ -35,26 +35,6 @@ abstract class Plugin
     }
 
     /**
-     * @param array|callable|null|object|string $config
-     * @param array $args
-     * @param callable $callback
-     * @return callable|null|object
-     */
-    public function createTest($config, array $args = [], callable $callback = null)
-    {
-        return $this->create($config, $args, $callback);
-    }
-
-    /**
-     * @param array|callable|object|string $config
-     * @return callable|null
-     */
-    public function invokableTest($config) : callable
-    {
-        return $this->invokable($config);
-    }
-
-    /**
      * @param string $name
      * @return mixed
      */

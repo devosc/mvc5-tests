@@ -11,7 +11,7 @@ class HydratorTest
     /**
      *
      */
-    public function test__construct()
+    public function test_construct()
     {
         $mock = $this->getCleanMock(Hydrator::class, ['__construct'], ['foo', []]);
 

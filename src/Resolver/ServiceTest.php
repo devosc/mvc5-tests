@@ -42,7 +42,7 @@ class ServiceTest
         $mock = $this->getCleanMock(Service::class, ['__invoke'], [['foo' => 'bar']]);
 
         $mock->expects($this->once())
-             ->method('create')
+             ->method('plugin')
              ->willReturn('baz');
 
         $this->assertEquals('baz', $mock->__invoke('foo'));

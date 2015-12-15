@@ -20,35 +20,10 @@ class ResponseTest
     {
         /** @var MvcResponse|Mock $mock */
 
-        $mock = $this->getCleanMock(MvcResponse::class, ['__invoke']);
+        $mock = $this->getCleanAbstractMock(MvcResponse::class, ['__invoke']);
 
         $response = $this->getCleanMock(Response::class);
 
-        $mock->expects($this->once())
-             ->method('send')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->__invoke($response));
-    }
-
-    /**
-     *
-     */
-    public function test_invoke_exception()
-    {
-        /** @var MvcResponse|Mock $mock */
-
-        $mock = $this->getCleanMock(MvcResponse::class, ['__invoke']);
-
-        $response = $this->getCleanMock(Response::class);
-
-        $mock->method('send')
-             ->will($this->onConsecutiveCalls($this->throwException(new \Exception), 'foo'));
-
-        $mock->expects($this->once())
-             ->method('exception')
-             ->willReturn($response);
-
-        $this->assertEquals('foo', $mock->__invoke($response));
+        $this->assertEquals($response, $mock->__invoke($response));
     }
 }

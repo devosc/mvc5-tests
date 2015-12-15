@@ -2,7 +2,6 @@
 
 namespace Mvc5\Test\Resolver\Resolver;
 
-use Mvc5\Event\Event;
 use Mvc5\Plugin\Gem\Child;
 use Mvc5\Plugin\Gem\Plugin;
 use Mvc5\Resolver\Resolver as Base;
@@ -57,15 +56,6 @@ abstract class Resolver
     }
 
     /**
-     * @param array|Event|string $event
-     * @return Event
-     */
-    public function eventTest($event)
-    {
-        return $this->event($event);
-    }
-
-    /**
      * @param array|callable|null|object|string $arg
      * @param array $filters
      * @return mixed
@@ -106,14 +96,22 @@ abstract class Resolver
     }
 
     /**
+     * @param array|callable|object|string $config
+     * @return callable|null
+     */
+    public function listenerTest($config)
+    {
+        return $this->listener($config);
+    }
+
+    /**
      * @param string $name
      * @param array $args
-     * @param callable $callback
      * @return callable|object
      */
-    public function makeTest($name, array $args = [], callable $callback = null)
+    public function makeTest($name, array $args = [])
     {
-        return $this->make($name, $args, $callback);
+        return $this->make($name, $args);
     }
 
     /**

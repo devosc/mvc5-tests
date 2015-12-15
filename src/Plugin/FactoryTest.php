@@ -11,7 +11,7 @@ class FactoryTest
     /**
      *
      */
-    public function test__construct()
+    public function test_construct()
     {
         $this->assertInstanceOf(Factory::class, new Factory('foo'));
     }

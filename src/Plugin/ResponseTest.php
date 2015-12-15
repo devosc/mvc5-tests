@@ -2,10 +2,10 @@
 
 namespace Mvc5\Test\Plugin;
 
-use Mvc5\Plugin\Call;
+use Mvc5\Plugin\Response;
 use Mvc5\Test\Test\TestCase;
 
-class CallTest
+class ResponseTest
     extends TestCase
 {
     /**
@@ -13,6 +13,6 @@ class CallTest
      */
     public function test_construct()
     {
-        $this->assertInstanceOf(Call::class, new Call(['foo']));
+        $this->assertInstanceOf(Response::class, new Response('foo'));
     }
 }

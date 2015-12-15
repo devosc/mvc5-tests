@@ -4,7 +4,6 @@ namespace Mvc5\Test\Plugin;
 
 use Mvc5\Plugin\Invokable;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class InvokableTest
     extends TestCase
@@ -12,24 +11,8 @@ class InvokableTest
     /**
      *
      */
-    public function test_config()
+    public function test_construct()
     {
-        /** @var Invokable|Mock $mock */
-
-        $mock = $this->getCleanMock(Invokable::class, ['config'], ['foo']);
-
-        $this->assertEquals('foo', $mock->config());
-    }
-
-    /**
-     *
-     */
-    public function test_args()
-    {
-        /** @var Invokable|Mock $mock */
-
-        $mock = $this->getCleanMock(Invokable::class, ['args'], [null, ['foo']]);
-
-        $this->assertEquals(['foo'], $mock->args());
+        $this->assertInstanceOf(Invokable::class, new Invokable(['foo']));
     }
 }

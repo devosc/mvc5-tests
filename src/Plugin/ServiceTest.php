@@ -11,10 +11,8 @@ class ServiceTest
     /**
      *
      */
-    public function test__construct()
+    public function test_construct()
     {
-        $mock = $this->getCleanMock(Service::class, ['__construct'], ['foo']);
-
-        $this->assertInternalType('object', $mock);
+        $this->assertInstanceOf(Service::class, new Service('foo'));
     }
 }

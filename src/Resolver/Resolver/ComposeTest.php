@@ -25,7 +25,7 @@ class ComposeTest
         $app = $this->getCleanMock(App::class);
 
         $app->expects($this->once())
-            ->method('create')
+            ->method('plugin')
             ->willReturn('bar');
 
         $this->assertEquals('bar', $mock->composeTest($app, ['foo']));
@@ -47,7 +47,7 @@ class ComposeTest
             ->willReturn('bar');
 
         $mock->expects($this->once())
-            ->method('create')
+            ->method('plugin')
             ->willReturn('baz');
 
         $this->assertEquals('baz', $mock->composeTest($container, ['foo']));

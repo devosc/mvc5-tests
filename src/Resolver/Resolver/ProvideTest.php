@@ -64,7 +64,7 @@ class ProvideTest
             ->willReturn('foo');
 
         $mock->expects($this->once())
-            ->method('create')
+            ->method('plugin')
             ->willReturn('bar');
 
         $config = new Plugin('foo');
@@ -98,7 +98,7 @@ class ProvideTest
             ->willReturn('foo');
 
         $mock->expects($this->once())
-            ->method('create')
+            ->method('plugin')
             ->willReturn('foo');
 
         $config = new Plugin('foo');

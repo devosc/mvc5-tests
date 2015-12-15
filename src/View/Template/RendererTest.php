@@ -32,7 +32,7 @@ class RendererTest
 
         $mock = $this->getCleanMock(Renderer::class, ['__invoke']);
 
-        $this->assertEquals('foo', $mock->__invoke('foo'));
+        $this->assertEquals(null, $mock->__invoke('foo'));
     }
 
     /**

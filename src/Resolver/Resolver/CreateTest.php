@@ -16,7 +16,7 @@ class CreateTest
     /**
      *
      */
-    public function test_create()
+    public function test_plugin()
     {
         $config = [
             'alias'     => [],
@@ -35,29 +35,29 @@ class CreateTest
 
         $sm = new App($app);
 
-        $this->assertInstanceOf(App::class, $sm->create('Foo'));
+        $this->assertInstanceOf(App::class, $sm->plugin('Foo'));
     }
 
     /**
      *
      */
-    public function test_create_false()
+    public function test_plugin_false()
     {
         /** @var Resolver|Mock $mock */
 
-        $mock = $this->getCleanMock(Resolver::class, ['create']);
+        $mock = $this->getCleanMock(Resolver::class, ['plugin']);
 
-        $this->assertEquals(false, $mock->create(false));
+        $this->assertEquals(false, $mock->plugin(false));
     }
 
     /**
      *
      */
-    public function test_create_string_configured()
+    public function test_plugin_string_configured()
     {
         /** @var Resolver|Mock $mock */
 
-        $mock = $this->getCleanMock(Resolver::class, ['create']);
+        $mock = $this->getCleanMock(Resolver::class, ['plugin']);
 
         $mock->expects($this->any())
             ->method('configured')
@@ -67,69 +67,69 @@ class CreateTest
             ->method('resolve')
             ->willReturn(new \stdClass);
 
-        $this->assertInstanceOf(\stdClass::class, $mock->create('foo'));
+        $this->assertInstanceOf(\stdClass::class, $mock->plugin('foo'));
     }
 
     /**
      *
      */
-    public function test_create_string_with_no_configuration()
+    public function test_plugin_string_with_no_configuration()
     {
         /** @var Resolver|Mock $mock */
 
-        $mock = $this->getCleanMock(Resolver::class, ['create']);
+        $mock = $this->getCleanMock(Resolver::class, ['plugin']);
 
         $mock->expects($this->once())
             ->method('build')
             ->willReturn('baz');
 
-        $this->assertEquals('baz', $mock->create('foo'));
+        $this->assertEquals('baz', $mock->plugin('foo'));
     }
 
     /**
      *
      */
-    public function test_create_array()
+    public function test_plugin_array()
     {
         /** @var Resolver|Mock $mock */
 
-        $mock = $this->getCleanMock(Resolver::class, ['create']);
+        $mock = $this->getCleanMock(Resolver::class, ['plugin']);
 
         $mock->expects($this->once())
             ->method('resolve')
             ->willReturn('foo');
 
-        $this->assertEquals('foo', $mock->create([new \stdClass]));
+        $this->assertEquals('foo', $mock->plugin([new \stdClass]));
     }
 
     /**
      *
      */
-    public function test_create_closure()
+    public function test_plugin_closure()
     {
         /** @var Resolver|Mock $mock */
 
-        $mock = $this->getCleanMock(Resolver::class, ['create']);
+        $mock = $this->getCleanMock(Resolver::class, ['plugin']);
 
-        $this->assertEquals(null, $mock->create(function() {}));
+        $this->assertEquals(null, $mock->plugin(function() {}));
     }
 
     /**
      *
      */
-    public function test_create_resolvable()
+    public function test_plugin_resolvable()
     {
         /** @var Resolver|Mock $mock */
 
-        $mock = $this->getCleanMock(Resolver::class, ['create']);
+        $mock = $this->getCleanMock(Resolver::class, ['plugin']);
 
-        $this->assertEquals(null, $mock->create(function() {}));
+        $this->assertEquals(null, $mock->plugin(function() {}));
     }
 
     /**
      *
      */
-    public function test_create_composite()
+    public function test_plugin_composite()
     {
         $app = [
             'alias'     => [],
@@ -141,6 +141,6 @@ class CreateTest
             ]
         ];
 
-        $this->assertEquals('foo/bar/baz', (new App($app))->create('Foo->Bar->Baz'));
+        $this->assertEquals('foo/bar/baz', (new App($app))->plugin('Foo->Bar->Baz'));
     }
 }

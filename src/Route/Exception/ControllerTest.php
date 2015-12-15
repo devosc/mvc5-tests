@@ -6,7 +6,7 @@
 namespace Mvc5\Test\Route\Exception;
 
 use Mvc5\Route\Exception\Controller;
-use Mvc5\Route\Exception;
+use Mvc5\Route\Route;
 use Mvc5\Test\Test\TestCase;
 use PHPUnit_Framework_MockObject_MockObject as Mock;
 
@@ -16,21 +16,24 @@ class ControllerTest
     /**
      *
      */
+    public function test_construct()
+    {
+        $this->assertInstanceOf(Controller::class, new Controller([]));
+    }
+
+    /**
+     *
+     */
     public function test_invoke()
     {
         /** @var Controller|Mock $mock */
 
         $mock = $this->getCleanMock(Controller::class, ['__invoke'], [[]]);
 
-        /** @var Exception|Mock $route */
+        /** @var Route|Mock $route */
 
-        $route = $this->getCleanMock(Exception::class);
+        $route = ['exception' => 'baz'];
 
-        $route->expects($this->once())
-              ->method('exception')
-              ->willReturn('foo');
-
-
-        $this->assertEquals(['exception' => 'foo'], $mock->__invoke($route));
+        $this->assertEquals(['exception' => 'baz'], $mock->__invoke($route));
     }
 }

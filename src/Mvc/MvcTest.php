@@ -43,7 +43,8 @@ class MvcTest
              ->willReturn('foo');
 
         $mock->expects($this->once())
-             ->method('setModel');
+             ->method('model')
+             ->willReturn('foo');
 
         $this->assertEquals('foo', $mock->__invoke(function() {}));
     }
@@ -88,7 +89,7 @@ class MvcTest
              ->willReturn($route);
 
         $mock->expects($this->once())
-             ->method('setRoute');
+             ->method('route');
 
         $this->assertEquals($route, $mock->__invoke(function() {}));
     }
@@ -113,7 +114,7 @@ class MvcTest
              ->willReturn($response);
 
         $mock->expects($this->once())
-             ->method('setResponse');
+             ->method('stop');
 
         $this->assertEquals($response, $mock->__invoke(function() {}));
     }

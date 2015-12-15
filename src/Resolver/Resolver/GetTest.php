@@ -41,8 +41,7 @@ class GetTest
              ->willReturn(null);
 
         $mock->expects($this->any())
-             ->method('initialize')
-             ->will($this->returnArgument(0))
+             ->method('plugin')
              ->willReturn('bar');
 
         $this->assertEquals('bar', $mock->get('foo'));

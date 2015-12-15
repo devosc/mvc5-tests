@@ -25,11 +25,12 @@ class Model
     }
 
     /**
+     * @param $model|null
      * @return array|callable|null|object|string
      */
-    public function modelTest()
+    public function modelTest($model = null)
     {
-        return $this->model();
+        return $this->model($model);
     }
 
     /**
@@ -41,37 +42,11 @@ class Model
     }
 
     /**
+     * @param Route|null $route
      * @return Route
      */
-    public function routeTest()
+    public function routeTest(Route $route = null)
     {
-        return $this->route();
-    }
-
-    /**
-     * @param $model
-     * @return void
-     */
-    public function setModelTest($model)
-    {
-        $this->setModel($model);
-    }
-
-    /**
-     * @param Response $response
-     * @return void
-     */
-    public function setResponseTest(Response $response)
-    {
-        $this->setResponse($response);
-    }
-
-    /**
-     * @param Route $route
-     * @return void
-     */
-    public function setRouteTest(Route $route)
-    {
-        $this->setRoute($route);
+        return $this->route($route);
     }
 }

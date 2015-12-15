@@ -11,7 +11,7 @@ class ConfigTest
     /**
      *
      */
-    public function test__construct()
+    public function test_construct()
     {
         $this->assertInternalType('object', new Config);
     }

@@ -12,13 +12,9 @@ class FilterTest
     /**
      *
      */
-    public function test_config()
+    public function test_construct()
     {
-        /** @var Filter|Mock $mock */
-
-        $mock = $this->getCleanMock(Filter::class, ['config'], ['foo']);
-
-        $this->assertEquals('foo', $mock->config());
+        $this->assertInstanceOf(Filter::class, new Filter(['foo']));
     }
 
     /**

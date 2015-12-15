@@ -11,10 +11,8 @@ class ModelTest
     /**
      *
      */
-    public function test__construct()
+    public function test_construct()
     {
-        $mock = $this->getCleanMock(Model::class, ['__construct'], ['foo']);
-
-        $this->assertInternalType('object', $mock);
+        $this->assertInstanceOf(Model::class, new Model('foo'));
     }
 }

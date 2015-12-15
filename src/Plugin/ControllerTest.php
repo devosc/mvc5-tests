@@ -11,7 +11,7 @@ class ControllerTest
     /**
      *
      */
-    public function test__construct()
+    public function test_construct()
     {
         $this->assertInstanceOf(Controller::class, new Controller('foo'));
     }

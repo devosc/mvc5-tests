@@ -35,46 +35,6 @@ class PluginTest
     /**
      *
      */
-    public function test_create()
-    {
-        /** @var Service|Mock $service */
-
-        $service = $this->getCleanMock(Service::class);
-
-        $service->expects($this->once())
-                ->method('create')
-                ->willReturn('foo');
-
-        /** @var Plugin $mock */
-
-        $mock = $this->getCleanMock(Plugin::class, ['create', 'createTest'], [$service]);
-
-        $this->assertEquals('foo', $mock->createTest(null));
-    }
-
-    /**
-     *
-     */
-    public function test_invokable()
-    {
-        /** @var Service|Mock $service */
-
-        $service = $this->getCleanMock(Service::class);
-
-        $service->expects($this->once())
-                ->method('invokable')
-                ->willReturn(function(){});
-
-        /** @var Plugin $mock */
-
-        $mock = $this->getCleanMock(Plugin::class, ['invokable', 'invokableTest'], [$service]);
-
-        $this->assertEquals(function(){}, $mock->invokableTest(null));
-    }
-
-    /**
-     *
-     */
     public function test_param()
     {
         /** @var Service|Mock $service */

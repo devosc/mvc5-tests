@@ -22,11 +22,7 @@ class ControllerTest
         $mock = $this->getCleanMock(Controller::class, ['__invoke']);
 
         $mock->expects($this->once())
-             ->method('controller')
-             ->will($this->returnArgument(0));
-
-        $mock->expects($this->once())
-             ->method('dispatch')
+             ->method('action')
              ->willReturn('foo');
 
         $this->assertEquals('foo', $mock->__invoke(function(){}));
@@ -42,11 +38,7 @@ class ControllerTest
         $mock = $this->getCleanMock(Controller::class, ['__invoke']);
 
         $mock->expects($this->once())
-             ->method('controller')
-             ->will($this->returnArgument(0));
-
-        $mock->expects($this->once())
-             ->method('dispatch')
+             ->method('action')
              ->will($this->throwException(new \Exception));
 
         $mock->expects($this->once())
