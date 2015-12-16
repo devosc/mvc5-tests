@@ -66,20 +66,6 @@ class CallTest
     /**
      *
      */
-    public function test_call_plugin_not_callable()
-    {
-        /** @var Resolver|Mock $mock */
-
-        $app = new App([Arg::ALIAS => [Arg::SERVICE_LOCATOR => function() { return null; }]]);
-
-        $this->setExpectedException('RuntimeException');
-
-        $app->call('foo');
-    }
-
-    /**
-     *
-     */
     public function test_call_plugin_callable_event()
     {
         /** @var Resolver|Mock $mock */
