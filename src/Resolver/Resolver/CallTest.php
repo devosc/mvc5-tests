@@ -28,6 +28,10 @@ class CallTest
              ->method('generate')
              ->willReturn('foo');
 
+        $mock->expects($this->once())
+             ->method('args')
+             ->willReturn([]);
+
         $this->assertEquals('foo', $mock->call(new CallEvent));
     }
 
@@ -134,6 +138,10 @@ class CallTest
         $mock->expects($this->once())
              ->method('generate')
              ->willReturn('foo');
+
+        $mock->expects($this->once())
+             ->method('args')
+             ->willReturn([]);
 
         $this->assertEquals('foo', $mock->call('bar'));
     }

@@ -28,6 +28,10 @@ class TriggerTest
             ->method('generate')
             ->willReturn('bar');
 
+        $mock->expects($this->once())
+             ->method('args')
+             ->willReturn([]);
+
         $this->assertEquals('bar', $mock->trigger(null));
     }
 }
