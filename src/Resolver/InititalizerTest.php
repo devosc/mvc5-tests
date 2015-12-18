@@ -101,6 +101,6 @@ class InitializerTest
 
         $mock = $this->getCleanAbstractMock(Initializer::class, ['initializing', 'testInitializing']);
 
-        $this->assertEquals(false, $mock->testInitializing('foo'));
+        $this->assertEquals(null, $mock->testInitializing('foo'));
     }
 }
