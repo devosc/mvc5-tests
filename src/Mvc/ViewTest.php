@@ -21,11 +21,23 @@ class ViewTest
 
         $mock = $this->getCleanMock(MvcView::class, ['__invoke']);
 
-        $mock->expects($this->once())
-            ->method('render')
-            ->willReturn('foo');
+        $this->assertEquals(null, $mock->__invoke(null));
+    }
 
-        $this->assertEquals('foo', $mock->__invoke(null));
+    /**
+     *
+     */
+    public function test_invoke_render()
+    {
+        /** @var MvcView|Mock $mock */
+
+        $mock = $this->getCleanMock(MvcView::class, ['__invoke']);
+
+        $mock->expects($this->once())
+             ->method('render')
+             ->willReturn('foo');
+
+        $this->assertEquals('foo', $mock->__invoke('bar'));
     }
 
     /**
@@ -45,6 +57,6 @@ class ViewTest
             ->method('exception')
             ->willReturn('foo');
 
-        $this->assertEquals('foo', $mock->__invoke(null));
+        $this->assertEquals('foo', $mock->__invoke('bar'));
     }
 }
