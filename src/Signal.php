@@ -26,6 +26,15 @@ abstract class Signal
 
     /**
      * @param $foo
+     * @return string
+     */
+    public static function optionalArgTest($foo = 'foo')
+    {
+        return $foo;
+    }
+
+    /**
+     * @param $foo
      * @param $baz
      * @param Config $config
      * @param array $args

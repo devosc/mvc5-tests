@@ -39,6 +39,18 @@ class SignalTest
     /**
      *
      */
+    public function test_signal_with_optional_arg()
+    {
+        /** @var Signal $mock */
+
+        $mock = $this->getCleanMock(Signal::class, ['signal', 'testSignal']);
+
+        $this->assertEquals('foo', $mock->testSignal([Signal::class, 'optionalArgTest']));
+    }
+
+    /**
+     *
+     */
     public function test_signal_array()
     {
         /** @var Signal $mock */

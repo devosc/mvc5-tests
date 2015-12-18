@@ -35,7 +35,7 @@ class GeneratorTest
         $mock = $this->getCleanAbstractMock(Generator::class, ['emit', 'emitTest']);
 
         $mock->expects($this->once())
-             ->method('invoke')
+             ->method('signal')
              ->willReturn('foo');
 
         $this->assertEquals('foo', $mock->emitTest(null, function() {}));
