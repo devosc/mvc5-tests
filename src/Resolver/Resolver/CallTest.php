@@ -50,32 +50,72 @@ class CallTest
     /**
      *
      */
-    public function test_call_plugin_callable()
+    public function test_call_plugin()
     {
         /** @var Resolver|Mock $mock */
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['call', 'plugin']);
+        $mock = $this->getCleanAbstractMock(Resolver::class, ['call']);
+
+        $mock->expects($this->once())
+             ->method('plugin')
+             ->willReturn('foo');
 
         $mock->expects($this->once())
              ->method('invoke')
-             ->willReturn('foo');
+             ->willReturn('bar');
 
-        $this->assertEquals('foo', $mock->call('time'));
+        $this->assertEquals('bar', $mock->call('foo'));
     }
 
     /**
      *
      */
-    public function test_call_plugin_callable_event()
+    public function test_call_plugin_with_call_sign()
     {
         /** @var Resolver|Mock $mock */
 
         $app = new App([
-            'alias'  => [Arg::SERVICE_LOCATOR  => function() { return new CallEvent; } ],
-            'events' => ['callable:event' => [function() { return 'bar'; } ]]
+            Arg::ALIAS => [
+                Arg::SERVICE_LOCATOR => function() { return null; }
+            ]
+        ]);
+
+        $this->assertEquals(phpversion(), $app->call('@phpversion'));
+    }
+
+    /**
+     *
+     */
+    public function test_call_plugin_event()
+    {
+        /** @var Resolver|Mock $mock */
+
+        $app = new App([
+            Arg::ALIAS => [
+                'foo' => function() { return 'bar'; },
+                Arg::SERVICE_LOCATOR => function() { return 'foo'; }
+            ]
         ]);
 
         $this->assertEquals('bar', $app->call('foo'));
+    }
+
+    /**
+     *
+     */
+    public function test_call_plugin_exception()
+    {
+        /** @var Resolver|Mock $mock */
+
+        $app = new App([
+            Arg::ALIAS => [
+                Arg::SERVICE_LOCATOR => function() { return null; }
+            ]
+        ]);
+
+        $this->setExpectedException('RuntimeException', 'Unresolvable plugin: foo');
+
+        $app->call('foo');
     }
 
     /**

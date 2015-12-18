@@ -16,31 +16,6 @@ class PluginTest
     /**
      *
      */
-    public function test_plugin()
-    {
-        $config = [
-            'alias'     => [],
-            'container' => [],
-            'events'    => [],
-            'services'  => [
-                'Service\Container' => []
-            ]
-        ];
-
-        $app = $config;
-
-        $app['services']['Foo'] = App::class;
-
-        $app['alias']['config'] = $config;
-
-        $sm = new App($app);
-
-        $this->assertInstanceOf(App::class, $sm->plugin('Foo'));
-    }
-
-    /**
-     *
-     */
     public function test_plugin_false()
     {
         /** @var Resolver|Mock $mock */
@@ -53,37 +28,42 @@ class PluginTest
     /**
      *
      */
-    public function test_plugin_string_configured()
+    public function test_plugin_string_resolve()
     {
         /** @var Resolver|Mock $mock */
 
         $mock = $this->getCleanMock(Resolver::class, ['plugin']);
 
         $mock->expects($this->any())
-            ->method('configured')
-            ->willReturn(new \stdClass);
+             ->method('alias');
 
         $mock->expects($this->any())
-            ->method('resolve')
-            ->willReturn(new \stdClass);
+             ->method('resolve')
+             ->willReturn('foo');
 
-        $this->assertInstanceOf(\stdClass::class, $mock->plugin('foo'));
+        $this->assertEquals('foo', $mock->plugin('foo'));
     }
 
     /**
      *
      */
-    public function test_plugin_string_with_no_configuration()
+    public function test_plugin_string_build()
     {
         /** @var Resolver|Mock $mock */
 
         $mock = $this->getCleanMock(Resolver::class, ['plugin']);
 
-        $mock->expects($this->once())
-            ->method('build')
-            ->willReturn('baz');
+        $mock->expects($this->any())
+            ->method('alias');
 
-        $this->assertEquals('baz', $mock->plugin('foo'));
+        $mock->expects($this->any())
+            ->method('resolve');
+
+        $mock->expects($this->any())
+            ->method('build')
+            ->willReturn('foo');
+
+        $this->assertEquals('foo', $mock->plugin('foo.bar'));
     }
 
     /**
@@ -95,11 +75,7 @@ class PluginTest
 
         $mock = $this->getCleanMock(Resolver::class, ['plugin']);
 
-        $mock->expects($this->once())
-            ->method('resolve')
-            ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->plugin([new \stdClass]));
+        $this->assertEquals(false, $mock->plugin([false]));
     }
 
     /**
@@ -111,7 +87,11 @@ class PluginTest
 
         $mock = $this->getCleanMock(Resolver::class, ['plugin']);
 
-        $this->assertEquals(null, $mock->plugin(function() {}));
+        $mock->expects($this->once())
+             ->method('invoke')
+             ->willReturn('foo');
+
+        $this->assertEquals('foo', $mock->plugin(function() {}));
     }
 
     /**
@@ -123,24 +103,10 @@ class PluginTest
 
         $mock = $this->getCleanMock(Resolver::class, ['plugin']);
 
-        $this->assertEquals(null, $mock->plugin(function() {}));
-    }
+        $mock->expects($this->once())
+             ->method('resolve')
+             ->willReturn('foo');
 
-    /**
-     *
-     */
-    public function test_plugin_composite()
-    {
-        $app = [
-            'alias'     => [],
-            'container' => [],
-            'events'    => [],
-            'services'  => [
-                'Foo' => new Config(['Bar' => ['Baz' => 'foo/bar/baz']]),
-                'container' => []
-            ]
-        ];
-
-        $this->assertEquals('foo/bar/baz', (new App($app))->plugin('Foo->Bar->Baz'));
+        $this->assertEquals('foo', $mock->plugin(new \stdClass));
     }
 }

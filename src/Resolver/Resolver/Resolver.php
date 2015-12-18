@@ -56,6 +56,17 @@ abstract class Resolver
     }
 
     /**
+     * @param $name
+     * @param array $args
+     * @param callable $callback
+     * @return callable|object
+     */
+    public function createTest($name, array $args = [], callable $callback = null)
+    {
+        return $this->create($name, $args, $callback);
+    }
+
+    /**
      * @param array|callable|null|object|string $arg
      * @param array $filters
      * @return mixed

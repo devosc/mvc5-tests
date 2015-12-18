@@ -15,44 +15,13 @@ class InvokableTest
     /**
      *
      */
-    public function test_invokable_string_call_prefix()
+    public function test_invokable_string()
     {
         /** @var Resolver|Mock $mock */
 
         $mock = $this->getCleanAbstractMock(Resolver::class, ['invokable', 'invokableTest']);
 
-        $this->assertEquals('time', $mock->invokableTest('@time'));
-    }
-
-    /**
-     *
-     */
-    public function test_invokable_string_plugin()
-    {
-        /** @var Resolver|Mock $mock */
-
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['invokable', 'invokableTest']);
-
-        $mock->expects($this->once())
-             ->method('listener')
-             ->willReturn('time');
-
-        $mock->expects($this->once())
-             ->method('plugin');
-
-        $this->assertEquals('time', $mock->invokableTest('foo'));
-    }
-
-    /**
-     *
-     */
-    public function test_invokable_string_not_plugin()
-    {
-        /** @var Resolver|Mock $mock */
-
-        $mock = $this->getMockForAbstractClass(Resolver::class);
-
-        $this->assertEquals('time', $mock->invokableTest('time'));
+        $this->assertInstanceOf(\Closure::class, $mock->invokableTest('foo'));
     }
 
     /**

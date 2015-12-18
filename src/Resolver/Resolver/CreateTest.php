@@ -16,131 +16,61 @@ class CreateTest
     /**
      *
      */
-    public function test_plugin()
-    {
-        $config = [
-            'alias'     => [],
-            'container' => [],
-            'events'    => [],
-            'services'  => [
-                'Service\Container' => []
-            ]
-        ];
-
-        $app = $config;
-
-        $app['services']['Foo'] = App::class;
-
-        $app['alias']['config'] = $config;
-
-        $sm = new App($app);
-
-        $this->assertInstanceOf(App::class, $sm->plugin('Foo'));
-    }
-
-    /**
-     *
-     */
-    public function test_plugin_false()
+    public function test_create_plugin()
     {
         /** @var Resolver|Mock $mock */
 
-        $mock = $this->getCleanMock(Resolver::class, ['plugin']);
-
-        $this->assertEquals(false, $mock->plugin(false));
-    }
-
-    /**
-     *
-     */
-    public function test_plugin_string_configured()
-    {
-        /** @var Resolver|Mock $mock */
-
-        $mock = $this->getCleanMock(Resolver::class, ['plugin']);
-
-        $mock->expects($this->any())
-            ->method('configured')
-            ->willReturn(new \stdClass);
-
-        $mock->expects($this->any())
-            ->method('resolve')
-            ->willReturn(new \stdClass);
-
-        $this->assertInstanceOf(\stdClass::class, $mock->plugin('foo'));
-    }
-
-    /**
-     *
-     */
-    public function test_plugin_string_with_no_configuration()
-    {
-        /** @var Resolver|Mock $mock */
-
-        $mock = $this->getCleanMock(Resolver::class, ['plugin']);
+        $mock = $this->getCleanAbstractMock(Resolver::class, ['create', 'createTest']);
 
         $mock->expects($this->once())
-            ->method('build')
-            ->willReturn('baz');
-
-        $this->assertEquals('baz', $mock->plugin('foo'));
-    }
-
-    /**
-     *
-     */
-    public function test_plugin_array()
-    {
-        /** @var Resolver|Mock $mock */
-
-        $mock = $this->getCleanMock(Resolver::class, ['plugin']);
+             ->method('configured');
 
         $mock->expects($this->once())
-            ->method('resolve')
-            ->willReturn('foo');
+             ->method('plugin')
+             ->willReturn('foo');
 
-        $this->assertEquals('foo', $mock->plugin([new \stdClass]));
+        $this->assertEquals('foo', $mock->createTest('foo'));
     }
 
     /**
      *
      */
-    public function test_plugin_closure()
+    public function test_create_callback()
     {
         /** @var Resolver|Mock $mock */
 
-        $mock = $this->getCleanMock(Resolver::class, ['plugin']);
+        $mock = $this->getCleanAbstractMock(Resolver::class, ['create', 'createTest']);
 
-        $this->assertEquals(null, $mock->plugin(function() {}));
+        $mock->expects($this->once())
+            ->method('configured');
+
+        $mock->expects($this->once())
+            ->method('plugin')
+            ->willReturn(null);
+
+        $this->assertEquals('foo', $mock->createTest('foo', [], function() { return 'foo'; }));
     }
 
     /**
      *
      */
-    public function test_plugin_resolvable()
+    public function test_create_make()
     {
         /** @var Resolver|Mock $mock */
 
-        $mock = $this->getCleanMock(Resolver::class, ['plugin']);
+        $mock = $this->getCleanAbstractMock(Resolver::class, ['create', 'createTest']);
 
-        $this->assertEquals(null, $mock->plugin(function() {}));
-    }
+        $mock->expects($this->once())
+            ->method('configured');
 
-    /**
-     *
-     */
-    public function test_plugin_composite()
-    {
-        $app = [
-            'alias'     => [],
-            'container' => [],
-            'events'    => [],
-            'services'  => [
-                'Foo' => new Config(['Bar' => ['Baz' => 'foo/bar/baz']]),
-                'container' => []
-            ]
-        ];
+        $mock->expects($this->once())
+            ->method('plugin')
+            ->willReturn(null);
 
-        $this->assertEquals('foo/bar/baz', (new App($app))->plugin('Foo->Bar->Baz'));
+        $mock->expects($this->once())
+             ->method('make')
+             ->willReturn('foo');
+
+        $this->assertEquals('foo', $mock->createTest(Resolver::class));
     }
 }
