@@ -167,8 +167,12 @@ class ResolveTest
         $mock = $this->getCleanAbstractMock(Resolver::class, ['resolve', 'resolveTest']);
 
         $mock->expects($this->once())
-            ->method('call')
-            ->willReturn('foo');
+             ->method('call')
+             ->willReturn('foo');
+
+        $mock->expects($this->once())
+             ->method('args')
+             ->willReturn([]);
 
         $this->assertEquals('foo', $mock->resolveTest(new Call('foo')));
     }

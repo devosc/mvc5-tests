@@ -21,16 +21,12 @@ class TriggerTest
         $mock = $this->getCleanAbstractMock(Resolver::class, ['trigger']);
 
         $mock->expects($this->any())
-            ->method('event')
-            ->willReturn('foo');
+             ->method('event')
+             ->willReturn('foo');
 
         $mock->expects($this->once())
-            ->method('generate')
-            ->willReturn('bar');
-
-        $mock->expects($this->once())
-             ->method('args')
-             ->willReturn([]);
+             ->method('generate')
+             ->willReturn('bar');
 
         $this->assertEquals('bar', $mock->trigger(null));
     }

@@ -25,7 +25,7 @@ class CreateTest
              ->method('configured');
 
         $mock->expects($this->once())
-             ->method('plugin')
+             ->method('__invoke')
              ->willReturn('foo');
 
         $this->assertEquals('foo', $mock->createTest('foo'));
@@ -44,7 +44,7 @@ class CreateTest
             ->method('configured');
 
         $mock->expects($this->once())
-            ->method('plugin')
+            ->method('__invoke')
             ->willReturn(null);
 
         $this->assertEquals('foo', $mock->createTest('foo', [], function() { return 'foo'; }));
@@ -63,7 +63,7 @@ class CreateTest
             ->method('configured');
 
         $mock->expects($this->once())
-            ->method('plugin')
+            ->method('__invoke')
             ->willReturn(null);
 
         $mock->expects($this->once())
