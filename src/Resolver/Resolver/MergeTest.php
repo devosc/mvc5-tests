@@ -23,7 +23,7 @@ class MergeTest
 
         $parent = new Plugin('foo', ['foo' => 'bar']);
 
-        $config = new Plugin('bar', ['foo' => 'baz'], ['a' => 'b'], true);
+        $config = new Plugin('bar', ['foo' => 'baz'], ['a' => 'b'], true, 'item');
 
         $this->assertInstanceOf(Plugin::class, $mock->mergeTest($parent, $config));
     }
