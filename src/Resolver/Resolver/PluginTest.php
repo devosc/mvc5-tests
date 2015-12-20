@@ -5,7 +5,6 @@
 
 namespace Mvc5\Test\Resolver\Resolver;
 
-use Mvc5\Config;
 use Mvc5\Test\Test\TestCase;
 use PHPUnit_Framework_MockObject_MockObject as Mock;
 
