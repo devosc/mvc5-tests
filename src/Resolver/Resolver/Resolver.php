@@ -43,6 +43,17 @@ abstract class Resolver
     }
 
     /**
+     * @param $name
+     * @param array $args
+     * @param callable|null $callback
+     * @return callable|object
+     */
+    public function callbackTest($name, array $args = [], callable $callback = null)
+    {
+        return $this->callback($name, $args, $callback);
+    }
+
+    /**
      * @param Child $config
      * @param array $args
      * @return array|callable|object|string
@@ -234,5 +245,17 @@ abstract class Resolver
     public function transmitTest(array $config = [], array $args = [], callable $callback = null)
     {
         return $this->transmit($config, $args, $callback);
+    }
+
+    /**
+     * @param $name
+     * @param $config
+     * @param array $args
+     * @param callable $callback
+     * @return callable|object
+     */
+    public function uniqueTest($name, $config, array $args = [], callable $callback = null)
+    {
+        return $this->unique($name, $config, $args, $callback);
     }
 }

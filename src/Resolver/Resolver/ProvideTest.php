@@ -103,6 +103,35 @@ class ProvideTest
     /**
      *
      */
+    public function test_provide_same_parent_type_config()
+    {
+        /** @var Resolver|Mock $mock */
+
+        $mock = $this->getCleanAbstractMock(Resolver::class, ['provide', 'provideTest']);
+
+        $mock->expects($this->any())
+            ->method('solve')
+            ->willReturn('foo');
+
+        $mock->expects($this->once())
+            ->method('configured')
+            ->willReturn('foo');
+
+        $mock->expects($this->once())
+            ->method('hydrate')
+            ->willReturn('bar');
+
+        $mock->expects($this->once())
+            ->method('make');
+
+        $config = new Plugin('foo');
+
+        $this->assertEquals('bar', $mock->provideTest($config));
+    }
+
+    /**
+     *
+     */
     public function test_provide_with_merge()
     {
         /** @var Resolver|Mock $mock */

@@ -45,16 +45,20 @@ class SolveTest
     /**
      *
      */
-    public function test_solve__invoke()
+    public function test_solve_recursion()
     {
         /** @var Resolver|Mock $mock */
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['__invoke']);
+        $mock = $this->getCleanAbstractMock(Resolver::class, ['signal', 'solve', 'solveTest']);
 
-        $mock->expects($this->once())
-            ->method('plugin')
-            ->willReturn('foo');
+        $resolvable = $this->getCleanMock(Resolvable::class);
 
-        $this->assertEquals('foo', $mock->__invoke('foo'));
+        $mock->expects($this->any())
+             ->method('resolve')
+             ->will($this->returnArgument(0));
+
+        $this->setExpectedException('RuntimeException');
+
+        $mock->solveTest($resolvable);
     }
 }

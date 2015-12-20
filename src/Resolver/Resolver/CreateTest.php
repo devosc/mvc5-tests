@@ -5,7 +5,6 @@
 
 namespace Mvc5\Test\Resolver\Resolver;
 
-use Mvc5\Config;
 use Mvc5\Test\Test\TestCase;
 use PHPUnit_Framework_MockObject_MockObject as Mock;
 
@@ -25,7 +24,7 @@ class CreateTest
              ->method('configured');
 
         $mock->expects($this->once())
-             ->method('__invoke')
+             ->method('unique')
              ->willReturn('foo');
 
         $this->assertEquals('foo', $mock->createTest('foo'));
@@ -44,10 +43,10 @@ class CreateTest
             ->method('configured');
 
         $mock->expects($this->once())
-            ->method('__invoke')
-            ->willReturn(null);
+            ->method('unique')
+            ->willReturn('bar');
 
-        $this->assertEquals('foo', $mock->createTest('foo', [], function() { return 'foo'; }));
+        $this->assertEquals('bar', $mock->createTest('foo', [], function() { return 'foo'; }));
     }
 
     /**
@@ -63,11 +62,10 @@ class CreateTest
             ->method('configured');
 
         $mock->expects($this->once())
-            ->method('__invoke')
-            ->willReturn(null);
+            ->method('unique');
 
         $mock->expects($this->once())
-             ->method('make')
+             ->method('callback')
              ->willReturn('foo');
 
         $this->assertEquals('foo', $mock->createTest(Resolver::class));

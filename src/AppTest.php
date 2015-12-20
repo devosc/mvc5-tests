@@ -5,6 +5,7 @@
 
 namespace Mvc5\Test;
 
+use Mvc5\Arg;
 use Mvc5\App;
 use Mvc5\Test\Test\TestCase;
 
@@ -18,8 +19,14 @@ class AppTest
     {
         /** @var App $mock */
 
-        $mock = $this->getCleanMock(App::class, ['config'], [['foo']]);
+        $config = [
+            Arg::SERVICES => [
+                Arg::CONTAINER => ['foo']
+            ]
+        ];
 
-        $this->assertEquals(['foo'], $mock->config());
+        $mock = $this->getCleanMock(App::class, ['config'], [$config]);
+
+        $this->assertEquals($config, $mock->config());
     }
 }
