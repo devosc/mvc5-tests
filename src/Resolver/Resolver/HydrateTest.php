@@ -37,7 +37,11 @@ class HydrateTest
         $mock = $this->getCleanAbstractMock(Resolver::class, ['hydrate', 'hydrateTest']);
 
         $mock->expects($this->once())
-            ->method('invoke');
+             ->method('invoke');
+
+        $mock->expects($this->once())
+             ->method('args')
+             ->willReturn([]);
 
         /** @var Plugin|Mock $config */
 
@@ -67,6 +71,10 @@ class HydrateTest
 
         $mock->expects($this->once())
              ->method('invoke');
+
+        $mock->expects($this->once())
+             ->method('args')
+             ->willReturn([]);
 
         /** @var Plugin|Mock $config */
 
@@ -140,6 +148,10 @@ class HydrateTest
 
         $mock->expects($this->once())
              ->method('invoke');
+
+        $mock->expects($this->once())
+             ->method('args')
+             ->willReturn([]);
 
         /** @var Plugin|Mock $config */
 

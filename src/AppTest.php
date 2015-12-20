@@ -6,7 +6,6 @@
 namespace Mvc5\Test;
 
 use Mvc5\App;
-use Mvc5\Arg;
 use Mvc5\Test\Test\TestCase;
 
 class AppTest
@@ -17,18 +16,10 @@ class AppTest
      */
     public function test_construct()
     {
-        $config = [
-            Arg::ALIAS => [],
-            Arg::EVENTS => [],
-            Arg::SERVICES => [
-                Arg::CONTAINER => []
-            ],
-        ];
-
         /** @var App $mock */
 
-        $mock = $this->getCleanMock(App::class, ['config'], [$config]);
+        $mock = $this->getCleanMock(App::class, ['config'], [['foo']]);
 
-        $this->assertEquals($config, $mock->config());
+        $this->assertEquals(['foo'], $mock->config());
     }
 }

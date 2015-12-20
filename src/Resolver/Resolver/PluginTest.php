@@ -27,25 +27,6 @@ class PluginTest
     /**
      *
      */
-    public function test_plugin_string_resolve()
-    {
-        /** @var Resolver|Mock $mock */
-
-        $mock = $this->getCleanMock(Resolver::class, ['plugin']);
-
-        $mock->expects($this->any())
-             ->method('alias');
-
-        $mock->expects($this->any())
-             ->method('resolve')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->plugin('foo'));
-    }
-
-    /**
-     *
-     */
     public function test_plugin_string_build()
     {
         /** @var Resolver|Mock $mock */

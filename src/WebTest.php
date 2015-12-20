@@ -30,17 +30,16 @@ class WebTest
     public function test_invoke()
     {
         $config = [
-            Arg::ALIAS => [
+            Arg::SERVICES => [
                 Arg::WEB => function() {
-                    return 'foo';
+                    return function() {
+                        return 'foo';
+                    };
                 }
             ]
         ];
-        /** @var Web $mock */
 
-        $mock = $this->getCleanMock(Web::class, ['__invoke'], [$config]);
-
-        $this->assertEquals('foo', $mock->__invoke());
+        $this->assertEquals('foo', (new Web($config))->__invoke());
     }
 
     /**
@@ -49,20 +48,20 @@ class WebTest
     public function test_invoke_exception()
     {
         $config = [
-            Arg::ALIAS => [
+            Arg::SERVICES => [
                 Arg::WEB => function() {
-                    throw new \Exception;
+                    return function() {
+                        throw new \Exception;
+                    };
                 },
                 Arg::RESPONSE_EXCEPTION => function() {
-                    return 'foo';
+                    return function() {
+                        return 'foo';
+                    };
                 }
             ]
         ];
 
-        /** @var Web $mock */
-
-        $mock = $this->getCleanMock(Web::class, ['__invoke'], [$config]);
-
-        $this->assertEquals('foo', $mock->__invoke());
+        $this->assertEquals('foo', (new Web($config))->__invoke());
     }
 }

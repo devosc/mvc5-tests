@@ -15,7 +15,35 @@ class ProvideTest
     /**
      *
      */
-    public function test_provide()
+    public function test_provide_no_parent()
+    {
+        /** @var Resolver|Mock $mock */
+
+        $mock = $this->getCleanAbstractMock(Resolver::class, ['provide', 'provideTest']);
+
+        $mock->expects($this->once())
+             ->method('solve')
+             ->willReturn('foo');
+
+        $mock->expects($this->once())
+             ->method('configured');
+
+        $mock->expects($this->once())
+             ->method('hydrate')
+             ->willReturn('foo');
+
+        $mock->expects($this->once())
+             ->method('build');
+
+        $config = new Plugin('foo', ['foo' => 'bar']);
+
+        $this->assertEquals('foo', $mock->ProvideTest($config, ['foo' => 'baz']));
+    }
+
+    /**
+     *
+     */
+    public function test_provide_same_parent()
     {
         /** @var Resolver|Mock $mock */
 
@@ -34,7 +62,7 @@ class ProvideTest
             ->willReturn('foo');
 
         $mock->expects($this->once())
-            ->method('build')
+            ->method('make')
             ->willReturn(null);
 
         $config = new Plugin('foo', ['foo' => 'bar']);
@@ -45,7 +73,7 @@ class ProvideTest
     /**
      *
      */
-    public function test_provide_no_parent_type_config()
+    public function test_provide_not_parent_type_config()
     {
         /** @var Resolver|Mock $mock */
 
@@ -75,6 +103,35 @@ class ProvideTest
     /**
      *
      */
+    public function test_provide_same_parent_type_config()
+    {
+        /** @var Resolver|Mock $mock */
+
+        $mock = $this->getCleanAbstractMock(Resolver::class, ['provide', 'provideTest']);
+
+        $mock->expects($this->any())
+             ->method('solve')
+             ->willReturn('foo');
+
+        $mock->expects($this->once())
+             ->method('configured')
+             ->willReturn('foo');
+
+        $mock->expects($this->once())
+             ->method('hydrate')
+             ->willReturn('bar');
+
+        $mock->expects($this->once())
+            ->method('make');
+
+        $config = new Plugin('foo');
+
+        $this->assertEquals('bar', $mock->provideTest($config));
+    }
+
+    /**
+     *
+     */
     public function test_provide_with_merge()
     {
         /** @var Resolver|Mock $mock */
@@ -98,8 +155,7 @@ class ProvideTest
             ->willReturn('foo');
 
         $mock->expects($this->once())
-            ->method('plugin')
-            ->willReturn('foo');
+            ->method('plugin');
 
         $config = new Plugin('foo');
 

@@ -24,10 +24,6 @@ class InvokeTest
             ->method('signal')
             ->willReturn(function() {});
 
-        $mock->expects($this->any())
-            ->method('args')
-            ->will($this->onConsecutiveCalls(function() {}, []));
-
         $this->assertEquals(function() {}, $mock->invokeTest(function() {}));
     }
 }

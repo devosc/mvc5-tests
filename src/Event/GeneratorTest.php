@@ -44,30 +44,6 @@ class GeneratorTest
     /**
      * @return mixed
      */
-    public function test_events()
-    {
-        /** @var Generator|Mock $mock */
-
-        $mock = $this->getCleanAbstractMock(Generator::class, ['events']);
-
-        $this->assertEquals([], $mock->events());
-    }
-
-    /**
-     * @return mixed
-     */
-    public function test_events_return_config()
-    {
-        /** @var Generator|Mock $mock */
-
-        $mock = $this->getCleanAbstractMock(Generator::class, ['events']);
-
-        $this->assertEquals(['foo'], $mock->events(['foo']));
-    }
-
-    /**
-     * @return mixed
-     */
     public function test_generate()
     {
         /** @var Generator|Mock $mock */
@@ -84,7 +60,7 @@ class GeneratorTest
              ->willReturn(['foo']);
 
         $mock->expects($this->once())
-             ->method('invokable')
+             ->method('callable')
              ->willReturn(function(){});
 
         $mock->expects($this->once())
@@ -92,32 +68,6 @@ class GeneratorTest
              ->willReturn('bar');
 
         $this->assertEquals('bar', $mock->generateTest($event));
-    }
-
-    /**
-     * @return mixed
-     */
-    public function test_listeners_with_config()
-    {
-        /** @var Generator|Mock $mock */
-
-        $mock = $this->getCleanAbstractMock(Generator::class, ['events', 'listeners', 'listenersTest']);
-
-        $mock->events(['foo' => 'bar']);
-
-        $this->assertEquals('bar', $mock->listenersTest('foo'));
-    }
-
-    /**
-     *
-     */
-    public function test_listeners_without_config()
-    {
-        /** @var Generator|Mock $mock */
-
-        $mock = $this->getCleanAbstractMock(Generator::class, ['listeners', 'listenersTest']);
-
-        $this->assertEquals(null, $mock->listenersTest('foo'));
     }
 
     /**

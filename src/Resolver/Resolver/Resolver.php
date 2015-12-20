@@ -34,6 +34,15 @@ abstract class Resolver
     }
 
     /**
+     * @param array|callable|object|string $config
+     * @return callable|null
+     */
+    public function callableTest($config) : callable
+    {
+        return $this->callable($config);
+    }
+
+    /**
      * @param Child $config
      * @param array $args
      * @return array|callable|object|string
@@ -64,6 +73,17 @@ abstract class Resolver
     public function createTest($name, array $args = [], callable $callback = null)
     {
         return $this->create($name, $args, $callback);
+    }
+
+    /**
+     * @param array|object|string|\Traversable $event
+     * @param array $args
+     * @param callable $callback
+     * @return mixed|null
+     */
+    public function eventTest($event, array $args = [], callable $callback = null)
+    {
+        return $this->event($event, $args, $callback);
     }
 
     /**
@@ -155,6 +175,29 @@ abstract class Resolver
     }
 
     /**
+     * @param $plugin
+     * @param array $config
+     * @param array $args
+     * @param callable|null $callback
+     * @return array|callable|object|string
+     */
+    public function relayTest($plugin, array $config = [], array $args = [], callable $callback = null)
+    {
+        return $this->relay($plugin, $config, $args, $callback);
+    }
+
+    /**
+     * @param $config
+     * @param array $args
+     * @param callable $callback
+     * @return array|callable|null|object|string
+     */
+    public function resolvableTest($config, array $args = [], callable $callback = null)
+    {
+        return $this->resolvable($config, $args, $callback);
+    }
+
+    /**
      * @param $config
      * @param array $args
      * @return array|callable|null|object|string
@@ -166,10 +209,30 @@ abstract class Resolver
 
     /**
      * @param $config
+     * @return callable|mixed|null|object
+     */
+    public function resolverTest($config)
+    {
+        return $this->resolver($config);
+    }
+
+    /**
+     * @param $config
      * @return mixed
      */
     public function solveTest($config)
     {
         return $this->solve($config);
+    }
+
+    /**
+     * @param array $config
+     * @param array $args
+     * @param callable|null $callback
+     * @return array|callable|object|string
+     */
+    public function transmitTest(array $config = [], array $args = [], callable $callback = null)
+    {
+        return $this->transmit($config, $args, $callback);
     }
 }
