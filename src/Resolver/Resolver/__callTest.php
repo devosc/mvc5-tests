@@ -24,18 +24,28 @@ class __callTest
             Arg::SERVICES => [
                 'foo' => new App([
                     Arg::SERVICES => [
-                        'bar' => function() {
-                            return function($foo) {
-                                return $foo;
-                            };
-                        }
+                        'bar' => new App([
+                            Arg::SERVICES => [
+                                'baz' => function() {
+                                    return new class() {
+                                        function test($foo) {
+                                            return $foo;
+                                        }
+                                    };
+                                }
+                            ]
+                        ])
                     ]
                 ])
             ]
         ]);
 
-        $bar = 'foo.bar';
+        $name = 'foo->bar->baz.test';
 
-        $this->assertEquals('baz', $app->$bar('baz'));
+        $this->assertEquals('foobar', $app->$name('foobar'));
+
+        $this->assertEquals('foobar', $app->call($name, ['foo' => 'foobar']));
+
+        $this->assertEquals('foobar', call_user_func_array([$app, $name], ['foobar']));
     }
 }
