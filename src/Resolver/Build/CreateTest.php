@@ -3,7 +3,7 @@
  *
  */
 
-namespace Mvc5\Test\Resolver\Resolver;
+namespace Mvc5\Test\Resolver\Build;
 
 use Mvc5\Test\Test\TestCase;
 use PHPUnit_Framework_MockObject_MockObject as Mock;

@@ -3,7 +3,7 @@
  *
  */
 
-namespace Mvc5\Test\Resolver\Resolver;
+namespace Mvc5\Test\Resolver\Build;
 
 use Mvc5\App;
 use Mvc5\Service\Container;
