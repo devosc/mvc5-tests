@@ -33,7 +33,7 @@ class ProvideTest
              ->willReturn('foo');
 
         $mock->expects($this->once())
-             ->method('build');
+             ->method('combine');
 
         $config = new Plugin('foo', ['foo' => 'bar']);
 

@@ -33,14 +33,8 @@ class PluginTest
         $mock = $this->getCleanMock(Resolver::class, ['plugin']);
 
         $mock->expects($this->any())
-            ->method('alias');
-
-        $mock->expects($this->any())
-            ->method('resolve');
-
-        $mock->expects($this->any())
-            ->method('build')
-            ->willReturn('foo');
+             ->method('build')
+             ->willReturn('foo');
 
         $this->assertEquals('foo', $mock->plugin('foo.bar'));
     }

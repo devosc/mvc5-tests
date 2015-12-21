@@ -14,7 +14,7 @@ class CreateTest
     /**
      *
      */
-    public function test_create_plugin()
+    public function test_create()
     {
         /** @var Resolver|Mock $mock */
 
@@ -28,46 +28,5 @@ class CreateTest
              ->willReturn('foo');
 
         $this->assertEquals('foo', $mock->createTest('foo'));
-    }
-
-    /**
-     *
-     */
-    public function test_create_callback()
-    {
-        /** @var Resolver|Mock $mock */
-
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['create', 'createTest']);
-
-        $mock->expects($this->once())
-            ->method('configured');
-
-        $mock->expects($this->once())
-            ->method('unique')
-            ->willReturn('bar');
-
-        $this->assertEquals('bar', $mock->createTest('foo', [], function() { return 'foo'; }));
-    }
-
-    /**
-     *
-     */
-    public function test_create_make()
-    {
-        /** @var Resolver|Mock $mock */
-
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['create', 'createTest']);
-
-        $mock->expects($this->once())
-            ->method('configured');
-
-        $mock->expects($this->once())
-            ->method('unique');
-
-        $mock->expects($this->once())
-             ->method('callback')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->createTest(Resolver::class));
     }
 }

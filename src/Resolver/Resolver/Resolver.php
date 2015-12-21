@@ -64,15 +64,38 @@ abstract class Resolver
     }
 
     /**
-     * @param mixed $service
      * @param array $config
      * @param array $args
      * @param callable $callback
      * @return callable|object
      */
-    public function composeTest($service, array $config, array $args = [], callable $callback = null)
+    public function combineTest(array $config, array $args = [], callable $callback = null)
     {
-        return $this->compose($service, $config, $args, $callback);
+        return $this->combine($config, $args, $callback);
+    }
+
+    /**
+     * @param $plugin
+     * @param array $config
+     * @param array $args
+     * @param callable $callback
+     * @return callable|object
+     */
+    public function composeTest($plugin, array $config = [], array $args = [], callable $callback = null)
+    {
+        return $this->compose($plugin, $config, $args, $callback);
+    }
+
+    /**
+     * @param $plugin
+     * @param $name
+     * @param array $args
+     * @param callable|null $callback
+     * @return array|callable|Plugin|null|object|string
+     */
+    public function compositeTest($plugin, $name, array $args = [], callable $callback = null)
+    {
+        return $this->composite($plugin, $name, $args, $callback);
     }
 
     /**
@@ -105,6 +128,18 @@ abstract class Resolver
     public function filterTest($arg, array $filters)
     {
         return $this->filter($arg, $filters);
+    }
+
+    /**
+     * @param $name
+     * @param array $config
+     * @param array $args
+     * @param callable $callback
+     * @return callable|object
+     */
+    public function firstTest($name, array $config, array $args = [], callable $callback = null)
+    {
+        return $this->first($name, $config, $args, $callback);
     }
 
     /**
