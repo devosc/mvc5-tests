@@ -2,7 +2,6 @@
 
 namespace Mvc5\Test\Resolver\Build;
 
-use Mvc5\Plugin\Gem\Child;
 use Mvc5\Plugin\Gem\Plugin;
 use Mvc5\Resolver\Resolver as Base;
 
