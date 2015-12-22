@@ -102,9 +102,6 @@ class RouterTest
               ->willReturn(false);
 
         $route->expects($this->once())
-              ->method('set');
-
-        $route->expects($this->once())
               ->method('matched')
               ->willReturn(true);
 

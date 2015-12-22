@@ -19,11 +19,8 @@ class FilterTest
 
         $route = $this->getCleanMock(Route::class);
 
-        $route->expects($this->any())
-              ->method('set');
-
-        $route->expects($this->any())
-              ->method('get')
+        $route->expects($this->once())
+              ->method('path')
               ->willReturn('foo');
 
         (new Filter)->__invoke($route);
