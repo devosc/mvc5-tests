@@ -31,7 +31,7 @@ class DefinitionTest
     {
         /** @var Definition|Mock $mock */
 
-        $mock = $this->getCleanMock(Definition::class, ['child'], [['children' => ['bar' => ['name' => 'baz']]]]);
+        $mock = $this->getCleanMock(Definition::class, ['child', 'offsetGet'], [['children' => ['bar' => ['name' => 'baz']]]]);
 
         $this->assertEquals(['name' => 'baz'], $mock->child('bar'));
     }
