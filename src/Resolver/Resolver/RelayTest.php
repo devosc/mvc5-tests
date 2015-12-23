@@ -32,15 +32,15 @@ class RelayTest
     /**
      *
      */
-    public function atest_relay_config()
+    public function test_relay_config()
     {
         /** @var Resolver|Mock $mock */
 
         $mock = $this->getCleanAbstractMock(Resolver::class, ['relay', 'relayTest']);
 
-        $mock->expects($this->any())
-            ->method('invoke')
-            ->will($this->onConsecutiveCalls('bar', 'baz'));
+        $mock->expects($this->once())
+             ->method('repeat')
+             ->willreturn('baz');
 
         $this->assertEquals('baz', $mock->relayTest('foo', ['bar', 'baz']));
     }

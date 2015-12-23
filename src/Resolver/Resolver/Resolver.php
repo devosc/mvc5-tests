@@ -154,6 +154,19 @@ abstract class Resolver
     }
 
     /**
+     * @param $plugin
+     * @param $name
+     * @param array $config
+     * @param array $args
+     * @param callable|null $callback
+     * @return array|callable|object|string
+     */
+    public function repeatTest($plugin, $name, array $config = [], array $args = [], callable $callback = null)
+    {
+        return $this->repeat($plugin, $name, $config, $args, $callback);
+    }
+
+    /**
      * @param $config
      * @param array $args
      * @param callable $callback
