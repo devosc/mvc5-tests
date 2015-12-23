@@ -5,7 +5,6 @@
 
 namespace Mvc5\Test\Route\Config;
 
-use Mvc5\Route\Config\Route;
 use Mvc5\Test\Test\TestCase;
 use PHPUnit_Framework_MockObject_MockObject as Mock;
 
@@ -19,10 +18,10 @@ class RouteTest
     {
         /** @var Route|Mock $mock */
 
-        $mock = $this->getCleanMockForTrait(Route::class, ['controller']);
+        $mock = $this->getCleanMock(Route::class, ['controller']);
 
         $mock->expects($this->once())
-             ->method('get')
+             ->method('offsetGet')
              ->willReturn('foo');
 
         $this->assertEquals('foo', $mock->controller());
@@ -35,10 +34,10 @@ class RouteTest
     {
         /** @var Route|Mock $mock */
 
-        $mock = $this->getCleanMockForTrait(Route::class, ['hostname']);
+        $mock = $this->getCleanMock(Route::class, ['hostname']);
 
         $mock->expects($this->once())
-             ->method('get')
+             ->method('offsetGet')
              ->willReturn('foo');
 
         $this->assertEquals('foo', $mock->hostname());
@@ -51,10 +50,10 @@ class RouteTest
     {
         /** @var Route|Mock $mock */
 
-        $mock = $this->getCleanMockForTrait(Route::class, ['length']);
+        $mock = $this->getCleanMock(Route::class, ['length']);
 
         $mock->expects($this->once())
-             ->method('get')
+             ->method('offsetGet')
              ->willReturn(2);
 
         $this->assertEquals(2, $mock->length());
@@ -67,10 +66,10 @@ class RouteTest
     {
         /** @var Route|Mock $mock */
 
-        $mock = $this->getCleanMockForTrait(Route::class, ['length']);
+        $mock = $this->getCleanMock(Route::class, ['length']);
 
         $mock->expects($this->once())
-             ->method('get')
+             ->method('offsetGet')
              ->willReturn(null);
 
         $this->assertEquals(0, $mock->length());
@@ -83,10 +82,10 @@ class RouteTest
     {
         /** @var Route|Mock $mock */
 
-        $mock = $this->getCleanMockForTrait(Route::class, ['matched']);
+        $mock = $this->getCleanMock(Route::class, ['matched']);
 
         $mock->expects($this->once())
-             ->method('get')
+             ->method('offsetGet')
              ->willReturn(true);
 
         $this->assertEquals(true, $mock->matched());
@@ -99,10 +98,10 @@ class RouteTest
     {
         /** @var Route|Mock $mock */
 
-        $mock = $this->getCleanMockForTrait(Route::class, ['matched']);
+        $mock = $this->getCleanMock(Route::class, ['matched']);
 
         $mock->expects($this->once())
-             ->method('get')
+             ->method('offsetGet')
              ->willReturn(null);
 
         $this->assertEquals(false, $mock->matched());
@@ -113,9 +112,9 @@ class RouteTest
      */
     public function test_method()
     {
-        $method = new Method(['method' => 'foo']);
+        $route = new Route(['method' => 'foo']);
 
-        $this->assertEquals('foo', $method->method());
+        $this->assertEquals('foo', $route->method());
     }
 
     /**
@@ -125,10 +124,10 @@ class RouteTest
     {
         /** @var Route|Mock $mock */
 
-        $mock = $this->getCleanMockForTrait(Route::class, ['name']);
+        $mock = $this->getCleanMock(Route::class, ['name']);
 
         $mock->expects($this->once())
-             ->method('get')
+             ->method('offsetGet')
              ->willReturn('foo');
 
         $this->assertEquals('foo', $mock->name());
@@ -141,10 +140,10 @@ class RouteTest
     {
         /** @var Route|Mock $mock */
 
-        $mock = $this->getCleanMockForTrait(Route::class, ['params']);
+        $mock = $this->getCleanMock(Route::class, ['params']);
 
         $mock->expects($this->once())
-             ->method('get')
+             ->method('offsetGet')
              ->willReturn('foo');
 
         $this->assertEquals('foo', $mock->params());
@@ -157,10 +156,10 @@ class RouteTest
     {
         /** @var Route|Mock $mock */
 
-        $mock = $this->getCleanMockForTrait(Route::class, ['params']);
+        $mock = $this->getCleanMock(Route::class, ['params']);
 
         $mock->expects($this->once())
-             ->method('get')
+             ->method('offsetGet')
              ->willReturn(null);
 
         $this->assertEquals([], $mock->params());
@@ -173,10 +172,10 @@ class RouteTest
     {
         /** @var Route|Mock $mock */
 
-        $mock = $this->getCleanMockForTrait(Route::class, ['path']);
+        $mock = $this->getCleanMock(Route::class, ['path']);
 
         $mock->expects($this->once())
-             ->method('get')
+             ->method('offsetGet')
              ->willReturn('foo');
 
         $this->assertEquals('foo', $mock->path());
@@ -189,10 +188,10 @@ class RouteTest
     {
         /** @var Route|Mock $mock */
 
-        $mock = $this->getCleanMockForTrait(Route::class, ['scheme']);
+        $mock = $this->getCleanMock(Route::class, ['scheme']);
 
         $mock->expects($this->once())
-            ->method('get')
+            ->method('offsetGet')
             ->willReturn('foo');
 
         $this->assertEquals('foo', $mock->scheme());

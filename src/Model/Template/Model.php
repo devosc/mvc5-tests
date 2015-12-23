@@ -5,9 +5,11 @@
 
 namespace Mvc5\Test\Model\Template;
 
+use Mvc5\Model\Template;
 use Mvc5\Model\Template\Model as Base;
 
-abstract class Model
+class Model
+    implements Template
 {
     /**
      *

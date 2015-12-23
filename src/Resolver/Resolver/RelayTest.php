@@ -32,7 +32,7 @@ class RelayTest
     /**
      *
      */
-    public function test_relay_config()
+    public function atest_relay_config()
     {
         /** @var Resolver|Mock $mock */
 

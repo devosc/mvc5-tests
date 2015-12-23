@@ -5,7 +5,6 @@
 
 namespace Mvc5\Test\Route\Config;
 
-use Mvc5\Route\Config\Definition;
 use Mvc5\Route\Definition\Config as RouteDefinition;
 use Mvc5\Test\Test\TestCase;
 use PHPUnit_Framework_MockObject_MockObject as Mock;
@@ -20,7 +19,7 @@ class DefinitionTest
     {
         /** @var Definition|Mock $mock */
 
-        $mock = $this->getCleanMockForTrait(Definition::class, ['add']);
+        $mock = $this->getCleanMock(Definition::class, ['add']);
 
         $mock->add('bar', 'baz');
     }
@@ -32,7 +31,7 @@ class DefinitionTest
     {
         /** @var Definition|Mock $mock */
 
-        $mock = $this->getCleanMockForTrait(Definition::class, ['child'], [['children' => ['bar' => ['name' => 'baz']]]]);
+        $mock = $this->getCleanMock(Definition::class, ['child'], [['children' => ['bar' => ['name' => 'baz']]]]);
 
         $this->assertEquals(['name' => 'baz'], $mock->child('bar'));
     }
@@ -44,7 +43,7 @@ class DefinitionTest
     {
         /** @var Definition|Mock $mock */
 
-        $mock = $this->getCleanMockForTrait(Definition::class, ['child']);
+        $mock = $this->getCleanMock(Definition::class, ['child']);
 
         $this->assertEquals(null, $mock->child('bar'));
     }
@@ -56,10 +55,10 @@ class DefinitionTest
     {
         /** @var Definition|Mock $mock */
 
-        $mock = $this->getCleanMockForTrait(Definition::class, ['children']);
+        $mock = $this->getCleanMock(Definition::class, ['children']);
 
         $mock->expects($this->once())
-             ->method('get')
+             ->method('offsetGet')
              ->willReturn('foo');
 
         $this->assertEquals('foo', $mock->children());
@@ -72,10 +71,10 @@ class DefinitionTest
     {
         /** @var Definition|Mock $mock */
 
-        $mock = $this->getCleanMockForTrait(Definition::class, ['className']);
+        $mock = $this->getCleanMock(Definition::class, ['className']);
 
         $mock->expects($this->once())
-             ->method('get')
+             ->method('offsetGet')
              ->willReturn('foo');
 
         $this->assertEquals('foo', $mock->className());
@@ -88,10 +87,10 @@ class DefinitionTest
     {
         /** @var Definition|Mock $mock */
 
-        $mock = $this->getCleanMockForTrait(Definition::class, ['constraints']);
+        $mock = $this->getCleanMock(Definition::class, ['constraints']);
 
         $mock->expects($this->once())
-             ->method('get')
+             ->method('offsetGet')
              ->willReturn('foo');
 
         $this->assertEquals('foo', $mock->constraints());
@@ -104,7 +103,7 @@ class DefinitionTest
     {
         /** @var Definition|Mock $mock */
 
-        $mock = $this->getCleanMockForTrait(Definition::class, ['constraints']);
+        $mock = $this->getCleanMock(Definition::class, ['constraints']);
 
         $this->assertEquals([], $mock->constraints());
     }
@@ -116,10 +115,10 @@ class DefinitionTest
     {
         /** @var Definition|Mock $mock */
 
-        $mock = $this->getCleanMockForTrait(Definition::class, ['controller']);
+        $mock = $this->getCleanMock(Definition::class, ['controller']);
 
         $mock->expects($this->once())
-             ->method('get')
+             ->method('offsetGet')
              ->willReturn('foo');
 
         $this->assertEquals('foo', $mock->controller());
@@ -132,10 +131,10 @@ class DefinitionTest
     {
         /** @var Definition|Mock $mock */
 
-        $mock = $this->getCleanMockForTrait(Definition::class, ['defaults']);
+        $mock = $this->getCleanMock(Definition::class, ['defaults']);
 
         $mock->expects($this->once())
-             ->method('get')
+             ->method('offsetGet')
              ->willReturn('foo');
 
         $this->assertEquals('foo', $mock->defaults());
@@ -148,7 +147,7 @@ class DefinitionTest
     {
         /** @var Definition|Mock $mock */
 
-        $mock = $this->getCleanMockForTrait(Definition::class, ['defaults']);
+        $mock = $this->getCleanMock(Definition::class, ['defaults']);
 
         $this->assertEquals([], $mock->defaults());
     }
@@ -160,10 +159,10 @@ class DefinitionTest
     {
         /** @var Definition|Mock $mock */
 
-        $mock = $this->getCleanMockForTrait(Definition::class, ['hostname']);
+        $mock = $this->getCleanMock(Definition::class, ['hostname']);
 
         $mock->expects($this->once())
-            ->method('get')
+            ->method('offsetGet')
             ->willReturn('foo');
 
         $this->assertEquals('foo', $mock->hostname());
@@ -176,7 +175,7 @@ class DefinitionTest
     {
         /** @var Definition|Mock $mock */
 
-        $mock = $this->getCleanMockForTrait(Definition::class, ['hostname']);
+        $mock = $this->getCleanMock(Definition::class, ['hostname']);
 
         $this->assertEquals(null, $mock->hostname());
     }
@@ -188,10 +187,10 @@ class DefinitionTest
     {
         /** @var Definition|Mock $mock */
 
-        $mock = $this->getCleanMockForTrait(Definition::class, ['name']);
+        $mock = $this->getCleanMock(Definition::class, ['name']);
 
         $mock->expects($this->once())
-             ->method('get')
+             ->method('offsetGet')
              ->willReturn('foo');
 
         $this->assertEquals('foo', $mock->name());
@@ -224,10 +223,10 @@ class DefinitionTest
     {
         /** @var Definition|Mock $mock */
 
-        $mock = $this->getCleanMockForTrait(Definition::class, ['paramMap']);
+        $mock = $this->getCleanMock(Definition::class, ['paramMap']);
 
         $mock->expects($this->once())
-             ->method('get')
+             ->method('offsetGet')
              ->willReturn('foo');
 
         $this->assertEquals('foo', $mock->paramMap());
@@ -240,7 +239,7 @@ class DefinitionTest
     {
         /** @var Definition|Mock $mock */
 
-        $mock = $this->getCleanMockForTrait(Definition::class, ['paramMap']);
+        $mock = $this->getCleanMock(Definition::class, ['paramMap']);
 
         $this->assertEquals([], $mock->paramMap());
     }
@@ -252,10 +251,10 @@ class DefinitionTest
     {
         /** @var Definition|Mock $mock */
 
-        $mock = $this->getCleanMockForTrait(Definition::class, ['regex']);
+        $mock = $this->getCleanMock(Definition::class, ['regex']);
 
         $mock->expects($this->once())
-             ->method('get')
+             ->method('offsetGet')
              ->willReturn('foo');
 
         $this->assertEquals('foo', $mock->regex());
@@ -268,10 +267,10 @@ class DefinitionTest
     {
         /** @var Definition|Mock $mock */
 
-        $mock = $this->getCleanMockForTrait(Definition::class, ['route']);
+        $mock = $this->getCleanMock(Definition::class, ['route']);
 
         $mock->expects($this->once())
-             ->method('get')
+             ->method('offsetGet')
              ->willReturn('foo');
 
         $this->assertEquals('foo', $mock->route());
@@ -284,10 +283,10 @@ class DefinitionTest
     {
         /** @var Definition|Mock $mock */
 
-        $mock = $this->getCleanMockForTrait(Definition::class, ['scheme']);
+        $mock = $this->getCleanMock(Definition::class, ['scheme']);
 
         $mock->expects($this->once())
-             ->method('get')
+             ->method('offsetGet')
              ->willReturn('foo');
 
         $this->assertEquals('foo', $mock->scheme());
@@ -300,10 +299,10 @@ class DefinitionTest
     {
         /** @var Definition|Mock $mock */
 
-        $mock = $this->getCleanMockForTrait(Definition::class, ['tokens']);
+        $mock = $this->getCleanMock(Definition::class, ['tokens']);
 
         $mock->expects($this->once())
-             ->method('get')
+             ->method('offsetGet')
              ->willReturn('foo');
 
         $this->assertEquals('foo', $mock->tokens());
@@ -316,7 +315,7 @@ class DefinitionTest
     {
         /** @var Definition|Mock $mock */
 
-        $mock = $this->getCleanMockForTrait(Definition::class, ['tokens']);
+        $mock = $this->getCleanMock(Definition::class, ['tokens']);
 
         $this->assertEquals([], $mock->tokens());
     }
@@ -328,10 +327,10 @@ class DefinitionTest
     {
         /** @var Definition|Mock $mock */
 
-        $mock = $this->getCleanMockForTrait(Definition::class, ['wildcard']);
+        $mock = $this->getCleanMock(Definition::class, ['wildcard']);
 
         $mock->expects($this->once())
-             ->method('get')
+             ->method('offsetGet')
              ->willReturn('foo');
 
         $this->assertEquals('foo', $mock->wildcard());
@@ -344,7 +343,7 @@ class DefinitionTest
     {
         /** @var Definition|Mock $mock */
 
-        $mock = $this->getCleanMockForTrait(Definition::class, ['wildcard']);
+        $mock = $this->getCleanMock(Definition::class, ['wildcard']);
 
         $this->assertEquals(false, $mock->wildcard());
     }

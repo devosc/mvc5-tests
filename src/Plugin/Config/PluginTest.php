@@ -5,7 +5,6 @@
 
 namespace Mvc5\Test\Plugin\Config;
 
-use Mvc5\Plugin\Config\Plugin;
 use Mvc5\Test\Test\TestCase;
 use PHPUnit_Framework_MockObject_MockObject as Mock;
 
@@ -19,10 +18,10 @@ class PluginTest
     {
         /** @var Plugin|Mock $mock */
 
-        $mock = $this->getCleanMockForTrait(Plugin::class, ['args']);
+        $mock = $this->getCleanMock(Plugin::class, ['args']);
 
         $mock->expects($this->once())
-             ->method('get')
+             ->method('offsetGet')
              ->willReturn('foo');
 
         $this->assertEquals('foo', $mock->args());
@@ -35,10 +34,10 @@ class PluginTest
     {
         /** @var Plugin|Mock $mock */
 
-        $mock = $this->getCleanMockForTrait(Plugin::class, ['args']);
+        $mock = $this->getCleanMock(Plugin::class, ['args']);
 
         $mock->expects($this->once())
-             ->method('get');
+             ->method('offsetGet');
 
         $this->assertEquals([], $mock->args());
     }
@@ -50,10 +49,10 @@ class PluginTest
     {
         /** @var Plugin|Mock $mock */
 
-        $mock = $this->getCleanMockForTrait(Plugin::class, ['calls']);
+        $mock = $this->getCleanMock(Plugin::class, ['calls']);
 
         $mock->expects($this->once())
-             ->method('get')
+             ->method('offsetGet')
              ->willReturn('foo');
 
         $this->assertEquals('foo', $mock->calls());
@@ -66,10 +65,10 @@ class PluginTest
     {
         /** @var Plugin|Mock $mock */
 
-        $mock = $this->getCleanMockForTrait(Plugin::class, ['calls']);
+        $mock = $this->getCleanMock(Plugin::class, ['calls']);
 
         $mock->expects($this->once())
-             ->method('get');
+             ->method('offsetGet');
 
         $this->assertEquals([], $mock->calls());
     }
@@ -81,10 +80,10 @@ class PluginTest
     {
         /** @var Plugin|Mock $mock */
 
-        $mock = $this->getCleanMockForTrait(Plugin::class, ['merge']);
+        $mock = $this->getCleanMock(Plugin::class, ['merge']);
 
         $mock->expects($this->once())
-             ->method('get')
+             ->method('offsetGet')
              ->willReturn('foo');
 
         $this->assertEquals('foo', $mock->merge());
@@ -97,10 +96,10 @@ class PluginTest
     {
         /** @var Plugin|Mock $mock */
 
-        $mock = $this->getCleanMockForTrait(Plugin::class, ['merge']);
+        $mock = $this->getCleanMock(Plugin::class, ['merge']);
 
         $mock->expects($this->once())
-             ->method('get');
+             ->method('offsetGet');
 
         $this->assertEquals(false, $mock->merge());
     }
@@ -112,10 +111,10 @@ class PluginTest
     {
         /** @var Plugin|Mock $mock */
 
-        $mock = $this->getCleanMockForTrait(Plugin::class, ['name']);
+        $mock = $this->getCleanMock(Plugin::class, ['name']);
 
         $mock->expects($this->once())
-             ->method('get')
+             ->method('offsetGet')
              ->willReturn('foo');
 
         $this->assertEquals('foo', $mock->name());
@@ -128,10 +127,10 @@ class PluginTest
     {
         /** @var Plugin|Mock $mock */
 
-        $mock = $this->getCleanMockForTrait(Plugin::class, ['param']);
+        $mock = $this->getCleanMock(Plugin::class, ['param']);
 
         $mock->expects($this->once())
-            ->method('get')
+            ->method('offsetGet')
             ->willReturn('foo');
 
         $this->assertEquals('foo', $mock->param());
@@ -144,10 +143,10 @@ class PluginTest
     {
         /** @var Plugin|Mock $mock */
 
-        $mock = $this->getCleanMockForTrait(Plugin::class, ['param']);
+        $mock = $this->getCleanMock(Plugin::class, ['param']);
 
         $mock->expects($this->once())
-             ->method('get')
+             ->method('offsetGet')
              ->willReturn('item');
 
         $this->assertEquals('item', $mock->param());

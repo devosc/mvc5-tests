@@ -100,41 +100,41 @@ class ConfigTest
     /**
      *
      */
-    public function test_get()
+    public function test_offsetGet()
     {
         /** @var Config|Mock $mock */
 
-        $mock = $this->getCleanMock(Config::class, ['get']);
+        $mock = $this->getCleanMock(Config::class, ['offsetGet']);
 
         $mock->expects($this->once())
              ->method('shared')
              ->willReturn('foo');
 
-        $this->assertEquals('foo', $mock->get(null));
+        $this->assertEquals('foo', $mock->offsetGet(null));
     }
 
     /**
      *
      */
-    public function test_has()
+    public function test_offsetExists()
     {
         /** @var Config $mock */
 
-        $mock = $this->getCleanMock(Config::class, ['has']);
+        $mock = $this->getCleanMock(Config::class, ['offsetExists']);
 
-        $this->assertEquals(false, $mock->has(null));
+        $this->assertEquals(false, $mock->offsetExists(null));
     }
 
     /**
      *
      */
-    public function test_remove()
+    public function test_offsetUnset()
     {
         /** @var Config $mock */
 
-        $mock = $this->getCleanMock(Config::class, ['remove']);
+        $mock = $this->getCleanMock(Config::class, ['offsetUnset']);
 
-        $mock->remove(null);
+        $mock->offsetUnset(null);
     }
 
     /**
@@ -156,9 +156,9 @@ class ConfigTest
     {
         /** @var Config $mock */
 
-        $mock = $this->getCleanMock(Config::class, ['set', 'shared', 'sharedTest']);
+        $mock = $this->getCleanMock(Config::class, ['offsetSet', 'shared', 'sharedTest']);
 
-        $mock->set('foo', 'bar');
+        $mock->offsetSet('foo', 'bar');
 
         $this->assertEquals('bar', $mock->sharedTest('foo'));
     }
@@ -190,12 +190,12 @@ class ConfigTest
     /**
      *
      */
-    public function test_set()
+    public function test_offsetSet()
     {
         /** @var Config $mock */
 
-        $mock = $this->getCleanMock(Config::class, ['set']);
+        $mock = $this->getCleanMock(Config::class, ['offsetSet']);
 
-        $mock->set('foo', 'bar');
+        $mock->offsetSet('foo', 'bar');
     }
 }
