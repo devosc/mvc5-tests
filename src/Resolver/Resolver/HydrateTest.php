@@ -267,7 +267,7 @@ class HydrateTest
                ->method('calls')
                ->willReturn(['#test' => $val]);
 
-        $service = $this->getCleanMock(Plugin::class, ['offsetGet', 'offsetSet']);
+        $service = $this->getCleanMock(Plugin::class, ['get', 'offsetGet', 'offsetSet', 'set']);
 
         $this->assertEquals('bar', $mock->hydrateTest($config, $service)['test']);
     }

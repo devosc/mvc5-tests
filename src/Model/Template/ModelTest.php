@@ -19,7 +19,7 @@ class ModelTest
     {
         /** @var Model|Mock $mock */
 
-        $mock = $this->getCleanMock(Model::class, ['template', 'offsetGet'], ['foo']);
+        $mock = $this->getCleanMock(Model::class, ['template', 'get', 'offsetGet'], ['foo']);
 
         $this->assertEquals('foo', $mock->template());
     }
@@ -31,7 +31,7 @@ class ModelTest
     {
         /** @var Model|Mock $mock */
 
-        $mock = $this->getCleanMock(Model::class, ['template', 'offsetGet'], [null]);
+        $mock = $this->getCleanMock(Model::class, ['template', 'get', 'offsetGet'], [null]);
 
         $this->assertEquals('baz', $mock->template());
     }
@@ -43,7 +43,7 @@ class ModelTest
     {
         /** @var Model|Mock $mock */
 
-        $mock = $this->getCleanMock(Model::class, ['template', 'offsetGet']);
+        $mock = $this->getCleanMock(Model::class, ['template', 'get', 'offsetGet']);
 
         $this->assertEquals(null, $mock->template());
     }
@@ -58,8 +58,8 @@ class ModelTest
         $mock = $this->getCleanMock(Model::class, ['template']);
 
         $mock->expects($this->once())
-            ->method('offsetGet')
-            ->willReturn('foo');
+             ->method('offsetGet')
+             ->willReturn('foo');
 
         $this->assertEquals('foo', $mock->template());
     }
@@ -118,7 +118,7 @@ class ModelTest
         $mock = $this->getCleanMock(Model::class, ['__get']);
 
         $mock->expects($this->once())
-             ->method('offsetGet')
+             ->method('get')
              ->willReturn('foo');
 
         $this->assertEquals('foo', $mock->__get(null));
@@ -134,7 +134,7 @@ class ModelTest
         $mock = $this->getCleanMock(Model::class, ['__isset']);
 
         $mock->expects($this->once())
-             ->method('offsetExists')
+             ->method('has')
              ->willReturn(true);
 
         $this->assertEquals(true, $mock->__isset(null));
@@ -150,7 +150,7 @@ class ModelTest
         $mock = $this->getCleanMock(Model::class, ['__set']);
 
         $mock->expects($this->once())
-             ->method('offsetSet');
+             ->method('set');
 
         $mock->__set(null, null);
     }
@@ -165,7 +165,7 @@ class ModelTest
         $mock = $this->getCleanMock(Model::class, ['__unset']);
 
         $mock->expects($this->once())
-             ->method('offsetUnset');
+             ->method('remove');
 
         $mock->__unset(null);
     }

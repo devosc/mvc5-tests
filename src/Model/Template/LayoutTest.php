@@ -19,7 +19,7 @@ class LayoutTest
     {
         /** @var Layout|Mock $mock */
 
-        $mock = $this->getCleanMock(Layout::class, ['model', 'offsetGet'], [null, [Arg::CHILD_MODEL => 'foo']]);
+        $mock = $this->getCleanMock(Layout::class, ['model', 'get', 'offsetGet'], [null, [Arg::CHILD_MODEL => 'foo']]);
 
         $this->assertEquals('foo', $mock->model());
     }
@@ -31,7 +31,7 @@ class LayoutTest
     {
         /** @var Layout|Mock $mock */
 
-        $mock = $this->getCleanMock(Layout::class, ['model', 'offsetSet']);
+        $mock = $this->getCleanMock(Layout::class, ['model', 'set', 'offsetSet']);
 
         $this->assertEquals(['foo' => 'bar'], $mock->model(['foo' => 'bar']));
     }

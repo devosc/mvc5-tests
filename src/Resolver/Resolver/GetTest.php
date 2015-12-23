@@ -14,27 +14,27 @@ class GetTest
     /**
      *
      */
-    public function test_offsetGet_shared()
+    public function test_get_shared()
     {
         /** @var Resolver|Mock $mock */
 
-        $mock = $this->getCleanMock(Resolver::class, ['offsetGet']);
+        $mock = $this->getCleanMock(Resolver::class, ['get']);
 
         $mock->expects($this->once())
              ->method('shared')
              ->willReturn('bar');
 
-        $this->assertEquals('bar', $mock->offsetGet('foo'));
+        $this->assertEquals('bar', $mock->get('foo'));
     }
 
     /**
      *
      */
-    public function test_offsetGet_plugin()
+    public function test_get_plugin()
     {
         /** @var Resolver|Mock $mock */
 
-        $mock = $this->getCleanMock(Resolver::class, ['offsetGet']);
+        $mock = $this->getCleanMock(Resolver::class, ['get']);
 
         $mock->expects($this->once())
              ->method('shared')
@@ -44,6 +44,6 @@ class GetTest
              ->method('plugin')
              ->willReturn('bar');
 
-        $this->assertEquals('bar', $mock->offsetGet('foo'));
+        $this->assertEquals('bar', $mock->get('foo'));
     }
 }

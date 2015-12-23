@@ -15,16 +15,49 @@ class ConfigTest
     /**
      *
      */
-    public function test_get()
+    public function test_count()
+    {
+        /** @var Config|Mock $mock */
+
+        $mock = $this->getCleanMockForTrait(Config::class, ['count'], [[1, 2, 3, 4, 5]]);
+
+        $this->assertEquals(5, $mock->count());
+    }
+
+    /**
+     *
+     */
+    public function test_current()
+    {
+        /** @var Config|Mock $mock */
+
+        $mock = $this->getCleanMockForTrait(Config::class, ['current'], [[2]]);
+
+        $this->assertEquals(2, $mock->current());
+    }
+
+    /**
+     *
+     */
+    public function test_get_isset()
+    {
+        /** @var Config|Mock $mock */
+
+        $mock = $this->getCleanMockForTrait(Config::class, ['get'], [['foo' => 'bar']]);
+
+        $this->assertEquals('bar', $mock->get('foo'));
+    }
+
+    /**
+     *
+     */
+    public function test_get_not_isset()
     {
         /** @var Config|Mock $mock */
 
         $mock = $this->getCleanMockForTrait(Config::class, ['get']);
 
-        $mock->method('offsetGet')
-            ->will($this->returnValue('bar'));
-
-        $this->assertEquals('bar', $mock->offsetGet('foo'));
+        $this->assertEquals(null, $mock->get('foo'));
     }
 
     /**
@@ -34,12 +67,45 @@ class ConfigTest
     {
         /** @var Config|Mock $mock */
 
+        $mock = $this->getCleanMockForTrait(Config::class, ['has'], [['foo' => 'bar']]);
+
+        $this->assertEquals(true, $mock->has('foo'));
+    }
+
+    /**
+     *
+     */
+    public function test_has_not()
+    {
+        /** @var Config|Mock $mock */
+
         $mock = $this->getCleanMockForTrait(Config::class, ['has']);
 
-        $mock->method('offsetExists')
-             ->will($this->returnValue(true));
+        $this->assertEquals(false, $mock->has('foo'));
+    }
 
-        $this->assertTrue($mock->offsetExists('foo'));
+    /**
+     *
+     */
+    public function test_key()
+    {
+        /** @var Config|Mock $mock */
+
+        $mock = $this->getCleanMockForTrait(Config::class, ['key'], [['foo' => 'bar']]);
+
+        $this->assertEquals('foo', $mock->key());
+    }
+
+    /**
+     *
+     */
+    public function test_next()
+    {
+        /** @var Config|Mock $mock */
+
+        $mock = $this->getCleanMockForTrait(Config::class, ['next']);
+
+        $mock->next();
     }
 
     /**
@@ -49,12 +115,21 @@ class ConfigTest
     {
         /** @var Config|Mock $mock */
 
-        $mock = $this->getCleanMockForTrait(Config::class, ['remove']);
-
-        $mock->expects($this->once())
-            ->method('offsetUnset');
+        $mock = $this->getCleanMockForTrait(Config::class, ['remove'], [['foo' => 'bar']]);
 
         $mock->remove('foo');
+    }
+
+    /**
+     *
+     */
+    public function test_rewind()
+    {
+        /** @var Config|Mock $mock */
+
+        $mock = $this->getCleanMockForTrait(Config::class, ['rewind']);
+
+        $mock->rewind();
     }
 
     /**
@@ -66,10 +141,38 @@ class ConfigTest
 
         $mock = $this->getCleanMockForTrait(Config::class, ['set']);
 
-        $mock->expects($this->once())
-            ->method('offsetSet')
-            ->willReturn('bar');
+        $this->assertEquals('bar', $mock->set('foo', 'bar'));
+    }
 
-        $this->assertEquals('bar', $mock->offsetSet('foo', 'bar'));
+    /**
+     *
+     */
+    public function test_valid()
+    {
+        /** @var Config|Mock $mock */
+
+        $mock = $this->getCleanMockForTrait(Config::class, ['valid']);
+
+        $mock->expects($this->once())
+             ->method('key')
+             ->willReturn(1);
+
+        $this->assertEquals(true, $mock->valid());
+    }
+
+    /**
+     *
+     */
+    public function test_valid_not()
+    {
+        /** @var Config|Mock $mock */
+
+        $mock = $this->getCleanMockForTrait(Config::class, ['valid']);
+
+        $mock->expects($this->once())
+            ->method('key')
+            ->willReturn(null);
+
+        $this->assertEquals(false, $mock->valid());
     }
 }
