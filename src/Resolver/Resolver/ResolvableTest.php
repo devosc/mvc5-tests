@@ -274,7 +274,7 @@ class ResolvableTest
     /**
      *
      */
-    public function test_resolvable_service_config()
+    public function test_resolvable_plug()
     {
         /** @var Resolver|Mock $mock */
 
@@ -290,29 +290,7 @@ class ResolvableTest
     /**
      *
      */
-    public function test_resolvable_service_invoke()
-    {
-        /** @var Resolver|Mock $mock */
-
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['resolvable', 'resolvableTest']);
-
-        $mock->expects($this->once())
-            ->method('call')
-            ->willReturn('foo');
-
-        $mock->expects($this->once())
-            ->method('args')
-            ->willReturn([]);
-
-        $callable = $mock->resolvableTest(new Invoke('foo'));
-
-        $this->assertEquals('foo', $callable());
-    }
-
-    /**
-     *
-     */
-    public function test_resolvable_service_invoke_args()
+    public function test_resolvable_invoke()
     {
         /** @var Resolver|Mock $mock */
 
@@ -320,71 +298,41 @@ class ResolvableTest
 
         $invoke = new Invoke(function($foo, $bar) { return $foo . $bar; });
 
-        $this->assertEquals('foobar', call_user_func_array($mock->plugin($invoke), ['foo', 'bar']));
+        $callable = $mock->resolvableTest($invoke);
+
+        $this->assertEquals('foobar', $callable('foo', 'bar'));
+
+        $this->assertEquals('foobar', call_user_func($callable, 'foo', 'bar'));
+
+        $this->assertEquals('foobar', call_user_func_array($callable, ['foo', 'bar']));
+
+        $this->assertEquals('foobar', $mock->call($callable, ['foo', 'bar']));
+
+        $this->assertEquals('foobar', $mock->call($callable, ['bar' => 'bar', 'foo' => 'foo']));
     }
 
     /**
      *
      */
-    public function test_resolvable_service_invoke_args_named()
+    public function test_resolvable_invokable()
     {
         /** @var Resolver|Mock $mock */
 
         $mock = $this->getMockForAbstractClass(Resolver::class);
 
-        $invoke = new Invoke(function($foo, $bar) { return $foo . $bar; });
+        $invokable = new Invokable(new Call(new Invoke(function($foo, $bar) { return $foo . $bar; })));
 
-        $this->assertEquals('foobar', $mock->call($mock->plugin($invoke), ['bar' => 'bar', 'foo' => 'foo']));
-    }
+        $callable = $mock->resolvableTest($invokable);
 
-    /**
-     *
-     */
-    public function test_resolvable_service_invokable()
-    {
-        /** @var Resolver|Mock $mock */
+        $this->assertEquals('foobar', $callable('foo', 'bar'));
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['resolvable', 'resolvableTest']);
+        $this->assertEquals('foobar', call_user_func($callable, 'foo', 'bar'));
 
-        $mock->expects($this->once())
-             ->method('solve')
-             ->willReturn('foo');
+        $this->assertEquals('foobar', call_user_func_array($callable, ['foo', 'bar']));
 
-        $mock->expects($this->once())
-             ->method('args')
-             ->willReturn([]);
+        $this->assertEquals('foobar', $mock->call($callable, ['foo', 'bar']));
 
-        $callable = $mock->resolvableTest(new Invokable('foo'));
-
-        $this->assertEquals('foo', $callable());
-    }
-
-    /**
-     *
-     */
-    public function test_resolvable_service_invokable_args()
-    {
-        /** @var Resolver|Mock $mock */
-
-        $mock = $this->getMockForAbstractClass(Resolver::class);
-
-        $call = new Invokable(new Call(new Invoke(function($foo, $bar) { return $foo . $bar; })));
-
-        $this->assertEquals('foobar', call_user_func_array($mock->plugin($call), ['foo', 'bar']));
-    }
-
-    /**
-     *
-     */
-    public function test_resolvable_service_invokable_args_named()
-    {
-        /** @var Resolver|Mock $mock */
-
-        $mock = $this->getMockForAbstractClass(Resolver::class);
-
-        $call = new Invokable(new Call(new Invoke(function($foo, $bar) { return $foo . $bar; })));
-
-        $this->assertEquals('foobar', $mock->call($mock->plugin($call), ['bar' => 'bar', 'foo' => 'foo']));
+        $this->assertEquals('foobar', $mock->call($callable, ['bar' => 'bar', 'foo' => 'foo']));
     }
 
     /**
