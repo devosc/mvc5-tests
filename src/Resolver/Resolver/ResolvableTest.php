@@ -312,6 +312,34 @@ class ResolvableTest
     /**
      *
      */
+    public function test_resolvable_service_invoke_args()
+    {
+        /** @var Resolver|Mock $mock */
+
+        $mock = $this->getMockForAbstractClass(Resolver::class);
+
+        $invoke = new Invoke(function($foo, $bar) { return $foo . $bar; });
+
+        $this->assertEquals('foobar', call_user_func_array($mock->plugin($invoke), ['foo', 'bar']));
+    }
+
+    /**
+     *
+     */
+    public function test_resolvable_service_invoke_args_named()
+    {
+        /** @var Resolver|Mock $mock */
+
+        $mock = $this->getMockForAbstractClass(Resolver::class);
+
+        $invoke = new Invoke(function($foo, $bar) { return $foo . $bar; });
+
+        $this->assertEquals('foobar', $mock->call($mock->plugin($invoke), ['bar' => 'bar', 'foo' => 'foo']));
+    }
+
+    /**
+     *
+     */
     public function test_resolvable_service_invokable()
     {
         /** @var Resolver|Mock $mock */
@@ -319,12 +347,44 @@ class ResolvableTest
         $mock = $this->getCleanAbstractMock(Resolver::class, ['resolvable', 'resolvableTest']);
 
         $mock->expects($this->once())
-            ->method('solve')
-            ->willReturn('foo');
+             ->method('solve')
+             ->willReturn('foo');
+
+        $mock->expects($this->once())
+             ->method('args')
+             ->willReturn([]);
 
         $callable = $mock->resolvableTest(new Invokable('foo'));
 
         $this->assertEquals('foo', $callable());
+    }
+
+    /**
+     *
+     */
+    public function test_resolvable_service_invokable_args()
+    {
+        /** @var Resolver|Mock $mock */
+
+        $mock = $this->getMockForAbstractClass(Resolver::class);
+
+        $call = new Invokable(new Call(new Invoke(function($foo, $bar) { return $foo . $bar; })));
+
+        $this->assertEquals('foobar', call_user_func_array($mock->plugin($call), ['foo', 'bar']));
+    }
+
+    /**
+     *
+     */
+    public function test_resolvable_service_invokable_args_named()
+    {
+        /** @var Resolver|Mock $mock */
+
+        $mock = $this->getMockForAbstractClass(Resolver::class);
+
+        $call = new Invokable(new Call(new Invoke(function($foo, $bar) { return $foo . $bar; })));
+
+        $this->assertEquals('foobar', $mock->call($mock->plugin($call), ['bar' => 'bar', 'foo' => 'foo']));
     }
 
     /**
