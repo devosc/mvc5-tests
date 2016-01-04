@@ -5,7 +5,7 @@
 
 namespace Mvc5\Test\Resolver\Resolver;
 
-use Mvc5\Arg;
+use Mvc5\Plugin\SignalArgs;
 use Mvc5\Test\Test\TestCase;
 use PHPUnit_Framework_MockObject_MockObject as Mock;
 
@@ -21,7 +21,7 @@ class VariadicTest
 
         $mock = $this->getCleanAbstractMock(Resolver::class, ['variadic', 'variadicTest']);
 
-        $this->assertEquals(['foo'], $mock->variadicTest([[Arg::VARIADIC => ['foo']]]));
+        $this->assertEquals(['foo'], $mock->variadicTest([new SignalArgs(['foo'])]));
     }
 
     /**

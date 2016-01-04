@@ -5,7 +5,7 @@
 
 namespace Mvc5\Test;
 
-use Mvc5\Arg;
+use Mvc5\Plugin\Gem\SignalArgs;
 use Mvc5\Plugin\Gem\Config;
 use Mvc5\Signal as Base;
 
@@ -40,7 +40,7 @@ abstract class Signal
      */
     public static function variadicArgsTest(...$args)
     {
-        return $args[0][Arg::VARIADIC];
+        return $args[0] instanceof SignalArgs ? $args[0]->args() : null;
     }
 
     /**
