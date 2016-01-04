@@ -63,6 +63,30 @@ class SignalTest
     /**
      *
      */
+    public function test_signal_variadic_args()
+    {
+        /** @var Signal $mock */
+
+        $mock = $this->getCleanMock(Signal::class, ['signal', 'testSignal']);
+
+        $this->assertEquals(['foo' => 'bar'], $mock->testSignal([Signal::class, 'variadicArgsTest'], ['foo' => 'bar']));
+    }
+
+    /**
+     *
+     */
+    public function test_signal_args()
+    {
+        /** @var Signal $mock */
+
+        $mock = $this->getCleanMock(Signal::class, ['signal', 'testSignal']);
+
+        $this->assertEquals(['foo' => 'bar'], $mock->testSignal([Signal::class, 'argsTest'], ['foo' => 'bar']));
+    }
+
+    /**
+     *
+     */
     public function test_signal_static_string()
     {
         /** @var Signal $mock */

@@ -226,4 +226,13 @@ abstract class Resolver
     {
         return $this->transmit($config, $args, $callback);
     }
+
+    /**
+     * @param array $args
+     * @return array
+     */
+    public function variadicTest(array $args)
+    {
+        return $this->variadic($args);
+    }
 }

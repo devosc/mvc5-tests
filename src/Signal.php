@@ -5,6 +5,7 @@
 
 namespace Mvc5\Test;
 
+use Mvc5\Arg;
 use Mvc5\Plugin\Gem\Config;
 use Mvc5\Signal as Base;
 
@@ -31,6 +32,24 @@ abstract class Signal
     public static function optionalArgTest($foo = 'foo')
     {
         return $foo;
+    }
+
+    /**
+     * @param ...$args
+     * @return mixed
+     */
+    public static function variadicArgsTest(...$args)
+    {
+        return $args[0][Arg::VARIADIC];
+    }
+
+    /**
+     * @param ...$args
+     * @return mixed
+     */
+    public static function argsTest($args)
+    {
+        return $args;
     }
 
     /**
