@@ -41,7 +41,7 @@ class ResolvableTest
     /**
      *
      */
-    public function test_resolvable_service_factory()
+    public function test_resolvable_factory()
     {
         /** @var Resolver|Mock $mock */
 
@@ -60,7 +60,7 @@ class ResolvableTest
     /**
      *
      */
-    public function test_resolvable_service_calls()
+    public function test_resolvable_calls()
     {
         /** @var Resolver|Mock $mock */
 
@@ -76,7 +76,7 @@ class ResolvableTest
     /**
      *
      */
-    public function test_resolvable_child_service()
+    public function test_resolvable_child()
     {
         /** @var Resolver|Mock $mock */
 
@@ -144,7 +144,7 @@ class ResolvableTest
     /**
      *
      */
-    public function test_resolvable_service_param()
+    public function test_resolvable_param()
     {
         /** @var Resolver|Mock $mock */
 
@@ -163,21 +163,29 @@ class ResolvableTest
     /**
      *
      */
-    public function test_resolvable_service_call()
+    public function test_resolvable_call_named()
     {
         /** @var Resolver|Mock $mock */
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['resolvable', 'resolvableTest']);
+        $mock = $this->getMockForAbstractClass(Resolver::class);
 
-        $mock->expects($this->once())
-            ->method('call')
-            ->willReturn('foo');
+        $call = new Call(Model\CallObject::class, ['foo' => 'foo']);
 
-        $mock->expects($this->once())
-            ->method('args')
-            ->willReturn([]);
+        $this->assertEquals('foo', $mock->resolvableTest($call, ['bar' => 'bar']));
+    }
 
-        $this->assertEquals('foo', $mock->resolvableTest(new Call('foo')));
+    /**
+     *
+     */
+    public function test_resolvable_call_not_named()
+    {
+        /** @var Resolver|Mock $mock */
+
+        $mock = $this->getMockForAbstractClass(Resolver::class);
+
+        $call = new Call(Model\CallObject::class, ['bar']);
+
+        $this->assertEquals('foo', $mock->resolvableTest($call, ['foo']));
     }
 
     /**
