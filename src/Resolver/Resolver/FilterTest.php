@@ -18,7 +18,7 @@ class FilterTest
     {
         /** @var Resolver|Mock $mock */
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['filter', 'filterTest']);
+        $mock = $this->getCleanAbstractMock(Resolver::class, ['callable', 'filter', 'filterTest', 'invoke', 'signal']);
 
         $this->assertEquals('foo', $mock->filterTest(null, [function() { return 'foo'; }]));
     }

@@ -28,4 +28,16 @@ class FilterTest
 
         $this->assertEquals(null, $mock->filter());
     }
+
+    /**
+     *
+     */
+    public function test_param()
+    {
+        /** @var Filter|Mock $mock */
+
+        $mock = $this->getCleanMock(Filter::class, ['param']);
+
+        $this->assertEquals(null, $mock->param());
+    }
 }

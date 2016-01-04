@@ -3,6 +3,7 @@
 namespace Mvc5\Test\Resolver\Resolver;
 
 use Mvc5\Plugin\Gem\Child;
+use Mvc5\Plugin\Gem\Filter;
 use Mvc5\Plugin\Gem\Plugin;
 use Mvc5\Resolver\Resolver as Base;
 
@@ -71,6 +72,16 @@ abstract class Resolver
     public function filterTest($arg, array $filters)
     {
         return $this->filter($arg, $filters);
+    }
+
+    /**
+     * @param Filter $config
+     * @param array $args
+     * @return mixed
+     */
+    public function filterableTest(Filter $config, array $args = [])
+    {
+        return $this->filterable($config, $args);
     }
 
     /**
