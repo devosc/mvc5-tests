@@ -249,6 +249,10 @@ class ResolvableTest
              ->method('args')
              ->willReturn([]);
 
+        $mock->expects($this->once())
+             ->method('arguments')
+             ->willReturn([]);
+
         $this->assertEquals('foo', $mock->resolvableTest(new Filter('foo')));
     }
 

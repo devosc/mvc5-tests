@@ -24,6 +24,16 @@ abstract class Resolver
     }
 
     /**
+     * @param array $child
+     * @param array $parent
+     * @return array
+     */
+    public function argumentsTest(array $child, array $parent)
+    {
+        return $this->arguments($child, $parent);
+    }
+
+    /**
      * @param array|callable|object|string $config
      * @return callable|null
      */
