@@ -144,6 +144,52 @@ class ResolvableTest
     /**
      *
      */
+    public function test_resolvable_dependency()
+    {
+        /** @var Resolver|Mock $mock */
+
+        $mock = $this->getMockForAbstractClass(Resolver::class);
+
+        $this->assertEquals('test', $mock->resolvableTest(new Dependency('foo', new Args('test'))));
+    }
+
+    /**
+     *
+     */
+    public function test_resolvable_dependency_not_null()
+    {
+        /** @var Resolver|Mock $mock */
+
+        $mock = $this->getMockForAbstractClass(Resolver::class);
+
+        $value = 0;
+
+        $this->assertTrue(false === $mock->has('foo'));
+
+        $this->assertTrue($value === $mock->resolvableTest(new Dependency('foo', new Args($value))));
+
+        $this->assertTrue(true === $mock->has('foo'));
+
+        $this->assertTrue(['foo' => $value] === $mock->container());
+
+        $this->assertTrue($value === $mock->resolvableTest(new Dependency('foo')));
+    }
+
+    /**
+     *
+     */
+    public function test_resolvable_dependency_null()
+    {
+        /** @var Resolver|Mock $mock */
+
+        $mock = $this->getMockForAbstractClass(Resolver::class);
+
+        $this->assertEquals(null, $mock->resolvableTest(new Dependency('foo', new Args(null))));
+    }
+
+    /**
+     *
+     */
     public function test_resolvable_param()
     {
         /** @var Resolver|Mock $mock */

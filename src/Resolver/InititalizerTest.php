@@ -61,6 +61,33 @@ class InitializerTest
     /**
      *
      */
+    public function test_initialized_set()
+    {
+        /** @var Initializer|Mock $mock */
+
+        $mock = $this->getCleanAbstractMock(Initializer::class, ['initialized', 'testInitialized']);
+
+        $mock->expects($this->once())
+             ->method('set');
+
+        $this->assertEquals(true, $mock->testInitialized('foo', true));
+    }
+
+    /**
+     *
+     */
+    public function test_initialized_null()
+    {
+        /** @var Initializer|Mock $mock */
+
+        $mock = $this->getCleanAbstractMock(Initializer::class, ['initialized', 'testInitialized']);
+
+        $this->assertEquals(null, $mock->testInitialized('foo', null));
+    }
+
+    /**
+     *
+     */
     public function test_initialized_with_service()
     {
         /** @var Initializer|Mock $mock */
