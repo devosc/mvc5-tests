@@ -12,6 +12,7 @@ use Mvc5\Plugin\Child;
 use Mvc5\Plugin\Config;
 use Mvc5\Plugin\Dependency;
 use Mvc5\Plugin\Factory;
+use Mvc5\Plugin\FileInclude;
 use Mvc5\Plugin\Filter;
 use Mvc5\Plugin\Invoke;
 use Mvc5\Plugin\Invokable;
@@ -414,6 +415,20 @@ class ResolvableTest
         $this->assertEquals('foobars', call_user_func_array($callable, ['foo', 'bar']));
 
         $this->assertEquals('foobars', $mock->call($callable, ['foo', 'bar']));
+    }
+
+    /**
+     *
+     */
+    public function test_resolvable_file_include()
+    {
+        /** @var Resolver|Mock $mock */
+
+        $mock = $this->getMockForAbstractClass(Resolver::class);
+
+        $plugin = new FileInclude(__DIR__ . '/Model/config.inc.php');
+
+        $this->assertEquals(['foo' => 'bar'], $mock->resolvableTest($plugin));
     }
 
     /**
