@@ -7,6 +7,7 @@ namespace Mvc5\Test\View\Template;
 
 use Mvc5\Arg;
 use Mvc5\Model;
+use Mvc5\Layout;
 use Mvc5\Service\Service;
 use Mvc5\View\Template\Renderer;
 use Mvc5\Test\Test\TestCase;
@@ -40,38 +41,15 @@ class RendererTest
      */
     public function test_invoke()
     {
-        /** @var Renderer|Mock $mock */
+        /** @var Renderer $mock */
 
-        $mock = $this->getCleanMock(Renderer::class, ['__invoke']);
+        $renderer = new Renderer;
 
-        $template = __DIR__ . '/index.phtml';
+        $model = new HomeModel(__DIR__ . '/index.phtml', ['title' => 'foo']);
 
-        $config = [Arg::CHILD_MODEL => new Model($template)];
+        $layout = new Layout(__DIR__ . '/layout.phtml', [Arg::CHILD_MODEL => $model]);
 
-        $model = $this->getCleanMock(Model::class, ['current', 'key', 'next', 'valid'], [$template, $config]);
-
-        $model->expects($this->any())
-              ->method('template')
-              ->willReturn($template);
-
-        $model->expects($this->any())
-              ->method('service');
-
-        $model->expects($this->once())
-              ->method('vars')
-              ->willReturn([]);
-
-        $service = $this->getCleanMock(Service::class);
-
-        $mock->expects($this->any())
-             ->method('service')
-             ->willReturn($service);
-
-        $mock->expects($this->any())
-             ->method('template')
-             ->willReturn($template);
-
-        $this->assertEquals('<h1>Home</h1>', trim($mock->__invoke($model)));
+        $this->assertEquals('<h1>Home</h1>', trim($renderer($layout)));
     }
 
     /**
