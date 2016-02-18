@@ -22,7 +22,7 @@ class ProvideTest
         $mock = $this->getCleanAbstractMock(Resolver::class, ['provide', 'provideTest']);
 
         $mock->expects($this->once())
-             ->method('solve')
+             ->method('resolve')
              ->willReturn('foo');
 
         $mock->expects($this->once())
@@ -50,7 +50,7 @@ class ProvideTest
         $mock = $this->getCleanAbstractMock(Resolver::class, ['provide', 'provideTest']);
 
         $mock->expects($this->once())
-            ->method('solve')
+            ->method('resolve')
             ->willReturn('foo');
 
         $mock->expects($this->once())
@@ -80,7 +80,7 @@ class ProvideTest
         $mock = $this->getCleanAbstractMock(Resolver::class, ['provide', 'provideTest']);
 
         $mock->expects($this->any())
-            ->method('solve')
+            ->method('resolve')
             ->willReturn('foo');
 
         $mock->expects($this->once())
@@ -110,7 +110,7 @@ class ProvideTest
         $mock = $this->getCleanAbstractMock(Resolver::class, ['provide', 'provideTest']);
 
         $mock->expects($this->any())
-            ->method('solve')
+            ->method('resolve')
             ->willReturn('foo');
 
         $mock->expects($this->once())
@@ -139,7 +139,7 @@ class ProvideTest
         $mock = $this->getCleanAbstractMock(Resolver::class, ['provide', 'provideTest']);
 
         $mock->expects($this->any())
-            ->method('solve')
+            ->method('resolve')
             ->willReturn('foo');
 
         $mock->expects($this->any())

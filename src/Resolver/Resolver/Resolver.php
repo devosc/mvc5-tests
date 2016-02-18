@@ -5,6 +5,7 @@ namespace Mvc5\Test\Resolver\Resolver;
 use Mvc5\Plugin\Gem\Child;
 use Mvc5\Plugin\Gem\Filter;
 use Mvc5\Plugin\Gem\Plugin;
+use Mvc5\Resolvable;
 use Mvc5\Resolver\Resolver as Base;
 
 abstract class Resolver
@@ -191,11 +192,12 @@ abstract class Resolver
      * @param $config
      * @param array $args
      * @param callable $callback
-     * @return array|callable|null|object|string
+     * @param int $c
+     * @return array|callable|Plugin|null|object|Resolvable|string
      */
-    public function resolvableTest($config, array $args = [], callable $callback = null)
+    public function resolvableTest($config, array $args = [], callable $callback = null, $c = 0)
     {
-        return $this->resolvable($config, $args, $callback);
+        return $this->resolvable($config, $args, $callback, $c);
     }
 
     /**
@@ -219,11 +221,13 @@ abstract class Resolver
 
     /**
      * @param $config
-     * @return mixed
+     * @param array $args
+     * @param callable $callback
+     * @return mixed|callable
      */
-    public function solveTest($config)
+    public function solveTest($config, array $args = [], callable $callback = null)
     {
-        return $this->solve($config);
+        return $this->solve($config, $args, $callback);
     }
 
     /**
