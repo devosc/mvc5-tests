@@ -22,7 +22,7 @@ class DispatchTest
 
         $mock = $this->getCleanMock(Dispatch::class, ['__invoke']);
 
-        $mock->expects($this->once())
+        $mock->expects($this->any())
              ->method('args')
              ->willReturn([]);
 
