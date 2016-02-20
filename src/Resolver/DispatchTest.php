@@ -5,10 +5,10 @@
 
 namespace Mvc5\Test\Resolver;
 
-use Mvc5\Route\Config as Route;
+use Mvc5\Plugin\Config;
 use Mvc5\Resolver\Dispatch;
+use Mvc5\Resolvable;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class DispatchTest
     extends TestCase
@@ -16,25 +16,36 @@ class DispatchTest
     /**
      *
      */
-    public function test_invoke()
+    public function test_invoke_stopped()
     {
-        /** @var Dispatch|Mock $mock */
+        $dispatch = new Dispatch;
 
-        $mock = $this->getCleanMock(Dispatch::class, ['__invoke']);
+        $this->assertEquals([], $dispatch(function(){ return []; }));
 
-        $mock->expects($this->any())
-             ->method('args')
-             ->willReturn([]);
+        $this->assertTrue($dispatch->stopped());
+    }
 
-        $route = $this->getCleanMock(Route::class);
+    /**
+     *
+     */
+    public function test_invoke_resolvable_not_stopped()
+    {
+        $dispatch = new Dispatch;
 
-        $mock->expects($this->once())
-             ->method('signal')
-             ->willReturn($route);
+        $this->assertInstanceOf(Resolvable::class, $dispatch(function() { return new Config; }));
 
-        $mock->expects($this->once())
-             ->method('stop');
+        $this->assertFalse($dispatch->stopped());
+    }
 
-        $this->assertEquals($route, $mock->__invoke(function(){}));
+    /**
+     *
+     */
+    public function test_invoke_null_not_stopped()
+    {
+        $dispatch = new Dispatch;
+
+        $this->assertNull($dispatch(function(){ return null; }));
+
+        $this->assertFalse($dispatch->stopped());
     }
 }
