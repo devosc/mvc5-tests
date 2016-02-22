@@ -96,6 +96,16 @@ abstract class Resolver
     }
 
     /**
+     * @param $config
+     * @param array $args
+     * @return mixed|callable
+     */
+    public function gemTest($config, array $args = [])
+    {
+        return $this->gem($config, $args);
+    }
+
+    /**
      * @param Plugin $config
      * @param object $service
      * @return object
