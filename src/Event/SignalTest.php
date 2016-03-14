@@ -31,16 +31,26 @@ class SignalTest
     {
         /** @var Signal|Mock $mock */
 
-        $mock = $this->getCleanAbstractMock(Signal::class, ['__invoke']);
+        $mock = $this->getCleanAbstractMock(Signal::class, ['signal', '__invoke']);
+
+        $this->assertEquals('baz', $mock->__invoke(function($bar, $foo){ return $foo; }, ['bar', 'baz']));
+    }
+
+    /**
+     *
+     */
+    public function test_invoke_named()
+    {
+        /** @var Signal|Mock $mock */
+
+        $mock = $this->getCleanAbstractMock(Signal::class, ['signal', '__invoke']);
 
         $mock->expects($this->once())
-            ->method('args')
-            ->willReturn([]);
+             ->method('args')
+             ->willReturn([]);
 
-        $mock->expects($this->once())
-             ->method('signal')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->__invoke(function(){}));
+        $this->assertEquals('bar', $mock->__invoke(
+            function($bar, $foo){ return $foo; }, ['bar' => 'baz', 'foo' => 'bar'])
+        );
     }
 }

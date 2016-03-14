@@ -40,18 +40,18 @@ class EventTest
      */
     public function test_invoke()
     {
-        /** @var Event|Mock $mock */
+        $event = new Event;
 
-        $mock = $this->getCleanMock(Event::class, ['__invoke']);
+        $this->assertEquals('baz', $event(function($bar, $foo) { return $foo; }, ['bar', 'baz']));
+    }
 
-        $mock->expects($this->once())
-             ->method('args')
-             ->willReturn([]);
+    /**
+     *
+     */
+    public function test_invoke_named()
+    {
+        $event = new Event;
 
-        $mock->expects($this->once())
-             ->method('signal')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->__invoke(function() {}));
+        $this->assertEquals('bar', $event(function($bar, $foo) { return $foo; }, ['foo' => 'bar', 'bar' => 'baz']));
     }
 }
