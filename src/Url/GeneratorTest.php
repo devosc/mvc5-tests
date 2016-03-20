@@ -12,6 +12,29 @@ class GeneratorTest
     extends TestCase
 {
     /**
+     * @var array
+     */
+    protected $definition = [
+        'name'        => 'app',
+        'route'       => '/[:controller[/:action]]',
+        'wildcard'    => true,
+        'constraints' => ['controller' => '[a-zA-Z0-9_-]*', 'action' => '[a-zA-Z0-9_-]*'],
+        'defaults'    => ['controller' => 'home', 'action' => 'index'],
+        'tokens'      => [
+            ['literal', '/'],
+            ['optional-start'],
+            ['parameter', 'controller', null],
+            ['optional-start'],
+            ['literal', '/'],
+            ['parameter','action', null],
+            ['optional-end'],
+            ['optional-end']
+        ],
+        'regex'       => '/(?:(?P<param1>[a-zA-Z0-9_-]*)(?:/(?P<param2>[a-zA-Z0-9_-]*))?)?',
+        'paramMap'    => ['param1' => 'controller', 'param2' => 'action']
+    ];
+
+    /**
      *
      */
     public function test_construct()
@@ -214,6 +237,26 @@ class GeneratorTest
         $args = ['foo' => 'bar'];
 
         $this->assertEquals('/foo/bar', $mock->generateTest('foo', $args, $definition));
+    }
+
+    /**
+     *
+     */
+    public function test_generate_wildcard()
+    {
+        $generator = new Generator(new Config($this->definition));
+
+        $this->assertEquals('/foo/bar', $generator->generateTest('app', ['controller' => 'foo', 'action' => 'bar']));
+    }
+
+    /**
+     *
+     */
+    public function test_generate_wildcard_defaults()
+    {
+        $generator = new Generator(new Config($this->definition));
+
+        $this->assertEquals('/', $generator->generateTest('app', ['controller' => 'home', 'action' => 'index']));
     }
 
     /**

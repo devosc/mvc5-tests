@@ -37,19 +37,17 @@ class PluginTest
      */
     public function test_url()
     {
-        /** @var Plugin|Mock $mock */
+        /** @var Route $route */
 
-        $mock = $this->getCleanMock(Plugin::class, ['url', 'urlTest']);
+        $route = $this->getCleanMock(Route::class);
 
-        $mock->expects($this->once())
-             ->method('generator')
-             ->willReturn(function(){});
+        $generator = function($name, array $args = []) {
+            return $name . '/' . key($args) . '/' . current($args);
+        };
 
-        $mock->expects($this->once())
-             ->method('signal')
-             ->willReturn('bar');
+        $plugin = new Plugin($route, $generator);
 
-        $this->assertEquals('bar', $mock->urlTest('foo'));
+        $this->assertEquals('foo/bar/baz', $plugin->urlTest('foo', ['bar' => 'baz']));
     }
 
     /**
