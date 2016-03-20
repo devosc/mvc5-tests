@@ -5,6 +5,7 @@
 
 namespace Mvc5\Test\Route\Config;
 
+use Mvc5\Arg;
 use Mvc5\Test\Test\TestCase;
 use PHPUnit_Framework_MockObject_MockObject as Mock;
 
@@ -131,6 +132,26 @@ class RouteTest
              ->willReturn('foo');
 
         $this->assertEquals('foo', $mock->name());
+    }
+
+    /**
+     *
+     */
+    public function test_param_not_null()
+    {
+        $route = new Route([Arg::PARAMS => ['foo' => 'bar']]);
+
+        $this->assertEquals('bar', $route->param('foo'));
+    }
+
+    /**
+     *
+     */
+    public function test_param_null()
+    {
+        $route = new Route();
+
+        $this->assertEquals(null, $route->param('foo'));
     }
 
     /**
