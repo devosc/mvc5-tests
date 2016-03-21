@@ -149,7 +149,7 @@ class BuildTest
     {
         /** @var Build|Mock $mock */
 
-        $mock = $this->getCleanMock(Build::class, ['create', 'createTest']);
+        $mock = $this->getCleanMock(Build::class, ['create', 'createDefault', 'createTest']);
 
         $definition = [
             Arg::CHILDREN    => [],
@@ -162,6 +162,28 @@ class BuildTest
         ];
 
         $this->assertInstanceOf(Config::class, $mock->createTest($definition));
+    }
+
+    /**
+     *
+     */
+    public function test_create_default()
+    {
+        /** @var Build|Mock $mock */
+
+        $mock = $this->getCleanMock(Build::class, ['createDefault', 'createDefaultTest']);
+
+        $definition = [
+            Arg::CHILDREN    => [],
+            Arg::CONSTRAINTS => [],
+            Arg::NAME        => null,
+            Arg::PARAM_MAP   => [],
+            Arg::REGEX       => null,
+            Arg::ROUTE       => '/',
+            Arg::TOKENS      => null
+        ];
+
+        $this->assertInstanceOf(Config::class, $mock->createDefaultTest($definition));
     }
 
     /**

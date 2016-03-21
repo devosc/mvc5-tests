@@ -44,6 +44,15 @@ class Build
     }
 
     /**
+     * @param array $definition
+     * @return string
+     */
+    public function createDefaultTest(array $definition = [])
+    {
+        return $this->createDefault($definition);
+    }
+
+    /**
      * @param array|Definition $definition
      * @param bool $compile
      * @param bool $recursive
