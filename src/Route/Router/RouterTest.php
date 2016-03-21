@@ -83,6 +83,30 @@ class RouterTest
     /**
      *
      */
+    public function test_dispatch_match_not_route()
+    {
+        /** @var Definition|Mock $definition */
+
+        $definition = $this->getCleanMock(Definition::class);
+
+        /** @var Route $route */
+
+        $route = $this->getCleanMock(Route::class);
+
+        /** @var Router|Mock $mock */
+
+        $mock = $this->getCleanMock(Router::class, ['dispatch', 'dispatchTest']);
+
+        $mock->expects($this->once())
+             ->method('match')
+             ->willReturn('foo');
+
+        $this->assertEquals('foo', $mock->dispatchTest($route, $definition));
+    }
+
+    /**
+     *
+     */
     public function test_dispatch_matched()
     {
         /** @var Definition|Mock $definition */

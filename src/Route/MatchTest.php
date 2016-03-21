@@ -54,4 +54,24 @@ class MatchTest
 
         $this->assertEquals($route, $mock->__invoke(function(){}));
     }
+
+    /**
+     *
+     */
+    public function test_invoke_not_route()
+    {
+        /** @var Match|Mock $mock */
+
+        $mock = $this->getCleanMock(Match::class, ['__invoke']);
+
+        $mock->expects($this->once())
+             ->method('args')
+             ->willReturn([]);
+
+        $mock->expects($this->once())
+             ->method('signal')
+             ->willReturn('foo');
+
+        $this->assertEquals('foo', $mock->__invoke(function(){}));
+    }
 }
