@@ -97,55 +97,16 @@ class GeneratorTest
     /**
      *
      */
-    public function test_queue_string()
+    public function test_queue_not_array_or_traversable()
     {
         /** @var Generator|Mock $mock */
 
         $mock = $this->getCleanAbstractMock(Generator::class, ['queue', 'queueTest']);
 
         $mock->expects($this->once())
-             ->method('listeners')
+             ->method('traversable')
              ->willReturn(['bar']);
 
         $this->assertEquals(['bar'], $mock->queueTest('foo'));
-    }
-
-    /**
-     *
-     */
-    public function test_queue_event()
-    {
-        /** @var Generator|Mock $mock */
-
-        $mock = $this->getCleanAbstractMock(Generator::class, ['queue', 'queueTest']);
-
-        $event = $this->getCleanMock('Mvc5\Event');
-        $event->expects($this->once())
-              ->method('event')
-              ->willReturn('foo');
-
-        $mock->expects($this->once())
-            ->method('listeners')
-            ->willReturn(['bar']);
-
-        $this->assertEquals(['bar'], $mock->queueTest($event));
-    }
-
-    /**
-     *
-     */
-    public function test_queue_object()
-    {
-        /** @var Generator|Mock $mock */
-
-        $mock = $this->getCleanAbstractMock(Generator::class, ['queue', 'queueTest']);
-
-        $object = $this->getCleanMock('stdClass');
-
-        $mock->expects($this->once())
-            ->method('listeners')
-            ->willReturn(['bar']);
-
-        $this->assertEquals(['bar'], $mock->queueTest($object));
     }
 }

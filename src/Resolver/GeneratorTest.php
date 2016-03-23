@@ -2,12 +2,49 @@
 
 namespace Mvc5\Test\Resolver;
 
+use Mvc5\Event;
 use Mvc5\Test\Test\TestCase;
 use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class GeneratorTest
     extends TestCase
 {
+
+    /**
+     *
+     */
+    public function test_event_name_string()
+    {
+        /** @var Generator|Mock $mock */
+
+        $mock = $this->getCleanAbstractMock(Generator::class, ['eventName', 'eventNameTest']);
+
+        $this->assertEquals('foo', $mock->eventNameTest('foo'));
+    }
+
+    /**
+     *
+     */
+    public function test_event_name_event()
+    {
+        /** @var Generator|Mock $mock */
+
+        $mock = $this->getCleanAbstractMock(Generator::class, ['eventName', 'eventNameTest']);
+
+        $this->assertEquals('foo', $mock->eventNameTest(new Event('foo')));
+    }
+
+    /**
+     *
+     */
+    public function test_event_name_object()
+    {
+        /** @var Generator|Mock $mock */
+
+        $mock = $this->getCleanAbstractMock(Generator::class, ['eventName', 'eventNameTest']);
+
+        $this->assertEquals('stdClass', $mock->eventNameTest(new \stdClass));
+    }
 
     /**
      * @return mixed
@@ -63,5 +100,29 @@ class GeneratorTest
         $this->setExpectedException('RuntimeException');
 
         $mock->listenersTest('foo');
+    }
+
+    /**
+     *
+     */
+    public function test_traversable()
+    {
+        /** @var Generator|Mock $mock */
+
+        $mock = $this->getCleanAbstractMock(Generator::class, ['traversable', 'traversableTest']);
+
+        $mock->expects($this->once())
+             ->method('eventName')
+             ->willReturn('foo');
+
+        $mock->expects($this->once())
+             ->method('listeners')
+             ->willReturn('bar');
+
+        $mock->expects($this->once())
+             ->method('resolve')
+             ->willReturn('baz');
+
+        $this->assertEquals('baz', $mock->traversableTest('foo'));
     }
 }
