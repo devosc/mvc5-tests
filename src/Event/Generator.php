@@ -38,15 +38,6 @@ abstract class Generator
     }
 
     /**
-     * @param string $name
-     * @return array|\Traversable|null
-     */
-    public function listenersTest($name)
-    {
-        return $this->listeners($name);
-    }
-
-    /**
      * @param array|Event|string|\Traversable $event
      * @return array|\Traversable
      */
