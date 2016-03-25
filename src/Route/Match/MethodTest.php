@@ -2,12 +2,11 @@
 
 namespace Mvc5\Test\Route\Match;
 
-use Mvc5\Response\Error\MethodNotAllowed;
+use Mvc5\Arg;
 use Mvc5\Route\Match\Method;
-use Mvc5\Route\Route;
-use Mvc5\Route\Definition;
+use Mvc5\Route\Config as Route;
+use Mvc5\Route\Definition\Config as Definition;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class MethodTest
     extends TestCase
@@ -15,48 +14,50 @@ class MethodTest
     /**
      *
      */
-    public function test__invoke()
+    public function test__invoke_no_resources()
     {
-        /** @var Route|Mock $route */
+        $method = new Method;
 
-        $route = $this->getCleanMock(Route::class);
+        $route = new Route;
 
-        $route->expects($this->once())
-              ->method('method')
-              ->willReturn('foo');
+        $definition = new Definition;
 
-        /** @var Definition|Mock $definition */
-
-        $definition = $this->getCleanMock(Definition::class);
-
-        $definition->expects($this->any())
-                   ->method('method')
-                   ->willReturn('foo');
-
-        $this->assertEquals($route, (new Method)->__invoke($route, $definition));
+        $this->assertEquals($route, $method($route, $definition));
     }
 
     /**
      *
      */
-    public function test_invoke_not_matched()
+    public function test__invoke_resource()
     {
-        /** @var Route|Mock $route */
+        $method = new Method;
 
-        $route = $this->getCleanMock(Route::class);
+        $route = new Route([Arg::METHOD => 'GET']);
 
-        $route->expects($this->once())
-            ->method('method')
-            ->willReturn('foo');
+        $definition = new Definition([Arg::METHOD => ['GET' => 'foo']]);
 
-        /** @var Definition|Mock $definition */
+        /** @var Route $route */
 
-        $definition = $this->getCleanMock(Definition::class);
+        $route = $method($route, $definition);
 
-        $definition->expects($this->any())
-            ->method('method')
-            ->willReturn('bar');
+        $this->assertEquals('foo', $route->controller());
+    }
 
-        $this->assertInstanceOf(MethodNotAllowed::class, (new Method)->__invoke($route, $definition));
+    /**
+     *
+     */
+    public function test__invoke_no_resource_existing_controller()
+    {
+        $resource = new Method;
+
+        $route = new Route([Arg::CONTROLLER => 'foo']);
+
+        $definition = new Definition;
+
+        /** @var Route $route */
+
+        $route = $resource($route, $definition);
+
+        $this->assertEquals('foo', $route->controller());
     }
 }

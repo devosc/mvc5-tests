@@ -5,6 +5,7 @@
 
 namespace Mvc5\Test\Route\Config;
 
+use Mvc5\Arg;
 use Mvc5\Route\Definition\Config as RouteDefinition;
 use Mvc5\Test\Test\TestCase;
 use PHPUnit_Framework_MockObject_MockObject as Mock;
@@ -199,21 +200,21 @@ class DefinitionTest
     /**
      *
      */
-    public function test_method_exists()
+    public function test_allow_exists()
     {
         /** @var Definition|Mock $mock */
 
-        $this->assertEquals('foo', (new RouteDefinition(['method' => 'foo']))->method());
+        $this->assertEquals(['GET'], (new RouteDefinition([Arg::ALLOW => ['GET']]))->allow());
     }
 
     /**
      *
      */
-    public function test_method_not_exists()
+    public function test_allow_not_exists()
     {
         /** @var Definition|Mock $mock */
 
-        $this->assertEquals(null, (new RouteDefinition)->method());
+        $this->assertEquals([], (new RouteDefinition)->allow());
     }
 
     /**
@@ -258,6 +259,26 @@ class DefinitionTest
              ->willReturn('foo');
 
         $this->assertEquals('foo', $mock->regex());
+    }
+
+    /**
+     *
+     */
+    public function test_method()
+    {
+        $definition = new Definition([Arg::METHOD => ['GET' => 'foo']]);
+
+        $this->assertEquals('foo', $definition->method('GET'));
+    }
+
+    /**
+     *
+     */
+    public function test_methods()
+    {
+        $definition = new Definition([Arg::METHOD => ['GET' => 'foo']]);
+
+        $this->assertEquals(['GET' => 'foo'], $definition->methods());
     }
 
     /**
