@@ -2,6 +2,7 @@
 
 namespace Mvc5\Test\Route\Match;
 
+use Mvc5\Response\Error\MethodNotAllowed;
 use Mvc5\Route\Match\Method;
 use Mvc5\Route\Route;
 use Mvc5\Route\Definition;
@@ -56,6 +57,6 @@ class MethodTest
             ->method('method')
             ->willReturn('bar');
 
-        $this->assertEquals(null, (new Method)->__invoke($route, $definition));
+        $this->assertInstanceOf(MethodNotAllowed::class, (new Method)->__invoke($route, $definition));
     }
 }

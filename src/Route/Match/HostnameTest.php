@@ -2,6 +2,7 @@
 
 namespace Mvc5\Test\Route\Match;
 
+use Mvc5\Response\Error\BadRequest;
 use Mvc5\Route\Match\Hostname;
 use Mvc5\Route\Route;
 use Mvc5\Route\Definition;
@@ -56,6 +57,6 @@ class HostnameTest
                    ->method('hostname')
                    ->willReturn('bar');
 
-        $this->assertEquals(null, (new Hostname)->__invoke($route, $definition));
+        $this->assertInstanceOf(BadRequest::class, (new Hostname)->__invoke($route, $definition));
     }
 }

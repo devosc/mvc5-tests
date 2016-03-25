@@ -2,6 +2,7 @@
 
 namespace Mvc5\Test\Route\Match;
 
+use Mvc5\Response\Error\BadRequest;
 use Mvc5\Route\Match\Scheme;
 use Mvc5\Route\Route;
 use Mvc5\Route\Definition;
@@ -56,6 +57,6 @@ class SchemeTest
                    ->method('scheme')
                    ->willReturn('bar');
 
-        $this->assertEquals(null, (new Scheme)->__invoke($route, $definition));
+        $this->assertInstanceOf(BadRequest::class, (new Scheme)->__invoke($route, $definition));
     }
 }

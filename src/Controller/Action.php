@@ -5,6 +5,8 @@
 
 namespace Mvc5\Test\Controller;
 
+use Mvc5\Response\Error;
+use Mvc5\Response\Response;
 use Mvc5\Controller\Action as Base;
 use Throwable;
 
@@ -23,6 +25,16 @@ abstract class Action
     public function actionTest(callable $controller, array $args = [])
     {
         return $this->action($controller, $args);
+    }
+
+    /**
+     * @param Error $error
+     * @param Response $response
+     * @return mixed
+     */
+    public function errorTest(Error $error, Response $response)
+    {
+        return $this->error($error, $response);
     }
 
     /**

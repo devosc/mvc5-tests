@@ -31,6 +31,22 @@ class RouteTest
     /**
      *
      */
+    public function test_error()
+    {
+        /** @var Route|Mock $mock */
+
+        $mock = $this->getCleanMock(Route::class, ['error']);
+
+        $mock->expects($this->once())
+             ->method('offsetGet')
+             ->willReturn('foo');
+
+        $this->assertEquals('foo', $mock->error());
+    }
+
+    /**
+     *
+     */
     public function test_hostname()
     {
         /** @var Route|Mock $mock */

@@ -5,6 +5,7 @@
 
 namespace Mvc5\Test\Route\Error;
 
+use Mvc5\Response\Error\NotFound;
 use Mvc5\Route\Error\Create;
 use Mvc5\Route\Route;
 use Mvc5\Test\Test\TestCase;
@@ -37,6 +38,6 @@ class CreateTest
 
         $mock = $this->getCleanMock(Create::class, ['__invoke'], ['foo', 'bar']);
 
-        $this->assertEquals($route, $mock->__invoke($route));
+        $this->assertEquals($route, $mock->__invoke($route, new NotFound));
     }
 }
