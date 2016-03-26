@@ -3,6 +3,7 @@
 namespace Mvc5\Test\Route\Match;
 
 use Mvc5\Arg;
+use Mvc5\Response\Error\MethodNotAllowed;
 use Mvc5\Route\Match\Method;
 use Mvc5\Route\Config as Route;
 use Mvc5\Route\Definition\Config as Definition;
@@ -14,13 +15,11 @@ class MethodTest
     /**
      *
      */
-    public function test__invoke_no_resources()
+    public function test__invoke()
     {
-        $method = new Method;
-
-        $route = new Route;
-
-        $definition = new Definition;
+        $definition = new Definition([Arg::METHOD => ['GET']]);
+        $method     = new Method;
+        $route      = new Route([Arg::METHOD => 'GET']);
 
         $this->assertEquals($route, $method($route, $definition));
     }
@@ -28,36 +27,12 @@ class MethodTest
     /**
      *
      */
-    public function test__invoke_resource()
+    public function test_invoke_not_matched()
     {
-        $method = new Method;
+        $definition = new Definition([Arg::METHOD => 'GET']);
+        $method     = new Method;
+        $route      = new Route([Arg::METHOD => 'POST']);
 
-        $route = new Route([Arg::METHOD => 'GET']);
-
-        $definition = new Definition([Arg::METHOD => ['GET' => 'foo']]);
-
-        /** @var Route $route */
-
-        $route = $method($route, $definition);
-
-        $this->assertEquals('foo', $route->controller());
-    }
-
-    /**
-     *
-     */
-    public function test__invoke_no_resource_existing_controller()
-    {
-        $resource = new Method;
-
-        $route = new Route([Arg::CONTROLLER => 'foo']);
-
-        $definition = new Definition;
-
-        /** @var Route $route */
-
-        $route = $resource($route, $definition);
-
-        $this->assertEquals('foo', $route->controller());
+        $this->assertInstanceOf(MethodNotAllowed::class, $method($route, $definition));
     }
 }

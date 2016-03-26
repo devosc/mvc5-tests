@@ -200,21 +200,17 @@ class DefinitionTest
     /**
      *
      */
-    public function test_allow_exists()
+    public function test_method_exists()
     {
-        /** @var Definition|Mock $mock */
-
-        $this->assertEquals(['GET'], (new RouteDefinition([Arg::ALLOW => ['GET']]))->allow());
+        $this->assertEquals(['GET'], (new RouteDefinition([Arg::METHOD => ['GET']]))->method());
     }
 
     /**
      *
      */
-    public function test_allow_not_exists()
+    public function test_method_not_exists()
     {
-        /** @var Definition|Mock $mock */
-
-        $this->assertEquals([], (new RouteDefinition)->allow());
+        $this->assertEquals(null, (new RouteDefinition)->method());
     }
 
     /**
@@ -264,21 +260,21 @@ class DefinitionTest
     /**
      *
      */
-    public function test_method()
+    public function test_action()
     {
-        $definition = new Definition([Arg::METHOD => ['GET' => 'foo']]);
+        $definition = new Definition([Arg::ACTION => ['GET' => 'foo']]);
 
-        $this->assertEquals('foo', $definition->method('GET'));
+        $this->assertEquals('foo', $definition->action('GET'));
     }
 
     /**
      *
      */
-    public function test_methods()
+    public function test_actions()
     {
-        $definition = new Definition([Arg::METHOD => ['GET' => 'foo']]);
+        $definition = new Definition([Arg::ACTION => ['GET' => 'foo']]);
 
-        $this->assertEquals(['GET' => 'foo'], $definition->methods());
+        $this->assertEquals(['GET' => 'foo'], $definition->actions());
     }
 
     /**
