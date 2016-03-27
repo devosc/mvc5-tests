@@ -23,12 +23,11 @@ class ControllerTest
         $response = $this->getCleanMock(Response::class);
 
         $response->expects($this->once())
-                 ->method('setContent');
+                 ->method('setContent')
+                 ->willReturnSelf();
 
-        /** @var Controller|Mock $mock */
+        $controller = new Controller;
 
-        $mock = $this->getCleanAbstractMock(Controller::class, ['__invoke']);
-
-        $this->assertInstanceOf(Response::class, $mock->__invoke($response, null));
+        $this->assertInstanceOf(Response::class, $controller($response, null));
     }
 }

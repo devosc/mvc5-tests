@@ -26,17 +26,16 @@ class StatusTest
      */
     public function test_invoke()
     {
-        /** @var Status|Mock $mock */
-
-        $mock = $this->getCleanMock(Status::class, ['__invoke']);
+        $status = new Status('200');
 
         /** @var Response|Mock $response */
 
         $response = $this->getCleanMock(Response::class);
 
         $response->expects($this->once())
-                 ->method('setStatus');
+                 ->method('setStatus')
+                 ->willReturnSelf();
 
-        $mock->__invoke($response);
+        $this->assertInstanceOf(Response::class, $status($response));
     }
 }

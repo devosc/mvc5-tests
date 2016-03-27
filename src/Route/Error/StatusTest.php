@@ -21,7 +21,8 @@ class StatusTest
         $response = $this->getCleanMock(Response::class);
 
         $response->expects($this->once())
-                 ->method('setStatus');
+                 ->method('setStatus')
+                 ->willReturnSelf();
 
         $error = $this->getCleanMock(Error::class);
 
@@ -30,6 +31,6 @@ class StatusTest
 
         $status = new Status;
 
-        $status($response, $error);
+        $this->assertInstanceOf(Response::class, $status($response, $error));
     }
 }
