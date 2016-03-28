@@ -31,7 +31,7 @@ class ErrorTest
 
         $response = $this->getCleanMock(Response::class);
 
-        $this->assertEquals('foo', $mock->__invoke($error, $response));
+        $this->assertEquals('foo', $mock->__invoke($response, $error));
     }
 
     /**
@@ -45,6 +45,6 @@ class ErrorTest
 
         $response = $this->getCleanMock(Response::class);
 
-        $this->assertEquals('foo', $mock->__invoke('foo', $response));
+        $this->assertEquals('foo', $mock->__invoke($response, 'foo'));
     }
 }
