@@ -52,17 +52,21 @@ class DefinitionTest
     /**
      *
      */
-    public function test_children()
+    public function test_children_isset()
     {
-        /** @var Definition|Mock $mock */
+        $definition = new Definition(['children' => ['foo' => 'bar']]);
 
-        $mock = $this->getCleanMock(Definition::class, ['children']);
+        $this->assertEquals(['foo' => 'bar'], $definition->children());
+    }
 
-        $mock->expects($this->once())
-             ->method('offsetGet')
-             ->willReturn('foo');
+    /**
+     *
+     */
+    public function test_children_not_isset()
+    {
+        $definition = new Definition();
 
-        $this->assertEquals('foo', $mock->children());
+        $this->assertEquals([], $definition->children());
     }
 
     /**
@@ -86,15 +90,9 @@ class DefinitionTest
      */
     public function test_constraints_exists()
     {
-        /** @var Definition|Mock $mock */
+        $definition = new Definition(['constraints' => ['foo' => 'bar']]);
 
-        $mock = $this->getCleanMock(Definition::class, ['constraints']);
-
-        $mock->expects($this->once())
-             ->method('offsetGet')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->constraints());
+        $this->assertEquals(['foo' => 'bar'], $definition->constraints());
     }
 
     /**
@@ -104,9 +102,9 @@ class DefinitionTest
     {
         /** @var Definition|Mock $mock */
 
-        $mock = $this->getCleanMock(Definition::class, ['constraints']);
+        $definition = new Definition();
 
-        $this->assertEquals([], $mock->constraints());
+        $this->assertEquals([], $definition->constraints());
     }
 
     /**
@@ -130,15 +128,9 @@ class DefinitionTest
      */
     public function test_defaults_exists()
     {
-        /** @var Definition|Mock $mock */
+        $definition = new Definition(['defaults' => ['foo' => 'bar']]);
 
-        $mock = $this->getCleanMock(Definition::class, ['defaults']);
-
-        $mock->expects($this->once())
-             ->method('offsetGet')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->defaults());
+        $this->assertEquals(['foo' => 'bar'], $definition->defaults());
     }
 
     /**
@@ -146,11 +138,9 @@ class DefinitionTest
      */
     public function test_defaults_not_exists()
     {
-        /** @var Definition|Mock $mock */
+        $definition = new Definition();
 
-        $mock = $this->getCleanMock(Definition::class, ['defaults']);
-
-        $this->assertEquals([], $mock->defaults());
+        $this->assertEquals([], $definition->defaults());
     }
 
     /**
@@ -158,15 +148,9 @@ class DefinitionTest
      */
     public function test_hostname_exists()
     {
-        /** @var Definition|Mock $mock */
+        $definition = new Definition(['hostname' => 'foo']);
 
-        $mock = $this->getCleanMock(Definition::class, ['hostname']);
-
-        $mock->expects($this->once())
-            ->method('offsetGet')
-            ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->hostname());
+        $this->assertEquals('foo', $definition->hostname());
     }
 
     /**
@@ -174,11 +158,9 @@ class DefinitionTest
      */
     public function test_hostname_not_exists()
     {
-        /** @var Definition|Mock $mock */
+        $definition = new Definition();
 
-        $mock = $this->getCleanMock(Definition::class, ['hostname']);
-
-        $this->assertEquals(null, $mock->hostname());
+        $this->assertEquals(null, $definition->hostname());
     }
 
     /**
@@ -202,7 +184,9 @@ class DefinitionTest
      */
     public function test_method_exists()
     {
-        $this->assertEquals(['GET'], (new RouteDefinition([Arg::METHOD => ['GET']]))->method());
+        /** @var Definition|Mock $mock */
+
+        $this->assertEquals('foo', (new RouteDefinition(['method' => 'foo']))->method());
     }
 
     /**
@@ -210,6 +194,8 @@ class DefinitionTest
      */
     public function test_method_not_exists()
     {
+        /** @var Definition|Mock $mock */
+
         $this->assertEquals(null, (new RouteDefinition)->method());
     }
 
@@ -218,15 +204,9 @@ class DefinitionTest
      */
     public function test_paramMap_exists()
     {
-        /** @var Definition|Mock $mock */
+        $definition = new Definition(['paramMap' => ['foo' => 'bar']]);
 
-        $mock = $this->getCleanMock(Definition::class, ['paramMap']);
-
-        $mock->expects($this->once())
-             ->method('offsetGet')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->paramMap());
+        $this->assertEquals(['foo' => 'bar'], $definition->paramMap());
     }
 
     /**
@@ -234,11 +214,9 @@ class DefinitionTest
      */
     public function test_paramMap_not_exists()
     {
-        /** @var Definition|Mock $mock */
+        $definition = new Definition();
 
-        $mock = $this->getCleanMock(Definition::class, ['paramMap']);
-
-        $this->assertEquals([], $mock->paramMap());
+        $this->assertEquals([], $definition->paramMap());
     }
 
     /**
@@ -314,15 +292,9 @@ class DefinitionTest
      */
     public function test_tokens_exists()
     {
-        /** @var Definition|Mock $mock */
+        $definition = new Definition(['tokens' => ['foo' => 'bar']]);
 
-        $mock = $this->getCleanMock(Definition::class, ['tokens']);
-
-        $mock->expects($this->once())
-             ->method('offsetGet')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->tokens());
+        $this->assertEquals(['foo' => 'bar'], $definition->tokens());
     }
 
     /**
@@ -330,11 +302,9 @@ class DefinitionTest
      */
     public function test_tokens_not_exists()
     {
-        /** @var Definition|Mock $mock */
+        $definition = new Definition();
 
-        $mock = $this->getCleanMock(Definition::class, ['tokens']);
-
-        $this->assertEquals([], $mock->tokens());
+        $this->assertEquals([], $definition->tokens());
     }
 
     /**
@@ -342,15 +312,9 @@ class DefinitionTest
      */
     public function test_wildcard_exists()
     {
-        /** @var Definition|Mock $mock */
+        $definition = new Definition(['wildcard' => 'foo']);
 
-        $mock = $this->getCleanMock(Definition::class, ['wildcard']);
-
-        $mock->expects($this->once())
-             ->method('offsetGet')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->wildcard());
+        $this->assertEquals('foo', $definition->wildcard());
     }
 
     /**
@@ -360,8 +324,8 @@ class DefinitionTest
     {
         /** @var Definition|Mock $mock */
 
-        $mock = $this->getCleanMock(Definition::class, ['wildcard']);
+        $definition = new Definition();;
 
-        $this->assertEquals(false, $mock->wildcard());
+        $this->assertEquals(false, $definition->wildcard());
     }
 }

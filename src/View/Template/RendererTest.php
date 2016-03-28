@@ -8,7 +8,6 @@ namespace Mvc5\Test\View\Template;
 use Mvc5\Arg;
 use Mvc5\Model;
 use Mvc5\Layout;
-use Mvc5\Service\Service;
 use Mvc5\View\Template\Renderer;
 use Mvc5\Test\Test\TestCase;
 use PHPUnit_Framework_MockObject_MockObject as Mock;
@@ -78,30 +77,14 @@ class RendererTest
     {
         /** @var Renderer|Mock $mock */
 
-        $mock = $this->getCleanMock(Renderer::class, ['__invoke']);
-
         $template = __DIR__ . '/exception.phtml';
 
-        $model = $this->getCleanMock(Model::class, ['current', 'key', 'next', 'valid'], [$template]);
+        $renderer = new Renderer();
 
-        $model->expects($this->any())
-              ->method('template');
+        $model = new Model($template);
 
-        $model->expects($this->any())
-              ->method('service');
+        $this->setExpectedException('Exception', 'Exception Test');
 
-        $vm = $this->getCleanMock(Service::class);
-
-        $mock->expects($this->any())
-             ->method('service')
-             ->willReturn($vm);
-
-        $mock->expects($this->any())
-             ->method('template')
-             ->willReturn($template);
-
-        $this->setExpectedException('Exception', 'Model template not found');
-
-        $mock->__invoke($model);
+        $renderer($model);
     }
 }
