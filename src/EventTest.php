@@ -6,7 +6,6 @@
 namespace Mvc5\Test;
 
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class EventTest
     extends TestCase
@@ -16,11 +15,9 @@ class EventTest
      */
     public function test_construct()
     {
-        /** @var Event $mock */
+        $event = new Event('foo');
 
-        $mock = $this->getCleanMock(Event::class, ['event'], ['foo']);
-
-        $this->assertEquals('foo', $mock->event());
+        $this->assertEquals('foo', $event->event());
     }
 
     /**
@@ -28,11 +25,9 @@ class EventTest
      */
     public function test_args()
     {
-        /** @var Event|Mock $mock */
+        $event = new Event;
 
-        $mock = $this->getCleanMock(Event::class, ['args', 'argsTest']);
-
-        $this->assertTrue(is_array($mock->argsTest()));
+        $this->assertTrue(is_array($event->args()));
     }
 
     /**

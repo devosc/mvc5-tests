@@ -1,4 +1,7 @@
 <?php
+/**
+ *
+ */
 
 namespace Mvc5\Test\Route\Definition;
 
@@ -12,9 +15,7 @@ class RegexTest
      */
     public function test_regex()
     {
-        /** @var Regex $mock */
-
-        $mock = $this->getCleanAbstractMock(Regex::class, ['regex', 'regexTest']);
+        $definition = new Regex;
 
         $constraints = [
             //'author'   => '[a-zA-Z0-9_-]*',
@@ -34,7 +35,7 @@ class RegexTest
 
         $regex = "/(?:(?P<param1>[^/]+)(?:/(?P<param2>[a-zA-Z0-9_-]*))?)?";
 
-        $this->assertEquals($regex, $mock->regexTest($tokens, $constraints));
+        $this->assertEquals($regex, $definition->regex($tokens, $constraints));
     }
 
     /**
@@ -42,9 +43,7 @@ class RegexTest
      */
     public function test_regex_with_delimiter()
     {
-        /** @var Regex $mock */
-
-        $mock = $this->getCleanAbstractMock(Regex::class, ['regex', 'regexTest']);
+        $definition = new Regex;
 
         $constraints = [
             //'author'   => '[a-zA-Z0-9_-]*',
@@ -64,7 +63,7 @@ class RegexTest
 
         $regex = "/(?:(?P<param1>[^abc]+)(?:/(?P<param2>[a-zA-Z0-9_-]*))?)?";
 
-        $this->assertEquals($regex, $mock->regexTest($tokens, $constraints));
+        $this->assertEquals($regex, $definition->regex($tokens, $constraints));
     }
 
     /**
@@ -72,9 +71,7 @@ class RegexTest
      */
     public function test_regex_group_param()
     {
-        /** @var Regex $mock */
-
-        $mock = $this->getCleanAbstractMock(Regex::class, ['regex', 'regexTest']);
+        $definition = new Regex;
 
         $constraints = [
             //'author'   => '[a-zA-Z0-9_-]*',
@@ -94,6 +91,6 @@ class RegexTest
 
         $regex = "/(?:(?P<param1>[^abc]+)(?:/(?P<param2>[a-zA-Z0-9_-]*))?)?";
 
-        $this->assertEquals($regex, $mock->regexTest($tokens, $constraints));
+        $this->assertEquals($regex, $definition->regex($tokens, $constraints));
     }
 }

@@ -1,10 +1,12 @@
 <?php
+/**
+ *
+ */
 
 namespace Mvc5\Test\Plugin;
 
 use Mvc5\Plugin\Filter;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class FilterTest
     extends TestCase
@@ -14,7 +16,17 @@ class FilterTest
      */
     public function test_construct()
     {
-        $this->assertInstanceOf(Filter::class, new Filter(['foo']));
+        $this->assertInstanceOf(Filter::class, new Filter([]));
+    }
+
+    /**
+     *
+     */
+    public function test_config()
+    {
+        $filter = new Filter(['foo']);
+
+        $this->assertEquals(['foo'], $filter->config());
     }
 
     /**
@@ -22,11 +34,19 @@ class FilterTest
      */
     public function test_filter()
     {
-        /** @var Filter|Mock $mock */
+        $filter = new Filter([], ['foo']);
 
-        $mock = $this->getCleanMock(Filter::class, ['filter']);
+        $this->assertEquals(['foo'], $filter->filter());
+    }
 
-        $this->assertEquals(null, $mock->filter());
+    /**
+     *
+     */
+    public function test_args()
+    {
+        $filter = new Filter([], [], ['foo']);
+
+        $this->assertEquals(['foo'], $filter->args());
     }
 
     /**
@@ -34,10 +54,8 @@ class FilterTest
      */
     public function test_param()
     {
-        /** @var Filter|Mock $mock */
+        $filter = new Filter([], [], [], 'foo');
 
-        $mock = $this->getCleanMock(Filter::class, ['param']);
-
-        $this->assertEquals(null, $mock->param());
+        $this->assertEquals('foo', $filter->param());
     }
 }

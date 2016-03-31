@@ -5,46 +5,51 @@
 
 namespace Mvc5\Test\Mvc;
 
+use Mvc5\Arg;
+use Mvc5\App;
 use Mvc5\Mvc\Error;
-use Mvc5\Response\Error as ResponseError;
-use Mvc5\Response\Response;
+use Mvc5\Response\Error\BadRequest;
+use Mvc5\Test\Response\Response;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class ErrorTest
     extends TestCase
 {
     /**
-     *
+     * @return App
      */
-    public function test__invoke()
+    protected function app()
     {
-        /** @var Error|Mock $mock */
-
-        $mock = $this->getCleanMock(Error::class, ['__invoke']);
-
-        $mock->expects($this->once())
-             ->method('error')
-             ->willReturn('foo');
-
-        $error = $this->getCleanMock(ResponseError::class);
-
-        $response = $this->getCleanMock(Response::class);
-
-        $this->assertEquals('foo', $mock->__invoke($response, $error));
+        return new App([
+            Arg::SERVICES => [
+                'controller\error' => function() {
+                    return function() {
+                        return 'Error';
+                    };
+                }
+            ]
+        ]);
     }
 
     /**
      *
      */
-    public function test__invoke_no_error()
+    public function test_invoke()
     {
-        /** @var Error|Mock $mock */
+        $error = new Error;
 
-        $mock = $this->getCleanMock(Error::class, ['__invoke']);
+        $error->service($this->app());
 
-        $response = $this->getCleanMock(Response::class);
+        $this->assertEquals('Error', $error(new Response, new BadRequest));
+    }
 
-        $this->assertEquals('foo', $mock->__invoke($response, 'foo'));
+    /**
+     *
+     */
+    public function test_invoke_no_error()
+    {
+        $error = new Error;
+
+        $this->assertEquals('foo', $error(new Response, 'foo'));
     }
 }

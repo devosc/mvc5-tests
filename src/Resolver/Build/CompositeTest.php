@@ -6,9 +6,12 @@
 namespace Mvc5\Test\Resolver\Build;
 
 use Mvc5\App;
-use Mvc5\Service\Container;
+use Mvc5\Arg;
+use Mvc5\Config;
+use Mvc5\Container;
+use Mvc5\Plugin\Plugin;
+use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class CompositeTest
     extends TestCase
@@ -18,17 +21,11 @@ class CompositeTest
      */
     public function test_composite_service_manager()
     {
-        /** @var Resolver|Mock $mock */
+        $plugin   = new App([Arg::SERVICES => ['foo' => Config::class]]);
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['composite', 'compositeTest']);
+        $resolver = new Resolver;
 
-        $plugin = $this->getCleanMock(App::class);
-
-        $plugin->expects($this->once())
-               ->method('plugin')
-               ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->compositeTest($plugin, 'bar'));
+        $this->assertInstanceOf(Config::class, $resolver->composite($plugin, 'foo'));
     }
 
     /**
@@ -36,17 +33,12 @@ class CompositeTest
      */
     public function test_composite_service_container()
     {
-        /** @var Resolver|Mock $mock */
+        $plugin   = new Container(['foo' => 'bar']);
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['composite', 'compositeTest']);
+        $resolver->configure('bar', Config::class);
 
-        $plugin = $this->getCleanMock(Container::class);
-
-        $mock->expects($this->once())
-             ->method('plugin')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->compositeTest($plugin, 'bar'));
+        $this->assertInstanceOf(Config::class, $resolver->composite($plugin, 'foo'));
     }
 
     /**
@@ -54,18 +46,9 @@ class CompositeTest
      */
     public function test_composite_array_access()
     {
-        /** @var Resolver|Mock $mock */
+        $plugin   = ['foo' => new Plugin(Config::class)];
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['composite', 'compositeTest']);
-
-        $plugin = [
-            'bar' => 'baz'
-        ];
-
-        $mock->expects($this->once())
-             ->method('resolve')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->compositeTest($plugin, 'bar'));
+        $this->assertInstanceOf(Config::class, $resolver->composite($plugin, 'foo'));
     }
 }

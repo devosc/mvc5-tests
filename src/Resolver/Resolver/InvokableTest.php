@@ -8,8 +8,8 @@ namespace Mvc5\Test\Resolver\Resolver;
 use Mvc5\Arg;
 use Mvc5\App;
 use Mvc5\Event;
+use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class InvokableTest
     extends TestCase
@@ -19,8 +19,6 @@ class InvokableTest
      */
     public function test_invokable_event()
     {
-        /** @var Resolver|Mock $mock */
-
         $app = new App([
             Arg::EVENTS => [
                 'foo' => [
@@ -42,10 +40,8 @@ class InvokableTest
      */
     public function test_invokable_string()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['invokable', 'invokableTest']);
-
-        $this->assertEquals('foo', $mock->invokableTest('@foo'));
+        $this->assertEquals('foo', $resolver->invokable('@foo'));
     }
 }

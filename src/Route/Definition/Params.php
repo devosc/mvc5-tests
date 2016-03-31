@@ -1,4 +1,7 @@
 <?php
+/**
+ *
+ */
 
 namespace Mvc5\Test\Route\Definition;
 
@@ -9,14 +12,7 @@ class Params
     /**
      *
      */
-    use Base;
-
-    /**
-     * @param array $tokens
-     * @return array
-     */
-    public function paramsTest(array $tokens)
-    {
-        return $this->params($tokens);
+    use Base {
+        params as public;
     }
 }

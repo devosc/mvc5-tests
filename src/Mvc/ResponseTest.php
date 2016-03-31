@@ -5,10 +5,9 @@
 
 namespace Mvc5\Test\Mvc;
 
-use Mvc5\Mvc\Response as MvcResponse;
-use Mvc5\Response\Response;
+use Mvc5\Mvc\Response;
+use Mvc5\Test\Response\Response as TestResponse;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class ResponseTest
     extends TestCase
@@ -16,14 +15,10 @@ class ResponseTest
     /**
      *
      */
-    public function test__invoke()
+    public function test_invoke()
     {
-        /** @var MvcResponse|Mock $mock */
+        $response = new Response;
 
-        $mock = $this->getCleanAbstractMock(MvcResponse::class, ['__invoke']);
-
-        $response = $this->getCleanMock(Response::class);
-
-        $this->assertEquals($response, $mock->__invoke($response));
+        $this->assertInstanceOf(TestResponse::class, $response(new TestResponse));
     }
 }

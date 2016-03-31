@@ -5,10 +5,11 @@
 
 namespace Mvc5\Test\Resolver\Resolver\Gem;
 
+use Mvc5\Config;
 use Mvc5\Plugin\Child;
-use Mvc5\Test\Resolver\Resolver\Resolver;
+use Mvc5\Plugin\Plugin;
+use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class ChildTest
     extends TestCase
@@ -18,14 +19,10 @@ class ChildTest
      */
     public function test_gem_child()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['gem', 'gemTest']);
+        $resolver->configure('bar', new Plugin(Config::class));
 
-        $mock->expects($this->once())
-            ->method('child')
-            ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->gemTest(new Child('foo', 'bar')));
+        $this->assertInstanceOf(Config::class, $resolver->gem(new Child('foo', 'bar')));
     }
 }

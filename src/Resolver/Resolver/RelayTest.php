@@ -7,8 +7,8 @@ namespace Mvc5\Test\Resolver\Resolver;
 
 use Mvc5\Arg;
 use Mvc5\App;
+use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class RelayTest
     extends TestCase
@@ -18,15 +18,9 @@ class RelayTest
      */
     public function test_relay_no_config()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['relay', 'relayTest']);
-
-        $mock->expects($this->once())
-            ->method('invoke')
-            ->willReturn('bar');
-
-        $this->assertEquals('bar', $mock->relayTest('foo'));
+        $this->assertEquals(phpversion(), $resolver->relay('phpversion'));
     }
 
     /**
@@ -34,24 +28,6 @@ class RelayTest
      */
     public function test_relay_config()
     {
-        /** @var Resolver|Mock $mock */
-
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['relay', 'relayTest']);
-
-        $mock->expects($this->once())
-             ->method('repeat')
-             ->willreturn('baz');
-
-        $this->assertEquals('baz', $mock->relayTest('foo', ['bar', 'baz']));
-    }
-
-    /**
-     *
-     */
-    public function test_relay()
-    {
-        /** @var Resolver|Mock $mock */
-
         $app = new App([
             Arg::SERVICES => [
                 'foo' => new class() {

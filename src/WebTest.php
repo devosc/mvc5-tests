@@ -17,11 +17,7 @@ class WebTest
      */
     public function test_construct()
     {
-        /** @var Web $mock */
-
-        $mock = $this->getCleanMock(Web::class, [], []);
-
-        $this->assertInstanceOf(Web::class, $mock);
+        $this->assertInstanceOf(Web::class, new Web);
     }
 
     /**
@@ -39,7 +35,9 @@ class WebTest
             ]
         ];
 
-        $this->assertEquals('foo', (new Web($config))->__invoke());
+        $web = new Web($config);
+
+        $this->assertEquals('foo', $web());
     }
 
     /**
@@ -62,6 +60,8 @@ class WebTest
             ]
         ];
 
-        $this->assertEquals('foo', (new Web($config))->__invoke());
+        $web = new Web($config);
+
+        $this->assertEquals('foo', $web());
     }
 }

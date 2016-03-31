@@ -5,9 +5,8 @@
 
 namespace Mvc5\Test\Config;
 
-use Mvc5\Config\Config;
+use Mvc5\Config;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class ConfigTest
     extends TestCase
@@ -17,11 +16,9 @@ class ConfigTest
      */
     public function test_count()
     {
-        /** @var Config|Mock $mock */
+        $config = new Config([1, 2, 3, 4, 5]);
 
-        $mock = $this->getCleanMockForTrait(Config::class, ['count'], [[1, 2, 3, 4, 5]]);
-
-        $this->assertEquals(5, $mock->count());
+        $this->assertEquals(5, count($config));
     }
 
     /**
@@ -29,11 +26,9 @@ class ConfigTest
      */
     public function test_current()
     {
-        /** @var Config|Mock $mock */
+        $config = new Config(['foo' => 'bar']);
 
-        $mock = $this->getCleanMockForTrait(Config::class, ['current'], [[2]]);
-
-        $this->assertEquals(2, $mock->current());
+        $this->assertEquals('bar', $config->current());
     }
 
     /**
@@ -41,11 +36,9 @@ class ConfigTest
      */
     public function test_get_isset()
     {
-        /** @var Config|Mock $mock */
+        $config = new Config(['foo' => 'bar']);
 
-        $mock = $this->getCleanMockForTrait(Config::class, ['get'], [['foo' => 'bar']]);
-
-        $this->assertEquals('bar', $mock->get('foo'));
+        $this->assertEquals('bar', $config->get('foo'));
     }
 
     /**
@@ -53,11 +46,9 @@ class ConfigTest
      */
     public function test_get_not_isset()
     {
-        /** @var Config|Mock $mock */
+        $config = new Config;
 
-        $mock = $this->getCleanMockForTrait(Config::class, ['get']);
-
-        $this->assertEquals(null, $mock->get('foo'));
+        $this->assertEquals(null, $config->get('foo'));
     }
 
     /**
@@ -65,11 +56,9 @@ class ConfigTest
      */
     public function test_has()
     {
-        /** @var Config|Mock $mock */
+        $config = new Config(['foo' => 'bar']);
 
-        $mock = $this->getCleanMockForTrait(Config::class, ['has'], [['foo' => 'bar']]);
-
-        $this->assertEquals(true, $mock->has('foo'));
+        $this->assertEquals(true, $config->has('foo'));
     }
 
     /**
@@ -77,11 +66,9 @@ class ConfigTest
      */
     public function test_has_not()
     {
-        /** @var Config|Mock $mock */
+        $config = new Config;
 
-        $mock = $this->getCleanMockForTrait(Config::class, ['has']);
-
-        $this->assertEquals(false, $mock->has('foo'));
+        $this->assertEquals(false, $config->has('foo'));
     }
 
     /**
@@ -89,11 +76,9 @@ class ConfigTest
      */
     public function test_key()
     {
-        /** @var Config|Mock $mock */
+        $config = new Config(['foo' => 'bar']);
 
-        $mock = $this->getCleanMockForTrait(Config::class, ['key'], [['foo' => 'bar']]);
-
-        $this->assertEquals('foo', $mock->key());
+        $this->assertEquals('foo', $config->key());
     }
 
     /**
@@ -101,11 +86,11 @@ class ConfigTest
      */
     public function test_next()
     {
-        /** @var Config|Mock $mock */
+        $config = new Config(['foo' => 'bar', 'baz' => 'bat']);
 
-        $mock = $this->getCleanMockForTrait(Config::class, ['next']);
+        $config->next();
 
-        $mock->next();
+        $this->assertEquals('bat', $config->current());
     }
 
     /**
@@ -113,11 +98,13 @@ class ConfigTest
      */
     public function test_remove()
     {
-        /** @var Config|Mock $mock */
+        $config = new Config(['foo' => 'bar']);
 
-        $mock = $this->getCleanMockForTrait(Config::class, ['remove'], [['foo' => 'bar']]);
+        $this->assertEquals(true, $config->has('foo'));
 
-        $mock->remove('foo');
+        $config->remove('foo');
+
+        $this->assertEquals(false, $config->has('foo'));
     }
 
     /**
@@ -125,11 +112,17 @@ class ConfigTest
      */
     public function test_rewind()
     {
-        /** @var Config|Mock $mock */
+        $config = new Config(['foo' => 'bar', 'baz' => 'bat']);
 
-        $mock = $this->getCleanMockForTrait(Config::class, ['rewind']);
+        $this->assertEquals('bar', $config->current());
 
-        $mock->rewind();
+        $config->next();
+
+        $this->assertEquals('bat', $config->current());
+
+        $config->rewind();
+
+        $this->assertEquals('bar', $config->current());
     }
 
     /**
@@ -137,11 +130,9 @@ class ConfigTest
      */
     public function test_set()
     {
-        /** @var Config|Mock $mock */
+        $config = new Config;
 
-        $mock = $this->getCleanMockForTrait(Config::class, ['set']);
-
-        $this->assertEquals('bar', $mock->set('foo', 'bar'));
+        $this->assertEquals('bar', $config->set('foo', 'bar'));
     }
 
     /**
@@ -149,15 +140,9 @@ class ConfigTest
      */
     public function test_valid()
     {
-        /** @var Config|Mock $mock */
+        $config = new Config(['foo' => 'bar']);
 
-        $mock = $this->getCleanMockForTrait(Config::class, ['valid']);
-
-        $mock->expects($this->once())
-             ->method('key')
-             ->willReturn(1);
-
-        $this->assertEquals(true, $mock->valid());
+        $this->assertEquals(true, $config->valid());
     }
 
     /**
@@ -165,14 +150,8 @@ class ConfigTest
      */
     public function test_valid_not()
     {
-        /** @var Config|Mock $mock */
+        $config = new Config;
 
-        $mock = $this->getCleanMockForTrait(Config::class, ['valid']);
-
-        $mock->expects($this->once())
-            ->method('key')
-            ->willReturn(null);
-
-        $this->assertEquals(false, $mock->valid());
+        $this->assertEquals(false, $config->valid());
     }
 }

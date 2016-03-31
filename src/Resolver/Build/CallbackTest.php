@@ -5,8 +5,9 @@
 
 namespace Mvc5\Test\Resolver\Build;
 
+use Mvc5\Config;
+use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class CallbackTest
     extends TestCase
@@ -16,26 +17,28 @@ class CallbackTest
      */
     public function test_callback_no_class_exists()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['callback', 'callbackTest']);
-
-        $this->assertEquals('bar', $mock->callbackTest('foo', [], function() { return 'bar'; }));
+        $this->assertEquals('bar', $resolver->callback('foo', [], function() { return 'bar'; }));
     }
 
     /**
      *
      */
-    public function test_callback_class_exists()
+    public function test_callback_no_callback_and_class_exists()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['callback', 'callbackTest']);
+        $this->assertInstanceOf(Config::class, $resolver->callback(Config::class));
+    }
 
-        $mock->expects($this->once())
-             ->method('make')
-             ->willReturn('bar');
+    /**
+     *
+     */
+    public function test_callback_and_class_exists()
+    {
+        $resolver = new Resolver;
 
-        $this->assertEquals('bar', $mock->callbackTest(self::class, [], function() { return 'bar'; }));
+        $this->assertInstanceOf(Config::class, $resolver->callback(Config::class, [], function() { }));
     }
 }

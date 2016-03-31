@@ -5,8 +5,9 @@
 
 namespace Mvc5\Test\Resolver\Build;
 
+use Mvc5\Config;
+use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class BuildTest
     extends TestCase
@@ -16,14 +17,10 @@ class BuildTest
      */
     public function test_build()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['build', 'buildTest']);
+        $resolver->configure('foo', Config::class);
 
-        $mock->expects($this->once())
-             ->method('compose')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->buildTest(['foo']));
+        $this->assertInstanceOf(Config::class, $resolver->build(['foo']));
     }
 }

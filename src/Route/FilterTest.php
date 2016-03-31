@@ -1,11 +1,14 @@
 <?php
+/**
+ *
+ */
 
 namespace Mvc5\Test\Route;
 
-use Mvc5\Route\Route;
+use Mvc5\Arg;
+use Mvc5\Route\Config as Route;
 use Mvc5\Route\Filter;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class FilterTest
     extends TestCase
@@ -13,16 +16,26 @@ class FilterTest
     /**
      *
      */
-    public function test__invoke()
+    public function test_invoke()
     {
-        /** @var Route|Mock $route */
+        $filter = new Filter;
+        $route  = new Route([Arg::PATH => 'foo']);
 
-        $route = $this->getCleanMock(Route::class);
+        $filter($route);
 
-        $route->expects($this->once())
-              ->method('path')
-              ->willReturn('foo');
+        $this->assertEquals('foo', $route->path());
+    }
 
-        (new Filter)->__invoke($route);
+    /**
+     *
+     */
+    public function test_invoke_no_path()
+    {
+        $filter = new Filter;
+        $route  = new Route;
+
+        $filter($route);
+
+        $this->assertEquals('/', $route->path());
     }
 }

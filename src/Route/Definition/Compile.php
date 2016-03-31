@@ -1,4 +1,7 @@
 <?php
+/**
+ *
+ */
 
 namespace Mvc5\Test\Route\Definition;
 
@@ -11,17 +14,7 @@ class Compile
     /**
      *
      */
-    use Base;
-
-    /**
-     * @param $tokens
-     * @param $args
-     * @param $defaults
-     * @return mixed
-     * @throws \InvalidArgumentException
-     */
-    public function compileTest($tokens, $args, $defaults)
-    {
-        return $this->compile($tokens, $args, $defaults);
+    use Base {
+        compile as public;
     }
 }

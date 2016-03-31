@@ -7,7 +7,6 @@ namespace Mvc5\Test\Model\Template;
 
 use Mvc5\Arg;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class LayoutTest
     extends TestCase
@@ -17,11 +16,9 @@ class LayoutTest
      */
     public function test_model()
     {
-        /** @var Layout|Mock $mock */
+        $layout = new Layout(null, [Arg::CHILD_MODEL => 'foo']);
 
-        $mock = $this->getCleanMock(Layout::class, ['model', 'get', 'offsetGet'], [null, [Arg::CHILD_MODEL => 'foo']]);
-
-        $this->assertEquals('foo', $mock->model());
+        $this->assertEquals('foo', $layout->model());
     }
 
     /**
@@ -29,11 +26,11 @@ class LayoutTest
      */
     public function test_model_set()
     {
-        /** @var Layout|Mock $mock */
+        $vars = ['foo' => 'bar'];
 
-        $mock = $this->getCleanMock(Layout::class, ['model', 'set', 'offsetSet']);
+        $layout = new Layout;
 
-        $this->assertEquals(['foo' => 'bar'], $mock->model(['foo' => 'bar']));
+        $this->assertEquals($vars, $layout->model($vars));
     }
 
     /**
@@ -41,11 +38,11 @@ class LayoutTest
      */
     public function test_vars()
     {
-        /** @var Layout|Mock $mock */
+        $vars = ['foo' => 'bar'];
 
-        $mock = $this->getCleanMock(Layout::class, ['vars']);
+        $layout = new Layout(null, $vars);
 
-        $this->assertEquals([], $mock->vars());
+        $this->assertEquals($vars, $layout->vars());
     }
 
     /**
@@ -53,10 +50,10 @@ class LayoutTest
      */
     public function test_vars_set()
     {
-        /** @var Layout|Mock $mock */
+        $vars = ['foo' => 'bar'];
 
-        $mock = $this->getCleanMock(Layout::class, ['vars']);
+        $layout = new Layout;
 
-        $this->assertEquals(['foo'], $mock->vars(['foo']));
+        $this->assertEquals($vars, $layout->vars($vars));
     }
 }

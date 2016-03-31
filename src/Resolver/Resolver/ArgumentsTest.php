@@ -5,8 +5,8 @@
 
 namespace Mvc5\Test\Resolver\Resolver;
 
+use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class ArgumentsTest
     extends TestCase
@@ -16,19 +16,17 @@ class ArgumentsTest
      */
     public function test_arguments()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['arguments', 'argumentsTest']);
+        $this->assertEquals(['child'], $resolver->arguments(['child'], []));
 
-        $this->assertEquals(['child'], $mock->argumentsTest(['child'], []));
+        $this->assertEquals(['parent'], $resolver->arguments([], ['parent']));
 
-        $this->assertEquals(['parent'], $mock->argumentsTest([], ['parent']));
-
-        $this->assertEquals(['child', 'parent'], $mock->argumentsTest(['child'], ['parent']));
+        $this->assertEquals(['child', 'parent'], $resolver->arguments(['child'], ['parent']));
 
         $this->assertEquals(
             ['child' => 'foo', 'parent' => 'baz'],
-            $mock->argumentsTest(['child' => 'foo'], ['child' => 'bar', 'parent' => 'baz'])
+            $resolver->arguments(['child' => 'foo'], ['child' => 'bar', 'parent' => 'baz'])
         );
     }
 }

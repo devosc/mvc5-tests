@@ -1,11 +1,13 @@
 <?php
+/**
+ *
+ */
 
 namespace Mvc5\Test\Url;
 
 use Mvc5\Route\Definition;
-use Mvc5\Route\Route;
+use Mvc5\Route\Config as Route;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class PluginTest
     extends TestCase
@@ -15,9 +17,7 @@ class PluginTest
      */
     public function test_construct()
     {
-        $route = $this->getCleanMock(Route::class);
-
-        $this->getCleanMock(Plugin::class, [], [$route, function(){}]);
+        $this->assertInstanceOf(Plugin::class, new Plugin(new Route, function(){}));
     }
 
     /**
@@ -25,11 +25,10 @@ class PluginTest
      */
     public function test_generator()
     {
-        /** @var Plugin|Mock $mock */
+        $generator = function(){};
+        $plugin    = new Plugin(new Route, $generator);
 
-        $mock = $this->getCleanMock(Plugin::class, ['generator', 'generatorTest']);
-
-        $this->assertEquals(null, $mock->generatorTest());
+        $this->assertEquals($generator, $plugin->generator());
     }
 
     /**
@@ -37,17 +36,13 @@ class PluginTest
      */
     public function test_url()
     {
-        /** @var Route $route */
-
-        $route = $this->getCleanMock(Route::class);
-
         $generator = function($name, array $args = []) {
             return $name . '/' . key($args) . '/' . current($args);
         };
 
-        $plugin = new Plugin($route, $generator);
+        $plugin = new Plugin(new Route, $generator);
 
-        $this->assertEquals('foo/bar/baz', $plugin->urlTest('foo', ['bar' => 'baz']));
+        $this->assertEquals('foo/bar/baz', $plugin->url('foo', ['bar' => 'baz']));
     }
 
     /**
@@ -55,23 +50,8 @@ class PluginTest
      */
     public function test_invoke()
     {
-        /** @var Plugin|Mock $mock */
+        $plugin = new Plugin(new Route, function() { return 'foo'; });
 
-        $route = $this->getCleanMock(Route::class);
-
-        $route->expects($this->once())
-              ->method('name');
-
-        $route->expects($this->once())
-              ->method('params')
-              ->willReturn([]);
-
-        $mock = $this->getCleanMock(Plugin::class, ['__invoke', '__invoke'], [$route, function(){}]);
-
-        $mock->expects($this->once())
-             ->method('url')
-             ->willReturn('bar');
-
-        $this->assertEquals('bar', $mock->__invoke());
+        $this->assertEquals('foo', $plugin());
     }
 }

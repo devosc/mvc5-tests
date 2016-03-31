@@ -5,10 +5,11 @@
 
 namespace Mvc5\Test\Resolver\Resolver\Gem;
 
+use Mvc5\Config;
 use Mvc5\Plugin\Factory;
-use Mvc5\Test\Resolver\Resolver\Resolver;
+use Mvc5\Plugin\Plugin;
+use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class FactoryTest
     extends TestCase
@@ -18,17 +19,12 @@ class FactoryTest
      */
     public function test_gem_factory()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['gem', 'gemTest']);
+        $resolver->configure('bar', function() { return function() { return 'baz'; }; });
 
-        $mock->expects($this->once())
-            ->method('child');
+        $resolver->configure('factory', new Plugin('bar'));
 
-        $mock->expects($this->once())
-            ->method('invoke')
-            ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->gemTest(new Factory('foo')));
+        $this->assertEquals('baz', $resolver->gem(new Factory('foo')));
     }
 }

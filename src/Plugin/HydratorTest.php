@@ -1,4 +1,7 @@
 <?php
+/**
+ *
+ */
 
 namespace Mvc5\Test\Plugin;
 
@@ -13,8 +16,6 @@ class HydratorTest
      */
     public function test_construct()
     {
-        $mock = $this->getCleanMock(Hydrator::class, ['__construct'], ['foo', []]);
-
-        $this->assertInternalType('object', $mock);
+        $this->assertInstanceOf(Hydrator::class, new Hydrator('foo', []));
     }
 }

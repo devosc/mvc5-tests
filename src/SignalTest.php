@@ -17,11 +17,9 @@ class SignalTest
      */
     public function test_signal_with_numeric_args()
     {
-        /** @var Signal $mock */
+        $signal = new Signal;
 
-        $mock = $this->getCleanMock(Signal::class, ['signal', 'testSignal']);
-
-        $this->assertEquals('foo', $mock->testSignal(function() { return 'foo'; }, ['bar']));
+        $this->assertEquals('foo', $signal->signal(function() { return 'foo'; }, ['bar']));
     }
 
     /**
@@ -29,11 +27,9 @@ class SignalTest
      */
     public function test_signal_without_args()
     {
-        /** @var Signal $mock */
+        $signal = new Signal;
 
-        $mock = $this->getCleanMock(Signal::class, ['signal', 'testSignal']);
-
-        $this->assertEquals('foo', $mock->testSignal(function() { return 'foo'; }));
+        $this->assertEquals('foo', $signal->signal(function() { return 'foo'; }));
     }
 
     /**
@@ -41,11 +37,9 @@ class SignalTest
      */
     public function test_signal_with_optional_arg()
     {
-        /** @var Signal $mock */
+        $signal = new Signal;
 
-        $mock = $this->getCleanMock(Signal::class, ['signal', 'testSignal']);
-
-        $this->assertEquals('foo', $mock->testSignal([Signal::class, 'optionalArgTest']));
+        $this->assertEquals('foo', $signal->signal([Signal::class, 'optionalArgTest']));
     }
 
     /**
@@ -53,11 +47,9 @@ class SignalTest
      */
     public function test_signal_array()
     {
-        /** @var Signal $mock */
+        $signal = new Signal;
 
-        $mock = $this->getCleanMock(Signal::class, ['signal', 'testSignal']);
-
-        $this->assertEquals('bar', $mock->testSignal([Signal::class, 'staticTest'], ['foo' => 'bar']));
+        $this->assertEquals('bar', $signal->signal([Signal::class, 'staticTest'], ['foo' => 'bar']));
     }
 
     /**
@@ -65,11 +57,9 @@ class SignalTest
      */
     public function test_signal_variadic_args()
     {
-        /** @var Signal $mock */
+        $signal = new Signal;
 
-        $mock = $this->getCleanMock(Signal::class, ['signal', 'testSignal']);
-
-        $this->assertEquals(['foo' => 'bar'], $mock->testSignal([Signal::class, 'variadicArgsTest'], ['foo' => 'bar']));
+        $this->assertEquals(['foo' => 'bar'], $signal->signal([Signal::class, 'variadicArgsTest'], ['foo' => 'bar']));
     }
 
     /**
@@ -77,11 +67,9 @@ class SignalTest
      */
     public function test_signal_args()
     {
-        /** @var Signal $mock */
+        $signal = new Signal;
 
-        $mock = $this->getCleanMock(Signal::class, ['signal', 'testSignal']);
-
-        $this->assertEquals(['foo' => 'bar'], $mock->testSignal([Signal::class, 'argsTest'], ['foo' => 'bar']));
+        $this->assertEquals(['foo' => 'bar'], $signal->signal([Signal::class, 'argsTest'], ['foo' => 'bar']));
     }
 
     /**
@@ -89,13 +77,11 @@ class SignalTest
      */
     public function test_signal_static_string()
     {
-        /** @var Signal $mock */
+        $signal = new Signal;
 
-        $mock = $this->getCleanMock(Signal::class, ['signal', 'testSignal']);
+        $name = 'Mvc5\Test\Signal::staticRequiredTest';
 
-        $name = Signal::class.'::'.'staticRequiredTest';
-
-        $this->assertEquals('bar baz', $mock->testSignal($name, ['foo' => 'bar'], function($name) {
+        $this->assertEquals('bar baz', $signal->signal($name, ['foo' => 'bar'], function($name) {
             if (ConfigPlugin::class == $name) {
                 return new Config;
             }
@@ -113,15 +99,13 @@ class SignalTest
      */
     public function test_signal_no_param_exception()
     {
-        /** @var Signal $mock */
+        $signal = new Signal;
 
-        $mock = $this->getCleanMock(Signal::class, ['signal', 'testSignal']);
-
-        $name = Signal::class.'::'.'staticRequiredExceptionTest';
+        $name = 'Mvc5\Test\Signal::staticRequiredExceptionTest';
 
         $this->setExpectedException('RuntimeException');
 
-        $mock->testSignal($name, ['foo' => 'bar']);
+        $signal->signal($name, ['foo' => 'bar']);
     }
 
     /**
@@ -129,10 +113,8 @@ class SignalTest
      */
     public function test_signal_php_function()
     {
-        /** @var Signal $mock */
+        $signal = new Signal;
 
-        $mock = $this->getCleanMock(Signal::class, ['signal', 'testSignal']);
-
-        $this->assertEquals(null, $mock->testSignal('session_id'));
+        $this->assertEquals(null, $signal->signal('session_id'));
     }
 }

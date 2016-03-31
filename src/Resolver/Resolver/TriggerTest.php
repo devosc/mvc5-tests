@@ -5,8 +5,9 @@
 
 namespace Mvc5\Test\Resolver\Resolver;
 
+use Mvc5\Event;
+use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class TriggerTest
     extends TestCase
@@ -16,14 +17,12 @@ class TriggerTest
      */
     public function test_trigger()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['trigger']);
+        $resolver->configure('event\model', Event::class);
 
-        $mock->expects($this->once())
-             ->method('event')
-             ->willReturn('bar');
+        $resolver->events(['service\resolver' => [function() { return 'bar'; }]]);
 
-        $this->assertEquals('bar', $mock->trigger(null));
+        $this->assertEquals('bar', $resolver->trigger('service\resolver'));
     }
 }

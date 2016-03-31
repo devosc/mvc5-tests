@@ -5,8 +5,9 @@
 
 namespace Mvc5\Test\Resolver\Resolver;
 
+use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
+use Mvc5\Test\Resolver\Resolver\Model\CallableObject;
 
 class RepeatTest
     extends TestCase
@@ -16,15 +17,9 @@ class RepeatTest
      */
     public function test_repeat_no_config()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['repeat', 'repeatTest']);
-
-        $mock->expects($this->once())
-            ->method('invoke')
-            ->willReturn('bar');
-
-        $this->assertEquals('bar', $mock->repeatTest('foo', 'baz'));
+        $this->assertEquals('foo', $resolver->repeat(CallableObject::class, 'test'));
     }
 
     /**
@@ -32,14 +27,8 @@ class RepeatTest
      */
     public function test_repeat_config()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['repeat', 'repeatTest']);
-
-        $mock->expects($this->any())
-             ->method('invoke')
-             ->willreturn('baz');
-
-        $this->assertEquals('baz', $mock->repeatTest('foo', 'baz', ['foobar']));
+        $this->assertEquals('foo', $resolver->repeat(CallableObject::class, 'test2', ['test3']));
     }
 }

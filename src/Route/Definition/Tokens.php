@@ -1,4 +1,7 @@
 <?php
+/**
+ *
+ */
 
 namespace Mvc5\Test\Route\Definition;
 
@@ -9,16 +12,7 @@ class Tokens
     /**
      *
      */
-    use Base;
-
-    /**
-     * @param $subject
-     * @param $delimiter
-     * @return array
-     * @throws \RuntimeException
-     */
-    public function tokensTest($subject, $delimiter = '/')
-    {
-        return $this->tokens($subject, $delimiter);
+    use Base {
+        tokens as public;
     }
 }

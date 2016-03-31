@@ -5,8 +5,9 @@
 
 namespace Mvc5\Test\Resolver\Build;
 
+use Mvc5\Config;
+use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class UniqueTest
     extends TestCase
@@ -16,15 +17,9 @@ class UniqueTest
      */
     public function test_unique_same()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['unique', 'uniqueTest']);
-
-        $mock->expects($this->once())
-             ->method('callback')
-             ->willReturn('bar');
-
-        $this->assertEquals('bar', $mock->uniqueTest('foo', 'foo'));
+        $this->assertInstanceOf(Config::class, $resolver->unique(Config::class, Config::class));
     }
 
     /**
@@ -32,14 +27,18 @@ class UniqueTest
      */
     public function test_unique_parent()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['unique', 'uniqueTest']);
+        $this->assertInstanceOf(Config::class, $resolver->unique('foo', Config::class));
+    }
 
-        $mock->expects($this->once())
-             ->method('__invoke')
-             ->willReturn('bar');
+    /**
+     *
+     */
+    public function test_unique_callback()
+    {
+        $resolver = new Resolver;
 
-        $this->assertEquals('bar', $mock->uniqueTest('foo', 'baz'));
+        $this->assertInstanceOf(Config::class, $resolver->unique('foo', 'bar', [], function() { return new Config; }));
     }
 }

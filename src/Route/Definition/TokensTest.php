@@ -1,9 +1,11 @@
 <?php
+/**
+ *
+ */
 
 namespace Mvc5\Test\Route\Definition;
 
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class TokensTest
     extends TestCase
@@ -13,11 +15,9 @@ class TokensTest
      */
     public function test_tokens()
     {
-        /** @var Tokens|Mock $mock */
+        $definition = new Tokens;
 
-        $mock = $this->getCleanAbstractMock(Tokens::class, ['tokens', 'tokensTest']);
-
-        $this->assertTrue(is_array($mock->tokensTest('/:foo')));
+        $this->assertTrue(is_array($definition->tokens('/:foo')));
     }
 
     /**
@@ -25,13 +25,11 @@ class TokensTest
      */
     public function test_tokens_empty_parameter_exception()
     {
-        /** @var Tokens|Mock $mock */
-
-        $mock = $this->getCleanAbstractMock(Tokens::class, ['tokens', 'tokensTest']);
+        $definition = new Tokens;
 
         $this->setExpectedException('RuntimeException');
 
-        $mock->tokensTest(':');
+        $definition->tokens(':');
     }
 
     /**
@@ -39,13 +37,11 @@ class TokensTest
      */
     public function test_tokens_no_closing_bracket_exception()
     {
-        /** @var Tokens|Mock $mock */
-
-        $mock = $this->getCleanAbstractMock(Tokens::class, ['tokens', 'tokensTest']);
+        $definition = new Tokens;
 
         $this->setExpectedException('RuntimeException');
 
-        $mock->tokensTest('/:foo]');
+        $definition->tokens('/:foo]');
     }
 
     /**
@@ -53,12 +49,10 @@ class TokensTest
      */
     public function test_tokens_unbalanced_exception()
     {
-        /** @var Tokens|Mock $mock */
-
-        $mock = $this->getCleanAbstractMock(Tokens::class, ['tokens', 'tokensTest']);
+        $definition = new Tokens;
 
         $this->setExpectedException('RuntimeException');
 
-        $mock->tokensTest('/[:foo');
+        $definition->tokens('/[:foo');
     }
 }

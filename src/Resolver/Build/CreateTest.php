@@ -5,8 +5,9 @@
 
 namespace Mvc5\Test\Resolver\Build;
 
+use Mvc5\Config;
+use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class CreateTest
     extends TestCase
@@ -16,17 +17,10 @@ class CreateTest
      */
     public function test_create()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['create', 'createTest']);
+        $resolver->configure('foo', Config::class);
 
-        $mock->expects($this->once())
-             ->method('configured');
-
-        $mock->expects($this->once())
-             ->method('unique')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->createTest('foo'));
+        $this->assertInstanceOf(Config::class, $resolver->create('foo'));
     }
 }

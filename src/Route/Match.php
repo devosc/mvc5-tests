@@ -1,4 +1,7 @@
 <?php
+/**
+ *
+ */
 
 namespace Mvc5\Test\Route;
 
@@ -11,8 +14,8 @@ class Match
     /**
      * @return array
      */
-    public function argsTest()
+    public function args()
     {
-        return $this->args();
+        return parent::args();
     }
 }

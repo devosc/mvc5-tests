@@ -5,8 +5,9 @@
 
 namespace Mvc5\Test\Resolver\Build;
 
+use Mvc5\Config;
+use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class FirstTest
     extends TestCase
@@ -16,15 +17,9 @@ class FirstTest
      */
     public function test_first_with_no_others()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['first', 'firstTest']);
-
-        $mock->expects($this->once())
-             ->method('callback')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->firstTest('foo', []));
+        $this->assertInstanceOf(Config::class, $resolver->first(Config::class, []));
     }
 
     /**
@@ -32,14 +27,8 @@ class FirstTest
      */
     public function test_first_with_others()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['first', 'firstTest']);
-
-        $mock->expects($this->once())
-             ->method('create')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->firstTest('foo', ['bar']));
+        $this->assertInstanceOf(Config::class, $resolver->first(Config::class, ['bar']));
     }
 }

@@ -5,7 +5,7 @@
 
 namespace Mvc5\Test;
 
-use Mvc5\Plugin;
+use Mvc5\App;
 use Mvc5\Service\Service;
 use Mvc5\Test\Test\TestCase;
 
@@ -17,11 +17,9 @@ class PluginTest
      */
     public function test_service_empty()
     {
-        /** @var Plugin $mock */
+        $plugin = new Plugin;
 
-        $mock = $this->getCleanMockForTrait(Plugin::class, ['service']);
-
-        $this->assertEquals(null, $mock->service());
+        $this->assertEquals(null, $plugin->service());
     }
 
     /**
@@ -29,12 +27,8 @@ class PluginTest
      */
     public function test_service_not_empty()
     {
-        /** @var Plugin $mock */
+        $plugin = new Plugin;
 
-        $mock = $this->getCleanMockForTrait(Plugin::class, ['service']);
-
-        $service = $this->getCleanMock(Service::class);
-
-        $this->assertEquals($service, $mock->service($service));
+        $this->assertInstanceOf(Service::class, $plugin->service(new App));
     }
 }

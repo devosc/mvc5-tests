@@ -6,7 +6,6 @@
 namespace Mvc5\Test\Event;
 
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class ModelTest
     extends TestCase
@@ -16,11 +15,9 @@ class ModelTest
      */
     public function test_event()
     {
-        /** @var Event|Mock $mock */
+        $event = new Event('foo');
 
-        $mock = $this->getCleanMock(Event::class, ['event'], ['foo']);
-
-        $this->assertEquals('foo', $mock->event());
+        $this->assertEquals('foo', $event->event());
     }
 
     /**
@@ -28,11 +25,9 @@ class ModelTest
      */
     public function test_event_const()
     {
-        /** @var Event|Mock $mock */
+        $event = new Event;
 
-        $mock = $this->getCleanMock(Event::class, ['event']);
-
-        $this->assertEquals('baz', $mock->event());
+        $this->assertEquals('baz', $event->event());
     }
 
     /**
@@ -40,11 +35,9 @@ class ModelTest
      */
     public function test_event_class_name()
     {
-        /** @var Event|Mock $mock */
+        $event = new ModelEvent;
 
-        $mock = $this->getCleanMock(ModelEvent::class, ['event']);
-
-        $this->assertEquals(get_class($mock), $mock->event());
+        $this->assertEquals(get_class($event), $event->event());
     }
 
     /**
@@ -52,11 +45,13 @@ class ModelTest
      */
     public function test_stop()
     {
-        /** @var Event|Mock $mock */
+        $event = new ModelEvent;
 
-        $mock = $this->getCleanMock(ModelEvent::class, ['stop']);
+        $this->assertFalse($event->stopped());
 
-        $mock->stop();
+        $event->stop();
+
+        $this->assertTrue($event->stopped());
     }
 
     /**
@@ -64,10 +59,8 @@ class ModelTest
      */
     public function test_stopped()
     {
-        /** @var Event|Mock $mock */
+        $event = new ModelEvent;
 
-        $mock = $this->getCleanMock(ModelEvent::class, ['stopped']);
-
-        $this->assertEquals(false, $mock->stopped());
+        $this->assertFalse($event->stopped());
     }
 }

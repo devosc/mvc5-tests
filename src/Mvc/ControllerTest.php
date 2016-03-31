@@ -5,27 +5,50 @@
 
 namespace Mvc5\Test\Mvc;
 
+use Mvc5\Arg;
+use Mvc5\App;
 use Mvc5\Mvc\Controller;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class ControllerTest
     extends TestCase
 {
     /**
+     * @return App
+     */
+    protected function app()
+    {
+        return new App([
+            Arg::SERVICES => [
+                'home' => function() {
+                    return function() {
+                        return 'Home';
+                    };
+                },
+                'exception' => function() {
+                    return function() {
+                        throw new \Exception;
+                    };
+                },
+                'controller\exception' => function() {
+                    return function() {
+                        return 'Exception';
+                    };
+                }
+            ]
+        ]);
+    }
+
+    /**
      *
      */
-    public function test__invoke()
+    public function test_invoke()
     {
-        /** @var Controller|Mock $mock */
+        $controller = new Controller;
 
-        $mock = $this->getCleanMock(Controller::class, ['__invoke']);
+        $controller->service($this->app());
 
-        $mock->expects($this->once())
-             ->method('action')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->__invoke(function(){}));
+        $this->assertEquals('Home', $controller('home'));
     }
 
     /**
@@ -33,18 +56,10 @@ class ControllerTest
      */
     public function test_invoke_exception()
     {
-        /** @var Controller|Mock $mock */
+        $controller = new Controller;
 
-        $mock = $this->getCleanMock(Controller::class, ['__invoke']);
+        $controller->service($this->app());
 
-        $mock->expects($this->once())
-             ->method('action')
-             ->will($this->throwException(new \Exception));
-
-        $mock->expects($this->once())
-             ->method('exception')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->__invoke(function() {}));
+        $this->assertEquals('Exception', $controller('exception'));
     }
 }

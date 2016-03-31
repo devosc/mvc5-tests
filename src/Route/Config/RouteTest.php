@@ -7,7 +7,6 @@ namespace Mvc5\Test\Route\Config;
 
 use Mvc5\Arg;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class RouteTest
     extends TestCase
@@ -17,15 +16,9 @@ class RouteTest
      */
     public function test_controller()
     {
-        /** @var Route|Mock $mock */
+        $route = new Route([Arg::CONTROLLER => 'foo']);
 
-        $mock = $this->getCleanMock(Route::class, ['controller']);
-
-        $mock->expects($this->once())
-             ->method('offsetGet')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->controller());
+        $this->assertEquals('foo', $route->controller());
     }
 
     /**
@@ -33,15 +26,9 @@ class RouteTest
      */
     public function test_error()
     {
-        /** @var Route|Mock $mock */
+        $route = new Route([Arg::ERROR => 'foo']);;
 
-        $mock = $this->getCleanMock(Route::class, ['error']);
-
-        $mock->expects($this->once())
-             ->method('offsetGet')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->error());
+        $this->assertEquals('foo', $route->error());
     }
 
     /**
@@ -49,15 +36,9 @@ class RouteTest
      */
     public function test_hostname()
     {
-        /** @var Route|Mock $mock */
+        $route = new Route([Arg::HOSTNAME => 'foo']);
 
-        $mock = $this->getCleanMock(Route::class, ['hostname']);
-
-        $mock->expects($this->once())
-             ->method('offsetGet')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->hostname());
+        $this->assertEquals('foo', $route->hostname());
     }
 
     /**
@@ -65,7 +46,7 @@ class RouteTest
      */
     public function test_length()
     {
-        $route = new Route(['length' => 2]);
+        $route = new Route([Arg::LENGTH => 2]);
 
         $this->assertEquals(2, $route->length());
     }
@@ -75,7 +56,7 @@ class RouteTest
      */
     public function test_length_zero()
     {
-        $route = new Route();
+        $route = new Route;
 
         $this->assertEquals(0, $route->length());
     }
@@ -85,7 +66,7 @@ class RouteTest
      */
     public function test_matched()
     {
-        $route = new Route(['matched' => true]);
+        $route = new Route([Arg::MATCHED => true]);
 
         $this->assertEquals(true, $route->matched());
     }
@@ -95,7 +76,7 @@ class RouteTest
      */
     public function test_matched_false()
     {
-        $route = new Route();
+        $route = new Route;
 
         $this->assertEquals(false, $route->matched());
     }
@@ -105,7 +86,7 @@ class RouteTest
      */
     public function test_method()
     {
-        $route = new Route(['method' => 'foo']);
+        $route = new Route([Arg::METHOD => 'foo']);
 
         $this->assertEquals('foo', $route->method());
     }
@@ -115,15 +96,9 @@ class RouteTest
      */
     public function test_name()
     {
-        /** @var Route|Mock $mock */
+        $route = new Route([Arg::NAME => 'foo']);
 
-        $mock = $this->getCleanMock(Route::class, ['name']);
-
-        $mock->expects($this->once())
-             ->method('offsetGet')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->name());
+        $this->assertEquals('foo', $route->name());
     }
 
     /**
@@ -141,7 +116,7 @@ class RouteTest
      */
     public function test_param_null()
     {
-        $route = new Route();
+        $route = new Route;
 
         $this->assertEquals(null, $route->param('foo'));
     }
@@ -151,7 +126,7 @@ class RouteTest
      */
     public function test_params()
     {
-        $route = new Route(['params' => ['foo' => 'bar']]);
+        $route = new Route([Arg::PARAMS => ['foo' => 'bar']]);
 
         $this->assertEquals(['foo' => 'bar'], $route->params());
     }
@@ -161,7 +136,7 @@ class RouteTest
      */
     public function test_params_empty()
     {
-        $route = new Route();
+        $route = new Route;
 
         $this->assertEquals([], $route->params());
     }
@@ -171,15 +146,9 @@ class RouteTest
      */
     public function test_path()
     {
-        /** @var Route|Mock $mock */
+        $route = new Route([Arg::PATH => 'foo']);
 
-        $mock = $this->getCleanMock(Route::class, ['path']);
-
-        $mock->expects($this->once())
-             ->method('offsetGet')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->path());
+        $this->assertEquals('foo', $route->path());
     }
 
     /**
@@ -187,14 +156,8 @@ class RouteTest
      */
     public function test_scheme()
     {
-        /** @var Route|Mock $mock */
+        $route = new Route([Arg::SCHEME => 'foo']);
 
-        $mock = $this->getCleanMock(Route::class, ['scheme']);
-
-        $mock->expects($this->once())
-            ->method('offsetGet')
-            ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->scheme());
+        $this->assertEquals('foo', $route->scheme());
     }
 }

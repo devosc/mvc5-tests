@@ -5,8 +5,9 @@
 
 namespace Mvc5\Test\Resolver\Resolver;
 
+use Mvc5\Event;
+use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class ResolverTest
     extends TestCase
@@ -16,14 +17,12 @@ class ResolverTest
      */
     public function test_resolver()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['resolver', 'resolverTest']);
+        $resolver->configure('event\model', Event::class);
 
-        $mock->expects($this->once())
-             ->method('call')
-             ->willReturn('foo');
+        $resolver->events(['service\resolver' => [function() { return 'bar'; }]]);
 
-        $this->assertEquals('foo', $mock->resolverTest(false));
+        $this->assertEquals('bar', $resolver->resolver('foo'));
     }
 }

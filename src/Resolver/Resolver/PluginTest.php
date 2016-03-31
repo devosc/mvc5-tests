@@ -5,8 +5,11 @@
 
 namespace Mvc5\Test\Resolver\Resolver;
 
+use Mvc5\Config;
+use Mvc5\Container;
+use Mvc5\Plugin\Plugin;
+use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class PluginTest
     extends TestCase
@@ -16,11 +19,9 @@ class PluginTest
      */
     public function test_plugin_false()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanMock(Resolver::class, ['plugin']);
-
-        $this->assertEquals(false, $mock->plugin(false));
+        $this->assertEquals(false, $resolver->plugin(false));
     }
 
     /**
@@ -28,15 +29,11 @@ class PluginTest
      */
     public function test_plugin_string_build()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanMock(Resolver::class, ['plugin']);
+        $resolver->configure('foo', new Container(['bar' => Config::class]));
 
-        $mock->expects($this->any())
-             ->method('build')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->plugin('foo.bar'));
+        $this->assertEquals(new Config, $resolver->plugin('foo->bar'));
     }
 
     /**
@@ -44,11 +41,9 @@ class PluginTest
      */
     public function test_plugin_array()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanMock(Resolver::class, ['plugin']);
-
-        $this->assertEquals(false, $mock->plugin([false]));
+        $this->assertEquals(false, $resolver->plugin([false]));
     }
 
     /**
@@ -56,15 +51,9 @@ class PluginTest
      */
     public function test_plugin_closure()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanMock(Resolver::class, ['plugin']);
-
-        $mock->expects($this->once())
-             ->method('invoke')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->plugin(function() {}));
+        $this->assertEquals('foo', $resolver->plugin(function() { return 'foo'; }));
     }
 
     /**
@@ -72,14 +61,8 @@ class PluginTest
      */
     public function test_plugin_resolvable()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanMock(Resolver::class, ['plugin']);
-
-        $mock->expects($this->once())
-             ->method('resolve')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->plugin(new \stdClass));
+        $this->assertEquals(new Config, $resolver->plugin(new Plugin(Config::class)));
     }
 }

@@ -5,9 +5,9 @@
 
 namespace Mvc5\Test\Resolver\Resolver;
 
+use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Resolver\Resolver\Model\CallableObject;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class CallableTest
     extends TestCase
@@ -17,11 +17,9 @@ class CallableTest
      */
     public function test_callable_string()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['callable', 'callableTest']);
-
-        $this->assertInstanceOf(\Closure::class, $mock->callableTest('foo'));
+        $this->assertInstanceOf(\Closure::class, $resolver->callableMethod('foo'));
     }
 
     /**
@@ -29,13 +27,11 @@ class CallableTest
      */
     public function test_callable_array_string()
     {
-        /** @var Resolver|Mock $mock */
-
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['callable', 'callableTest']);
+        $resolver = new Resolver;
 
         $config = [CallableObject::class, 'test'];
 
-        $this->assertEquals($config, $mock->callableTest($config));
+        $this->assertEquals($config, $resolver->callableMethod($config));
     }
 
     /**
@@ -43,17 +39,11 @@ class CallableTest
      */
     public function test_callable_array_object()
     {
-        /** @var Resolver|Mock $mock */
-
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['callable', 'callableTest']);
+        $resolver = new Resolver;
 
         $config = [new CallableObject, 'test'];
 
-        $mock->expects($this->once())
-             ->method('resolve')
-             ->willReturn($config[0]);
-
-        $this->assertEquals($config, $mock->callableTest($config));
+        $this->assertEquals($config, $resolver->callableMethod($config));
     }
 
     /**
@@ -61,11 +51,9 @@ class CallableTest
      */
     public function test_callable_closure()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['callable', 'callableTest']);
-
-        $this->assertEquals(function(){}, $mock->callableTest(function(){}));
+        $this->assertEquals(function(){}, $resolver->callableMethod(function(){}));
     }
 
     /**
@@ -73,19 +61,10 @@ class CallableTest
      */
     public function test_callable_object()
     {
-        /** @var Resolver|Mock $mock */
-
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['callable', 'callableTest']);
+        $resolver = new Resolver;
 
         $obj = new CallableObject;
 
-        $mock->expects($this->once())
-             ->method('resolve');
-
-        $mock->expects($this->once())
-             ->method('listener')
-             ->willReturn($obj);
-
-        $this->assertEquals($obj, $mock->callableTest($obj));
+        $this->assertEquals($obj, $resolver->callableMethod($obj));
     }
 }

@@ -5,31 +5,54 @@
 
 namespace Mvc5\Test\Mvc;
 
-use Mvc5\Mvc\Route as MvcRoute;
-use Mvc5\Route\Route;
+use Mvc5\Arg;
+use Mvc5\App;
+use Mvc5\Mvc\Route;
+use Mvc5\Route\Config as RouteConfig;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class RouteTest
     extends TestCase
 {
     /**
+     * @return App
+     */
+    protected function app()
+    {
+        return new App([
+            Arg::SERVICES => [
+                'route\dispatch' => function() {
+                    return function(RouteConfig $route) {
+                        switch($route->name()) {
+                            default:
+                                throw new \RuntimeException;
+                                break;
+                            case 'home':
+                                $route[Arg::MATCHED] = true;
+                                return $route;
+                                break;
+                        }
+                    };
+                },
+                'route\exception' => function() {
+                    return function() {
+                      return 'foo';
+                    };
+                }
+            ]
+        ]);
+    }
+
+    /**
      *
      */
-    public function test__invoke()
+    public function test_invoke()
     {
-        /** @var MvcRoute|Mock $mock */
+        $route = new Route;
 
-        $mock = $this->getCleanMock(MvcRoute::class, ['__invoke']);
+        $route->service($this->app());
 
-        $route = $this->getCleanMock(Route::class);
-
-        $mock->expects($this->once())
-             ->method('route')
-             ->will($this->returnArgument(0))
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->__invoke($route));
+        $this->assertInstanceOf(RouteConfig::class, $route(new RouteConfig([Arg::NAME => 'home'])));
     }
 
     /**
@@ -37,20 +60,10 @@ class RouteTest
      */
     public function test_invoke_exception()
     {
-        /** @var MvcRoute|Mock $mock */
+        $route = new Route;
 
-        $mock = $this->getCleanMock(MvcRoute::class, ['__invoke']);
+        $route->service($this->app());
 
-        $route = $this->getCleanMock(Route::class);
-
-        $mock->expects($this->once())
-             ->method('route')
-             ->will($this->throwException(new \Exception));
-
-        $mock->expects($this->once())
-             ->method('exception')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->__invoke($route));
+        $this->assertEquals('foo', $route(new RouteConfig([Arg::NAME => 'exception'])));
     }
 }

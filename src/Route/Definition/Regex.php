@@ -1,4 +1,7 @@
 <?php
+/**
+ *
+ */
 
 namespace Mvc5\Test\Route\Definition;
 
@@ -9,16 +12,7 @@ class Regex
     /**
      *
      */
-    use Base;
-
-    /**
-     * @param array $tokens
-     * @param array $constraints
-     * @param string $delimiter
-     * @return string
-     */
-    public function regexTest(array $tokens, array $constraints = [], $delimiter = '/')
-    {
-        return $this->regex($tokens, $constraints, $delimiter);
+    use Base {
+        regex as public;
     }
 }

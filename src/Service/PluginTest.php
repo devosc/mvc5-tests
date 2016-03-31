@@ -5,9 +5,7 @@
 
 namespace Mvc5\Test\Service;
 
-use Mvc5\Service\Service;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class PluginTest
     extends TestCase
@@ -17,19 +15,9 @@ class PluginTest
      */
     public function test_call()
     {
-        /** @var Service|Mock $service */
+        $plugin = new Plugin(new Service);
 
-        $service = $this->getCleanMock(Service::class);
-
-        $service->expects($this->once())
-                ->method('call')
-                ->willReturn('foo');
-
-        /** @var Plugin $mock */
-
-        $mock = $this->getCleanMock(Plugin::class, ['call', 'callTest'], [$service]);
-
-        $this->assertEquals('foo', $mock->callTest(null));
+        $this->assertEquals('foo', $plugin->call(null));
     }
 
     /**
@@ -37,19 +25,9 @@ class PluginTest
      */
     public function test_param()
     {
-        /** @var Service|Mock $service */
+        $plugin = new Plugin(new Service);
 
-        $service = $this->getCleanMock(Service::class);
-
-        $service->expects($this->once())
-                ->method('param')
-                ->willReturn('foo');
-
-        /** @var Plugin $mock */
-
-        $mock = $this->getCleanMock(Plugin::class, ['param', 'paramTest'], [$service]);
-
-        $this->assertEquals('foo', $mock->paramTest(null));
+        $this->assertEquals('foo', $plugin->param(null));
     }
 
     /**
@@ -57,19 +35,9 @@ class PluginTest
      */
     public function test_plugin()
     {
-        /** @var Service|Mock $service */
+        $plugin = new Plugin(new Service);
 
-        $service = $this->getCleanMock(Service::class);
-
-        $service->expects($this->once())
-                ->method('plugin')
-                ->willReturn('foo');
-
-        /** @var Plugin $mock */
-
-        $mock = $this->getCleanMock(Plugin::class, ['plugin', 'pluginTest'], [$service]);
-
-        $this->assertEquals('foo', $mock->pluginTest(null));
+        $this->assertEquals('foo', $plugin->plugin(null));
     }
 
     /**
@@ -77,18 +45,8 @@ class PluginTest
      */
     public function test_trigger()
     {
-        /** @var Service|Mock $service */
+        $plugin = new Plugin(new Service);
 
-        $service = $this->getCleanMock(Service::class);
-
-        $service->expects($this->once())
-            ->method('trigger')
-            ->willReturn('foo');
-
-        /** @var Plugin $mock */
-
-        $mock = $this->getCleanMock(Plugin::class, ['trigger', 'triggerTest'], [$service]);
-
-        $this->assertEquals('foo', $mock->triggerTest(null));
+        $this->assertEquals('foo', $plugin->trigger(null));
     }
 }

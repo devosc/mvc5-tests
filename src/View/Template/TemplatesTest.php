@@ -15,13 +15,11 @@ class TemplatesTest
      */
     public function test_template()
     {
-        /** @var Templates $mock */
+        $templates = new Templates;
 
-        $mock = $this->getCleanAbstractMock(Templates::class, ['template', 'templateTest', 'templates']);
+        $templates->templates(['bar' => 'baz']);
 
-        $mock->templates(['bar' => 'baz']);
-
-        $this->assertEquals('baz', $mock->templateTest('bar'));
+        $this->assertEquals('baz', $templates->template('bar'));
     }
 
     /**
@@ -29,11 +27,9 @@ class TemplatesTest
      */
     public function test_template_not_exist()
     {
-        /** @var Templates $mock */
+        $templates = new Templates;
 
-        $mock = $this->getCleanAbstractMock(Templates::class, ['template', 'templateTest']);
-
-        $this->assertEquals(null, $mock->templateTest('foo'));
+        $this->assertEquals(null, $templates->template('foo'));
     }
 
     /**
@@ -41,11 +37,9 @@ class TemplatesTest
      */
     public function test_templates_empty()
     {
-        /** @var Templates $mock */
+        $templates = new Templates;
 
-        $mock = $this->getCleanAbstractMock(Templates::class, ['templates']);
-
-        $this->assertEquals([], $mock->templates());
+        $this->assertEquals([], $templates->templates());
     }
 
     /**
@@ -53,10 +47,8 @@ class TemplatesTest
      */
     public function test_templates_not_empty()
     {
-        /** @var Templates $mock */
+        $templates = new Templates;
 
-        $mock = $this->getCleanAbstractMock(Templates::class, ['templates']);
-
-        $this->assertEquals(['bar' => 'baz'], $mock->templates(['bar' => 'baz']));
+        $this->assertEquals(['bar' => 'baz'], $templates->templates(['bar' => 'baz']));
     }
 }

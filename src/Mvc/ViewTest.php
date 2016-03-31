@@ -5,23 +5,51 @@
 
 namespace Mvc5\Test\Mvc;
 
-use Mvc5\Mvc\View as MvcView;
+use Mvc5\Arg;
+use Mvc5\App;
+use Mvc5\Model;
+use Mvc5\Mvc\View;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class ViewTest
     extends TestCase
 {
     /**
+     * @return App
+     */
+    protected function app()
+    {
+        return new App([
+            Arg::SERVICES => [
+                'view\render' => function() {
+                    return function(Model $model) {
+                        switch($model->template()) {
+                            default:
+                                throw new \RuntimeException;
+                                break;
+                            case 'home':
+                                return 'Home';
+                                break;
+                        }
+                    };
+                },
+                'view\exception' => function() {
+                    return function() {
+                        return 'Exception';
+                    };
+                }
+            ]
+        ]);
+    }
+
+    /**
      *
      */
     public function test_invoke()
     {
-        /** @var MvcView|Mock $mock */
+        $view = new View;
 
-        $mock = $this->getCleanMock(MvcView::class, ['__invoke']);
-
-        $this->assertEquals(null, $mock->__invoke(null));
+        $this->assertEquals(null, $view(null));
     }
 
     /**
@@ -29,15 +57,11 @@ class ViewTest
      */
     public function test_invoke_render()
     {
-        /** @var MvcView|Mock $mock */
+        $view = new View;
 
-        $mock = $this->getCleanMock(MvcView::class, ['__invoke']);
+        $view->service($this->app());
 
-        $mock->expects($this->once())
-             ->method('render')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->__invoke('bar'));
+        $this->assertEquals('Home', $view(new Model('home')));
     }
 
     /**
@@ -45,18 +69,10 @@ class ViewTest
      */
     public function test_invoke_exception()
     {
-        /** @var MvcView|Mock $mock */
+        $view = new View;
 
-        $mock = $this->getCleanMock(MvcView::class, ['__invoke']);
+        $view->service($this->app());
 
-        $mock->expects($this->once())
-            ->method('render')
-            ->will($this->throwException(new \Exception));
-
-        $mock->expects($this->once())
-            ->method('exception')
-            ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->__invoke('bar'));
+        $this->assertEquals('Exception', $view(new Model('exception')));
     }
 }

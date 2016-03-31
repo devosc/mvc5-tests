@@ -1,11 +1,14 @@
 <?php
+/**
+ *
+ */
 
 namespace Mvc5\Test\Route;
 
-use Mvc5\Route\Definition;
-use Mvc5\Route\Route;
+use Mvc5\Arg;
+use Mvc5\Route\Definition\Config as Definition;
+use Mvc5\Route\Config as Route;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class MatchTest
     extends TestCase
@@ -15,10 +18,7 @@ class MatchTest
      */
     public function test_construct()
     {
-        $definition = $this->getCleanMock(Definition::class);
-        $route      = $this->getCleanMock(Route::class);
-
-        $this->getCleanMock(Match::class, [], [$definition, $route]);
+        $this->assertInstanceOf(Match::class, new Match(new Definition, new Route));
     }
 
     /**
@@ -26,11 +26,9 @@ class MatchTest
      */
     public function test_args()
     {
-        /** @var Match $mock */
+        $match = new Match(new Definition, new Route);
 
-        $mock = $this->getCleanMock(Match::class, ['args', 'argsTest']);
-
-        $this->assertTrue(is_array($mock->argsTest()));
+        $this->assertTrue(is_array($match->args()));
     }
 
     /**
@@ -38,21 +36,10 @@ class MatchTest
      */
     public function test_invoke()
     {
-        /** @var Match|Mock $mock */
+        $match = new Match(new Definition, new Route);
+        $route = new Route;
 
-        $mock = $this->getCleanMock(Match::class, ['__invoke']);
-
-        $mock->expects($this->once())
-             ->method('args')
-             ->willReturn([]);
-
-        $route = $this->getCleanMock(Route::class);
-
-        $mock->expects($this->once())
-             ->method('signal')
-             ->willReturn($route);
-
-        $this->assertEquals($route, $mock->__invoke(function(){}));
+        $this->assertEquals($route, $match(function($route){ return $route; }, [Arg::ROUTE => $route]));
     }
 
     /**
@@ -60,18 +47,8 @@ class MatchTest
      */
     public function test_invoke_not_route()
     {
-        /** @var Match|Mock $mock */
+        $match = new Match(new Definition, new Route);
 
-        $mock = $this->getCleanMock(Match::class, ['__invoke']);
-
-        $mock->expects($this->once())
-             ->method('args')
-             ->willReturn([]);
-
-        $mock->expects($this->once())
-             ->method('signal')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->__invoke(function(){}));
+        $this->assertEquals('foo', $match(function(){ return 'foo'; }));
     }
 }

@@ -6,8 +6,8 @@
 namespace Mvc5\Test\Model\Template;
 
 use Mvc5\Arg;
+use Mvc5\Model as Mvc5Model;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class ModelTest
     extends TestCase
@@ -17,11 +17,9 @@ class ModelTest
      */
     public function test_construct_template()
     {
-        /** @var Model|Mock $mock */
+        $model = new Model('foo');
 
-        $mock = $this->getCleanMock(Model::class, ['template', 'get', 'offsetGet'], ['foo']);
-
-        $this->assertEquals('foo', $mock->template());
+        $this->assertEquals('foo', $model->template());
     }
 
     /**
@@ -29,23 +27,9 @@ class ModelTest
      */
     public function test_construct_template_const()
     {
-        /** @var Model|Mock $mock */
+        $model = new Model;
 
-        $mock = $this->getCleanMock(Model::class, ['template', 'get', 'offsetGet'], [null]);
-
-        $this->assertEquals('baz', $mock->template());
-    }
-
-    /**
-     *
-     */
-    public function test_construct_template_null()
-    {
-        /** @var Model|Mock $mock */
-
-        $mock = $this->getCleanMock(Model::class, ['template', 'get', 'offsetGet']);
-
-        $this->assertEquals(null, $mock->template());
+        $this->assertEquals('baz', $model->template());
     }
 
     /**
@@ -53,15 +37,9 @@ class ModelTest
      */
     public function test_template()
     {
-        /** @var Model|Mock $mock */
+        $model = new Mvc5Model;
 
-        $mock = $this->getCleanMock(Model::class, ['template']);
-
-        $mock->expects($this->once())
-             ->method('offsetGet')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->template());
+        $this->assertEquals(null, $model->template());
     }
 
     /**
@@ -69,15 +47,9 @@ class ModelTest
      */
     public function test_template_set()
     {
-        /** @var Model|Mock $mock */
+        $model = new Mvc5Model;
 
-        $mock = $this->getCleanMock(Model::class, ['template']);
-
-        $mock->expects($this->once())
-             ->method('offsetSet')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->template('foo'));
+        $this->assertEquals('foo', $model->template('foo'));
     }
 
     /**
@@ -85,11 +57,11 @@ class ModelTest
      */
     public function test_vars()
     {
-        /** @var Model|Mock $mock */
+        $vars = ['foo' => 'bar'];
 
-        $mock = $this->getCleanMock(Model::class, ['vars']);
+        $model = new Mvc5Model(null, $vars);
 
-        $this->assertEquals([], $mock->vars());
+        $this->assertEquals($vars, $model->vars());
     }
 
     /**
@@ -97,15 +69,11 @@ class ModelTest
      */
     public function test_vars_set()
     {
-        /** @var Model|Mock $mock */
+        $vars = ['bar' => 'baz'];
 
-        $mock = $this->getCleanMock(Model::class, ['vars']);
+        $model = new Mvc5Model('foo', $vars);
 
-        $mock->expects($this->once())
-             ->method('template')
-             ->willReturn('foo');
-
-        $this->assertEquals([Arg::TEMPLATE_MODEL => 'foo', 'bar' => 'baz'], $mock->vars(['bar' => 'baz']));
+        $this->assertEquals([Arg::TEMPLATE_MODEL => 'foo'] + $vars, $model->vars($vars));
     }
 
     /**
@@ -113,15 +81,11 @@ class ModelTest
      */
     public function test_get()
     {
-        /** @var Model|Mock $mock */
+        $vars = ['foo' => 'bar'];
 
-        $mock = $this->getCleanMock(Model::class, ['__get']);
+        $model = new Mvc5Model(null, $vars);
 
-        $mock->expects($this->once())
-             ->method('get')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->__get(null));
+        $this->assertEquals('bar', $model->foo);
     }
 
     /**
@@ -129,15 +93,11 @@ class ModelTest
      */
     public function test_isset()
     {
-        /** @var Model|Mock $mock */
+        $vars = ['foo' => 'bar'];
 
-        $mock = $this->getCleanMock(Model::class, ['__isset']);
+        $model = new Mvc5Model(null, $vars);
 
-        $mock->expects($this->once())
-             ->method('has')
-             ->willReturn(true);
-
-        $this->assertEquals(true, $mock->__isset(null));
+        $this->assertEquals(true, isset($model->foo));
     }
 
     /**
@@ -145,14 +105,9 @@ class ModelTest
      */
     public function test_set()
     {
-        /** @var Model|Mock $mock */
+        $model = new Mvc5Model;
 
-        $mock = $this->getCleanMock(Model::class, ['__set']);
-
-        $mock->expects($this->once())
-             ->method('set');
-
-        $mock->__set(null, null);
+        $this->assertEquals('bar', $model->foo = 'bar');
     }
 
     /**
@@ -160,13 +115,14 @@ class ModelTest
      */
     public function test_unset()
     {
-        /** @var Model|Mock $mock */
+        $vars = ['foo' => 'bar'];
 
-        $mock = $this->getCleanMock(Model::class, ['__unset']);
+        $model = new Mvc5Model(null, $vars);
 
-        $mock->expects($this->once())
-             ->method('remove');
+        $this->assertTrue(isset($model->foo));
 
-        $mock->__unset(null);
+        unset($model->foo);
+
+        $this->assertFalse(isset($model->foo));
     }
 }

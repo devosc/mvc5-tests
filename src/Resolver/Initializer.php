@@ -1,15 +1,43 @@
 <?php
+/**
+ *
+ */
 
 namespace Mvc5\Test\Resolver;
 
 use Mvc5\Resolver\Initializer as Base;
 
-abstract class Initializer
+class Initializer
 {
     /**
      *
      */
-    use Base;
+    use Base {
+        initialize   as public;
+        initialized  as public;
+        initializing as public;
+    }
+
+    /**
+     * @param string $name
+     * @param callable $callback
+     * @param array $args
+     * @return callable|null|object
+     */
+    protected function plugin($name, array $args = [], callable $callback = null)
+    {
+        return new $name;
+    }
+
+    /**
+     * @param string $name
+     * @param mixed $service
+     * @return mixed
+     */
+    protected function set($name, $service)
+    {
+        return $service;
+    }
 
     /**
      * @param array $pending
@@ -17,34 +45,5 @@ abstract class Initializer
     public function setPending(array $pending)
     {
         $this->pending = $pending;
-    }
-
-    /**
-     * @param string $name
-     * @param null $config
-     * @return null|object|callable
-     */
-    public function testInitialize($name, $config = null)
-    {
-        return $this->initialize($name, $config);
-    }
-
-    /**
-     * @param string $name
-     * @param callable|null|object $service
-     * @return callable|null|object
-     */
-    public function testInitialized($name, $service = null)
-    {
-        return $this->initialized($name, $service);
-    }
-
-    /**
-     * @param string $name
-     * @return bool
-     */
-    public function testInitializing($name)
-    {
-        return $this->initializing($name);
     }
 }

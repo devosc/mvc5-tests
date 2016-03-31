@@ -5,7 +5,7 @@
 
 namespace Mvc5\Test\Plugin\Config;
 
-use Mvc5\Plugin\Config\Hydrator;
+use Mvc5\Plugin\Hydrator;
 use Mvc5\Test\Test\TestCase;
 
 class HydratorTest
@@ -14,10 +14,8 @@ class HydratorTest
     /**
      *
      */
-    public function test__construct()
+    public function test_construct()
     {
-        $mock = $this->getCleanMockForTrait(Hydrator::class, ['__construct'], ['foo', []]);
-
-        $this->assertInternalType('object', $mock);
+        $this->assertInstanceOf(Hydrator::class, new Hydrator('foo', []));
     }
 }

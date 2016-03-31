@@ -1,4 +1,7 @@
 <?php
+/**
+ *
+ */
 
 namespace Mvc5\Test\Url;
 
@@ -12,9 +15,9 @@ class Plugin
     /**
      * @return callable
      */
-    public function generatorTest()
+    public function generator()
     {
-        return $this->generator();
+        return parent::generator();
     }
 
     /**
@@ -22,8 +25,8 @@ class Plugin
      * @param array $args
      * @return string
      */
-    public function urlTest($name, array $args = [])
+    public function url($name, array $args = [])
     {
-        return $this->url($name, $args);
+        return parent::url($name, $args);
     }
 }

@@ -6,9 +6,8 @@
 namespace Mvc5\Test\Resolver\Resolver\Gem;
 
 use Mvc5\Plugin\Link;
-use Mvc5\Test\Resolver\Resolver\Resolver;
+use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class LinkTest
     extends TestCase
@@ -18,10 +17,8 @@ class LinkTest
      */
     public function test_gem_link()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['gem', 'gemTest']);
-
-        $this->assertEquals($mock, $mock->gemTest(new Link()));
+        $this->assertEquals($resolver, $resolver->gem(new Link()));
     }
 }

@@ -1,4 +1,7 @@
 <?php
+/**
+ *
+ */
 
 namespace Mvc5\Test\Resolver\Resolver\Model;
 
@@ -13,11 +16,17 @@ class CallableObject
         return 'foo';
     }
 
+    public static function test2()
+    {
+        return new CallObject;
+    }
+
     public static function __callStatic($name, $args = [])
     {
     }
 
-    public function __invoke()
+    public function __invoke($foo = null)
     {
+        return $foo;
     }
 }

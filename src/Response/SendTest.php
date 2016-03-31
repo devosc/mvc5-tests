@@ -5,10 +5,8 @@
 
 namespace Mvc5\Test\Response;
 
-use Mvc5\Response\Response;
 use Mvc5\Response\Send;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class SendTest
     extends TestCase
@@ -18,14 +16,8 @@ class SendTest
      */
     public function test_invoke()
     {
-        /** @var Response|Mock $response */
+        $send = new Send;
 
-        $response = $this->getCleanMock(Response::class);
-
-        $response->expects($this->once())
-                 ->method('send')
-                 ->willReturn('foo');
-
-        (new Send)->__invoke($response);
+        $this->assertNull($send(new Response));
     }
 }

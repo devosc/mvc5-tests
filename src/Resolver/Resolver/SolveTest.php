@@ -5,10 +5,11 @@
 
 namespace Mvc5\Test\Resolver\Resolver;
 
-use Mvc5\Plugin\Gem\Gem;
-use Mvc5\Resolvable;
+use Mvc5\Config;
+use Mvc5\Event;
+use Mvc5\Plugin\Plugin;
+use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class SolveTest
     extends TestCase
@@ -18,15 +19,9 @@ class SolveTest
      */
     public function test_solve_gem()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['solve', 'solveTest']);
-
-        $mock->expects($this->once())
-             ->method('gem')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->solveTest($this->getMock(Gem::class)));
+        $this->assertEquals(new Config, $resolver->solve(new Plugin(Config::class)));
     }
 
     /**
@@ -34,13 +29,9 @@ class SolveTest
      */
     public function test_solve_callback()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['solve', 'solveTest']);
-
-        $resolvable = $this->getCleanMock(Resolvable::class);
-
-        $this->assertEquals('foo', $mock->solveTest($resolvable, [], function() { return 'foo'; }));
+        $this->assertEquals('foo', $resolver->solve('foo', [], function($foo) { return $foo; }));
     }
 
     /**
@@ -48,16 +39,12 @@ class SolveTest
      */
     public function test_solve_resolver()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['solve', 'solveTest']);
+        $resolver->configure('event\model', Event::class);
 
-        $resolvable = $this->getCleanMock(Resolvable::class);
+        $resolver->events(['service\resolver' => [function() { return 'bar'; }]]);
 
-        $mock->expects($this->once())
-             ->method('resolver')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->solveTest($resolvable));
+        $this->assertEquals('bar', $resolver->solve('foo'));
     }
 }

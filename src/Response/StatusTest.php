@@ -5,10 +5,8 @@
 
 namespace Mvc5\Test\Response;
 
-use Mvc5\Response\Response;
 use Mvc5\Response\Status;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class StatusTest
     extends TestCase
@@ -18,7 +16,7 @@ class StatusTest
      */
     public function test_construct()
     {
-        $this->getCleanMock(Status::class, [], [null]);
+        $this->assertInstanceOf(Status::class, new Status(null));
     }
 
     /**
@@ -28,14 +26,6 @@ class StatusTest
     {
         $status = new Status('200');
 
-        /** @var Response|Mock $response */
-
-        $response = $this->getCleanMock(Response::class);
-
-        $response->expects($this->once())
-                 ->method('setStatus')
-                 ->willReturnSelf();
-
-        $this->assertInstanceOf(Response::class, $status($response));
+        $this->assertInstanceOf(Response::class, $status(new Response));
     }
 }

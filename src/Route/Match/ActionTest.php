@@ -1,4 +1,7 @@
 <?php
+/**
+ *
+ */
 
 namespace Mvc5\Test\Route\Match;
 
@@ -14,7 +17,7 @@ class ActionTest
     /**
      *
      */
-    public function test__invoke_no_actions()
+    public function test_invoke_no_actions()
     {
         $action     = new Action;
         $definition = new Definition;
@@ -26,7 +29,7 @@ class ActionTest
     /**
      *
      */
-    public function test__invoke_action()
+    public function test_invoke_action()
     {
         $action     = new Action;
         $definition = new Definition([Arg::ACTION => ['GET' => 'foo']]);
@@ -42,7 +45,7 @@ class ActionTest
     /**
      *
      */
-    public function test__invoke_no_action_default_is_controller()
+    public function test_invoke_no_action_default_is_controller()
     {
         $action     = new Action;
         $definition = new Definition;

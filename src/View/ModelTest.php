@@ -6,9 +6,7 @@
 namespace Mvc5\Test\View;
 
 use Mvc5\Model as Mvc5Model;
-use Mvc5\View\Model;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class ModelTest
     extends TestCase
@@ -18,15 +16,11 @@ class ModelTest
      */
     public function test_setModel()
     {
-        /** @var Model $mock */
+        $model = new Model;
 
-        $mock = $this->getCleanMockForTrait(Model::class, ['setModel']);
+        $model->setModel(new Mvc5Model);
 
-        /** @var Mvc5Model $model */
-
-        $model = $this->getCleanMock(Mvc5Model::class);
-
-        $mock->setModel($model);
+        $this->assertInstanceOf(Mvc5Model::class, $model->model());
     }
 
     /**
@@ -34,11 +28,9 @@ class ModelTest
      */
     public function test_model()
     {
-        /** @var Model $mock */
+        $model = new Model;
 
-        $mock = $this->getCleanMockForTrait(Model::class, ['model']);
-
-        $this->assertInstanceOf(Mvc5Model::class, $mock->model(['foo']));
+        $this->assertInstanceOf(Mvc5Model::class, $model->model(['foo']));
     }
 
     /**
@@ -46,19 +38,10 @@ class ModelTest
      */
     public function test_view()
     {
-        /** @var Model $mock */
+        $model = new Model;
 
-        $mock = $this->getCleanMockForTrait(Model::class, ['view', 'setModel']);
+        $model->setModel(new Mvc5Model);
 
-        /** @var Mvc5Model|Mock $model */
-
-        $model = $this->getCleanMock(Mvc5Model::class);
-
-        $model->expects($this->once())
-              ->method('template');
-
-        $mock->setModel($model);
-
-        $this->assertInstanceOf(Mvc5Model::class, $mock->view('foo', ['foo']));
+        $this->assertInstanceOf(Mvc5Model::class, $model->view('foo', ['foo']));
     }
 }

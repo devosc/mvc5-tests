@@ -11,8 +11,8 @@ use Mvc5\Plugin\Args;
 use Mvc5\Plugin\Config;
 use Mvc5\Plugin\Filter;
 use Mvc5\Plugin\Plugin;
+use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class FilterTest
     extends TestCase
@@ -22,11 +22,9 @@ class FilterTest
      */
     public function test_filter()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['callable', 'filter', 'filterTest', 'invoke', 'signal']);
-
-        $this->assertEquals('foo', $mock->filterTest(null, [function() { return 'foo'; }]));
+        $this->assertEquals('foo', $resolver->filter(null, [function() { return 'foo'; }]));
     }
 
     /**
@@ -198,13 +196,11 @@ class FilterTest
      */
     public function test_filter_resolvable()
     {
-        /** @var Resolver|Mock $mock */
-
-        $mock = $this->getMockForAbstractClass(Resolver::class);
+        $resolver = new Resolver;
 
         $plugin = new Plugin('Mvc5\Config', [[function($foo) { return $foo; }]]);
 
-        $this->assertEquals('foo', $mock->resolvableTest(new Filter('foo', $plugin)));
+        $this->assertEquals('foo', $resolver->resolvable(new Filter('foo', $plugin)));
     }
 
     /**
@@ -212,12 +208,10 @@ class FilterTest
      */
     public function test_filter_args_plugin()
     {
-        /** @var Resolver|Mock $mock */
-
-        $mock = $this->getMockForAbstractClass(Resolver::class);
+        $resolver = new Resolver;
 
         $plugin = new Args([function($foo) { return $foo; }]);
 
-        $this->assertEquals('foo', $mock->resolvableTest(new Filter('foo', $plugin)));
+        $this->assertEquals('foo', $resolver->resolvable(new Filter('foo', $plugin)));
     }
 }

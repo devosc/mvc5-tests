@@ -5,8 +5,8 @@
 
 namespace Mvc5\Test\Resolver\Resolver;
 
+use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class ParentTest
     extends TestCase
@@ -16,18 +16,10 @@ class ParentTest
      */
     public function test_parent()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['parent', 'parentTest']);
+        $resolver->configure('foo', 'bar');
 
-        $mock->expects($this->once())
-             ->method('resolve')
-             ->willReturn('bar');
-
-        $mock->expects($this->once())
-             ->method('configured')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->parentTest('foo.bar'));
+        $this->assertEquals('bar', $resolver->parent('foo'));
     }
 }

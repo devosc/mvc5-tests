@@ -1,41 +1,49 @@
 <?php
+/**
+ *
+ */
 
 namespace Mvc5\Test\Resolver;
 
 use Mvc5\Resolver\Generator as Base;
 
-abstract class Generator
+class Generator
 {
     /**
      *
      */
-    use Base;
-
-    /**
-     * @param $event
-     * @return string
-     */
-    public function eventNameTest($event)
-    {
-        return $this->eventName($event);
+    use Base {
+        eventName   as public;
+        listeners   as public;
+        traversable as public;
     }
 
     /**
-     * @param string $name
-     * @return array|\Traversable|null
+     * @param array|callable|object|string $config
+     * @return callable|null
      */
-    public function listenersTest($name)
+    protected function callable($config) : callable
     {
-        return $this->listeners($name);
+        throw new \RuntimeException('Unknown test');
     }
 
     /**
-     * @param object|string $event
+     * @param $config
      * @param array $args
-     * @return array|\Traversable|null
+     * @return array|callable|null|object|string
      */
-    public function traversableTest($event, array $args = [])
+    protected function resolve($config, array $args = [])
     {
-        return $this->traversable($event, $args);
+        return $config;
+    }
+    /**
+     * @param callable|object $config
+     * @param array $args
+     * @param callable $callback
+     * @return mixed
+     */
+    protected function signal(callable $config, array $args = [], callable $callback = null)
+    {
+        throw new \RuntimeException;
     }
 }

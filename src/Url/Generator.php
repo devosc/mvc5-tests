@@ -1,4 +1,7 @@
 <?php
+/**
+ *
+ */
 
 namespace Mvc5\Test\Url;
 
@@ -13,27 +16,27 @@ class Generator
      * @param $name
      * @return array|Definition
      */
-    public function configTest($name)
+    public function config($name)
     {
-        return $this->config($name);
+        return parent::config($name);
     }
 
     /**
      * @param array|Definition $definition
      * @return Definition|null
      */
-    public function urlTest($definition)
+    public function url($definition)
     {
-        return $this->url($definition);
+        return parent::url($definition);
     }
 
     /**
      * @param string $name
      * @return string
      */
-    public function nameTest($name)
+    public function name($name)
     {
-        return $this->name($name);
+        return parent::name($name);
     }
 
     /**
@@ -43,8 +46,8 @@ class Generator
      * @return string|void
      * @throws \RuntimeException
      */
-    public function generateTest($name, array $args = [], Definition $definition = null)
+    public function generate($name, array $args = [], Definition $definition = null)
     {
-        return $this->generate($name, $args, $definition);
+        return parent::generate($name, $args, $definition);
     }
 }

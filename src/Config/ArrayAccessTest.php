@@ -5,9 +5,8 @@
 
 namespace Mvc5\Test\Config;
 
-use Mvc5\Config\ArrayAccess;
+use Mvc5\Config;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class ArrayAccessTest
     extends TestCase
@@ -17,14 +16,9 @@ class ArrayAccessTest
      */
     public function test_offsetExists()
     {
-        /** @var ArrayAccess|Mock $mock */
+        $config = new Config(['foo' => 'bar']);
 
-        $mock = $this->getCleanMockForTrait(ArrayAccess::class, ['offsetExists']);
-
-        $mock->method('has')
-             ->will($this->returnValue(true));
-
-        $this->assertTrue($mock->offsetExists('foo'));
+        $this->assertTrue(isset($config['foo']));
     }
 
     /**
@@ -32,14 +26,9 @@ class ArrayAccessTest
      */
     public function test_offsetGet()
     {
-        /** @var ArrayAccess|Mock $mock */
+        $config = new Config(['foo' => 'bar']);
 
-        $mock = $this->getCleanMockForTrait(ArrayAccess::class, ['offsetGet']);
-
-        $mock->method('get')
-             ->will($this->returnValue('bar'));
-
-        $this->assertEquals('bar', $mock->offsetGet('foo'));
+        $this->assertEquals('bar', $config['foo']);
     }
 
     /**
@@ -47,15 +36,9 @@ class ArrayAccessTest
      */
     public function test_offsetSet()
     {
-        /** @var ArrayAccess|Mock $mock */
+        $config = new Config;
 
-        $mock = $this->getCleanMockForTrait(ArrayAccess::class, ['offsetSet']);
-
-        $mock->expects($this->once())
-             ->method('set')
-             ->willReturn('bar');
-
-        $this->assertEquals('bar', $mock->offsetSet('foo', 'bar'));
+        $this->assertEquals('bar', $config['foo'] = 'bar');
     }
 
     /**
@@ -63,10 +46,12 @@ class ArrayAccessTest
      */
     public function test_offsetUnset()
     {
-        /** @var ArrayAccess|Mock $mock */
+        $config = new Config(['foo' => 'bar']);
 
-        $mock = $this->getCleanMockForTrait(ArrayAccess::class, ['offsetUnset']);
+        $this->assertTrue(isset($config['foo']));
 
-        $mock->offsetUnset('foo');
+        unset($config['foo']);
+
+        $this->assertFalse(isset($config['foo']));
     }
 }

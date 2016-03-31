@@ -5,9 +5,8 @@
 
 namespace Mvc5\Test\Plugin\Config;
 
-use Mvc5\Plugin\Config\Args;
+use Mvc5\Plugin\SignalArgs as Args;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class ArgsTest
     extends TestCase
@@ -17,11 +16,7 @@ class ArgsTest
      */
     public function test_construct()
     {
-        /** @var Args|Mock $mock */
-
-        $mock = $this->getCleanMockForTrait(Args::class, ['__construct']);
-
-        $mock->__construct(['foo']);
+        $this->assertInstanceOf(Args::class, new Args([]));
     }
 
     /**
@@ -29,10 +24,8 @@ class ArgsTest
      */
     public function test_args()
     {
-        /** @var Args|Mock $mock */
+        $args = new Args([]);
 
-        $mock = $this->getCleanMockForTrait(Args::class, ['args']);
-
-        $this->assertEquals(null, $mock->args());
+        $this->assertEquals([], $args->args());
     }
 }

@@ -5,24 +5,61 @@
 
 namespace Mvc5\Test\Mvc;
 
+use Mvc5\Arg;
+use Mvc5\Route\Config as Route;
+use Mvc5\Test\Response\Response;
 use Mvc5\Test\Test\TestCase;
-use Mvc5\Response\Response;
-use Mvc5\Route\Route;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class MvcTest
     extends TestCase
 {
     /**
+     * @return Mvc
+     */
+    protected function mvc()
+    {
+        return new Mvc(null, [
+            Arg::ROUTE    => new Route,
+            Arg::RESPONSE => new Response
+        ]);
+    }
+
+    /**
      *
      */
     public function test_args()
     {
-        /** @var Mvc|Mock $mock */
+        $this->assertTrue(is_array($this->mvc()->args()));
+    }
 
-        $mock = $this->getCleanMock(Mvc::class, ['args', 'argsTest']);
+    /**
+     *
+     */
+    public function test_invoke()
+    {
+        $mvc = $this->mvc();
 
-        $this->assertTrue(is_array($mock->argsTest()));
+        $this->assertEquals('bar', $mvc(function($foo) { return $foo; }, ['foo' => 'bar']));
+    }
+
+    /**
+     *
+     */
+    public function test_invoke_false()
+    {
+        $mvc = $this->mvc();
+
+        $this->assertEquals(false, $mvc(function($foo) { return $foo; }, ['foo' => false]));
+    }
+
+    /**
+     *
+     */
+    public function test_invoke_route()
+    {
+        $mvc = $this->mvc();
+
+        $this->assertInstanceOf(Route::class, $mvc(function($route) { return $route; }));
     }
 
     /**
@@ -30,92 +67,8 @@ class MvcTest
      */
     public function test_invoke_response()
     {
-        /** @var Mvc|Mock $mock */
+        $mvc = $this->mvc();
 
-        $mock = $this->getCleanMock(Mvc::class, ['__invoke']);
-
-        $mock->expects($this->once())
-             ->method('args')
-             ->willReturn([]);
-
-        $mock->expects($this->once())
-             ->method('signal')
-             ->willReturn('foo');
-
-        $mock->expects($this->once())
-             ->method('model')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->__invoke(function() {}));
-    }
-
-    /**
-     *
-     */
-    public function test_invoke_false_response()
-    {
-        /** @var Mvc|Mock $mock */
-
-        $mock = $this->getCleanMock(Mvc::class, ['__invoke']);
-
-        $mock->expects($this->once())
-             ->method('args')
-             ->willReturn([]);
-
-        $mock->expects($this->once())
-             ->method('signal')
-             ->willReturn(false);
-
-        $this->assertEquals(false, $mock->__invoke(function() {}));
-    }
-
-    /**
-     *
-     */
-    public function test_invoke_route_response()
-    {
-        /** @var Mvc|Mock $mock */
-
-        $mock = $this->getCleanMock(Mvc::class, ['__invoke']);
-
-        $mock->expects($this->once())
-             ->method('args')
-             ->willReturn([]);
-
-        $route = $this->getCleanMock(Route::class);
-
-        $mock->expects($this->once())
-             ->method('signal')
-             ->willReturn($route);
-
-        $mock->expects($this->once())
-             ->method('route');
-
-        $this->assertEquals($route, $mock->__invoke(function() {}));
-    }
-
-    /**
-     *
-     */
-    public function test_invoke_response_response()
-    {
-        /** @var Mvc|Mock $mock */
-
-        $mock = $this->getCleanMock(Mvc::class, ['__invoke']);
-
-        $mock->expects($this->once())
-             ->method('args')
-             ->willReturn([]);
-
-        $response = $this->getCleanMock(Response::class);
-
-        $mock->expects($this->once())
-             ->method('signal')
-             ->willReturn($response);
-
-        $mock->expects($this->once())
-             ->method('stop');
-
-        $this->assertEquals($response, $mock->__invoke(function() {}));
+        $this->assertInstanceOf(Response::class, $mvc(function($response) { return $response; }));
     }
 }

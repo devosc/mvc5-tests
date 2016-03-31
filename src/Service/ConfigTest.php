@@ -6,7 +6,6 @@
 namespace Mvc5\Test\Service;
 
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class ConfigTest
     extends TestCase
@@ -16,11 +15,9 @@ class ConfigTest
      */
     public function test_config_empty()
     {
-        /** @var Config $mock */
+        $config = new Config;
 
-        $mock = $this->getCleanMock(Config::class, ['config']);
-
-        $this->assertEquals([], $mock->config());
+        $this->assertEquals([], $config->config());
     }
 
     /**
@@ -28,11 +25,9 @@ class ConfigTest
      */
     public function test_config()
     {
-        /** @var Config $mock */
+        $config = new Config;
 
-        $mock = $this->getCleanMock(Config::class, ['config']);
-
-        $this->assertEquals(['foo'], $mock->config(['foo']));
+        $this->assertEquals(['foo'], $config->config(['foo']));
     }
 
     /**
@@ -40,11 +35,11 @@ class ConfigTest
      */
     public function test_configure()
     {
-        /** @var Config $mock */
+        $config = new Config;
 
-        $mock = $this->getCleanMock(Config::class, ['configure']);
+        $config->configure('foo', 'bar');
 
-        $mock->configure('foo', 'bar');
+        $this->assertEquals('bar', $config->configured('foo'));
     }
 
     /**
@@ -52,11 +47,9 @@ class ConfigTest
      */
     public function test_configured_null()
     {
-        /** @var Config $mock */
+        $config = new Config;
 
-        $mock = $this->getCleanMock(Config::class, ['configured']);
-
-        $this->assertEquals(null, $mock->configured('foo'));
+        $this->assertEquals(null, $config->configured('foo'));
     }
 
     /**
@@ -64,13 +57,11 @@ class ConfigTest
      */
     public function test_configured_not_null()
     {
-        /** @var Config $mock */
+        $config = new Config;
 
-        $mock = $this->getCleanMock(Config::class, ['configured', 'configure']);
+        $config->configure('foo', 'bar');
 
-        $mock->configure('foo', 'bar');
-
-        $this->assertEquals('bar', $mock->configured('foo'));
+        $this->assertEquals('bar', $config->configured('foo'));
     }
 
     /**
@@ -78,11 +69,9 @@ class ConfigTest
      */
     public function test_container_empty()
     {
-        /** @var Config $mock */
+        $config = new Config;
 
-        $mock = $this->getCleanMock(Config::class, ['container']);
-
-        $this->assertEquals([], $mock->container());
+        $this->assertEquals([], $config->container());
     }
 
     /**
@@ -90,11 +79,9 @@ class ConfigTest
      */
     public function test_container_not_empty()
     {
-        /** @var Config $mock */
+        $config = new Config;
 
-        $mock = $this->getCleanMock(Config::class, ['container']);
-
-        $this->assertEquals(['foo'], $mock->container(['foo']));
+        $this->assertEquals(['foo'], $config->container(['foo']));
     }
 
     /**
@@ -102,15 +89,11 @@ class ConfigTest
      */
     public function test_get()
     {
-        /** @var Config|Mock $mock */
+        $config = new Config;
 
-        $mock = $this->getCleanMock(Config::class, ['get']);
+        $config->container(['foo' => 'bar']);
 
-        $mock->expects($this->once())
-             ->method('shared')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->get(null));
+        $this->assertEquals('bar', $config->get('foo'));
     }
 
     /**
@@ -118,11 +101,9 @@ class ConfigTest
      */
     public function test_has()
     {
-        /** @var Config $mock */
+        $config = new Config;
 
-        $mock = $this->getCleanMock(Config::class, ['has']);
-
-        $this->assertEquals(false, $mock->has(null));
+        $this->assertEquals(false, $config->has('foo'));
     }
 
     /**
@@ -130,11 +111,15 @@ class ConfigTest
      */
     public function test_remove()
     {
-        /** @var Config $mock */
+        $config = new Config;
 
-        $mock = $this->getCleanMock(Config::class, ['remove']);
+        $config->container(['foo' => 'bar']);
 
-        $mock->remove(null);
+        $this->assertEquals(true, $config->has('foo'));
+
+        $config->remove('foo');
+
+        $this->assertEquals(false, $config->has('foo'));
     }
 
     /**
@@ -142,11 +127,9 @@ class ConfigTest
      */
     public function test_shared_null()
     {
-        /** @var Config $mock */
+        $config = new Config;
 
-        $mock = $this->getCleanMock(Config::class, ['shared', 'sharedTest']);
-
-        $this->assertEquals(null, $mock->sharedTest(null));
+        $this->assertEquals(null, $config->shared('foo'));
     }
 
     /**
@@ -154,13 +137,11 @@ class ConfigTest
      */
     public function test_shared_not_null()
     {
-        /** @var Config $mock */
+        $config = new Config;
 
-        $mock = $this->getCleanMock(Config::class, ['set', 'shared', 'sharedTest']);
+        $config->set('foo', 'bar');
 
-        $mock->set('foo', 'bar');
-
-        $this->assertEquals('bar', $mock->sharedTest('foo'));
+        $this->assertEquals('bar', $config->shared('foo'));
     }
 
     /**
@@ -168,11 +149,9 @@ class ConfigTest
      */
     public function test_services_empty()
     {
-        /** @var Config $mock */
+        $config = new Config;
 
-        $mock = $this->getCleanMock(Config::class, ['services']);
-
-        $this->assertEquals([], $mock->services());
+        $this->assertEquals([], $config->services());
     }
 
     /**
@@ -180,11 +159,9 @@ class ConfigTest
      */
     public function test_services_not_empty()
     {
-        /** @var Config $mock */
+        $config = new Config;
 
-        $mock = $this->getCleanMock(Config::class, ['services']);
-
-        $this->assertEquals(['foo'], $mock->services(['foo']));
+        $this->assertEquals(['foo'], $config->services(['foo']));
     }
 
     /**
@@ -192,10 +169,10 @@ class ConfigTest
      */
     public function test_set()
     {
-        /** @var Config $mock */
+        $config = new Config;
 
-        $mock = $this->getCleanMock(Config::class, ['set']);
+        $config->set('foo', 'bar');
 
-        $mock->set('foo', 'bar');
+        $this->assertEquals('bar', $config->get('foo'));
     }
 }

@@ -1,12 +1,15 @@
 <?php
+/**
+ *
+ */
 
 namespace Mvc5\Test\Route\Match;
 
+use Mvc5\Arg;
 use Mvc5\Route\Match\Wildcard;
-use Mvc5\Route\Route;
-use Mvc5\Route\Definition;
+use Mvc5\Route\Config as Route;
+use Mvc5\Route\Definition\Config as Definition;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class WildcardTest
     extends TestCase
@@ -14,25 +17,25 @@ class WildcardTest
     /**
      *
      */
-    public function test__invoke()
+    public function test_invoke_no_wildcard()
     {
-        /** @var Route|Mock $route */
+        $definition = new Definition([Arg::WILDCARD => false]);
+        $route      = new Route;
+        $wildcard   = new Wildcard;
 
-        $route = $this->getCleanMock(Route::class);
+        $this->assertEquals($route, $wildcard($route, $definition));
+    }
 
-        $route->expects($this->once())
-              ->method('path')
-              ->willReturn('/foo/bar');
+    /**
+     *
+     */
+    public function test_invoke_valid_pair()
+    {
+        $definition = new Definition([Arg::WILDCARD => true]);
+        $route      = new Route([Arg::PATH => '/foo/bar/baz/bat', Arg::PARAMS => ['a' => 'b'], Arg::LENGTH => 8]);
+        $wildcard   = new Wildcard;
 
-        /** @var Definition|Mock $definition */
-
-        $definition = $this->getCleanMock(Definition::class);
-
-        $definition->expects($this->any())
-                   ->method('wildcard')
-                   ->willReturn(true);
-
-        $this->assertEquals($route, (new Wildcard)->__invoke($route, $definition));
+        $this->assertEquals(['a' => 'b', 'baz' => 'bat'], $wildcard($route, $definition)->params());
     }
 
     /**
@@ -40,42 +43,10 @@ class WildcardTest
      */
     public function test_invoke_invalid_pair()
     {
-        /** @var Route|Mock $route */
+        $definition = new Definition([Arg::WILDCARD => true]);
+        $route      = new Route([Arg::PATH => '/foo/bar/baz', Arg::PARAMS => ['a' => 'b'], Arg::LENGTH => 8]);
+        $wildcard   = new Wildcard;
 
-        $route = $this->getCleanMock(Route::class);
-
-        $route->expects($this->once())
-              ->method('path')
-              ->willReturn('/foo/bar/baz');
-
-        /** @var Definition|Mock $definition */
-
-        $definition = $this->getCleanMock(Definition::class);
-
-        $definition->expects($this->any())
-                   ->method('wildcard')
-                   ->willReturn(true);
-
-        $this->assertEquals($route, (new Wildcard)->__invoke($route, $definition));
-    }
-
-    /**
-     *
-     */
-    public function test_invoke_not_matched()
-    {
-        /** @var Route|Mock $route */
-
-        $route = $this->getCleanMock(Route::class);
-
-        /** @var Definition|Mock $definition */
-
-        $definition = $this->getCleanMock(Definition::class);
-
-        $definition->expects($this->any())
-                   ->method('wildcard')
-                   ->willReturn(false);
-
-        $this->assertEquals($route, (new Wildcard)->__invoke($route, $definition));
+        $this->assertEquals(['a' => 'b'], $wildcard($route, $definition)->params());
     }
 }

@@ -17,16 +17,14 @@ class AppTest
      */
     public function test_construct()
     {
-        /** @var App $mock */
-
         $config = [
             Arg::SERVICES => [
                 Arg::CONTAINER => ['foo']
             ]
         ];
 
-        $mock = $this->getCleanMock(App::class, ['config'], [$config]);
+        $app = new App($config);
 
-        $this->assertEquals($config, $mock->config());
+        $this->assertEquals($config, $app->config());
     }
 }

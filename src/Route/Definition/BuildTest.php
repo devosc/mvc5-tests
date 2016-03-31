@@ -1,4 +1,7 @@
 <?php
+/**
+ *
+ */
 
 namespace Mvc5\Test\Route\Definition;
 
@@ -6,7 +9,6 @@ use Mvc5\Arg;
 use Mvc5\Route\Definition;
 use Mvc5\Route\Definition\Config;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class BuildTest
     extends TestCase
@@ -16,28 +18,10 @@ class BuildTest
      */
     public function test_definition()
     {
-        /** @var Build|Mock $mock */
-
-        $mock = $this->getCleanMock(Build::class, ['definition', 'definitionTest']);
-
-        $mock->expects($this->once())
-            ->method('tokens')
-            ->willReturn([]);
-
-        $mock->expects($this->once())
-            ->method('regex')
-            ->willReturn('foo');
-
-        $mock->expects($this->once())
-            ->method('params')
-            ->willReturn([]);
-
-        $mock->expects($this->once())
-            ->method('children')
-            ->willReturn([['foo']]);
+        $build = new Build;
 
         $definition = [
-            Arg::CHILDREN    => [[]],
+            Arg::CHILDREN    => ['foo' => [Arg::ROUTE => 'foo']],
             Arg::CONSTRAINTS => null,
             Arg::NAME        => null,
             Arg::PARAM_MAP   => null,
@@ -46,17 +30,7 @@ class BuildTest
             Arg::TOKENS      => null
         ];
 
-        $result = [
-            Arg::CHILDREN    => [['foo']],
-            Arg::CONSTRAINTS => [],
-            Arg::NAME        => null,
-            Arg::PARAM_MAP   => [],
-            Arg::REGEX       => 'foo',
-            Arg::ROUTE       => '/',
-            Arg::TOKENS      => []
-        ];
-
-        $this->assertEquals($result, $mock->definitionTest($definition, true, true));
+        $this->assertInternalType('array', $build->definition($definition, true, true));
     }
 
     /**
@@ -64,13 +38,11 @@ class BuildTest
      */
     public function test_definition_no_route_exception()
     {
-        /** @var Build|Mock $mock */
-
-        $mock = $this->getCleanMock(Build::class, ['definition', 'definitionTest']);
+        $build = new Build;
 
         $this->setExpectedException('RuntimeException');
 
-        $mock->definitionTest([]);
+        $build->definition([]);
     }
 
     /**
@@ -78,9 +50,7 @@ class BuildTest
      */
     public function test_children()
     {
-        /** @var Build|Mock $mock */
-
-        $mock = $this->getCleanMock(Build::class, ['children', 'childrenTest']);
+        $build = new Build;
 
         $definitions = [
             [
@@ -94,7 +64,7 @@ class BuildTest
             ]
         ];
 
-        $this->assertInternalType('array', $mock->childrenTest($definitions));
+        $this->assertInternalType('array', $build->children($definitions));
     }
 
     /**
@@ -102,9 +72,7 @@ class BuildTest
      */
     public function test_create_route_definition()
     {
-        /** @var Build|Mock $mock */
-
-        $mock = $this->getCleanMock(Build::class, ['create', 'createTest']);
+        $build = new Build;
 
         $definition = new Config([
             Arg::CHILDREN    => [],
@@ -116,7 +84,7 @@ class BuildTest
             Arg::TOKENS      => null
         ]);
 
-        $this->assertInstanceOf(Config::class, $mock->createTest($definition));
+        $this->assertInstanceOf(Config::class, $build->create($definition));
     }
 
     /**
@@ -124,9 +92,7 @@ class BuildTest
      */
     public function test_create_with_class_name()
     {
-        /** @var Build|Mock $mock */
-
-        $mock = $this->getCleanMock(Build::class, ['create', 'createTest']);
+        $build = new Build;
 
         $definition = [
             Arg::CHILDREN    => [],
@@ -139,7 +105,7 @@ class BuildTest
             Arg::TOKENS      => null
         ];
 
-        $this->assertInstanceOf(Config::class, $mock->createTest($definition));
+        $this->assertInstanceOf(Config::class, $build->create($definition));
     }
 
     /**
@@ -147,9 +113,7 @@ class BuildTest
      */
     public function test_create()
     {
-        /** @var Build|Mock $mock */
-
-        $mock = $this->getCleanMock(Build::class, ['create', 'createDefault', 'createTest']);
+        $build = new Build;
 
         $definition = [
             Arg::CHILDREN    => [],
@@ -161,7 +125,7 @@ class BuildTest
             Arg::TOKENS      => null
         ];
 
-        $this->assertInstanceOf(Config::class, $mock->createTest($definition));
+        $this->assertInstanceOf(Config::class, $build->create($definition));
     }
 
     /**
@@ -169,9 +133,7 @@ class BuildTest
      */
     public function test_create_default()
     {
-        /** @var Build|Mock $mock */
-
-        $mock = $this->getCleanMock(Build::class, ['createDefault', 'createDefaultTest']);
+        $build = new Build;
 
         $definition = [
             Arg::CHILDREN    => [],
@@ -183,7 +145,7 @@ class BuildTest
             Arg::TOKENS      => null
         ];
 
-        $this->assertInstanceOf(Config::class, $mock->createDefaultTest($definition));
+        $this->assertInstanceOf(Config::class, $build->createDefault($definition));
     }
 
     /**
@@ -191,18 +153,18 @@ class BuildTest
      */
     public function test_build()
     {
-        /** @var Build|Mock $mock */
+        $build = new Build;
 
-        $mock = $this->getCleanMock(Build::class, ['build', 'buildTest']);
+        $definition = [
+            Arg::CHILDREN    => [],
+            Arg::CONSTRAINTS => [],
+            Arg::NAME        => null,
+            Arg::PARAM_MAP   => [],
+            Arg::REGEX       => null,
+            Arg::ROUTE       => '/',
+            Arg::TOKENS      => null
+        ];
 
-        $mock->expects($this->once())
-            ->method('definition')
-            ->willReturn('foo');
-
-        $mock->expects($this->once())
-            ->method('create')
-            ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->buildTest([]));
+        $this->assertInstanceOf(Definition::class, $build->build($definition));
     }
 }

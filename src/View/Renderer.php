@@ -6,32 +6,25 @@
 namespace Mvc5\Test\View;
 
 use Mvc5\View\Renderer as Base;
-use Throwable;
 
-abstract class Renderer
+class Renderer
 {
     /**
      *
      */
-    use Base;
-
-    /**
-     * @param Throwable $exception
-     * @param $model
-     * @return mixed
-     */
-    public function exceptionTest(Throwable $exception, $model)
-    {
-        return $this->exception($exception, $model);
+    use Base {
+        exception as public;
+        render    as public;
     }
 
     /**
-     * @param $model
+     * @param array|callable|object|string $name
      * @param array $args
-     * @return mixed
+     * @param callable $callback
+     * @return callable|mixed|null|object
      */
-    public function renderTest($model, array $args = [])
+    protected function call($name, array $args = [], callable $callback = null)
     {
-        return $this->render($model, $args);
+        return 'foo';
     }
 }

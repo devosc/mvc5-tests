@@ -1,13 +1,16 @@
 <?php
+/**
+ *
+ */
 
 namespace Mvc5\Test\Route\Match;
 
+use Mvc5\Arg;
 use Mvc5\Response\Error\BadRequest;
 use Mvc5\Route\Match\Scheme;
-use Mvc5\Route\Route;
-use Mvc5\Route\Definition;
+use Mvc5\Route\Config as Route;
+use Mvc5\Route\Definition\Config as Definition;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class SchemeTest
     extends TestCase
@@ -15,25 +18,25 @@ class SchemeTest
     /**
      *
      */
-    public function test__invoke()
+    public function test_invoke()
     {
-        /** @var Route|Mock $route */
+        $definition = new Definition;
+        $route      = new Route;
+        $scheme     = new Scheme;
 
-        $route = $this->getCleanMock(Route::class);
+        $this->assertEquals($route, $scheme($route, $definition));
+    }
 
-        $route->expects($this->once())
-              ->method('scheme')
-              ->willReturn('foo');
+    /**
+     *
+     */
+    public function test_invoke_matched()
+    {
+        $definition = new Definition([Arg::SCHEME => 'http']);
+        $route      = new Route([Arg::SCHEME => 'http']);
+        $scheme     = new Scheme;
 
-        /** @var Definition|Mock $definition */
-
-        $definition = $this->getCleanMock(Definition::class);
-
-        $definition->expects($this->any())
-                   ->method('scheme')
-                   ->willReturn('foo');
-
-        $this->assertEquals($route, (new Scheme)->__invoke($route, $definition));
+        $this->assertEquals($route, $scheme($route, $definition));
     }
 
     /**
@@ -41,22 +44,10 @@ class SchemeTest
      */
     public function test_invoke_not_matched()
     {
-        /** @var Route|Mock $route */
+        $definition = new Definition([Arg::SCHEME => 'https']);
+        $route      = new Route([Arg::SCHEME => 'http']);
+        $scheme     = new Scheme;
 
-        $route = $this->getCleanMock(Route::class);
-
-        $route->expects($this->once())
-              ->method('scheme')
-              ->willReturn('foo');
-
-        /** @var Definition|Mock $definition */
-
-        $definition = $this->getCleanMock(Definition::class);
-
-        $definition->expects($this->any())
-                   ->method('scheme')
-                   ->willReturn('bar');
-
-        $this->assertInstanceOf(BadRequest::class, (new Scheme)->__invoke($route, $definition));
+        $this->assertInstanceOf(BadRequest::class, $scheme($route, $definition));
     }
 }

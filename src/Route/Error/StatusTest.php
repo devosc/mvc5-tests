@@ -5,8 +5,8 @@
 
 namespace Mvc5\Test\Route\Error;
 
-use Mvc5\Response\Response;
-use Mvc5\Response\Error;
+use Mvc5\Response\Error\BadRequest;
+use Mvc5\Test\Response\Response;
 use Mvc5\Route\Error\Status;
 use Mvc5\Test\Test\TestCase;
 
@@ -18,19 +18,8 @@ class StatusTest
      */
     public function test_invoke()
     {
-        $response = $this->getCleanMock(Response::class);
-
-        $response->expects($this->once())
-                 ->method('setStatus')
-                 ->willReturnSelf();
-
-        $error = $this->getCleanMock(Error::class);
-
-        $error->expects($this->once())
-              ->method('status');
-
         $status = new Status;
 
-        $this->assertInstanceOf(Response::class, $status($response, $error));
+        $this->assertInstanceOf(Response::class, $status(new Response, new BadRequest));
     }
 }

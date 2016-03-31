@@ -1,55 +1,43 @@
 <?php
+/**
+ *
+ */
 
 namespace Mvc5\Test\Route;
 
-use Mvc5\Route\Definition;
 use Mvc5\Route\Dispatcher as Base;
-use Mvc5\Route\Route;
-use Throwable;
 
-abstract class Dispatcher
+class Dispatcher
 {
     /**
      *
      */
-    use Base;
-
-    /**
-     * @param array|Definition $definition
-     * @return Definition
-     */
-    public function definitionTest($definition)
-    {
-        return $this->definition($definition);
+    use Base {
+        definition as public;
+        exception  as public;
+        match      as public;
+        route      as public;
     }
 
     /**
-     * @param Throwable $exception
-     * @param $route
-     * @return mixed
-     */
-    public function exceptionTest(Throwable $exception, $route)
-    {
-        return $this->exception($exception, $route);
-    }
-
-    /**
-     * @param $definition
-     * @param $route
-     * @return Route
-     */
-    public function matchTest($definition, $route)
-    {
-        return $this->match($definition, $route);
-    }
-
-    /**
-     * @param $route
+     * @param array|callable|object|string $name
      * @param array $args
-     * @return Route
+     * @param callable $callback
+     * @return callable|mixed|null|object
      */
-    public function routeTest($route, array $args = [])
+    public function call($name, array $args = [], callable $callback = null)
     {
-        return $this->route($route, $args);
+        return 'foo';
+    }
+
+    /**
+     * @param array|object|string|\Traversable $event
+     * @param array $args
+     * @param callable $callback
+     * @return mixed|null
+     */
+    protected function trigger($event, array $args = [], callable $callback = null)
+    {
+        return 'foo';
     }
 }

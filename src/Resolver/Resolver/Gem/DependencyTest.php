@@ -7,9 +7,8 @@ namespace Mvc5\Test\Resolver\Resolver\Gem;
 
 use Mvc5\Plugin\Args;
 use Mvc5\Plugin\Dependency;
-use Mvc5\Test\Resolver\Resolver\Resolver;
+use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class DependencyTest
     extends TestCase
@@ -19,15 +18,13 @@ class DependencyTest
      */
     public function test_gem_dependency_shared()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['gem', 'gemTest']);
+        $resolver->set('foo', 'bar');
 
-        $mock->expects($this->once())
-            ->method('shared')
-            ->willReturn('foo');
+        $this->assertEquals('bar', $resolver->gem(new Dependency('foo')));
 
-        $this->assertEquals('foo', $mock->gemTest(new Dependency('foo')));
+        $this->assertEquals('bar', $resolver->get('foo'));
     }
 
     /**
@@ -35,19 +32,11 @@ class DependencyTest
      */
     public function test_gem_dependency_create()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['gem', 'gemTest']);
+        $this->assertEquals('bar', $resolver->gem(new Dependency('foo', function() { return 'bar'; })));
 
-        $mock->expects($this->once())
-            ->method('shared')
-            ->willReturn(null);
-
-        $mock->expects($this->once())
-            ->method('initialize')
-            ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->gemTest(new Dependency('foo')));
+        $this->assertEquals('bar', $resolver->get('foo'));
     }
 
     /**
@@ -55,11 +44,11 @@ class DependencyTest
      */
     public function test_gem_dependency()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getMockForAbstractClass(Resolver::class);
+        $this->assertEquals('bar', $resolver->gem(new Dependency('foo', new Args('bar'))));
 
-        $this->assertEquals('test', $mock->gemTest(new Dependency('foo', new Args('test'))));
+        $this->assertEquals('bar', $resolver->get('foo'));
     }
 
     /**
@@ -67,21 +56,19 @@ class DependencyTest
      */
     public function test_gem_dependency_not_null()
     {
-        /** @var Resolver|Mock $mock */
-
-        $mock = $this->getMockForAbstractClass(Resolver::class);
+        $resolver = new Resolver;
 
         $value = 0;
 
-        $this->assertTrue(false === $mock->has('foo'));
+        $this->assertTrue(false === $resolver->has('foo'));
 
-        $this->assertTrue($value === $mock->gemTest(new Dependency('foo', new Args($value))));
+        $this->assertTrue($value === $resolver->gem(new Dependency('foo', new Args($value))));
 
-        $this->assertTrue(true === $mock->has('foo'));
+        $this->assertTrue(true === $resolver->has('foo'));
 
-        $this->assertTrue(['foo' => $value] === $mock->container());
+        $this->assertTrue(['foo' => $value] === $resolver->container());
 
-        $this->assertTrue($value === $mock->gemTest(new Dependency('foo')));
+        $this->assertTrue($value === $resolver->gem(new Dependency('foo')));
     }
 
     /**
@@ -89,10 +76,10 @@ class DependencyTest
      */
     public function test_gem_dependency_null()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getMockForAbstractClass(Resolver::class);
+        $this->assertEquals(null, $resolver->gem(new Dependency('foo', new Args(null))));
 
-        $this->assertEquals(null, $mock->gemTest(new Dependency('foo', new Args(null))));
+        $this->assertTrue(false === $resolver->has('foo'));
     }
 }

@@ -1,4 +1,7 @@
 <?php
+/**
+ *
+ */
 
 namespace Mvc5\Test\Route;
 
@@ -24,8 +27,8 @@ class GeneratorTest
             Arg::TOKENS      => null
         ];
 
-        $this->assertInstanceOf(
-            Config\Definition::class, (new Generator(Config\Definition::class))->__invoke($definition)
-        );
+        $generator = new Generator(Config\Definition::class);
+
+        $this->assertInstanceOf(Config\Definition::class, $generator($definition));
     }
 }

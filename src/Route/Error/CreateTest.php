@@ -7,9 +7,8 @@ namespace Mvc5\Test\Route\Error;
 
 use Mvc5\Response\Error\NotFound;
 use Mvc5\Route\Error\Create;
-use Mvc5\Route\Route;
+use Mvc5\Route\Config as Route;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class CreateTest
     extends TestCase
@@ -27,17 +26,8 @@ class CreateTest
      */
     public function test_invoke()
     {
-        /** @var Route|Mock $route */
+        $create = new Create('foo', 'bar');
 
-        $route = $this->getCleanMock(Route::class);
-
-        $route->expects($this->any())
-              ->method('offsetSet');
-
-        /** @var Create|Mock $mock */
-
-        $mock = $this->getCleanMock(Create::class, ['__invoke'], ['foo', 'bar']);
-
-        $this->assertEquals($route, $mock->__invoke($route, new NotFound));
+        $this->assertInstanceOf(Route::class, $create(new Route, new NotFound));
     }
 }

@@ -5,20 +5,14 @@
 
 namespace Mvc5\Test\Event;
 
-use Mvc5\Event\Signal as Base;
+use Mvc5\Event\Signal as EventSignal;
 
-abstract  class Signal
+class Signal
 {
     /**
      *
      */
-    use Base;
-
-    /**
-     * @return array
-     */
-    public function argsTest()
-    {
-        return $this->args();
+    use EventSignal {
+        args as public;
     }
 }

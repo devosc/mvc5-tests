@@ -12,14 +12,7 @@ class Config
     /**
      *
      */
-    use Base;
-
-    /**
-     * @param string $name
-     * @return mixed
-     */
-    public function sharedTest($name)
-    {
-        return $this->shared($name);
+    use Base {
+        shared as public;
     }
 }

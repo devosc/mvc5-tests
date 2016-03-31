@@ -1,4 +1,7 @@
 <?php
+/**
+ *
+ */
 
 namespace Mvc5\Test\Route\Definition;
 
@@ -12,10 +15,8 @@ class ParamsTest
      */
     public function test_params()
     {
-        /** @var Params $mock */
+        $definition = new Params;
 
-        $mock = $this->getCleanAbstractMock(Params::class, ['params', 'paramsTest']);
-
-        $this->assertEquals(1, count($mock->paramsTest([['parameter', 'author']])));
+        $this->assertEquals(1, count($definition->params([['parameter', 'author']])));
     }
 }

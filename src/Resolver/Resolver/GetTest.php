@@ -5,8 +5,9 @@
 
 namespace Mvc5\Test\Resolver\Resolver;
 
+use Mvc5\Config;
+use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class GetTest
     extends TestCase
@@ -16,15 +17,11 @@ class GetTest
      */
     public function test_get_shared()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanMock(Resolver::class, ['get']);
+        $resolver->set('foo', 'bar');
 
-        $mock->expects($this->once())
-             ->method('shared')
-             ->willReturn('bar');
-
-        $this->assertEquals('bar', $mock->get('foo'));
+        $this->assertEquals('bar', $resolver->get('foo'));
     }
 
     /**
@@ -32,18 +29,8 @@ class GetTest
      */
     public function test_get_plugin()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanMock(Resolver::class, ['get']);
-
-        $mock->expects($this->once())
-             ->method('shared')
-             ->willReturn(null);
-
-        $mock->expects($this->any())
-             ->method('plugin')
-             ->willReturn('bar');
-
-        $this->assertEquals('bar', $mock->get('foo'));
+        $this->assertEquals(new Config, $resolver->get(Config::class));
     }
 }

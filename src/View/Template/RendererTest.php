@@ -10,7 +10,6 @@ use Mvc5\Model;
 use Mvc5\Layout;
 use Mvc5\View\Template\Renderer;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class RendererTest
     extends TestCase
@@ -20,7 +19,7 @@ class RendererTest
      */
     public function test_construct()
     {
-        $this->getCleanMock(Renderer::class, [], [null]);
+        $this->assertInstanceOf(Renderer::class, new Renderer);
     }
 
     /**
@@ -28,11 +27,9 @@ class RendererTest
      */
     public function test_not_a_view_model()
     {
-        /** @var Renderer|Mock $mock */
+        $renderer = new Renderer;
 
-        $mock = $this->getCleanMock(Renderer::class, ['__invoke']);
-
-        $this->assertEquals(null, $mock->__invoke('foo'));
+        $this->assertEquals(null, $renderer('foo'));
     }
 
     /**
@@ -40,13 +37,13 @@ class RendererTest
      */
     public function test_invoke()
     {
-        /** @var Renderer $mock */
+        $model  = new HomeModel('home', ['title' => 'foo']);
+        $layout = new Layout('layout', [Arg::CHILD_MODEL => $model]);
 
-        $renderer = new Renderer;
-
-        $model = new HomeModel(__DIR__ . '/index.phtml', ['title' => 'foo']);
-
-        $layout = new Layout(__DIR__ . '/layout.phtml', [Arg::CHILD_MODEL => $model]);
+        $renderer = new Renderer([
+            'home'   => __DIR__ . '/index.phtml',
+            'layout' => __DIR__ . '/layout.phtml'
+        ]);
 
         $this->assertEquals('<h1>Home</h1>', trim($renderer($layout)));
     }
@@ -56,18 +53,11 @@ class RendererTest
      */
     public function test_invoke_no_template_exception()
     {
-        /** @var Renderer|Mock $mock */
-
-        $mock = $this->getCleanMock(Renderer::class, ['__invoke']);
-
-        $model = $this->getCleanMock(Model::class, ['current', 'key', 'next', 'valid']);
-
-        $model->expects($this->any())
-              ->method('template');
+        $renderer = new Renderer;
 
         $this->setExpectedException('RuntimeException');
 
-        $mock->__invoke($model);
+        $renderer(new Model);
     }
 
     /**
@@ -75,16 +65,11 @@ class RendererTest
      */
     public function test_invoke_exception()
     {
-        /** @var Renderer|Mock $mock */
-
+        $renderer = new Renderer;
         $template = __DIR__ . '/exception.phtml';
-
-        $renderer = new Renderer();
-
-        $model = new Model($template);
 
         $this->setExpectedException('Exception', 'Exception Test');
 
-        $renderer($model);
+        $renderer(new Model($template));
     }
 }

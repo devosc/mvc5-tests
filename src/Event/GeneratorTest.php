@@ -5,8 +5,9 @@
 
 namespace Mvc5\Test\Event;
 
+use Mvc5\Config;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
+use Traversable;
 
 class GeneratorTest
     extends TestCase
@@ -16,13 +17,11 @@ class GeneratorTest
      */
     public function test_emit_callable_event()
     {
-        /** @var Generator|Mock $mock */
+        $event     = function() { return 'foo'; };
+        $generator = new Generator;
+        $listener  = function() {};
 
-        $mock = $this->getCleanAbstractMock(Generator::class, ['emit', 'emitTest']);
-
-        $event = function() { return 'foo'; };
-
-        $this->assertEquals('foo', $mock->emitTest($event, function() {}));
+        $this->assertEquals('foo', $generator->emit($event, $listener));
     }
 
     /**
@@ -30,15 +29,9 @@ class GeneratorTest
      */
     public function test_emit_listener()
     {
-        /** @var Generator|Mock $mock */
+        $generator = new Generator;
 
-        $mock = $this->getCleanAbstractMock(Generator::class, ['emit', 'emitTest']);
-
-        $mock->expects($this->once())
-             ->method('signal')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->emitTest(null, function() {}));
+        $this->assertEquals('foo', $generator->emit(null, function() { return 'foo'; }));
     }
 
     /**
@@ -46,28 +39,9 @@ class GeneratorTest
      */
     public function test_generate()
     {
-        /** @var Generator|Mock $mock */
+        $generator = new Generator;
 
-        $mock = $this->getCleanAbstractMock(Generator::class, ['generate', 'generateTest']);
-
-        $event = $this->getCleanMock('Mvc5\Event');
-        $event->expects($this->once())
-              ->method('stopped')
-              ->willReturn(true);
-
-        $mock->expects($this->once())
-             ->method('queue')
-             ->willReturn(['foo']);
-
-        $mock->expects($this->once())
-             ->method('callable')
-             ->willReturn(function(){});
-
-        $mock->expects($this->once())
-             ->method('emit')
-             ->willReturn('bar');
-
-        $this->assertEquals('bar', $mock->generateTest($event));
+        $this->assertEquals('foo', $generator->generate(new Event));
     }
 
     /**
@@ -75,11 +49,9 @@ class GeneratorTest
      */
     public function test_queue_array()
     {
-        /** @var Generator|Mock $mock */
+        $generator = new Generator;
 
-        $mock = $this->getCleanAbstractMock(Generator::class, ['queue', 'queueTest']);
-
-        $this->assertEquals(['foo'], $mock->queueTest(['foo']));
+        $this->assertEquals(['foo'], $generator->queue(['foo']));
     }
 
     /**
@@ -87,11 +59,9 @@ class GeneratorTest
      */
     public function test_queue_traversable()
     {
-        /** @var Generator|Mock $mock */
+        $generator = new Generator;
 
-        $mock = $this->getCleanAbstractMock(Generator::class, ['queue', 'queueTest']);
-
-        $this->assertInstanceOf(\Traversable::class, $mock->queueTest($this->getCleanMock('Mvc5\Config')));
+        $this->assertInstanceOf(Traversable::class, $generator->queue(new Config));
     }
 
     /**
@@ -99,14 +69,8 @@ class GeneratorTest
      */
     public function test_queue_not_array_or_traversable()
     {
-        /** @var Generator|Mock $mock */
+        $generator = new Generator;
 
-        $mock = $this->getCleanAbstractMock(Generator::class, ['queue', 'queueTest']);
-
-        $mock->expects($this->once())
-             ->method('traversable')
-             ->willReturn(['bar']);
-
-        $this->assertEquals(['bar'], $mock->queueTest('foo'));
+        $this->assertEquals(['bar'], $generator->queue('foo'));
     }
 }

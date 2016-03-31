@@ -5,11 +5,13 @@
 
 namespace Mvc5\Test\Resolver\Resolver;
 
+use Mvc5\Config;
+use Mvc5\Event;
 use Mvc5\Plugin\Plug;
 use Mvc5\Plugin\Plugin;
-use Mvc5\Resolvable;
+use Mvc5\Test\Resolver\Resolver\Model\Unresolvable;
+use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class ResolvableTest
     extends TestCase
@@ -19,17 +21,9 @@ class ResolvableTest
      */
     public function test_resolvable()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['resolvable', 'resolvableTest']);
-
-        $resolvable = $this->getCleanMock(Resolvable::class);
-
-        $mock->expects($this->once())
-             ->method('solve')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->resolvableTest($resolvable));
+        $this->assertEquals(new Config, $resolver->resolvable(new Plugin(Config::class)));
     }
 
     /**
@@ -37,11 +31,9 @@ class ResolvableTest
      */
     public function test_resolvable_not()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['resolvable', 'resolvableTest']);
-
-        $this->assertEquals('foo', $mock->resolvableTest('foo'));
+        $this->assertEquals('foo', $resolver->resolvable('foo'));
     }
 
     /**
@@ -49,15 +41,13 @@ class ResolvableTest
      */
     public function test_resolvable_recursion()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getMockForAbstractClass(Resolver::class);
-
-        $mock->configure('foo', new Plugin(Model\CallObject::class));
+        $resolver->configure('foo', new Plugin(Model\CallObject::class));
 
         $plugin = new Plug('foo');
 
-        $this->assertInstanceOf(Model\CallObject::class, $mock->resolvableTest($plugin));
+        $this->assertInstanceOf(Model\CallObject::class, $resolver->resolvable($plugin));
     }
 
     /**
@@ -65,18 +55,14 @@ class ResolvableTest
      */
     public function test_resolvable_recursion_exception()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['signal', 'resolvable', 'resolvableTest']);
+        $resolver->configure('event\model', Event::class);
 
-        $resolvable = $this->getCleanMock(Resolvable::class);
-
-        $mock->expects($this->any())
-             ->method('solve')
-             ->will($this->returnArgument(0));
+        $resolver->events(['service\resolver' => [function() { throw new \RuntimeException; }]]);
 
         $this->setExpectedException('RuntimeException');
 
-        $mock->resolvableTest($resolvable);
+        $resolver->resolvable(new Unresolvable);
     }
 }

@@ -5,8 +5,9 @@
 
 namespace Mvc5\Test\Resolver\Resolver;
 
+use Mvc5\Config;
+use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class InvokeClassTest
     extends TestCase
@@ -14,16 +15,10 @@ class InvokeClassTest
     /**
      *
      */
-    public function test_solve__invoke()
+    public function test_solve_invoke()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['__invoke']);
-
-        $mock->expects($this->once())
-            ->method('plugin')
-            ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->__invoke('foo'));
+        $this->assertEquals(new Config, $resolver(Config::class));
     }
 }

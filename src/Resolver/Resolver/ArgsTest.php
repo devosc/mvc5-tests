@@ -5,9 +5,10 @@
 
 namespace Mvc5\Test\Resolver\Resolver;
 
-use Mvc5\Plugin\Config;
+use Mvc5\Config;
+use Mvc5\Plugin\Plugin;
+use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class ArgsTest
     extends TestCase
@@ -17,11 +18,9 @@ class ArgsTest
      */
     public function test_args()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['args', 'argsTest']);
-
-        $this->assertEquals(false, $mock->argsTest(false));
+        $this->assertEquals(false, $resolver->args(false));
     }
 
     /**
@@ -29,15 +28,9 @@ class ArgsTest
      */
     public function test_args_not_array()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['args', 'argsTest']);
-
-        $mock->expects($this->once())
-             ->method('resolve')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->argsTest('foo'));
+        $this->assertEquals('foo', $resolver->args('foo'));
     }
 
     /**
@@ -45,14 +38,8 @@ class ArgsTest
      */
     public function test_args_array()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['args', 'argsTest']);
-
-        $mock->expects($this->once())
-             ->method('resolve')
-             ->willReturn('bar');
-
-        $this->assertEquals(['foo' => 'bar'], $mock->argsTest(['foo' => new Config]));
+        $this->assertEquals(['foo' => new Config], $resolver->args(['foo' => new Plugin(Config::class)]));
     }
 }

@@ -13,8 +13,8 @@ class Event
     /**
      * @return array
      */
-    public function argsTest()
+    public function args()
     {
-        return $this->args();
+        return parent::args();
     }
 }

@@ -5,9 +5,10 @@
 
 namespace Mvc5\Test\Model\Template;
 
-use Mvc5\Model\Template\Plugin;
+use Mvc5\App;
+use Mvc5\Arg;
+use Mvc5\Model as Mvc5Model;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class PluginTest
     extends TestCase
@@ -17,14 +18,11 @@ class PluginTest
      */
     public function test_call()
     {
-        /** @var Plugin|Mock $mock */
+        $model   = new Mvc5Model;
+        $service = new App([Arg::SERVICES => ['foo' => function() { return function($bar) { return $bar; }; }]]);
 
-        $mock = $this->getCleanMockForTrait(Plugin::class, ['__call']);
+        $model->service($service);
 
-        $mock->expects($this->once())
-             ->method('call')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->__call(null));
+        $this->assertEquals('bar', $model->foo('bar'));
     }
 }

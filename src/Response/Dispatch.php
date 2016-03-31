@@ -5,16 +5,16 @@
 
 namespace Mvc5\Test\Response;
 
-use Mvc5\Response\Dispatch as Base;
+use Mvc5\Response\Dispatch as ResponseDispatch;
 
 class Dispatch
-    extends Base
+    extends ResponseDispatch
 {
     /**
      * @return array
      */
-    public function argsTest()
+    public function args()
     {
-        return $this->args();
+        return parent::args();
     }
 }

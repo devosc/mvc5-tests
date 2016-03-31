@@ -5,8 +5,9 @@
 
 namespace Mvc5\Test\Resolver\Build;
 
+use Mvc5\Config;
+use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class CombineTest
     extends TestCase
@@ -16,14 +17,8 @@ class CombineTest
      */
     public function test_combine()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['combine', 'combineTest']);
-
-        $mock->expects($this->once())
-            ->method('compose')
-            ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->combineTest(['foo']));
+        $this->assertInstanceOf(Config::class, $resolver->combine([Config::class]));
     }
 }

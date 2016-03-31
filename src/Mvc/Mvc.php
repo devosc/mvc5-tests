@@ -12,13 +12,7 @@ class Mvc
     /**
      *
      */
-    use Base;
-
-    /**
-     * @return array
-     */
-    public function argsTest()
-    {
-        return $this->args();
+    use Base {
+        args as public;
     }
 }

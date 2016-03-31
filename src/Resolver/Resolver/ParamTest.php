@@ -5,8 +5,8 @@
 
 namespace Mvc5\Test\Resolver\Resolver;
 
+use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class ParamTest
     extends TestCase
@@ -16,14 +16,10 @@ class ParamTest
      */
     public function test_param()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['param']);
+        $resolver->config(['foo' => ['bar' => 'baz']]);
 
-        $mock->expects($this->once())
-            ->method('config')
-            ->willReturn(['foo' => ['bar' => 'baz']]);
-
-        $this->assertEquals('baz', $mock->param('foo.bar'));
+        $this->assertEquals('baz', $resolver->param('foo.bar'));
     }
 }

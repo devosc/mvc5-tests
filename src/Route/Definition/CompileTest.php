@@ -1,4 +1,7 @@
 <?php
+/**
+ *
+ */
 
 namespace Mvc5\Test\Route\Definition;
 
@@ -13,9 +16,7 @@ class CompileTest
      */
     public function test_compile()
     {
-        /** @var Compile $mock */
-
-        $mock = $this->getCleanMock(Compile::class, ['compile', 'compileTest']);
+        $compile = new Compile;
 
         $definition = (new Generator)->__invoke([
             'route'      => '[:no_constraint]/:author[/:category]',
@@ -39,7 +40,7 @@ class CompileTest
 
         $this->setExpectedException('InvalidArgumentException', 'Missing parameter "author"');
 
-        $mock->compileTest($tokens, $args, $defaults);
+        $compile->compile($tokens, $args, $defaults);
     }
 
     /**
@@ -47,9 +48,7 @@ class CompileTest
      */
     public function test_compile_no_default_param()
     {
-        /** @var Compile $mock */
-
-        $mock = $this->getCleanMock(Compile::class, ['compile', 'compileTest']);
+        $compile = new Compile;
 
         $definition = (new Generator)->__invoke([
             'route'      => '[:no_constraint]/:author[/:category]',
@@ -73,7 +72,7 @@ class CompileTest
 
         $this->setExpectedException('InvalidArgumentException', 'Missing parameter "author"');
 
-        $mock->compileTest($tokens, $args, $defaults);
+        $compile->compile($tokens, $args, $defaults);
     }
 
     /**
@@ -81,9 +80,7 @@ class CompileTest
      */
     public function test_compile_param_path()
     {
-        /** @var Compile $mock */
-
-        $mock = $this->getCleanMock(Compile::class, ['compile', 'compileTest']);
+        $compile = new Compile;
 
         $definition = (new Generator)->__invoke([
             'route'      => '/[:author[/:category]]',
@@ -106,6 +103,6 @@ class CompileTest
 
         $defaults = $definition['defaults'];
 
-        $this->assertEquals('/foo/bar', $mock->compileTest($tokens, $args, $defaults));
+        $this->assertEquals('/foo/bar', $compile->compile($tokens, $args, $defaults));
     }
 }

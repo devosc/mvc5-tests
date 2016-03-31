@@ -8,7 +8,6 @@ namespace Mvc5\Test\Controller;
 use Mvc5\Arg;
 use Mvc5\Controller\Exception;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class Test
     extends TestCase
@@ -16,15 +15,11 @@ class Test
     /**
      *
      */
-    public function test__invoke()
+    public function test_invoke()
     {
-        /** @var Exception|Mock $mock */
+        $e         = new \Exception;
+        $exception = new Exception([]);
 
-        $exception = new \Exception;
-        $model     = [Arg::EXCEPTION => $exception];
-
-        $mock = $this->getCleanMock(Exception::class, ['__invoke'], [[]]);
-
-        $this->assertTrue($model == $mock->__invoke($exception));
+        $this->assertEquals($e, $exception($e)[Arg::EXCEPTION]);
     }
 }

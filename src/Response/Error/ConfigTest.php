@@ -5,8 +5,8 @@
 
 namespace Mvc5\Test\Response\Error;
 
+use Mvc5\Arg;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class ConfigTest
     extends TestCase
@@ -16,15 +16,9 @@ class ConfigTest
      */
     public function test_code()
     {
-        /** @var Config|Mock $mock */
+        $config = new Config([Arg::CODE => 'foo']);
 
-        $mock = $this->getCleanMock(Config::class, ['code']);
-
-        $mock->expects($this->once())
-             ->method('offsetGet')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->code());
+        $this->assertEquals('foo', $config->code());
     }
 
     /**
@@ -32,15 +26,9 @@ class ConfigTest
      */
     public function test_description()
     {
-        /** @var Config|Mock $mock */
+        $config = new Config([Arg::DESCRIPTION => 'foo']);
 
-        $mock = $this->getCleanMock(Config::class, ['description']);
-
-        $mock->expects($this->once())
-             ->method('offsetGet')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->description());
+        $this->assertEquals('foo', $config->description());
     }
 
     /**
@@ -48,15 +36,9 @@ class ConfigTest
      */
     public function test_errors()
     {
-        /** @var Config|Mock $mock */
+        $config = new Config([Arg::ERRORS => ['foo']]);
 
-        $mock = $this->getCleanMock(Config::class, ['errors']);
-
-        $mock->expects($this->once())
-             ->method('offsetGet')
-             ->willReturn([]);
-
-        $this->assertEquals([], $mock->errors());
+        $this->assertEquals(['foo'], $config->errors());
     }
 
     /**
@@ -64,15 +46,9 @@ class ConfigTest
      */
     public function test_message()
     {
-        /** @var Config|Mock $mock */
+        $config = new Config([Arg::MESSAGE => 'foo']);
 
-        $mock = $this->getCleanMock(Config::class, ['message']);
-
-        $mock->expects($this->once())
-             ->method('offsetGet')
-             ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->message());
+        $this->assertEquals('foo', $config->message());
     }
 
     /**
@@ -80,14 +56,8 @@ class ConfigTest
      */
     public function test_status()
     {
-        /** @var Config|Mock $mock */
+        $config = new Config([Arg::STATUS => 'foo']);
 
-        $mock = $this->getCleanMock(Config::class, ['status']);
-
-        $mock->expects($this->once())
-            ->method('offsetGet')
-            ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->status());
+        $this->assertEquals('foo', $config->status());
     }
 }

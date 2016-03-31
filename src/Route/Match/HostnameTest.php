@@ -1,13 +1,16 @@
 <?php
+/**
+ *
+ */
 
 namespace Mvc5\Test\Route\Match;
 
+use Mvc5\Arg;
 use Mvc5\Response\Error\BadRequest;
 use Mvc5\Route\Match\Hostname;
-use Mvc5\Route\Route;
-use Mvc5\Route\Definition;
+use Mvc5\Route\Config as Route;
+use Mvc5\Route\Definition\Config as Definition;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class HostnameTest
     extends TestCase
@@ -15,25 +18,13 @@ class HostnameTest
     /**
      *
      */
-    public function test__invoke()
+    public function test_invoke()
     {
-        /** @var Route|Mock $route */
+        $definition = new Definition([Arg::HOSTNAME => 'foo']);
+        $hostname   = new Hostname;
+        $route      = new Route([Arg::HOSTNAME => 'foo']);
 
-        $route = $this->getCleanMock(Route::class);
-
-        $route->expects($this->once())
-              ->method('hostname')
-              ->willReturn('foo');
-
-        /** @var Definition|Mock $definition */
-
-        $definition = $this->getCleanMock(Definition::class);
-
-        $definition->expects($this->any())
-                   ->method('hostname')
-                   ->willReturn('foo');
-
-        $this->assertEquals($route, (new Hostname)->__invoke($route, $definition));
+        $this->assertEquals($route, $hostname($route, $definition));
     }
 
     /**
@@ -41,22 +32,10 @@ class HostnameTest
      */
     public function test_invoke_not_matched()
     {
-        /** @var Route|Mock $route */
+        $definition = new Definition([Arg::HOSTNAME => 'foo']);
+        $hostname   = new Hostname;
+        $route      = new Route([Arg::HOSTNAME => 'bar']);
 
-        $route = $this->getCleanMock(Route::class);
-
-        $route->expects($this->once())
-              ->method('hostname')
-              ->willReturn('foo');
-
-        /** @var Definition|Mock $definition */
-
-        $definition = $this->getCleanMock(Definition::class);
-
-        $definition->expects($this->any())
-                   ->method('hostname')
-                   ->willReturn('bar');
-
-        $this->assertInstanceOf(BadRequest::class, (new Hostname)->__invoke($route, $definition));
+        $this->assertInstanceOf(BadRequest::class, $hostname($route, $definition));
     }
 }

@@ -9,12 +9,14 @@ use Mvc5\Plugin\Gem\SignalArgs;
 use Mvc5\Plugin\Gem\Config;
 use Mvc5\Signal as Base;
 
-abstract class Signal
+class Signal
 {
     /**
      *
      */
-    use Base;
+    use Base {
+        signal as public;
+    }
 
     /**
      * @param $foo
@@ -72,16 +74,5 @@ abstract class Signal
     public function staticRequiredExceptionTest($foo, $baz)
     {
         return $foo . ' ' . $baz;
-    }
-
-    /**
-     * @param callable|object $config
-     * @param array $args
-     * @param callable $callback
-     * @return mixed
-     */
-    public function testSignal(callable $config, array $args = [], callable $callback = null)
-    {
-        return $this->signal($config, $args, $callback);
     }
 }

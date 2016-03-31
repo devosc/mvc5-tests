@@ -5,10 +5,11 @@
 
 namespace Mvc5\Test\Resolver\Resolver\Gem;
 
+use Mvc5\Config;
 use Mvc5\Plugin\Args;
-use Mvc5\Test\Resolver\Resolver\Resolver;
+use Mvc5\Plugin\Plugin;
+use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit_Framework_MockObject_MockObject as Mock;
 
 class ArgsTest
     extends TestCase
@@ -18,14 +19,8 @@ class ArgsTest
      */
     public function test_gem_args()
     {
-        /** @var Resolver|Mock $mock */
+        $resolver = new Resolver;
 
-        $mock = $this->getCleanAbstractMock(Resolver::class, ['gem', 'gemTest']);
-
-        $mock->expects($this->once())
-            ->method('args')
-            ->willReturn('foo');
-
-        $this->assertEquals('foo', $mock->gemTest(new Args('foo')));
+        $this->assertEquals(['foo' => new Config], $resolver->gem(new Args(['foo' => new Plugin(Config::class)])));
     }
 }

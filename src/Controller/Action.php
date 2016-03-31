@@ -5,45 +5,28 @@
 
 namespace Mvc5\Test\Controller;
 
-use Mvc5\Response\Error;
-use Mvc5\Response\Response;
-use Mvc5\Controller\Action as Base;
-use Throwable;
+use Mvc5\Controller\Action as ControllerAction;
 
-abstract class Action
+class Action
 {
     /**
      *
      */
-    use Base;
+    use ControllerAction {
+        action    as public;
+        error     as public;
+        exception as public;
+    }
 
     /**
-     * @param callable $controller
+     * @param array|callable|object|string $config
      * @param array $args
-     * @return mixed
+     * @param callable $callback
+     * @return callable|mixed|null|object
+     * @throws \RuntimeException
      */
-    public function actionTest(callable $controller, array $args = [])
+    public function call($config, array $args = [], callable $callback = null)
     {
-        return $this->action($controller, $args);
-    }
-
-    /**
-     * @param Error $error
-     * @param Response $response
-     * @return mixed
-     */
-    public function errorTest(Error $error, Response $response)
-    {
-        return $this->error($error, $response);
-    }
-
-    /**
-     * @param Throwable $exception
-     * @param $controller
-     * @return mixed
-     */
-    public function exceptionTest(Throwable $exception, $controller)
-    {
-        return $this->exception($exception, $controller);
+        return 'foo';
     }
 }
