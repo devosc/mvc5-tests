@@ -16,12 +16,20 @@ class LayoutTest
     /**
      *
      */
-    public function test_invoke()
+    public function test_invoke_model()
     {
         $layout = new Layout;
 
-        $layout(new ViewLayout, new Model);
-
         $this->assertInstanceOf(ViewLayout::class, $layout(new ViewLayout, new Model));
+    }
+
+    /**
+     *
+     */
+    public function test_invoke_string_model()
+    {
+        $layout = new Layout;
+
+        $this->assertInstanceOf(ViewLayout::class, $layout(new ViewLayout, 'foo'));
     }
 }
