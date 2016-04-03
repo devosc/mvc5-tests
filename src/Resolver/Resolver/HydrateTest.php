@@ -6,9 +6,11 @@
 namespace Mvc5\Test\Resolver\Resolver;
 
 use Mvc5\Config;
+use Mvc5\Plugin\Call;
 use Mvc5\Plugin\Hydrator;
+use Mvc5\Plugin\Invoke;
+use Mvc5\Plugin\Plug;
 use Mvc5\Test\Resolver\Resolver;
-use Mvc5\Test\Resolver\Resolver\Model\AutowireNoConstructor;
 use Mvc5\Test\Resolver\Resolver\Model\Hydrate;
 use Mvc5\Test\Test\TestCase;
 
@@ -18,7 +20,7 @@ class HydrateTest
     /**
      *
      */
-    public function test_hydrate()
+    public function test_hydrate_does_nothing()
     {
         $resolver = new Resolver;
 
@@ -28,7 +30,7 @@ class HydrateTest
     /**
      *
      */
-    public function test_hydrate_array_access()
+    public function test_hydrate_array_access_set()
     {
         $resolver = new Resolver;
 
@@ -40,7 +42,7 @@ class HydrateTest
     /**
      *
      */
-    public function test_hydrate_property_access()
+    public function test_hydrate_property_access_set()
     {
         $resolver = new Resolver;
 
@@ -56,53 +58,99 @@ class HydrateTest
     /**
      *
      */
-    public function test_hydrate_call_method_with_single_argument()
+    public function test_hydrate_call_method_on_current_object_with_single_argument()
     {
         $resolver = new Resolver;
 
-        $plugin = new Hydrator(null, ['remove' => 'foo']);
+        $plugin = new Hydrator(null, ['name' => 'foo']);
 
-        $this->assertEquals(new Config, $resolver->hydrate($plugin, new Config(['foo' => 'bar'])));
+        $object = $resolver->hydrate($plugin, new Hydrate);
+
+        $this->assertInstanceOf(Hydrate::class, $object);
+
+        $this->assertEquals('foo', $object->name());
     }
 
     /**
      *
      */
-    public function test_hydrate_array_string_method()
+    public function test_hydrate_call_method_on_current_object_with_multiple_args()
     {
         $resolver = new Resolver;
 
-        $plugin = new Hydrator(null, [['$bar', '__invoke', 'foo' => 'foo']]);
+        $plugin = new Hydrator(null, [['init', 'name' => 'foo', 'id' => 'bar']]);
 
-        $this->assertInstanceOf(Hydrate::class, $resolver->hydrate($plugin, new Hydrate));
+        $object = $resolver->hydrate($plugin, new Hydrate);
+
+        $this->assertInstanceOf(Hydrate::class, $object);
+
+        $this->assertEquals('foo', $object->name());
+
+        $this->assertEquals('bar', $object->id());
     }
 
     /**
-     *
+     * [$service, $method]
      */
-    public function test_hydrate_array_array_object()
+    public function test_hydrate_call_service_object_and_pass_current_object_as_named_arg()
     {
         $resolver = new Resolver;
 
-        $object = new AutowireNoConstructor;
+        $initializer = new Hydrate;
 
-        $plugin = new Hydrator(null, [['$bar', [$object, '__invoke'], 'foo' => 'foo']]);
+        $plugin = new Hydrator(null, [['$object', [$initializer, 'initialize'], 'foo' => 'foo']]);
 
-        $this->assertInstanceOf(AutowireNoConstructor::class, $resolver->hydrate($plugin, $object));
+        $object = $resolver->hydrate($plugin, new Hydrate);
+
+        $this->assertInstanceOf(Hydrate::class, $object);
+
+        $this->assertTrue($initializer !== $object);
+
+        $this->assertEquals('foo', $object->name());
     }
 
     /**
-     *
+     * $this->resolve($method)
      */
-    public function test_hydrate_array_service()
+    public function test_hydrate_call_function_with_args()
     {
         $resolver = new Resolver;
 
-        $object = new Hydrator(null, []);
+        $function = function($name) {
+            if ('foo' !== $name) {
+                throw new \Exception;
+            }
+        };
 
-        $plugin = new Hydrator(null, [[function() {}, ['bar']]]);
+        $plugin = new Hydrator(null, [[$function, 'foo']]);
 
-        $this->assertInstanceOf(Hydrator::class, $resolver->hydrate($plugin, $object));
+        $object = $resolver->hydrate($plugin, new Hydrate);
+
+        $this->assertInstanceOf(Hydrate::class, $object);
+    }
+
+    /**
+     * $this->resolve($method)
+     */
+    public function test_hydrate_call_function_with_args_and_current_object()
+    {
+        $resolver = new Resolver;
+
+        $resolver->configure('foo', 'bar');
+
+        $function = new Invoke(function(Hydrate $object, $name) {
+            $object->name($name);
+
+            return $object;
+        });
+
+        $plugin = new Hydrator(null, [['$object', $function, 'name' => new Plug('foo')]]);
+
+        $object = $resolver->hydrate($plugin, new Hydrate);
+
+        $this->assertInstanceOf(Hydrate::class, $object);
+
+        $this->assertEquals('bar', $object->name());
     }
 
     /**
@@ -112,10 +160,16 @@ class HydrateTest
     {
         $resolver = new Resolver;
 
-        $plugin = new Hydrator(null, [function() {}]);
+        $called = false;
 
-        $object = new Hydrator(null, []);
+        $call = new Call(function() use(&$called) {
+            $called = true;
+        });
 
-        $this->assertInstanceOf(Hydrator::class, $resolver->hydrate($plugin, $object));
+        $plugin = new Hydrator(null, [$call]);
+
+        $this->assertInstanceOf(Hydrate::class, $resolver->hydrate($plugin, new Hydrate));
+
+        $this->assertTrue($called);
     }
 }
