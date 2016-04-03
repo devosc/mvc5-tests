@@ -110,21 +110,21 @@ class GeneratorTest
     }
 
     /**
-     * @fixme remove double slash
+     *
      */
     public function test_generate()
     {
         $generator = new Generator(new Definition($this->definition));
 
-        $this->assertEquals('//foo/bar', $generator->generate('app', ['foo' => 'bar']));
+        $this->assertEquals('/foo/bar', $generator->generate('app', ['foo' => 'bar']));
     }
 
     /**
-     * @fixme where is the leading slash?
+     *
      */
-    public function test_generate_with_child()
+    public function test_generate_child()
     {
-        $definition = [
+        $definition = new Definition([
             Arg::NAME     => 'app',
             Arg::ROUTE    => '/',
             Arg::CHILDREN => [
@@ -132,13 +132,11 @@ class GeneratorTest
                     Arg::ROUTE => 'foo/:controller'
                 ]
             ]
-        ];
+        ]);
 
-        $generator = new Generator(new Definition([Arg::NAME => 'app']));
+        $generator = new Generator;
 
-        $args = ['controller' => 'bar'];
-
-        $this->assertEquals('foo/bar', $generator->generate('foo', $args, new Definition($definition)));
+        $this->assertEquals('foo/bar', $generator->generate('foo', ['controller' => 'bar'], $definition));
     }
 
     /**
