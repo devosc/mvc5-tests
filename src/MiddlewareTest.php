@@ -62,4 +62,18 @@ class MiddlewareTest
 
         $this->assertInstanceOf(Response::class, $middleware(new Request, new Response));
     }
+
+    /**
+     *
+     */
+    public function test_invoke_empty_stack()
+    {
+        $middleware = new Middleware;
+
+        $middleware->service(new App);
+
+        $this->setExpectedException(\Exception::class, 'Empty call stack');
+
+        $this->assertInstanceOf(Response::class, $middleware(new Request, new Response));
+    }
 }
