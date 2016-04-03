@@ -11,11 +11,21 @@ class Response
     implements Mvc5Response
 {
     /**
+     * @var
+     */
+    protected $content;
+
+    /**
+     * @var
+     */
+    protected $status;
+
+    /**
      * @return callable|mixed|null|string|object
      */
     function content()
     {
-        return 'foo';
+        return $this->content;
     }
 
     /**
@@ -31,6 +41,7 @@ class Response
      */
     function setContent($content)
     {
+        $this->content = $content;
         return $this;
     }
 
@@ -41,6 +52,8 @@ class Response
      */
     function setStatus($code, $text = '')
     {
+        $this->status = $code;
+
         return $this;
     }
 
@@ -49,6 +62,6 @@ class Response
      */
     function status()
     {
-        return 'foo';
+        return $this->status;
     }
 }

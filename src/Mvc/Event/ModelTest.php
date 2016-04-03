@@ -37,7 +37,11 @@ class ModelTest
      */
     public function test_model()
     {
-        $model = new Model(null, [Arg::RESPONSE => new Response]);
+        $response = new Response;
+
+        $response->setContent('foo');
+
+        $model = new Model(null, [Arg::RESPONSE => $response]);
 
         $this->assertEquals('foo', $model->model());
     }
@@ -47,9 +51,13 @@ class ModelTest
      */
     public function test_model_set()
     {
-        $model = new Model(null, [Arg::RESPONSE => new Response]);
+        $response = new Response;
+
+        $model = new Model(null, [Arg::RESPONSE => $response]);
 
         $this->assertEquals('foo', $model->model('foo'));
+
+        $this->assertEquals('foo', $response->content());
     }
 
     /**
