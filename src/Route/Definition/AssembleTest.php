@@ -177,6 +177,25 @@ class AssembleTest
     /**
      *
      */
+    public function test_assemble_canonical_with_options_standard_http_no_scheme()
+    {
+        $assemble = new Assemble;
+
+        $options = $this->options([
+            Arg::CANONICAL  => true,
+            Arg::HOSTNAME   => 'localhost',
+            Arg::PORT       => '80',
+            Arg::SCHEME     => null,
+        ]);
+
+        $this->assertEquals(
+            '//localhost/app', $assemble->assemble(null, 'localhost', '80', '/app', $options)
+        );
+    }
+
+    /**
+     *
+     */
     public function test_assemble_canonical_with_options_not_standard_http()
     {
         $assemble = new Assemble;
