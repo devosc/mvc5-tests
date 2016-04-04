@@ -7,6 +7,7 @@ namespace Mvc5\Test\Resolver\Resolver;
 
 use Mvc5\Config;
 use Mvc5\Plugin\Call;
+use Mvc5\Plugin\Filter;
 use Mvc5\Plugin\Hydrator;
 use Mvc5\Plugin\Invoke;
 use Mvc5\Plugin\Plug;
@@ -98,7 +99,7 @@ class HydrateTest
 
         $initializer = new Hydrate;
 
-        $plugin = new Hydrator(null, [['$object', [$initializer, 'initialize'], 'foo' => 'foo']]);
+        $plugin = new Hydrator(null, [['$object', [new Filter($initializer), 'initialize'], 'foo' => 'foo']]);
 
         $object = $resolver->hydrate($plugin, new Hydrate);
 
