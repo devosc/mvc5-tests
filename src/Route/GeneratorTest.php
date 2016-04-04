@@ -6,6 +6,7 @@
 namespace Mvc5\Test\Route;
 
 use Mvc5\Arg;
+use Mvc5\Route\Definition\Config as Definition;
 use Mvc5\Route\Generator;
 use Mvc5\Test\Test\TestCase;
 
@@ -27,8 +28,8 @@ class GeneratorTest
             Arg::TOKENS      => null
         ];
 
-        $generator = new Generator(Config\Definition::class);
+        $generator = new Generator;
 
-        $this->assertInstanceOf(Config\Definition::class, $generator($definition));
+        $this->assertInstanceOf(Definition::class, $generator($definition));
     }
 }

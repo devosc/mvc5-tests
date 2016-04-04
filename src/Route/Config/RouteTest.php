@@ -6,6 +6,7 @@
 namespace Mvc5\Test\Route\Config;
 
 use Mvc5\Arg;
+use Mvc5\Route\Config as Route;
 use Mvc5\Test\Test\TestCase;
 
 class RouteTest
@@ -149,6 +150,26 @@ class RouteTest
         $route = new Route([Arg::PATH => 'foo']);
 
         $this->assertEquals('foo', $route->path());
+    }
+
+    /**
+     *
+     */
+    public function test_port_exists()
+    {
+        $route = new Route([Arg::PORT => '80']);
+
+        $this->assertEquals('80', $route->port());
+    }
+
+    /**
+     *
+     */
+    public function test_port_not_exists()
+    {
+        $route = new Route;
+
+        $this->assertEquals(null, $route->port());
     }
 
     /**

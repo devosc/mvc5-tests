@@ -11,6 +11,15 @@ use Mvc5\Url\Generator as Base;
 class Generator
     extends Base
 {
+    /**
+     * @param Definition $parent
+     * @param $name
+     * @return Definition
+     */
+    public function child(Definition $parent, $name)
+    {
+        return parent::child($parent, $name);
+    }
 
     /**
      * @param $name
@@ -22,12 +31,26 @@ class Generator
     }
 
     /**
-     * @param array|Definition $definition
-     * @return Definition|null
+     * @param array|string $name
+     * @param array $args
+     * @param array $options
+     * @param string $path
+     * @param Definition $parent
+     * @return string|void
      */
-    public function url($definition)
+    public function generate($name, array $args = [], array $options = [], $path = '', Definition $parent = null)
     {
-        return parent::url($definition);
+        return parent::generate($name, $args, $options, $path, $parent);
+    }
+
+    /**
+     * @param Definition $parent
+     * @param Definition $child
+     * @return Definition
+     */
+    public function merge(Definition $parent, Definition $child)
+    {
+        return parent::merge($parent, $child);
     }
 
     /**
@@ -40,14 +63,20 @@ class Generator
     }
 
     /**
-     * @param array|string $name
-     * @param array $args
-     * @param Definition $definition
-     * @return string|void
-     * @throws \RuntimeException
+     * @param array $options
+     * @return array
      */
-    public function generate($name, array $args = [], Definition $definition = null)
+    public function options(array $options = [])
     {
-        return parent::generate($name, $args, $definition);
+        return parent::options($options);
+    }
+
+    /**
+     * @param array|Definition $definition
+     * @return Definition|null
+     */
+    public function url($definition)
+    {
+        return parent::url($definition);
     }
 }

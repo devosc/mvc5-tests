@@ -6,6 +6,7 @@
 namespace Mvc5\Test\Route\Config;
 
 use Mvc5\Arg;
+use Mvc5\Route\Definition\Config as Definition;
 use Mvc5\Test\Test\TestCase;
 
 class DefinitionTest
@@ -191,6 +192,26 @@ class DefinitionTest
         $definition = new Definition;
 
         $this->assertEquals([], $definition->paramMap());
+    }
+
+    /**
+     *
+     */
+    public function test_port_exists()
+    {
+        $definition = new Definition([Arg::PORT => '80']);
+
+        $this->assertEquals('80', $definition->port());
+    }
+
+    /**
+     *
+     */
+    public function test_port_not_exists()
+    {
+        $definition = new Definition;
+
+        $this->assertEquals(null, $definition->port());
     }
 
     /**

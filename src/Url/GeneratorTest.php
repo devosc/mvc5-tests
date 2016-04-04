@@ -40,7 +40,24 @@ class GeneratorTest
      */
     public function test_construct()
     {
-        $this->assertInstanceOf(Generator::class, new Generator([]));
+        $this->assertInstanceOf(Generator::class, new Generator);
+    }
+
+    /**
+     *
+     */
+    public function test_child()
+    {
+        $definition = new Definition([
+            Arg::NAME => 'app',
+            Arg::CHILDREN => [
+                'foo' => ['route' => '/foo']
+            ]
+        ]);
+
+        $generator  = new Generator($definition);
+
+        $this->assertInstanceOf(Definition::class, $generator->child($definition, 'foo'));
     }
 
     /**
@@ -63,6 +80,85 @@ class GeneratorTest
         $generator  = new Generator($definition);
 
         $this->assertEquals('bar', $generator->config('foo'));
+    }
+
+    /**
+     *
+     */
+    public function test_generate()
+    {
+        $generator = new Generator(new Definition($this->definition));
+
+        $this->assertEquals('/foo/bar', $generator->generate('app', ['foo' => 'bar']));
+    }
+
+    /**
+     *
+     */
+    public function test_generate_child()
+    {
+        $definition = new Definition([
+            Arg::NAME     => 'app',
+            Arg::ROUTE    => '/',
+            Arg::CHILDREN => [
+                'foo' => [
+                    Arg::ROUTE => 'foo/:controller',
+                    Arg::CHILDREN => [
+                        'bar' => [
+                            Arg::ROUTE => '/bat'
+                        ]
+                    ]
+                ]
+            ]
+        ]);
+
+        $generator = new Generator;
+
+        $this->assertEquals(
+            'foo/baz/bat', $generator->generate('foo/bar', ['controller' => 'baz'], [], null, $definition)
+        );
+    }
+
+    /**
+     *
+     */
+    public function test_generate_wildcard()
+    {
+        $generator = new Generator(new Definition($this->definition));
+
+        $this->assertEquals('/foo/bar', $generator->generate('app', ['controller' => 'foo', 'action' => 'bar']));
+    }
+
+    /**
+     *
+     */
+    public function test_generate_wildcard_defaults()
+    {
+        $generator = new Generator(new Definition($this->definition));
+
+        $this->assertEquals('/', $generator->generate('app', ['controller' => 'home', 'action' => 'index']));
+    }
+
+    /**
+     *
+     */
+    public function test_merge()
+    {
+        $generator  = new Generator;
+
+        $parent = new Definition([Arg::SCHEME => 'https', Arg::HOSTNAME => 'localhost', Arg::PORT => '443']);
+
+        $child = $generator->merge($parent, new Definition);
+
+        $this->assertTrue($parent == $child);
+
+        $this->assertTrue($parent !== $child);
+
+        $this->assertEquals('https', $child->scheme());
+
+        $this->assertEquals('localhost', $child->hostname());
+
+        $this->assertEquals('443', $child->port());
     }
 
     /**
@@ -91,6 +187,20 @@ class GeneratorTest
     /**
      *
      */
+    public function test_options()
+    {
+        $generator = new Generator;
+
+        $defaults = $generator->options();
+
+        $options = [Arg::HOSTNAME => 'foo'];
+
+        $this->assertEquals($options + $defaults, $generator->options($options));
+    }
+
+    /**
+     *
+     */
     public function test_url()
     {
         $generator = new Generator([Arg::NAME => 'app']);
@@ -112,56 +222,6 @@ class GeneratorTest
     /**
      *
      */
-    public function test_generate()
-    {
-        $generator = new Generator(new Definition($this->definition));
-
-        $this->assertEquals('/foo/bar', $generator->generate('app', ['foo' => 'bar']));
-    }
-
-    /**
-     *
-     */
-    public function test_generate_child()
-    {
-        $definition = new Definition([
-            Arg::NAME     => 'app',
-            Arg::ROUTE    => '/',
-            Arg::CHILDREN => [
-                'foo' => [
-                    Arg::ROUTE => 'foo/:controller'
-                ]
-            ]
-        ]);
-
-        $generator = new Generator;
-
-        $this->assertEquals('foo/bar', $generator->generate('foo', ['controller' => 'bar'], $definition));
-    }
-
-    /**
-     *
-     */
-    public function test_generate_wildcard()
-    {
-        $generator = new Generator(new Definition($this->definition));
-
-        $this->assertEquals('/foo/bar', $generator->generate('app', ['controller' => 'foo', 'action' => 'bar']));
-    }
-
-    /**
-     *
-     */
-    public function test_generate_wildcard_defaults()
-    {
-        $generator = new Generator(new Definition($this->definition));
-
-        $this->assertEquals('/', $generator->generate('app', ['controller' => 'home', 'action' => 'index']));
-    }
-
-    /**
-     *
-     */
     public function test_invoke()
     {
         $generator = new Generator([Arg::NAME => 'app', Arg::ROUTE => '/foo']);
@@ -177,5 +237,17 @@ class GeneratorTest
         $generator = new Generator([Arg::NAME => 'app', Arg::ROUTE => '/']);
 
         $this->assertEquals('/', $generator('app'));
+    }
+
+    /**
+     *
+     */
+    public function test_invoke_canonical_and_wildcard_params()
+    {
+        $generator = new Generator([Arg::NAME => 'app', Arg::ROUTE => '/', Arg::WILDCARD => true]);
+
+        $options = [Arg::SCHEME => 'https', Arg::HOSTNAME => 'localhost', Arg::PORT => '443', Arg::CANONICAL => true];
+
+        $this->assertEquals('https://localhost/foo/bar', $generator('app', ['foo' => 'bar'], $options));
     }
 }
