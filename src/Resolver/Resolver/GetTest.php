@@ -27,6 +27,16 @@ class GetTest
     /**
      *
      */
+    public function test_get_plugin_null()
+    {
+        $resolver = new Resolver;
+
+        $this->assertEquals(null, $resolver->get('foo'));
+    }
+
+    /**
+     *
+     */
     public function test_get_plugin()
     {
         $resolver = new Resolver;
