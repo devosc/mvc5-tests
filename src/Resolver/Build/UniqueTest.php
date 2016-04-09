@@ -25,6 +25,16 @@ class UniqueTest
     /**
      *
      */
+    public function test_unique_null_parent()
+    {
+        $resolver = new Resolver;
+
+        $this->assertInstanceOf(Config::class, $resolver->unique(Config::class, null));
+    }
+
+    /**
+     *
+     */
     public function test_unique_parent()
     {
         $resolver = new Resolver;

@@ -49,7 +49,21 @@ class PluginTest
     /**
      *
      */
-    public function test_plugin_closure()
+    public function test_plugin_closure_with_scope()
+    {
+        $resolver = new Resolver;
+
+        $config = new Config;
+
+        $resolver->scope($config);
+
+        $this->assertEquals($config, $resolver->plugin(function() { return $this; }));
+    }
+
+    /**
+     *
+     */
+    public function test_plugin_closure_without_scope()
     {
         $resolver = new Resolver;
 

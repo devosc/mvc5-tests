@@ -15,7 +15,19 @@ class ResolverTest
     /**
      *
      */
-    public function test_resolver()
+    public function test_resolver_provider()
+    {
+        $resolver = new Resolver;
+
+        $resolver->setProvider(function() { return 'bar'; });
+
+        $this->assertEquals('bar', $resolver->resolver('foo'));
+    }
+
+    /**
+     *
+     */
+    public function test_resolver_service()
     {
         $resolver = new Resolver;
 

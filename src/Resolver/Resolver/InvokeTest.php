@@ -20,4 +20,16 @@ class InvokeTest
 
         $this->assertEquals('foo', $resolver->invoke(function() { return 'foo'; }));
     }
+
+    /**
+     *
+     */
+    public function test_invoke_with_callback()
+    {
+        $resolver = new Resolver;
+
+        $result = $resolver->invoke(function($foo) { return $foo; }, [], function() { return 'bar'; });
+
+        $this->assertEquals('bar', $result);
+    }
 }
