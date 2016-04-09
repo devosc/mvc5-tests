@@ -24,9 +24,19 @@ class ConfigTest
     /**
      *
      */
-    public function test_current()
+    public function test_current_array()
     {
         $config = new Config(['foo' => 'bar']);
+
+        $this->assertEquals('bar', $config->current());
+    }
+
+    /**
+     *
+     */
+    public function test_current_iterator()
+    {
+        $config = new Config(new Config(['foo' => 'bar']));
 
         $this->assertEquals('bar', $config->current());
     }
@@ -74,7 +84,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_key()
+    public function test_key_array()
     {
         $config = new Config(['foo' => 'bar']);
 
@@ -84,9 +94,31 @@ class ConfigTest
     /**
      *
      */
-    public function test_next()
+    public function test_key_iterator()
+    {
+        $config = new Config(new Config(['foo' => 'bar']));
+
+        $this->assertEquals('foo', $config->key());
+    }
+
+    /**
+     *
+     */
+    public function test_next_array()
     {
         $config = new Config(['foo' => 'bar', 'baz' => 'bat']);
+
+        $config->next();
+
+        $this->assertEquals('bat', $config->current());
+    }
+
+    /**
+     *
+     */
+    public function test_next_iterator()
+    {
+        $config = new Config(new Config(['foo' => 'bar', 'baz' => 'bat']));
 
         $config->next();
 
@@ -110,9 +142,27 @@ class ConfigTest
     /**
      *
      */
-    public function test_rewind()
+    public function test_rewind_array()
     {
         $config = new Config(['foo' => 'bar', 'baz' => 'bat']);
+
+        $this->assertEquals('bar', $config->current());
+
+        $config->next();
+
+        $this->assertEquals('bat', $config->current());
+
+        $config->rewind();
+
+        $this->assertEquals('bar', $config->current());
+    }
+
+    /**
+     *
+     */
+    public function test_rewind_iterator()
+    {
+        $config = new Config(new Config(['foo' => 'bar', 'baz' => 'bat']));
 
         $this->assertEquals('bar', $config->current());
 
@@ -138,7 +188,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_valid()
+    public function test_valid_array()
     {
         $config = new Config(['foo' => 'bar']);
 
@@ -148,9 +198,29 @@ class ConfigTest
     /**
      *
      */
-    public function test_valid_not()
+    public function test_valid_not_array()
     {
         $config = new Config;
+
+        $this->assertEquals(false, $config->valid());
+    }
+
+    /**
+     *
+     */
+    public function test_valid_with_iterator()
+    {
+        $config = new Config(new Config(['foo' => 'bar']));
+
+        $this->assertEquals(true, $config->valid());
+    }
+
+    /**
+     *
+     */
+    public function test_valid_not_with_iterator()
+    {
+        $config = new Config(new Config);
 
         $this->assertEquals(false, $config->valid());
     }
