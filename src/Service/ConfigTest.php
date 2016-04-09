@@ -5,6 +5,7 @@
 
 namespace Mvc5\Test\Service;
 
+use Mvc5\Container;
 use Mvc5\Test\Test\TestCase;
 
 class ConfigTest
@@ -87,6 +88,42 @@ class ConfigTest
     /**
      *
      */
+    public function test_count()
+    {
+        $config = new Config;
+
+        $config->container([1, 2, 3, 4, 5]);
+
+        $this->assertEquals(5, count($config));
+    }
+
+    /**
+     *
+     */
+    public function test_current_array()
+    {
+        $config = new Config;
+
+        $config->container(['foo' => 'bar']);
+
+        $this->assertEquals('bar', $config->current());
+    }
+
+    /**
+     *
+     */
+    public function test_current_iterator()
+    {
+        $config = new Config;
+
+        $config->container(new Container(['foo' => 'bar']));
+
+        $this->assertEquals('bar', $config->current());
+    }
+
+    /**
+     *
+     */
     public function test_get()
     {
         $config = new Config;
@@ -109,6 +146,58 @@ class ConfigTest
     /**
      *
      */
+    public function test_key_array()
+    {
+        $config = new Config;
+
+        $config->container(['foo' => 'bar']);
+
+        $this->assertEquals('foo', $config->key());
+    }
+
+    /**
+     *
+     */
+    public function test_key_iterator()
+    {
+        $config = new Config;
+
+        $config->container(new Container(['foo' => 'bar']));
+
+        $this->assertEquals('foo', $config->key());
+    }
+
+    /**
+     *
+     */
+    public function test_next_array()
+    {
+        $config = new Config;
+
+        $config->container(['foo' => 'bar', 'baz' => 'bat']);
+
+        $config->next();
+
+        $this->assertEquals('bat', $config->current());
+    }
+
+    /**
+     *
+     */
+    public function test_next_iterator()
+    {
+        $config = new Config();
+
+        $config->container(new Container(['foo' => 'bar', 'baz' => 'bat']));
+
+        $config->next();
+
+        $this->assertEquals('bat', $config->current());
+    }
+
+    /**
+     *
+     */
     public function test_remove()
     {
         $config = new Config;
@@ -120,6 +209,46 @@ class ConfigTest
         $config->remove('foo');
 
         $this->assertEquals(false, $config->has('foo'));
+    }
+
+    /**
+     *
+     */
+    public function test_rewind_array()
+    {
+        $config = new Config;
+
+        $config->container(['foo' => 'bar', 'baz' => 'bat']);
+
+        $this->assertEquals('bar', $config->current());
+
+        $config->next();
+
+        $this->assertEquals('bat', $config->current());
+
+        $config->rewind();
+
+        $this->assertEquals('bar', $config->current());
+    }
+
+    /**
+     *
+     */
+    public function test_rewind_iterator()
+    {
+        $config = new Config;
+
+        $config->container(new Container(['foo' => 'bar', 'baz' => 'bat']));
+
+        $this->assertEquals('bar', $config->current());
+
+        $config->next();
+
+        $this->assertEquals('bat', $config->current());
+
+        $config->rewind();
+
+        $this->assertEquals('bar', $config->current());
     }
 
     /**
@@ -174,5 +303,51 @@ class ConfigTest
         $config->set('foo', 'bar');
 
         $this->assertEquals('bar', $config->get('foo'));
+    }
+
+    /**
+     *
+     */
+    public function test_valid_array()
+    {
+        $config = new Config;
+
+        $config->container(['foo' => 'bar']);
+
+        $this->assertEquals(true, $config->valid());
+    }
+
+    /**
+     *
+     */
+    public function test_valid_not_array()
+    {
+        $config = new Config;
+
+        $this->assertEquals(false, $config->valid());
+    }
+
+    /**
+     *
+     */
+    public function test_valid_with_iterator()
+    {
+        $config = new Config;
+
+        $config->container(new Container(['foo' => 'bar']));
+
+        $this->assertEquals(true, $config->valid());
+    }
+
+    /**
+     *
+     */
+    public function test_valid_not_with_iterator()
+    {
+        $config = new Config;
+
+        $config->container(new Container);
+
+        $this->assertEquals(false, $config->valid());
     }
 }
