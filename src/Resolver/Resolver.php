@@ -6,8 +6,10 @@
 namespace Mvc5\Test\Resolver;
 
 use Mvc5\Resolver\Resolver as Base;
+use Mvc5\Service\Service;
 
 class Resolver
+    implements Service
 {
     /**
      *
@@ -36,11 +38,14 @@ class Resolver
         merge      as public;
         parent     as public;
         provide    as public;
+        provider   as public;
         relay      as public;
         repeat     as public;
         resolvable as public;
         resolve    as public;
         resolver   as public;
+        scope      as public;
+        scoped     as public;
         solve      as public;
         transmit   as public;
         unique     as public;
@@ -54,5 +59,13 @@ class Resolver
     public function callableMethod($config) : callable
     {
         return $this->callable($config);
+    }
+
+    /**
+     * @param callable|null $provider
+     */
+    public function setProvider(callable $provider)
+    {
+        $this->provider = $provider;
     }
 }
