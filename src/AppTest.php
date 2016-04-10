@@ -7,8 +7,12 @@ namespace Mvc5\Test;
 
 use Mvc5\Arg;
 use Mvc5\App;
+use Mvc5\Config;
+use Mvc5\Plugin\Args;
 use Mvc5\Plugin\Link;
+use Mvc5\Plugin\Plugin;
 use Mvc5\Plugin\Plugins;
+use Mvc5\Plugin\Provide;
 use Mvc5\Test\Test\TestCase;
 
 class AppTest
@@ -57,39 +61,48 @@ class AppTest
     {
         $app = new App([
             Arg::SERVICES => [
-                'bat' => function() {
-                    return 'foobar';
+                'var3' => function() { return 'foobar'; },
+                'var2' => [Config::class, new Args(['var3' => new Plugin('var3')])],
+                'bat' => function($var2) {
+                    return $var2['var3'];
                 },
+                'var4' => function() { return '6'; },
                 'code' => 1,
                 'foo' => new Plugins(
                     [
+                        'home' => 9,
+                        //'var3' => function() { return '4'; },
+                        //'var2' => [Config::class, new Args(['var3' => new Plugin('var3')])],
+                        'var2' => new Plugin(Config::class, [new Args(['var3' => new Provide('var4')])]), //Parent provider
+                        Config::class => function($args) {
+                            return new Config($args);
+                        },
                         'code' => 2,
                         'bar' => new Plugins(
                             [
-                                'home' => 9,
                                 'code' => 5,
-                                'test' => function() {
-                                    return function($bat, $code, $home) {
-                                        return $bat . $code . $home;
+                                'test' => function($bat, $code, $home, $var2, Config $config) {
+                                    return function($param) use($bat, $code, $home, $var2) {
+                                        return $bat . $code . $home . $param . $var2['var3'];
                                     };
                                 },
                                 'baz' => function() {
                                     return function() {
                                         /** @var \Mvc5\Service\Plugin $this */
 
-                                        return $this->call('test');
+                                        return $this->call('test', ['param' => '3']);
                                     };
                                 }
                             ],
-                            new Link, //$bat
+                            new Link,
                             true
                         )
                     ],
-                    new Link //$bat
+                    new Link
                 )
             ]
         ]);
 
-        $this->assertEquals('foobar59', $app->call('foo->bar->baz'));
+        $this->assertEquals('foobar5936', $app->call('foo->bar->baz'));
     }
 }
