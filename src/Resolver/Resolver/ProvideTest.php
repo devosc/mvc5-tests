@@ -36,7 +36,7 @@ class ProvideTest
 
         $resolver->configure(Config::class, $config);
 
-        $this->assertEquals(new Config(['foo' => 'baz']), $resolver->Provide($config, [['foo' => 'baz']]));
+        $this->assertEquals(new Config(['foo' => 'baz']), $resolver->provide($config, [['foo' => 'baz']]));
     }
 
     /**
@@ -50,7 +50,7 @@ class ProvideTest
 
         $resolver->configure(Config::class, Config::class);
 
-        $this->assertEquals(new Config(['foo' => 'baz']), $resolver->Provide($config, [['foo' => 'baz']]));
+        $this->assertEquals(new Config(['foo' => 'baz']), $resolver->provide($config, [['foo' => 'baz']]));
     }
 
     /**
@@ -64,6 +64,6 @@ class ProvideTest
 
         $config = new Plugin('foo');
 
-        $this->assertEquals(new Config(['foo' => 'baz']), $resolver->Provide($config, [['foo' => 'baz']]));
+        $this->assertEquals(new Config(['foo' => 'baz']), $resolver->provide($config, [['foo' => 'baz']]));
     }
 }
