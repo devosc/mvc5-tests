@@ -66,14 +66,15 @@ class AppTest
                 'bat' => function($var2) {
                     return $var2['var3'];
                 },
-                'var4' => function() { return '6'; },
+                Config::class => Config::class,
+                'v3' => function() { return '6'; },
+                'v2' => [Config::class, new Args(['v3' => new Plugin('v3')])],
+                'var4' => function($v2) { return $v2['v3']; },
                 'code' => 1,
                 'foo' => new Plugins(
                     [
                         'home' => 9,
-                        //'var3' => function() { return '4'; },
-                        //'var2' => [Config::class, new Args(['var3' => new Plugin('var3')])],
-                        'var2' => new Plugin(Config::class, [new Args(['var3' => new Provide('var4')])]), //Parent provider
+                        'var2' => new Plugin(Config::class, [new Args(['var3' => new Provide('var4')])]),
                         Config::class => function($args) {
                             return new Config($args);
                         },
@@ -81,16 +82,17 @@ class AppTest
                         'bar' => new Plugins(
                             [
                                 'code' => 5,
+                                Config::class => new Provide(Config::class), //Provide from parent
                                 'test' => function($bat, $code, $home, $var2, Config $config) {
-                                    return function($param) use($bat, $code, $home, $var2) {
-                                        return $bat . $code . $home . $param . $var2['var3'];
+                                    return function($param, $param2, Config $config) use($bat, $code, $home, $var2) {
+                                        return $bat . $code . $home . $param . $var2['var3'] . $param2;
                                     };
                                 },
                                 'baz' => function() {
-                                    return function() {
+                                    return function($param2) {
                                         /** @var \Mvc5\Service\Plugin $this */
 
-                                        return $this->call('test', ['param' => '3']);
+                                        return $this->call('test', ['param' => '3', 'param2' => $param2]);
                                     };
                                 }
                             ],
@@ -103,6 +105,18 @@ class AppTest
             ]
         ]);
 
-        $this->assertEquals('foobar5936', $app->call('foo->bar->baz'));
+        $this->assertEquals('foobar', $app['bat']);
+
+        $this->assertEquals('foobar', $app('bat'));
+
+        $this->assertEquals('foobar', $app->get('bat'));
+
+        $this->assertEquals('foobar', $app->plugin('bat'));
+
+        $this->assertEquals('6', $app['foo']['var2']['var3']);
+
+        $this->assertEquals('foobar59360', $app->call($app['foo']['bar']['baz'], ['param2' => '0']));
+
+        $this->assertEquals('foobar59360', $app->call('foo->bar->baz', ['param2' => '0']));
     }
 }
