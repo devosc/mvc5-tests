@@ -23,4 +23,16 @@ class ProvideTest
 
         $this->assertEquals('bar', $resolver->gem(new Provide('bar')));
     }
+
+    /**
+     *
+     */
+    public function test_gem_provide_no_provider()
+    {
+        $resolver = new Resolver;
+
+        $this->setExpectedException(\RuntimeException::class, 'Unresolvable plugin: bar');
+
+        $resolver->gem(new Provide('bar'));
+    }
 }
