@@ -50,6 +50,7 @@ class Resolver
         transmit   as public;
         unique     as public;
         variadic   as public;
+        vars       as public;
     }
 
     /**
