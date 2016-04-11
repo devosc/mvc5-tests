@@ -6,7 +6,9 @@
 namespace Mvc5\Test\Resolver\Resolver;
 
 use Mvc5\Config;
+use Mvc5\Plugin\Args;
 use Mvc5\Plugin\Plugin;
+use Mvc5\Plugin\Value;
 use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
 
@@ -20,9 +22,33 @@ class ProvideTest
     {
         $resolver = new Resolver;
 
-        $plugin = new Plugin(Config::class, [['foo' => 'bar']]);
+        $plugin = new Plugin(Config::class, [new Args(['foo' => new Value('bar')])]);
 
-        $this->assertEquals(new Config(['foo' => 'baz']), $resolver->provide($plugin, [['foo' => 'baz']]));
+        $this->assertEquals(new Config(['foo' => 'bar']), $resolver->gem($plugin));
+    }
+
+    /**
+     *
+     */
+    public function test_provide_no_parent_with_args()
+    {
+        $resolver = new Resolver;
+
+        $plugin = new Plugin(Config::class, [[new Value('bar')]]);
+
+        $this->assertEquals(new Config(['baz']), $resolver->gem($plugin, [['baz']]));
+    }
+
+    /**
+     *
+     */
+    public function test_provide_no_parent_with_named_args()
+    {
+        $resolver = new Resolver;
+
+        $plugin = new Plugin(Config::class, [['foo' => new Value('bar')]]);
+
+        $this->assertEquals(new Config(['foo' => 'baz']), $resolver->gem($plugin, [['foo' => 'baz']]));
     }
 
     /**
@@ -60,7 +86,7 @@ class ProvideTest
     {
         $resolver = new Resolver;
 
-        $resolver->configure('foo', new Plugin(Config::class, ['foo' => 'bar']));
+        $resolver->configure('foo', new Plugin(Config::class, ['foo' => new Value('bar')]));
 
         $config = new Plugin('foo');
 
