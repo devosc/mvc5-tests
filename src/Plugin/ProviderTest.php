@@ -25,6 +25,26 @@ class ProviderTest
     /**
      *
      */
+    public function test_provider()
+    {
+        $plugins = new Plugins;
+
+        $provider = new Provider(Config::class, $plugins);
+
+        $resolver = new Resolver;
+
+        list($service, $class, $args) = $resolver->args($provider->args());
+
+        $plugin = $provider->provider($service, $class, $args);
+
+        $this->assertInstanceOf(Config::class, $plugin);
+
+        $this->assertEquals($plugin, $plugins->scope());
+    }
+
+    /**
+     *
+     */
     public function test_resolver_gem_with_class_name()
     {
         $resolver = new Resolver;
