@@ -224,4 +224,50 @@ class ConfigTest
 
         $this->assertEquals(false, $config->valid());
     }
+
+    /**
+     *
+     */
+    public function test_clone_array_config()
+    {
+        $config = new Config(['a' => 'a']);
+
+        $clone = clone $config;
+
+        $clone['a'] = 'a1';
+        $clone['b'] = 'b';
+
+        $this->assertEquals('a', $config['a']);
+
+        $this->assertEquals('a1', $clone['a']);
+
+        $this->assertEquals(false, isset($config['b']));
+
+        $this->assertEquals(true, isset($clone['b']));
+
+        $this->assertEquals(false, $clone === $config);
+    }
+
+    /**
+     *
+     */
+    public function test_clone_object_config()
+    {
+        $config = new Config(new Config(['a' => 'a']));
+
+        $clone = clone $config;
+
+        $clone['a'] = 'a1';
+        $clone['b'] = 'b';
+
+        $this->assertEquals('a', $config['a']);
+
+        $this->assertEquals('a1', $clone['a']);
+
+        $this->assertEquals(false, isset($config['b']));
+
+        $this->assertEquals(true, isset($clone['b']));
+
+        $this->assertEquals(false, $clone === $config);
+    }
 }
