@@ -6,10 +6,10 @@
 namespace Mvc5\Test\Resolver\Resolver;
 
 use Mvc5\Config;
-use Mvc5\Plugin\Args;
 use Mvc5\Plugin\Plugin;
 use Mvc5\Plugin\Value;
 use Mvc5\Test\Resolver\Resolver;
+use Mvc5\Test\Resolver\Resolver\Model\Provide as Model;
 use Mvc5\Test\Test\TestCase;
 
 class ProvideTest
@@ -22,9 +22,9 @@ class ProvideTest
     {
         $resolver = new Resolver;
 
-        $plugin = new Plugin(Config::class, [new Args(['foo' => new Value('bar')])]);
+        $plugin = new Plugin(Model::class, [new Value('bar')]);
 
-        $this->assertEquals(new Config(['foo' => 'bar']), $resolver->gem($plugin));
+        $this->assertEquals(new Model('bar'), $resolver->gem($plugin));
     }
 
     /**
@@ -34,9 +34,9 @@ class ProvideTest
     {
         $resolver = new Resolver;
 
-        $plugin = new Plugin(Config::class, [[new Value('bar')]]);
+        $plugin = new Plugin(Model::class, [new Value('bar')]);
 
-        $this->assertEquals(new Config(['baz']), $resolver->gem($plugin, [['baz']]));
+        $this->assertEquals(new Model('baz'), $resolver->gem($plugin, ['baz']));
     }
 
     /**
@@ -46,9 +46,9 @@ class ProvideTest
     {
         $resolver = new Resolver;
 
-        $plugin = new Plugin(Config::class, [['foo' => new Value('bar')]]);
+        $plugin = new Plugin(Model::class, ['a' => new Value('bar'), 'b' => 'bat']);
 
-        $this->assertEquals(new Config(['foo' => 'baz']), $resolver->gem($plugin, [['foo' => 'baz']]));
+        $this->assertEquals(new Model('foo', 'bat'), $resolver->gem($plugin, ['a' => 'foo']));
     }
 
     /**
@@ -58,25 +58,25 @@ class ProvideTest
     {
         $resolver = new Resolver;
 
-        $config = new Plugin(Config::class, ['foo' => 'bar']);
+        $model = new Plugin(Model::class, ['a' => 'a', 'c' => new Value('c')]);
 
-        $resolver->configure(Config::class, $config);
+        $resolver->configure(Model::class, $model);
 
-        $this->assertEquals(new Config(['foo' => 'baz']), $resolver->provide($config, [['foo' => 'baz']]));
+        $this->assertEquals(new Model('a1', 'b1', 'c'), $resolver->gem($model, ['a' => 'a1', 'b' => 'b1']));
     }
 
     /**
      *
      */
-    public function test_provide_not_parent_type_config()
+    public function test_provide_not_parent_type_plugin()
     {
         $resolver = new Resolver;
 
-        $config = new Plugin(Config::class, ['foo' => 'bar']);
+        $config = new Plugin(Model::class, ['a' => 'a', 'b' => new Value('b')]);
 
-        $resolver->configure(Config::class, Config::class);
+        $resolver->configure(Model::class, Model::class);
 
-        $this->assertEquals(new Config(['foo' => 'baz']), $resolver->provide($config, [['foo' => 'baz']]));
+        $this->assertEquals(new Model('a1', 'b'), $resolver->gem($config, ['a' => 'a1']));
     }
 
     /**
@@ -86,10 +86,10 @@ class ProvideTest
     {
         $resolver = new Resolver;
 
-        $resolver->configure('foo', new Plugin(Config::class, ['foo' => new Value('bar')]));
+        $resolver->configure('foo', new Plugin(Model::class, ['a' => new Value('a'), 'b' => new Value('b')]));
 
-        $config = new Plugin('foo');
+        $config = new Plugin('foo', ['a' => new Value('a1')]);
 
-        $this->assertEquals(new Config(['foo' => 'baz']), $resolver->provide($config, [['foo' => 'baz']]));
+        $this->assertEquals(new Model('a1', 'b', 'c'), $resolver->gem($config, ['c' => 'c']));
     }
 }

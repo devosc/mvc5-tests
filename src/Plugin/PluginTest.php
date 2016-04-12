@@ -16,6 +16,42 @@ class PluginTest
      */
     public function test_construct()
     {
-        $this->assertInstanceOf(Plugin::class, new Plugin('foo'));
+        $plugin = new Plugin('foo');
+
+        $this->assertEquals('foo',  $plugin->name());
+        $this->assertEquals([],     $plugin->args());
+        $this->assertEquals([],     $plugin->calls());
+        $this->assertEquals('item', $plugin->param());
+        $this->assertEquals(false,  $plugin->merge());
+    }
+
+    /**
+     *
+     */
+    public function test_construct_false_param()
+    {
+        $plugin = new Plugin('foo', [], [], null);
+
+        $this->assertEquals('item', $plugin->param());
+    }
+
+    /**
+     *
+     */
+    public function test_construct_with_param()
+    {
+        $plugin = new Plugin('foo', [], [], 'bar');
+
+        $this->assertEquals('bar', $plugin->param());
+    }
+
+    /**
+     *
+     */
+    public function test_construct_with_merge()
+    {
+        $plugin = new Plugin('foo', [], [], null, true);
+
+        $this->assertEquals(true, $plugin->merge());
     }
 }

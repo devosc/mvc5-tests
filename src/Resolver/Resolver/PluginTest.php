@@ -7,6 +7,7 @@ namespace Mvc5\Test\Resolver\Resolver;
 
 use Mvc5\Config;
 use Mvc5\Container;
+use Mvc5\Layout;
 use Mvc5\Plugin\Plugin;
 use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
@@ -39,11 +40,31 @@ class PluginTest
     /**
      *
      */
-    public function test_plugin_array()
+    public function test_plugin_array_without_named_args()
     {
         $resolver = new Resolver;
 
-        $this->assertEquals(false, $resolver->plugin([false]));
+        $resolver->configure('exception\model', ['layout', 'error/exception']);
+        $resolver->configure('layout',          ['Mvc5\Layout', 'layout']);
+
+        $model = $resolver->plugin('exception\model');
+
+        $this->assertEquals('error/exception', $model->template());
+    }
+
+    /**
+     *
+     */
+    public function test_plugin_array_with_named_args()
+    {
+        $resolver = new Resolver;
+
+        $resolver->configure('exception\model', ['layout', 'template' => 'error/exception']);
+        $resolver->configure('layout',          ['Mvc5\Layout', 'template' => 'layout']);
+
+        $model = $resolver->plugin('exception\model');
+
+        $this->assertEquals('error/exception', $model->template());
     }
 
     /**
