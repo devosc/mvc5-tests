@@ -7,7 +7,6 @@ namespace Mvc5\Test\Resolver\Resolver;
 
 use Mvc5\Config;
 use Mvc5\Container;
-use Mvc5\Layout;
 use Mvc5\Plugin\Plugin;
 use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
