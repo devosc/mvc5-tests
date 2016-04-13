@@ -234,17 +234,16 @@ class ConfigTest
 
         $clone = clone $config;
 
+        $this->assertEquals(true, $clone == $config);
+
         $clone['a'] = 'a1';
         $clone['b'] = 'b';
 
-        $this->assertEquals('a', $config['a']);
-
-        $this->assertEquals('a1', $clone['a']);
-
+        $this->assertEquals(false, $clone == $config);
+        $this->assertEquals('a',   $config['a']);
+        $this->assertEquals('a1',  $clone['a']);
         $this->assertEquals(false, isset($config['b']));
-
-        $this->assertEquals(true, isset($clone['b']));
-
+        $this->assertEquals(true,  isset($clone['b']));
         $this->assertEquals(false, $clone === $config);
     }
 
@@ -257,17 +256,15 @@ class ConfigTest
 
         $clone = clone $config;
 
+        $this->assertEquals(true, $clone == $config);
+
         $clone['a'] = 'a1';
         $clone['b'] = 'b';
 
-        $this->assertEquals('a', $config['a']);
-
-        $this->assertEquals('a1', $clone['a']);
-
+        $this->assertEquals(false, $clone == $config);
+        $this->assertEquals('a',   $config['a']);
+        $this->assertEquals('a1',  $clone['a']);
         $this->assertEquals(false, isset($config['b']));
-
-        $this->assertEquals(true, isset($clone['b']));
-
-        $this->assertEquals(false, $clone === $config);
+        $this->assertEquals(true,  isset($clone['b']));
     }
 }
