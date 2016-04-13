@@ -26,6 +26,7 @@ class Resolver
         composite  as public;
         create     as public;
         event      as public;
+        fallback   as public;
         filter     as public;
         filterable as public;
         first      as public;

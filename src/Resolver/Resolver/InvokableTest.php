@@ -75,7 +75,7 @@ class InvokableTest
     /**
      *
      */
-    public function test_invokable_event()
+    public function test_invokable_with_fallback()
     {
         $resolver = new Resolver;
 
@@ -94,5 +94,17 @@ class InvokableTest
         $this->assertInstanceOf(\Closure::class, $invokable);
 
         $this->assertEquals('bar', $invokable());
+    }
+
+    /**
+     *
+     */
+    public function test_invokable_with_no_fallback()
+    {
+        $resolver = new Resolver;
+
+        $this->setExpectedException(\RuntimeException::class, 'Unresolvable plugin: foo');
+
+        $resolver->invokable('foo');
     }
 }
