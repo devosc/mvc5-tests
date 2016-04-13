@@ -17,6 +17,7 @@ class Resolver
     use Base {
         args       as public;
         arguments  as public;
+        bind       as public;
         build      as public;
         //callable   as public;
         callback   as public;

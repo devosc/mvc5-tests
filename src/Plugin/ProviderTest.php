@@ -39,7 +39,7 @@ class ProviderTest
 
         $this->assertInstanceOf(Config::class, $plugin);
 
-        $this->assertEquals($plugin, $plugins->scope());
+        $this->assertEquals(true, $plugins->scope());
     }
 
     /**
@@ -55,7 +55,7 @@ class ProviderTest
 
         $this->assertInstanceOf(Config::class, $plugin);
 
-        $this->assertEquals($plugin, $plugins->scope());
+        $this->assertEquals(true, $plugins->scope());
     }
 
     /**
@@ -73,6 +73,6 @@ class ProviderTest
 
         $this->assertInstanceOf(Config::class, $plugin);
 
-        $this->assertEquals($plugin, $plugins->scope());
+        $this->assertEquals(true, $plugins->scope());
     }
 }

@@ -27,7 +27,25 @@ class ScopedTest
     /**
      *
      */
-    public function test_scoped_with_scope()
+    public function test_scoped_with_boolean_true()
+    {
+        $resolver = new Resolver;
+
+        $resolver->scope(true);
+
+        $callback = function(){ return $this; };
+
+        $scoped = $resolver->scoped($callback);
+
+        $this->assertInstanceOf(\Closure::class, $scoped);
+
+        $this->assertTrue($resolver === $scoped());
+    }
+
+    /**
+     *
+     */
+    public function test_scoped_with_object()
     {
         $config = new Config;
 
