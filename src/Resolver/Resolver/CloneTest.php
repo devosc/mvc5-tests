@@ -83,6 +83,21 @@ class CloneTest
     /**
      *
      */
+    public function test_clone_scope_object()
+    {
+        $resolver = new Resolver;
+
+        $resolver->scope(new Config);
+
+        $clone = clone $resolver;
+
+        $this->assertTrue(is_object($clone->scope()));
+        $this->assertTrue($clone->scope() !== $resolver->scope());
+    }
+
+    /**
+     *
+     */
     public function test_clone_same_provider()
     {
         $resolver = new Resolver;
