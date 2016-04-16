@@ -5,7 +5,10 @@
 
 namespace Mvc5\Test\Config;
 
+use Mvc5\App;
+use Mvc5\Arg;
 use Mvc5\Config;
+use Mvc5\Plugin\Value;
 use Mvc5\Test\Test\TestCase;
 
 class ConfigTest
@@ -44,7 +47,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_get_isset()
+    public function test_get_isset_array()
     {
         $config = new Config(['foo' => 'bar']);
 
@@ -54,9 +57,49 @@ class ConfigTest
     /**
      *
      */
-    public function test_get_not_isset()
+    public function test_get_not_isset_array()
     {
         $config = new Config;
+
+        $this->assertEquals(null, $config->get('foo'));
+    }
+
+    /**
+     *
+     */
+    public function test_get_isset_object()
+    {
+        $config = new Config(new Config(['foo' => 'bar']));
+
+        $this->assertEquals('bar', $config->get('foo'));
+    }
+
+    /**
+     *
+     */
+    public function test_get_isset_app_container()
+    {
+        $config = new Config(new App([Arg::CONTAINER => ['foo' => 'bar']]));
+
+        $this->assertEquals('bar', $config->get('foo'));
+    }
+
+    /**
+     *
+     */
+    public function test_get_isset_app_services()
+    {
+        $config = new Config(new App([Arg::SERVICES => ['foo' => new Value('bar')]]));
+
+        $this->assertEquals('bar', $config->get('foo'));
+    }
+
+    /**
+     *
+     */
+    public function test_get_not_isset_app()
+    {
+        $config = new Config(new App);
 
         $this->assertEquals(null, $config->get('foo'));
     }
