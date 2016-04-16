@@ -27,19 +27,19 @@ class ProviderTest
      */
     public function test_provider()
     {
-        $plugins = new Plugins;
+        /** @var Plugins $plugins */
 
-        $provider = new Provider(Config::class, $plugins);
+        $provider = new Provider(Config::class, []);
 
         $resolver = new Resolver;
 
-        list($service, $class, $args) = $resolver->args($provider->args());
+        list($service, $plugins, $name) = $resolver->args($provider->args());
 
-        $plugin = $provider->provider($service, $class, $args);
+        $plugin = $provider->provider($service, $plugins, $name);
 
         $this->assertInstanceOf(Config::class, $plugin);
 
-        $this->assertEquals(true, $plugins->scope());
+        $this->assertEquals($plugin, $plugins->scope());
     }
 
     /**
@@ -49,13 +49,9 @@ class ProviderTest
     {
         $resolver = new Resolver;
 
-        $plugins = new Plugins;
-
-        $plugin = $resolver->gem(new Provider(Config::class, $plugins));
+        $plugin = $resolver->gem(new Provider(Config::class, []));
 
         $this->assertInstanceOf(Config::class, $plugin);
-
-        $this->assertEquals(true, $plugins->scope());
     }
 
     /**
@@ -67,12 +63,8 @@ class ProviderTest
 
         $resolver->configure('foo', Config::class);
 
-        $plugins = new Plugins;
-
-        $plugin = $resolver->gem(new Provider('foo', $plugins));
+        $plugin = $resolver->gem(new Provider('foo', []));
 
         $this->assertInstanceOf(Config::class, $plugin);
-
-        $this->assertEquals(true, $plugins->scope());
     }
 }
