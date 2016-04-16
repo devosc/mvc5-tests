@@ -77,6 +77,16 @@ class ConfigTest
     /**
      *
      */
+    public function test_get_not_isset_object()
+    {
+        $config = new Config(new Config);
+
+        $this->assertEquals(null, $config->get('foo'));
+    }
+
+    /**
+     *
+     */
     public function test_get_isset_app_container()
     {
         $config = new Config(new App([Arg::CONTAINER => ['foo' => 'bar']]));
