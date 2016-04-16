@@ -9,7 +9,6 @@ use Mvc5\Arg;
 use Mvc5\App;
 use Mvc5\Config;
 use Mvc5\Plugin\Args;
-use Mvc5\Plugin\Link;
 use Mvc5\Plugin\Plugin;
 use Mvc5\Plugin\Plugins;
 use Mvc5\Plugin\Provide;
@@ -71,37 +70,30 @@ class AppTest
                 'v2' => [Config::class, new Args(['v3' => new Plugin('v3')])],
                 'var4' => function($v2) { return $v2['v3']; },
                 'code' => 1,
-                'foo' => new Plugins(
-                    [
-                        'home' => 9,
-                        'var2' => new Plugin(Config::class, [new Args(['var3' => new Provide('var4')])]),
-                        Config::class => function($args) {
-                            return new Config($args);
+                'foo' => new Plugins([
+                    'home' => 9,
+                    'var2' => new Plugin(Config::class, [new Args(['var3' => new Provide('var4')])]),
+                    Config::class => function($args) {
+                        return new Config($args);
+                    },
+                    'code' => 2,
+                    'bar' => new Plugins([
+                        'code' => 5,
+                        Config::class => new Provide(Config::class), //Provide from parent
+                        'test' => function($bat, $code, $home, $var2, Config $config) {
+                            return function($param, $param2, Config $config) use($bat, $code, $home, $var2) {
+                                return $bat . $code . $home . $param . $var2['var3'] . $param2;
+                            };
                         },
-                        'code' => 2,
-                        'bar' => new Plugins(
-                            [
-                                'code' => 5,
-                                Config::class => new Provide(Config::class), //Provide from parent
-                                'test' => function($bat, $code, $home, $var2, Config $config) {
-                                    return function($param, $param2, Config $config) use($bat, $code, $home, $var2) {
-                                        return $bat . $code . $home . $param . $var2['var3'] . $param2;
-                                    };
-                                },
-                                'baz' => function() {
-                                    return function($param2) {
-                                        /** @var \Mvc5\Service\Plugin $this */
+                        'baz' => function() {
+                            return function($param2) {
+                                /** @var \Mvc5\Service\Plugin $this */
 
-                                        return $this->call('test', ['param' => '3', 'param2' => $param2]);
-                                    };
-                                }
-                            ],
-                            new Link,
-                            true
-                        )
-                    ],
-                    new Link
-                )
+                                return $this->call('test', ['param' => '3', 'param2' => $param2]);
+                            };
+                        }
+                    ])
+                ])
             ]
         ]);
 

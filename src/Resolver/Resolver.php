@@ -5,11 +5,12 @@
 
 namespace Mvc5\Test\Resolver;
 
+use Mvc5\Config\Configuration;
 use Mvc5\Resolver\Resolver as Base;
 use Mvc5\Service\Service;
 
 class Resolver
-    implements Service
+    implements Configuration, Service
 {
     /**
      *
