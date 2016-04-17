@@ -117,6 +117,23 @@ class AppTest
     /**
      *
      */
+    public function test_app_with_private_values()
+    {
+        $app = new App([
+            'bat' => 'baz',
+            'services' => [
+                'foo' => new Plugin(Config::class, [new Args(['foo' => new Param('bat')])])
+            ]
+        ]);
+
+        $this->assertEquals(null, $app['bat']);
+
+        $this->assertEquals(new Config(['foo' => 'baz']), $app['foo']);
+    }
+
+    /**
+     *
+     */
     public function test_app_with_private_plugins()
     {
         $app = new App([
@@ -126,6 +143,7 @@ class AppTest
             ]
         ]);
 
+        $this->assertEquals(null, $app['bat']);
 
         $this->assertEquals(new Config(['foo' => 'baz']), $app['foo']);
     }
