@@ -9,9 +9,11 @@ use Mvc5\Arg;
 use Mvc5\App;
 use Mvc5\Config;
 use Mvc5\Plugin\Args;
+use Mvc5\Plugin\Param;
 use Mvc5\Plugin\Plugin;
 use Mvc5\Plugin\Plugins;
 use Mvc5\Plugin\Provide;
+use Mvc5\Plugin\Value;
 use Mvc5\Test\Test\TestCase;
 
 class AppTest
@@ -110,5 +112,21 @@ class AppTest
         $this->assertEquals('foobar59360', $app->call($app['foo']['bar']['baz'], ['param2' => '0']));
 
         $this->assertEquals('foobar59360', $app->call('foo->bar->baz', ['param2' => '0']));
+    }
+
+    /**
+     *
+     */
+    public function test_app_with_private_plugins()
+    {
+        $app = new App([
+            'bat' => new Value('baz'),
+            'services' => [
+                'foo' => new Plugin(Config::class, [new Args(['foo' => new Param('bat')])])
+            ]
+        ]);
+
+
+        $this->assertEquals(new Config(['foo' => 'baz']), $app['foo']);
     }
 }
