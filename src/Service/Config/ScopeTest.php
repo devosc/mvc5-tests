@@ -45,4 +45,30 @@ class ScopeTest
 
         $this->assertEquals(clone $config, $config);
     }
+
+    /**
+     *
+     */
+    public function test_clone_object_scoped_true()
+    {
+        $plugins = new Plugins(null, null, true);
+
+        $config = new Scope($plugins);
+
+        $this->assertEquals(clone $config, $config);
+    }
+
+    /**
+     *
+     */
+    public function test_clone_object_scoped_different_object()
+    {
+        $plugins = new Plugins;
+
+        $config = new Scope($plugins);
+
+        $plugins->scope(new \stdClass);
+
+        $this->assertEquals(clone $config, $config);
+    }
 }
