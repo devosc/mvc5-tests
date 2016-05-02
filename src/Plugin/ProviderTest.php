@@ -6,7 +6,7 @@
 namespace Mvc5\Test\Plugin;
 
 use Mvc5\Config;
-use Mvc5\Plugins;
+use Mvc5\App;
 use Mvc5\Plugin\Args;
 use Mvc5\Plugin\Link;
 use Mvc5\Plugin\Plugin;
@@ -26,7 +26,7 @@ class ProviderTest
 
         $this->assertTrue(is_callable($plugin->config()));
 
-        $args = [new Link, new Plugin(Plugins::class, [new Args(['bar']), new Link]), 'foo', new Args(['baz'])];
+        $args = [new Link, new Plugin(App::class, [new Args(['bar']), new Link]), 'foo', new Args(['baz'])];
 
         $this->assertEquals($args, $plugin->args());
     }
@@ -36,7 +36,7 @@ class ProviderTest
      */
     function test_provider()
     {
-        /** @var Plugins $plugins */
+        /** @var App $plugins */
 
         $provider = new Provider(Config::class, []);
 
