@@ -6,8 +6,9 @@
 namespace Mvc5\Test\Route;
 
 use Mvc5\Arg;
-use Mvc5\Route\Definition\Config as Definition;
+use Mvc5\Request\Config as Mvc5Request;
 use Mvc5\Route\Config as Route;
+use Mvc5\Route\Request\Config as Request;
 use Mvc5\Test\Test\TestCase;
 
 class MatchTest
@@ -18,7 +19,7 @@ class MatchTest
      */
     function test_construct()
     {
-        $this->assertInstanceOf(Match::class, new Match(new Definition, new Route));
+        $this->assertInstanceOf(Match::class, new Match(new Route, new Request(new Mvc5Request)));
     }
 
     /**
@@ -26,7 +27,7 @@ class MatchTest
      */
     function test_args()
     {
-        $match = new Match(new Definition, new Route);
+        $match = new Match(new Route, new Request(new Mvc5Request));
 
         $this->assertTrue(is_array($match->args()));
     }
@@ -36,10 +37,10 @@ class MatchTest
      */
     function test_invoke()
     {
-        $match = new Match(new Definition, new Route);
-        $route = new Route;
+        $match   = new Match(new Route, new Request(new Mvc5Request));
+        $request = new Request(new Mvc5Request);
 
-        $this->assertEquals($route, $match(function($route){ return $route; }, [Arg::ROUTE => $route]));
+        $this->assertEquals($request, $match(function($request){ return $request; }, [Arg::REQUEST => $request]));
     }
 
     /**
@@ -47,7 +48,7 @@ class MatchTest
      */
     function test_invoke_not_route()
     {
-        $match = new Match(new Definition, new Route);
+        $match = new Match(new Route, new Request(new Mvc5Request));
 
         $this->assertEquals('foo', $match(function(){ return 'foo'; }));
     }

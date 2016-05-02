@@ -6,8 +6,8 @@
 namespace Mvc5\Test;
 
 use Mvc5\App;
-use Mvc5\Test\Request\Request;
-use Mvc5\Test\Response\Response;
+use Mvc5\Request\Config as Request;
+use Mvc5\Response\Config as Response;
 use Mvc5\Test\Test\TestCase;
 
 class MiddlewareTest

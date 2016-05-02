@@ -7,7 +7,7 @@ namespace Mvc5\Test\Route\Definition;
 
 use Mvc5\Arg;
 use Mvc5\Route\Definition\Add;
-use Mvc5\Route\Definition\Config as Definition;
+use Mvc5\Route\Config as Route;
 use Mvc5\Test\Test\TestCase;
 
 class AddTest
@@ -20,13 +20,13 @@ class AddTest
     {
         $add = new Add;
 
-        $parent = new Definition;
+        $parent = new Route;
 
-        $definition = new Definition([
+        $route = new Route([
             Arg::CHILDREN    => [],
             Arg::CONSTRAINTS => [],
             Arg::NAME        => null,
-            Arg::PARAM_MAP   => [],
+            Arg::MAP         => [],
             Arg::REGEX       => null,
             Arg::ROUTE       => null,
             Arg::TOKENS      => null
@@ -34,7 +34,7 @@ class AddTest
 
         $path = ['/'];
 
-        $this->assertInstanceOf(Definition::class, $add($parent, $definition, $path));
+        $this->assertInstanceOf(Route::class, $add($parent, $route, $path));
     }
 
     /**
@@ -44,13 +44,13 @@ class AddTest
     {
         $add = new Add;
 
-        $parent = new Definition;
+        $parent = new Route;
 
-        $definition = new Definition([
+        $route = new Route([
             Arg::CHILDREN    => [],
             Arg::CONSTRAINTS => [],
             Arg::NAME        => 'foo',
-            Arg::PARAM_MAP   => [],
+            Arg::MAP         => [],
             Arg::REGEX       => null,
             Arg::ROUTE       => null,
             Arg::TOKENS      => null
@@ -58,7 +58,7 @@ class AddTest
 
         $path = ['/'];
 
-        $this->assertInstanceOf(Definition::class, $add($parent, $definition, $path, true));
+        $this->assertInstanceOf(Route::class, $add($parent, $route, $path, true));
     }
 
     /**
@@ -68,13 +68,13 @@ class AddTest
     {
         $add = new Add;
 
-        $parent = new Definition;
+        $parent = new Route;
 
-        $definition = new Definition([
+        $route = new Route([
             Arg::CHILDREN    => [],
             Arg::CONSTRAINTS => [],
             Arg::NAME        => null,
-            Arg::PARAM_MAP   => [],
+            Arg::MAP         => [],
             Arg::REGEX       => null,
             Arg::ROUTE       => null,
             Arg::TOKENS      => null
@@ -84,7 +84,7 @@ class AddTest
 
         $this->setExpectedException('RuntimeException');
 
-        $this->assertInstanceOf(Definition::class, $add($parent, $definition, $path));
+        $this->assertInstanceOf(Route::class, $add($parent, $route, $path));
     }
 
     /**
@@ -94,22 +94,22 @@ class AddTest
     {
         $add = new Add;
 
-        $parent = new Definition([
+        $parent = new Route([
             Arg::CHILDREN    => [
-                'bar' => new Definition
+                'bar' => new Route
             ],
             Arg::CONSTRAINTS => [],
             Arg::NAME        => null,
-            Arg::PARAM_MAP   => [],
+            Arg::MAP         => [],
             Arg::REGEX       => null,
             Arg::ROUTE       => null,
             Arg::TOKENS      => null
         ]);
 
-        $definition = new Definition;
+        $route = new Route;
 
         $path = ['bar', 'baz'];
 
-        $this->assertInstanceOf(Definition::class, $add($parent, $definition, $path));
+        $this->assertInstanceOf(Route::class, $add($parent, $route, $path));
     }
 }

@@ -3,10 +3,10 @@
  *
  */
 
-namespace Mvc5\Test\Route\Error;
+namespace Mvc5\Test\Request\Error;
 
 use Mvc5\Arg;
-use Mvc5\Route\Error\Model;
+use Mvc5\Request\Error\Model;
 use Mvc5\Test\Test\TestCase;
 
 class ModelTest

@@ -15,21 +15,21 @@ class TokensTest
      */
     function test_tokens()
     {
-        $definition = new Tokens;
+        $tokens = new Tokens;
 
-        $this->assertTrue(is_array($definition->tokens('/:foo')));
+        $this->assertTrue(is_array($tokens->tokens('/:foo')));
     }
 
     /**
      *
      */
-    function test_tokens_empty_parameter_exception()
+    function test_tokens_empty_arg_exception()
     {
-        $definition = new Tokens;
+        $tokens = new Tokens;
 
         $this->setExpectedException('RuntimeException');
 
-        $definition->tokens(':');
+        $tokens->tokens(':');
     }
 
     /**
@@ -37,11 +37,11 @@ class TokensTest
      */
     function test_tokens_no_closing_bracket_exception()
     {
-        $definition = new Tokens;
+        $tokens = new Tokens;
 
         $this->setExpectedException('RuntimeException');
 
-        $definition->tokens('/:foo]');
+        $tokens->tokens('/:foo]');
     }
 
     /**
@@ -49,10 +49,10 @@ class TokensTest
      */
     function test_tokens_unbalanced_exception()
     {
-        $definition = new Tokens;
+        $tokens = new Tokens;
 
         $this->setExpectedException('RuntimeException');
 
-        $definition->tokens('/[:foo');
+        $tokens->tokens('/[:foo');
     }
 }

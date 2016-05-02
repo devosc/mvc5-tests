@@ -5,12 +5,20 @@
 
 namespace Mvc5\Test\Url;
 
-use Mvc5\Route\Definition;
 use Mvc5\Url\Plugin as Base;
 
 class Plugin
     extends Base
 {
+    /**
+     * @param null|string $name
+     * @param array $args
+     * @return array
+     */
+    function args($name = null, array $args = [])
+    {
+        return parent::args($name, $args);
+    }
 
     /**
      * @return callable
@@ -36,16 +44,6 @@ class Plugin
     function options(array $options = [])
     {
         return parent::options($options);
-    }
-
-    /**
-     * @param null|string $name
-     * @param array $args
-     * @return array
-     */
-    function params($name = null, array $args = [])
-    {
-        return parent::params($name, $args);
     }
 
     /**

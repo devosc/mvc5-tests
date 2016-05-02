@@ -15,7 +15,7 @@ class RegexTest
      */
     function test_regex()
     {
-        $definition = new Regex;
+        $regex = new Regex;
 
         $constraints = [
             //'author'   => '[a-zA-Z0-9_-]*',
@@ -25,17 +25,17 @@ class RegexTest
         $tokens = [
             ['literal', '/'],
             ['optional-start'],
-            ['parameter', 'author', NULL],
+            ['param', 'author', NULL],
             ['optional-start'],
             ['literal', '/'],
-            ['parameter', 'category', NULL],
+            ['param', 'category', NULL],
             ['optional-end'],
             ['optional-end']
         ];
 
-        $regex = "/(?:(?P<param1>[^/]+)(?:/(?P<param2>[a-zA-Z0-9_-]*))?)?";
+        $pattern = "/(?:(?P<param1>[^/]+)(?:/(?P<param2>[a-zA-Z0-9_-]*))?)?";
 
-        $this->assertEquals($regex, $definition->regex($tokens, $constraints));
+        $this->assertEquals($pattern, $regex->regex($tokens, $constraints));
     }
 
     /**
@@ -43,7 +43,7 @@ class RegexTest
      */
     function test_regex_with_delimiter()
     {
-        $definition = new Regex;
+        $regex = new Regex;
 
         $constraints = [
             //'author'   => '[a-zA-Z0-9_-]*',
@@ -53,25 +53,25 @@ class RegexTest
         $tokens = [
             ['literal', '/'],
             ['optional-start'],
-            ['parameter', 'author', 'abc'],
+            ['param', 'author', 'abc'],
             ['optional-start'],
             ['literal', '/'],
-            ['parameter', 'category', NULL],
+            ['param', 'category', NULL],
             ['optional-end'],
             ['optional-end']
         ];
 
-        $regex = "/(?:(?P<param1>[^abc]+)(?:/(?P<param2>[a-zA-Z0-9_-]*))?)?";
+        $pattern = "/(?:(?P<param1>[^abc]+)(?:/(?P<param2>[a-zA-Z0-9_-]*))?)?";
 
-        $this->assertEquals($regex, $definition->regex($tokens, $constraints));
+        $this->assertEquals($pattern, $regex->regex($tokens, $constraints));
     }
 
     /**
      *
      */
-    function test_regex_group_param()
+    function test_regex_group_arg()
     {
-        $definition = new Regex;
+        $regex = new Regex;
 
         $constraints = [
             //'author'   => '[a-zA-Z0-9_-]*',
@@ -81,16 +81,16 @@ class RegexTest
         $tokens = [
             ['literal', '/'],
             ['optional-start'],
-            ['parameter', 'author', 'abc'],
+            ['param', 'author', 'abc'],
             ['optional-start'],
             ['literal', '/'],
-            ['parameter', 'category', NULL],
+            ['param', 'category', NULL],
             ['optional-end'],
             ['optional-end']
         ];
 
-        $regex = "/(?:(?P<param1>[^abc]+)(?:/(?P<param2>[a-zA-Z0-9_-]*))?)?";
+        $pattern = "/(?:(?P<param1>[^abc]+)(?:/(?P<param2>[a-zA-Z0-9_-]*))?)?";
 
-        $this->assertEquals($regex, $definition->regex($tokens, $constraints));
+        $this->assertEquals($pattern, $regex->regex($tokens, $constraints));
     }
 }

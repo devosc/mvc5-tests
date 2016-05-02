@@ -3,11 +3,11 @@
  *
  */
 
-namespace Mvc5\Test\Route\Error;
+namespace Mvc5\Test\Request\Error;
 
 use Mvc5\Response\Error\BadRequest as Error;
-use Mvc5\Route\Error\Controller;
-use Mvc5\Route\Config as Route;
+use Mvc5\Request\Error\Controller;
+use Mvc5\Request\Config as Request;
 use Mvc5\Model\ViewModel;
 use Mvc5\Test\Test\TestCase;
 
@@ -21,7 +21,7 @@ class ControllerTest
     {
         $controller = new Controller;
 
-        $this->assertInstanceOf(ViewModel::class, $controller(new Route));
+        $this->assertInstanceOf(ViewModel::class, $controller(new Request));
     }
 
     /**
@@ -31,6 +31,6 @@ class ControllerTest
     {
         $controller = new Controller;
 
-        $this->assertInstanceOf(ViewModel::class, $controller(new Route, new Error));
+        $this->assertInstanceOf(ViewModel::class, $controller(new Request, new Error));
     }
 }

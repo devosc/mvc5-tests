@@ -19,7 +19,7 @@ class AssembleTest
      */
     protected function options(array $options = [])
     {
-        return $options + [Arg::SCHEME => null, Arg::HOSTNAME => null, Arg::PORT => null];
+        return $options + [Arg::SCHEME => null, Arg::HOST => null, Arg::PORT => null];
     }
 
     /**
@@ -55,9 +55,9 @@ class AssembleTest
         $assemble = new Assemble;
 
         $options = $this->options([
-            Arg::HOSTNAME => 'localhost',
-            Arg::PORT     => '80',
-            Arg::SCHEME   => 'http',
+            Arg::HOST   => 'localhost',
+            Arg::PORT   => '80',
+            Arg::SCHEME => 'http',
         ]);
 
         $this->assertEquals('/app', $assemble->assemble(null, null, null, '/app', $options));
@@ -71,9 +71,9 @@ class AssembleTest
         $assemble = new Assemble;
 
         $options = $this->options([
-            Arg::HOSTNAME => 'localhost',
-            Arg::PORT     => '8080',
-            Arg::SCHEME   => 'http',
+            Arg::HOST   => 'localhost',
+            Arg::PORT   => '8080',
+            Arg::SCHEME => 'http',
         ]);
 
         $this->assertEquals('http://localhost:8080/app', $assemble->assemble(null, null, null, '/app', $options));
@@ -88,7 +88,7 @@ class AssembleTest
 
         $options = $this->options([
             Arg::CANONICAL => true,
-            Arg::HOSTNAME  => 'localhost',
+            Arg::HOST      => 'localhost',
             Arg::PORT      => '80',
             Arg::SCHEME    => 'http',
         ]);
@@ -105,7 +105,7 @@ class AssembleTest
 
         $options = $this->options([
             Arg::CANONICAL => true,
-            Arg::HOSTNAME  => 'localhost',
+            Arg::HOST      => 'localhost',
             Arg::PORT      => '8080',
             Arg::SCHEME    => 'http',
         ]);
@@ -145,9 +145,9 @@ class AssembleTest
         $assemble = new Assemble;
 
         $options = $this->options([
-            Arg::HOSTNAME  => 'localhost',
-            Arg::PORT      => '80',
-            Arg::SCHEME    => 'http',
+            Arg::HOST   => 'localhost',
+            Arg::PORT   => '80',
+            Arg::SCHEME => 'http',
         ]);
 
         $this->assertEquals(
@@ -164,7 +164,7 @@ class AssembleTest
 
         $options = $this->options([
             Arg::CANONICAL => true,
-            Arg::HOSTNAME  => 'localhost',
+            Arg::HOST      => 'localhost',
             Arg::PORT      => '80',
             Arg::SCHEME    => 'http',
         ]);
@@ -183,7 +183,7 @@ class AssembleTest
 
         $options = $this->options([
             Arg::CANONICAL  => true,
-            Arg::HOSTNAME   => 'localhost',
+            Arg::HOST       => 'localhost',
             Arg::PORT       => '80',
             Arg::SCHEME     => null,
         ]);
@@ -202,7 +202,7 @@ class AssembleTest
 
         $options = $this->options([
             Arg::CANONICAL => true,
-            Arg::HOSTNAME  => 'localhost',
+            Arg::HOST      => 'localhost',
             Arg::PORT      => '8080',
             Arg::SCHEME    => 'http',
         ]);
@@ -220,9 +220,9 @@ class AssembleTest
         $assemble = new Assemble;
 
         $options = $this->options([
-            Arg::HOSTNAME  => 'localhost',
-            Arg::PORT      => '80',
-            Arg::SCHEME    => 'http',
+            Arg::HOST   => 'localhost',
+            Arg::PORT   => '80',
+            Arg::SCHEME => 'http',
         ]);
 
         $this->assertEquals(
@@ -238,9 +238,9 @@ class AssembleTest
         $assemble = new Assemble;
 
         $options = $this->options([
-            Arg::HOSTNAME  => 'localhost',
-            Arg::PORT      => '8080',
-            Arg::SCHEME    => 'http',
+            Arg::HOST   => 'localhost',
+            Arg::PORT   => '8080',
+            Arg::SCHEME => 'http',
         ]);
 
         $this->assertEquals(
@@ -257,7 +257,7 @@ class AssembleTest
 
         $options = $this->options([
             Arg::CANONICAL => true,
-            Arg::HOSTNAME  => 'localhost',
+            Arg::HOST      => 'localhost',
             Arg::PORT      => '80',
             Arg::SCHEME    => 'http',
         ]);
@@ -276,7 +276,7 @@ class AssembleTest
 
         $options = $this->options([
             Arg::CANONICAL => true,
-            Arg::HOSTNAME  => 'localhost',
+            Arg::HOST      => 'localhost',
             Arg::PORT      => '8080',
             Arg::SCHEME    => 'http',
         ]);

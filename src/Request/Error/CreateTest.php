@@ -3,11 +3,11 @@
  *
  */
 
-namespace Mvc5\Test\Route\Exception;
+namespace Mvc5\Test\Request\Error;
 
-use Exception;
-use Mvc5\Route\Exception\Create;
-use Mvc5\Route\Config as Route;
+use Mvc5\Response\Error\NotFound;
+use Mvc5\Request\Error\Create;
+use Mvc5\Request\Config as Request;
 use Mvc5\Test\Test\TestCase;
 
 class CreateTest
@@ -28,6 +28,6 @@ class CreateTest
     {
         $create = new Create('foo', 'bar');
 
-        $this->assertInstanceOf(Route::class, $create(new Route, new Exception));
+        $this->assertInstanceOf(Request::class, $create(new Request, new NotFound));
     }
 }

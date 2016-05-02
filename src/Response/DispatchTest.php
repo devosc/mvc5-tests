@@ -6,7 +6,7 @@
 namespace Mvc5\Test\Response;
 
 use Mvc5\Response\Error;
-use Mvc5\Test\Response\Error\Config;
+use Mvc5\Test\Response\Config\Error as Config;
 use Mvc5\Test\Test\TestCase;
 
 class DispatchTest

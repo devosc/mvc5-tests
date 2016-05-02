@@ -6,7 +6,7 @@
 namespace Mvc5\Test\Mvc;
 
 use Mvc5\Arg;
-use Mvc5\Route\Config as Route;
+use Mvc5\Request\Config as Request;
 use Mvc5\Test\Response\Response;
 use Mvc5\Test\Test\TestCase;
 
@@ -19,7 +19,7 @@ class MvcTest
     protected function mvc()
     {
         return new Mvc(null, [
-            Arg::ROUTE    => new Route,
+            Arg::REQUEST  => new Request,
             Arg::RESPONSE => new Response
         ]);
     }
@@ -55,11 +55,11 @@ class MvcTest
     /**
      *
      */
-    function test_invoke_route()
+    function test_invoke_request()
     {
         $mvc = $this->mvc();
 
-        $this->assertInstanceOf(Route::class, $mvc(function($route) { return $route; }));
+        $this->assertInstanceOf(Request::class, $mvc(function($request) { return $request; }));
     }
 
     /**

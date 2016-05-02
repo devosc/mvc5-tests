@@ -7,8 +7,8 @@ namespace Mvc5\Test\Route\Match;
 
 use Mvc5\Arg;
 use Mvc5\Route\Match\Wildcard;
+use Mvc5\Route\Request\Config as Request;
 use Mvc5\Route\Config as Route;
-use Mvc5\Route\Definition\Config as Definition;
 use Mvc5\Test\Test\TestCase;
 
 class WildcardTest
@@ -19,11 +19,11 @@ class WildcardTest
      */
     function test_invoke_no_wildcard()
     {
-        $definition = new Definition([Arg::WILDCARD => false]);
-        $route      = new Route;
-        $wildcard   = new Wildcard;
+        $route    = new Route([Arg::WILDCARD => false]);
+        $request  = new Request;
+        $wildcard = new Wildcard;
 
-        $this->assertEquals($route, $wildcard($route, $definition));
+        $this->assertEquals($request, $wildcard($request, $route));
     }
 
     /**
@@ -31,11 +31,15 @@ class WildcardTest
      */
     function test_invoke_valid_pair()
     {
-        $definition = new Definition([Arg::WILDCARD => true]);
-        $route      = new Route([Arg::PATH => '/foo/bar/baz/bat', Arg::PARAMS => ['a' => 'b'], Arg::LENGTH => 8]);
-        $wildcard   = new Wildcard;
+        $route    = new Route([Arg::WILDCARD => true]);
+        $request  = new Request([
+            Arg::URI => [Arg::PATH => '/foo/bar/baz/bat'], Arg::LENGTH => 8, Arg::PARAMS => ['a' => 'b']
+        ]);
+        $wildcard = new Wildcard;
 
-        $this->assertEquals(['a' => 'b', 'baz' => 'bat'], $wildcard($route, $definition)->params());
+        $request = $wildcard($request, $route);
+
+        $this->assertEquals(['a' => 'b', 'baz' => 'bat'], $request[Arg::PARAMS]);
     }
 
     /**
@@ -43,10 +47,14 @@ class WildcardTest
      */
     function test_invoke_invalid_pair()
     {
-        $definition = new Definition([Arg::WILDCARD => true]);
-        $route      = new Route([Arg::PATH => '/foo/bar/baz', Arg::PARAMS => ['a' => 'b'], Arg::LENGTH => 8]);
-        $wildcard   = new Wildcard;
+        $route    = new Route([Arg::WILDCARD => true]);
+        $request  = new Request([
+            Arg::URI => [Arg::PATH => '/foo/bar/baz'], Arg::LENGTH => 8, Arg::PARAMS => ['a' => 'b']
+        ]);
+        $wildcard = new Wildcard;
 
-        $this->assertEquals(['a' => 'b'], $wildcard($route, $definition)->params());
+        $request = $wildcard($request, $route);
+
+        $this->assertEquals(['a' => 'b'], $request[Arg::PARAMS]);
     }
 }

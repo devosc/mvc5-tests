@@ -16,6 +16,6 @@ class Model
         controller as public;
         model      as public;
         response   as public;
-        route      as public;
+        request    as public;
     }
 }

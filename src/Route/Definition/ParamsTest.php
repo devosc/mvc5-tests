@@ -15,8 +15,8 @@ class ParamsTest
      */
     function test_params()
     {
-        $definition = new Params;
+        $params = new Params;
 
-        $this->assertEquals(1, count($definition->params([['parameter', 'author']])));
+        $this->assertEquals(1, count($params->params([['param', 'author']])));
     }
 }

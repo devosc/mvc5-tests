@@ -8,7 +8,7 @@ namespace Mvc5\Test\Mvc;
 use Mvc5\Arg;
 use Mvc5\App;
 use Mvc5\Mvc\Route;
-use Mvc5\Route\Config as RouteConfig;
+use Mvc5\Request\Config as Request;
 use Mvc5\Test\Test\TestCase;
 
 class RouteTest
@@ -22,14 +22,14 @@ class RouteTest
         return new App([
             Arg::SERVICES => [
                 'route\dispatch' => function() {
-                    return function(RouteConfig $route) {
-                        switch($route->name()) {
+                    return function(Request $request) {
+                        switch($request->name()) {
                             default:
                                 throw new \RuntimeException;
                                 break;
                             case 'home':
-                                $route[Arg::MATCHED] = true;
-                                return $route;
+                                $request[Arg::MATCHED] = true;
+                                return $request;
                                 break;
                         }
                     };
@@ -52,7 +52,7 @@ class RouteTest
 
         $route->service($this->app());
 
-        $this->assertInstanceOf(RouteConfig::class, $route(new RouteConfig([Arg::NAME => 'home'])));
+        $this->assertInstanceOf(Request::class, $route(new Request([Arg::NAME => 'home'])));
     }
 
     /**
@@ -64,6 +64,6 @@ class RouteTest
 
         $route->service($this->app());
 
-        $this->assertEquals('foo', $route(new RouteConfig([Arg::NAME => 'exception'])));
+        $this->assertEquals('foo', $route(new Request([Arg::NAME => 'exception'])));
     }
 }

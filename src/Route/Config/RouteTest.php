@@ -15,6 +15,88 @@ class RouteTest
     /**
      *
      */
+    function test_add()
+    {
+        $route = new Route;
+
+        $route->add('bar', 'baz');
+
+        $this->assertEquals('baz', $route->child('bar'));
+    }
+
+    /**
+     *
+     */
+    function test_child_exists()
+    {
+        $route = new Route([Arg::CHILDREN => ['bar' => ['name' => 'baz']]]);
+
+        $this->assertEquals(['name' => 'baz'], $route->child('bar'));
+    }
+
+    /**
+     *
+     */
+    function test_child_not_exists()
+    {
+        $route = new Route;
+
+        $this->assertEquals(null, $route->child('bar'));
+    }
+
+    /**
+     *
+     */
+    function test_children_isset()
+    {
+        $route = new Route([Arg::CHILDREN => ['foo' => 'bar']]);
+
+        $this->assertEquals(['foo' => 'bar'], $route->children());
+    }
+
+    /**
+     *
+     */
+    function test_children_not_isset()
+    {
+        $route = new Route;
+
+        $this->assertEquals([], $route->children());
+    }
+
+    /**
+     *
+     */
+    function test_className()
+    {
+        $route = new Route([Arg::CLASS_NAME => 'foo']);
+
+        $this->assertEquals('foo', $route->className());
+    }
+
+    /**
+     *
+     */
+    function test_constraints_exists()
+    {
+        $route = new Route([Arg::CONSTRAINTS => ['foo' => 'bar']]);
+
+        $this->assertEquals(['foo' => 'bar'], $route->constraints());
+    }
+
+    /**
+     *
+     */
+    function test_constraints_not_exists()
+    {
+        $route = new Route;
+
+        $this->assertEquals([], $route->constraints());
+    }
+
+    /**
+     *
+     */
     function test_controller()
     {
         $route = new Route([Arg::CONTROLLER => 'foo']);
@@ -25,71 +107,81 @@ class RouteTest
     /**
      *
      */
-    function test_error()
+    function test_defaults_exists()
     {
-        $route = new Route([Arg::ERROR => 'foo']);;
+        $route = new Route(['defaults' => ['foo' => 'bar']]);
 
-        $this->assertEquals('foo', $route->error());
+        $this->assertEquals(['foo' => 'bar'], $route->defaults());
     }
 
     /**
      *
      */
-    function test_hostname()
-    {
-        $route = new Route([Arg::HOSTNAME => 'foo']);
-
-        $this->assertEquals('foo', $route->hostname());
-    }
-
-    /**
-     *
-     */
-    function test_length()
-    {
-        $route = new Route([Arg::LENGTH => 2]);
-
-        $this->assertEquals(2, $route->length());
-    }
-
-    /**
-     *
-     */
-    function test_length_zero()
+    function test_defaults_not_exists()
     {
         $route = new Route;
 
-        $this->assertEquals(0, $route->length());
+        $this->assertEquals([], $route->defaults());
     }
 
     /**
      *
      */
-    function test_matched()
+    function test_host_exists()
     {
-        $route = new Route([Arg::MATCHED => true]);
+        $route = new Route(['host' => 'foo']);
 
-        $this->assertEquals(true, $route->matched());
+        $this->assertEquals('foo', $route->host());
     }
 
     /**
      *
      */
-    function test_matched_false()
+    function test_host_not_exists()
     {
         $route = new Route;
 
-        $this->assertEquals(false, $route->matched());
+        $this->assertEquals(null, $route->host());
     }
 
     /**
      *
      */
-    function test_method()
+    function test_map_exists()
+    {
+        $route = new Route([Arg::MAP => ['foo' => 'bar']]);
+
+        $this->assertEquals(['foo' => 'bar'], $route->map());
+    }
+
+    /**
+     *
+     */
+    function test_map_not_exists()
+    {
+        $route = new Route;
+
+        $this->assertEquals([], $route->map());
+    }
+
+    /**
+     *
+     */
+    function test_method_exists()
     {
         $route = new Route([Arg::METHOD => 'foo']);
 
         $this->assertEquals('foo', $route->method());
+    }
+
+    /**
+     *
+     */
+    function test_method_not_exists()
+    {
+        $route = new Route;
+
+        $this->assertEquals(null, $route->method());
     }
 
     /**
@@ -100,56 +192,6 @@ class RouteTest
         $route = new Route([Arg::NAME => 'foo']);
 
         $this->assertEquals('foo', $route->name());
-    }
-
-    /**
-     *
-     */
-    function test_param_not_null()
-    {
-        $route = new Route([Arg::PARAMS => ['foo' => 'bar']]);
-
-        $this->assertEquals('bar', $route->param('foo'));
-    }
-
-    /**
-     *
-     */
-    function test_param_null()
-    {
-        $route = new Route;
-
-        $this->assertEquals(null, $route->param('foo'));
-    }
-
-    /**
-     *
-     */
-    function test_params()
-    {
-        $route = new Route([Arg::PARAMS => ['foo' => 'bar']]);
-
-        $this->assertEquals(['foo' => 'bar'], $route->params());
-    }
-
-    /**
-     *
-     */
-    function test_params_empty()
-    {
-        $route = new Route;
-
-        $this->assertEquals([], $route->params());
-    }
-
-    /**
-     *
-     */
-    function test_path()
-    {
-        $route = new Route([Arg::PATH => 'foo']);
-
-        $this->assertEquals('foo', $route->path());
     }
 
     /**
@@ -175,10 +217,90 @@ class RouteTest
     /**
      *
      */
+    function test_regex()
+    {
+        $route = new Route([Arg::REGEX => 'foo']);
+
+        $this->assertEquals('foo', $route->regex());
+    }
+
+    /**
+     *
+     */
+    function test_action()
+    {
+        $route = new Route([Arg::ACTION => ['GET' => 'foo']]);
+
+        $this->assertEquals('foo', $route->action('GET'));
+    }
+
+    /**
+     *
+     */
+    function test_actions()
+    {
+        $route = new Route([Arg::ACTION => ['GET' => 'foo']]);
+
+        $this->assertEquals(['GET' => 'foo'], $route->actions());
+    }
+
+    /**
+     *
+     */
+    function test_route()
+    {
+        $route = new Route([Arg::ROUTE => 'foo']);
+
+        $this->assertEquals('foo', $route->route());
+    }
+
+    /**
+     *
+     */
     function test_scheme()
     {
         $route = new Route([Arg::SCHEME => 'foo']);
 
         $this->assertEquals('foo', $route->scheme());
+    }
+
+    /**
+     *
+     */
+    function test_tokens_exists()
+    {
+        $route = new Route([Arg::TOKENS => ['foo' => 'bar']]);
+
+        $this->assertEquals(['foo' => 'bar'], $route->tokens());
+    }
+
+    /**
+     *
+     */
+    function test_tokens_not_exists()
+    {
+        $route = new Route;
+
+        $this->assertEquals([], $route->tokens());
+    }
+
+    /**
+     *
+     */
+    function test_wildcard_exists()
+    {
+        $route = new Route([Arg::WILDCARD => 'foo']);
+
+        $this->assertEquals('foo', $route->wildcard());
+    }
+
+    /**
+     *
+     */
+    function test_wildcard_not_exists()
+    {
+        $route = new Route;
+
+        $this->assertEquals(false, $route->wildcard());
     }
 }

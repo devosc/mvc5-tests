@@ -6,9 +6,10 @@
 namespace Mvc5\Test\Route\Match;
 
 use Mvc5\Arg;
+use Mvc5\Request\Config as Mvc5Request;
 use Mvc5\Route\Match\Path;
+use Mvc5\Route\Request\Config as Request;
 use Mvc5\Route\Config as Route;
-use Mvc5\Route\Definition\Config as Definition;
 use Mvc5\Test\Test\TestCase;
 
 class PathTest
@@ -19,11 +20,11 @@ class PathTest
      */
     function test_invoke()
     {
-        $definition = new Definition;
-        $path       = new Path;
-        $route      = new Route([Arg::PATH => 'foo']);
+        $route   = new Route;
+        $path    = new Path;
+        $request = new Request(new Mvc5Request([Arg::URI => [Arg::PATH => 'foo']]));
 
-        $this->assertEquals($route, $path($route, $definition));
+        $this->assertEquals($request, $path($request, $route));
     }
 
     /**
@@ -31,11 +32,11 @@ class PathTest
      */
     function test_invoke_not_matched()
     {
-        $definition = new Definition([Arg::REGEX => 'bar']);
-        $path       = new Path;
-        $route      = new Route([Arg::PATH => 'foo']);
+        $route   = new Route([Arg::REGEX => 'bar']);
+        $path    = new Path;
+        $request = new Request(new Mvc5Request([Arg::URI => [Arg::PATH => 'foo']]));
 
-        $this->assertEquals(null, $path($route, $definition));
+        $this->assertEquals(null, $path($request, $route));
     }
 
     /**
@@ -43,7 +44,7 @@ class PathTest
      */
     function test_params()
     {
-        $path = new PathParams;
+        $path = new Params;
 
         $this->assertEquals(['bar' => 'baz'], $path->params(['foo' => 'bar'], ['foo' => 'baz']));
     }

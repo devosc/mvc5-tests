@@ -3,9 +3,10 @@
  *
  */
 
-namespace Mvc5\Test\Route\Exception;
+namespace Mvc5\Test\Request\Exception;
 
-use Mvc5\Route\Exception\Controller;
+use Mvc5\Request\Config as Request;
+use Mvc5\Request\Exception\Controller;
 use Mvc5\Test\Test\TestCase;
 
 class ControllerTest
@@ -26,6 +27,6 @@ class ControllerTest
     {
         $controller = new Controller([]);
 
-        $this->assertEquals(['exception' => 'baz'], $controller(['exception' => 'baz']));
+        $this->assertEquals(['exception' => 'baz'], $controller(new Request(['exception' => 'baz'])));
     }
 }

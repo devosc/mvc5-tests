@@ -18,7 +18,7 @@ class CompileTest
     {
         $compile = new Compile;
 
-        $definition = (new Generator)->__invoke([
+        $route = (new Generator)->__invoke([
             'route'      => '[:no_constraint]/:author[/:category]',
             'defaults'   => [
                 'author'   => 'owner',
@@ -32,25 +32,25 @@ class CompileTest
             ]
         ]);
 
-        $args = ['category' => 'bar'];
+        $params = ['category' => 'bar'];
 
-        $tokens = $definition['tokens'];
+        $tokens = $route['tokens'];
 
-        $defaults = $definition['defaults'];
+        $defaults = $route['defaults'];
 
         $this->setExpectedException('InvalidArgumentException', 'Missing parameter "author"');
 
-        $compile->compile($tokens, $args, $defaults);
+        $compile->compile($tokens, $params, $defaults);
     }
 
     /**
      *
      */
-    function test_compile_no_default_param()
+    function test_compile_no_default_arg()
     {
         $compile = new Compile;
 
-        $definition = (new Generator)->__invoke([
+        $route = (new Generator)->__invoke([
             'route'      => '[:no_constraint]/:author[/:category]',
             'defaults'   => [
                 //'author'   => 'owner',
@@ -64,25 +64,25 @@ class CompileTest
             ]
         ]);
 
-        $args = ['category' => 'bar'];
+        $params = ['category' => 'bar'];
 
-        $tokens = $definition['tokens'];
+        $tokens = $route['tokens'];
 
-        $defaults = $definition['defaults'];
+        $defaults = $route['defaults'];
 
         $this->setExpectedException('InvalidArgumentException', 'Missing parameter "author"');
 
-        $compile->compile($tokens, $args, $defaults);
+        $compile->compile($tokens, $params, $defaults);
     }
 
     /**
      *
      */
-    function test_compile_param_path()
+    function test_compile_arg_path()
     {
         $compile = new Compile;
 
-        $definition = (new Generator)->__invoke([
+        $route = (new Generator)->__invoke([
             'route'      => '/[:author[/:category]]',
             'defaults'   => [
                 'author'   => 'owner',
@@ -96,13 +96,13 @@ class CompileTest
             ]
         ]);
 
-        $args = ['author' => 'foo', 'category' => 'bar'];
+        $params = ['author' => 'foo', 'category' => 'bar'];
 
-        $tokens = $definition['tokens'];
-        //$tokens = array_merge($definition['tokens'], [['foo', 'bar']]);
+        $tokens = $route['tokens'];
+        //$tokens = array_merge($route['tokens'], [['foo', 'bar']]);
 
-        $defaults = $definition['defaults'];
+        $defaults = $route['defaults'];
 
-        $this->assertEquals('/foo/bar', $compile->compile($tokens, $args, $defaults));
+        $this->assertEquals('/foo/bar', $compile->compile($tokens, $params, $defaults));
     }
 }

@@ -6,9 +6,10 @@
 namespace Mvc5\Test\Route\Match;
 
 use Mvc5\Arg;
+use Mvc5\Request\Config as Mvc5Request;
 use Mvc5\Route\Match\Action;
+use Mvc5\Route\Request\Config as Request;
 use Mvc5\Route\Config as Route;
-use Mvc5\Route\Definition\Config as Definition;
 use Mvc5\Test\Test\TestCase;
 
 class ActionTest
@@ -19,11 +20,11 @@ class ActionTest
      */
     function test_invoke_no_actions()
     {
-        $action     = new Action;
-        $definition = new Definition;
-        $route      = new Route;
+        $action  = new Action;
+        $route   = new Route;
+        $request = new Request(new Mvc5Request);
 
-        $this->assertEquals($route, $action($route, $definition));
+        $this->assertEquals($request, $action($request, $route));
     }
 
     /**
@@ -31,15 +32,15 @@ class ActionTest
      */
     function test_invoke_action()
     {
-        $action     = new Action;
-        $definition = new Definition([Arg::ACTION => ['GET' => 'foo']]);
-        $route      = new Route([Arg::METHOD => 'GET']);
+        $action  = new Action;
+        $route   = new Route([Arg::ACTION => ['GET' => 'foo']]);
+        $request = new Request(new Mvc5Request([Arg::METHOD => 'GET']));
 
-        /** @var Route $route */
+        /** @var Request $request */
 
-        $route = $action($route, $definition);
+        $request = $action($request, $route);
 
-        $this->assertEquals('foo', $route->controller());
+        $this->assertEquals('foo', $request->controller());
     }
 
     /**
@@ -47,14 +48,14 @@ class ActionTest
      */
     function test_invoke_no_action_default_is_controller()
     {
-        $action     = new Action;
-        $definition = new Definition;
-        $route      = new Route([Arg::CONTROLLER => 'foo']);
+        $action  = new Action;
+        $route   = new Route;
+        $request = new Request(new Mvc5Request([Arg::CONTROLLER => 'foo']));
 
-        /** @var Route $route */
+        /** @var Request $request */
 
-        $route = $action($route, $definition);
+        $request = $action($request, $route);
 
-        $this->assertEquals('foo', $route->controller());
+        $this->assertEquals('foo', $request->controller());
     }
 }

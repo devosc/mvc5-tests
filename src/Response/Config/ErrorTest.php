@@ -3,12 +3,12 @@
  *
  */
 
-namespace Mvc5\Test\Response\Error;
+namespace Mvc5\Test\Response\Config;
 
 use Mvc5\Arg;
 use Mvc5\Test\Test\TestCase;
 
-class ConfigTest
+class ErrorTest
     extends TestCase
 {
     /**
@@ -16,7 +16,7 @@ class ConfigTest
      */
     function test_code()
     {
-        $config = new Config([Arg::CODE => 'foo']);
+        $config = new Error([Arg::CODE => 'foo']);
 
         $this->assertEquals('foo', $config->code());
     }
@@ -26,7 +26,7 @@ class ConfigTest
      */
     function test_description()
     {
-        $config = new Config([Arg::DESCRIPTION => 'foo']);
+        $config = new Error([Arg::DESCRIPTION => 'foo']);
 
         $this->assertEquals('foo', $config->description());
     }
@@ -36,7 +36,7 @@ class ConfigTest
      */
     function test_errors()
     {
-        $config = new Config([Arg::ERRORS => ['foo']]);
+        $config = new Error([Arg::ERRORS => ['foo']]);
 
         $this->assertEquals(['foo'], $config->errors());
     }
@@ -46,7 +46,7 @@ class ConfigTest
      */
     function test_message()
     {
-        $config = new Config([Arg::MESSAGE => 'foo']);
+        $config = new Error([Arg::MESSAGE => 'foo']);
 
         $this->assertEquals('foo', $config->message());
     }
@@ -56,7 +56,7 @@ class ConfigTest
      */
     function test_status()
     {
-        $config = new Config([Arg::STATUS => 'foo']);
+        $config = new Error([Arg::STATUS => 'foo']);
 
         $this->assertEquals('foo', $config->status());
     }

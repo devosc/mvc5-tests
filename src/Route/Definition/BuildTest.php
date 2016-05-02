@@ -6,8 +6,8 @@
 namespace Mvc5\Test\Route\Definition;
 
 use Mvc5\Arg;
-use Mvc5\Route\Definition;
-use Mvc5\Route\Definition\Config;
+use Mvc5\Route\Route;
+use Mvc5\Route\Config;
 use Mvc5\Test\Test\TestCase;
 
 class BuildTest
@@ -20,17 +20,17 @@ class BuildTest
     {
         $build = new Build;
 
-        $definition = [
+        $route = [
             Arg::CHILDREN    => ['foo' => [Arg::ROUTE => 'foo']],
             Arg::CONSTRAINTS => null,
             Arg::NAME        => null,
-            Arg::PARAM_MAP   => null,
+            Arg::MAP         => null,
             Arg::REGEX       => null,
             Arg::ROUTE       => '/',
             Arg::TOKENS      => null
         ];
 
-        $this->assertInternalType('array', $build->definition($definition, true, true));
+        $this->assertInternalType('array', $build->definition($route, true, true));
     }
 
     /**
@@ -52,19 +52,19 @@ class BuildTest
     {
         $build = new Build;
 
-        $definitions = [
+        $routes = [
             [
                 Arg::CHILDREN    => [],
                 Arg::CONSTRAINTS => [],
                 Arg::NAME        => null,
-                Arg::PARAM_MAP   => [],
+                Arg::MAP         => [],
                 Arg::REGEX       => null,
                 Arg::ROUTE       => '/',
                 Arg::TOKENS      => null
             ]
         ];
 
-        $this->assertInternalType('array', $build->children($definitions));
+        $this->assertInternalType('array', $build->children($routes));
     }
 
     /**
@@ -74,17 +74,17 @@ class BuildTest
     {
         $build = new Build;
 
-        $definition = new Config([
+        $route = new Config([
             Arg::CHILDREN    => [],
             Arg::CONSTRAINTS => [],
             Arg::NAME        => null,
-            Arg::PARAM_MAP   => [],
+            Arg::MAP         => [],
             Arg::REGEX       => null,
             Arg::ROUTE       => '/',
             Arg::TOKENS      => null
         ]);
 
-        $this->assertInstanceOf(Config::class, $build->create($definition));
+        $this->assertInstanceOf(Config::class, $build->create($route));
     }
 
     /**
@@ -94,18 +94,18 @@ class BuildTest
     {
         $build = new Build;
 
-        $definition = [
+        $route = [
             Arg::CHILDREN    => [],
             Arg::CLASS_NAME  => Config::class,
             Arg::CONSTRAINTS => [],
             Arg::NAME        => null,
-            Arg::PARAM_MAP   => [],
+            Arg::MAP         => [],
             Arg::REGEX       => null,
             Arg::ROUTE       => '/',
             Arg::TOKENS      => null
         ];
 
-        $this->assertInstanceOf(Config::class, $build->create($definition));
+        $this->assertInstanceOf(Config::class, $build->create($route));
     }
 
     /**
@@ -115,17 +115,17 @@ class BuildTest
     {
         $build = new Build;
 
-        $definition = [
+        $route = [
             Arg::CHILDREN    => [],
             Arg::CONSTRAINTS => [],
             Arg::NAME        => null,
-            Arg::PARAM_MAP   => [],
+            Arg::MAP         => [],
             Arg::REGEX       => null,
             Arg::ROUTE       => '/',
             Arg::TOKENS      => null
         ];
 
-        $this->assertInstanceOf(Config::class, $build->create($definition));
+        $this->assertInstanceOf(Config::class, $build->create($route));
     }
 
     /**
@@ -135,17 +135,17 @@ class BuildTest
     {
         $build = new Build;
 
-        $definition = [
+        $route = [
             Arg::CHILDREN    => [],
             Arg::CONSTRAINTS => [],
             Arg::NAME        => null,
-            Arg::PARAM_MAP   => [],
+            Arg::MAP         => [],
             Arg::REGEX       => null,
             Arg::ROUTE       => '/',
             Arg::TOKENS      => null
         ];
 
-        $this->assertInstanceOf(Config::class, $build->createDefault($definition));
+        $this->assertInstanceOf(Config::class, $build->createDefault($route));
     }
 
     /**
@@ -155,16 +155,16 @@ class BuildTest
     {
         $build = new Build;
 
-        $definition = [
+        $route = [
             Arg::CHILDREN    => [],
             Arg::CONSTRAINTS => [],
             Arg::NAME        => null,
-            Arg::PARAM_MAP   => [],
+            Arg::MAP         => [],
             Arg::REGEX       => null,
             Arg::ROUTE       => '/',
             Arg::TOKENS      => null
         ];
 
-        $this->assertInstanceOf(Definition::class, $build->build($definition));
+        $this->assertInstanceOf(Route::class, $build->build($route));
     }
 }

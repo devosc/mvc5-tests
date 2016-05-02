@@ -8,8 +8,9 @@ namespace Mvc5\Test\Route\Router;
 use Mvc5\Arg;
 use Mvc5\App;
 use Mvc5\Event;
+use Mvc5\Request\Config as Mvc5Request;
+use Mvc5\Route\Request\Config as Request;
 use Mvc5\Route\Config as Route;
-use Mvc5\Route\Definition\Config as Definition;
 use Mvc5\Route\Generator;
 use Mvc5\Route\Match;
 use Mvc5\Test\Test\TestCase;
@@ -25,20 +26,20 @@ class RouterTest
         return new App([
             Arg::EVENTS => [
                 'route\match' => [
-                    function(Route $route, Definition $definition) {
-                        switch($definition->name()) {
+                    function(Request $request, Route $route) {
+                        switch($route->name()) {
                             default:
-                                if ('baz' == $route->name()) {
-                                    $route[Arg::MATCHED] = true;
+                                if ('baz' == $request->name()) {
+                                    $request[Arg::MATCHED] = true;
                                 }
-                                return $route;
+                                return $request;
                                 break;
                             case 'no_match':
                                 return null;
                                 break;
                             case 'matched':
-                                $route[Arg::MATCHED] = true;
-                                return $route;
+                                $request[Arg::MATCHED] = true;
+                                return $request;
                                 break;
                         }
                     }
@@ -56,7 +57,7 @@ class RouterTest
      */
     function test_construct()
     {
-        $this->assertInstanceOf(Router::class, new Router(new Definition));
+        $this->assertInstanceOf(Router::class, new Router(new Route));
     }
 
     /**
@@ -64,10 +65,10 @@ class RouterTest
      */
     function test_routeDefinition()
     {
-        $definition = new Definition(['regex' => 'foo']);
-        $router     = new Router(new Definition);
+        $route  = new Route(['regex' => 'foo']);
+        $router = new Router(new Route);
 
-        $this->assertEquals($definition, $router->routeDefinition($definition));
+        $this->assertEquals($route, $router->routeDefinition($route));
     }
 
     /**
@@ -75,11 +76,11 @@ class RouterTest
      */
     function test_create_without_definition()
     {
-        $router = new Router(new Definition);
+        $router = new Router(new Route);
 
         $router->service($this->app());
 
-        $this->assertInstanceOf(Definition::class, $router->routeDefinition([Arg::ROUTE => '/']));
+        $this->assertInstanceOf(Route::class, $router->routeDefinition([Arg::ROUTE => '/']));
     }
 
     /**
@@ -87,14 +88,14 @@ class RouterTest
      */
     function test_dispatch_match_not_route()
     {
-        $definition = new Definition([Arg::NAME => 'no_match']);
-        $route      = new Route;
+        $route   = new Route([Arg::NAME => 'no_match']);
+        $request = new Request;
 
-        $router = new Router(new Definition);
+        $router = new Router(new Route);
 
         $router->service($this->app());
 
-        $this->assertEquals(null, $router->dispatch($route, $definition));
+        $this->assertEquals(null, $router->dispatch($request, $route));
     }
 
     /**
@@ -102,14 +103,16 @@ class RouterTest
      */
     function test_dispatch_matched()
     {
-        $definition = new Definition([Arg::NAME => 'matched']);
-        $route      = new Route;
+        $route   = new Route([Arg::NAME => 'matched']);
+        $request = new Request(new Mvc5Request);
 
-        $router = new Router(new Definition);
+        $router = new Router(new Route);
 
         $router->service($this->app());
 
-        $this->assertEquals($route, $router->dispatch($route, $definition));
+        $result = new Mvc5Request([Arg::NAME => 'matched', Arg::MATCHED => true]);
+
+        $this->assertEquals($result, $router->dispatch($request, $route));
     }
 
     /**
@@ -117,16 +120,16 @@ class RouterTest
      */
     function test_dispatch_with_children()
     {
-        $definition = new Definition([Arg::ROUTE => '/', Arg::CHILDREN => ['baz' => [Arg::ROUTE => 'foo']]]);
-        $route      = new Route;
+        $route   = new Route([Arg::ROUTE => '/', Arg::CHILDREN => ['baz' => [Arg::ROUTE => 'foo']]]);
+        $request = new Request(new Mvc5Request);
 
-        $router = new Router(new Definition);
+        $router = new Router(new Route);
 
         $router->service($this->app());
 
-        $route = $router->dispatch($route, $definition);
+        $request = $router->dispatch($request, $route);
 
-        $this->assertEquals('baz', $route->name());
+        $this->assertEquals('baz', $request->name());
     }
 
     /**
@@ -144,10 +147,10 @@ class RouterTest
      */
     function test_invoke()
     {
-        $router = new Router(new Definition([Arg::ROUTE => '/']));
+        $router = new Router(new Route([Arg::ROUTE => '/']));
 
         $router->service($this->app());
 
-        $this->assertEquals(null, $router(new Route));
+        $this->assertEquals(null, $router(new Mvc5Request));
     }
 }

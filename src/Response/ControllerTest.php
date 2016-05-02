@@ -18,6 +18,6 @@ class ControllerTest
     {
         $controller = new Controller;
 
-        $this->assertInstanceOf(Response::class, $controller(new Response, null));
+        $this->assertEquals(new Response('foo'), $controller(new Response, 'foo'));
     }
 }

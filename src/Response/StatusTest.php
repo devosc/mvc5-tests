@@ -26,6 +26,6 @@ class StatusTest
     {
         $status = new Status('200');
 
-        $this->assertInstanceOf(Response::class, $status(new Response));
+        $this->assertEquals(new Response(null, '200'), $status(new Response));
     }
 }

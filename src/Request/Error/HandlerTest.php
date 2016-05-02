@@ -3,11 +3,11 @@
  *
  */
 
-namespace Mvc5\Test\Route\Error;
+namespace Mvc5\Test\Request\Error;
 
 use Mvc5\Response\Error\BadRequest;
 use Mvc5\Response\Error\NotFound;
-use Mvc5\Route\Error\Handler;
+use Mvc5\Request\Error\Handler;
 use Mvc5\Test\Test\TestCase;
 
 class HandlerTest

@@ -44,6 +44,26 @@ class CloneTest
     /**
      *
      */
+    function test_clone_container_array()
+    {
+        $resolver = new Resolver;
+
+        $a = new \stdClass;
+        $a->b = 'b';
+
+        $resolver->container(['a' => $a]);
+
+        $clone = clone $resolver;
+
+        $this->assertEquals(true, $clone == $resolver);
+        $this->assertInstanceOf(\stdClass::class, $clone->get('a'));
+        $this->assertEquals($a, $clone->get('a'));
+        $this->assertTrue($a !== $clone->get('a'));
+    }
+
+    /**
+     *
+     */
     function test_clone_with_objects()
     {
         $resolver = new Resolver;

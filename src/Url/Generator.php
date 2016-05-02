@@ -5,25 +5,25 @@
 
 namespace Mvc5\Test\Url;
 
-use Mvc5\Route\Definition;
+use Mvc5\Route\Route;
 use Mvc5\Url\Generator as Base;
 
 class Generator
     extends Base
 {
     /**
-     * @param Definition $parent
+     * @param Route $parent
      * @param $name
-     * @return Definition
+     * @return Route
      */
-    function child(Definition $parent, $name)
+    function child(Route $parent, $name)
     {
         return parent::child($parent, $name);
     }
 
     /**
      * @param $name
-     * @return array|Definition
+     * @return array|Route
      */
     function config($name)
     {
@@ -35,20 +35,20 @@ class Generator
      * @param array $args
      * @param array $options
      * @param string $path
-     * @param Definition $parent
+     * @param Route $parent
      * @return string|void
      */
-    function generate($name, array $args = [], array $options = [], $path = '', Definition $parent = null)
+    function generate($name, array $args = [], array $options = [], $path = '', Route $parent = null)
     {
         return parent::generate($name, $args, $options, $path, $parent);
     }
 
     /**
-     * @param Definition $parent
-     * @param Definition $child
-     * @return Definition
+     * @param Route $parent
+     * @param Route $child
+     * @return Route
      */
-    function merge(Definition $parent, Definition $child)
+    function merge(Route $parent, Route $child)
     {
         return parent::merge($parent, $child);
     }
@@ -72,11 +72,11 @@ class Generator
     }
 
     /**
-     * @param array|Definition $definition
-     * @return Definition|null
+     * @param array|Route $route
+     * @return Route|null
      */
-    function url($definition)
+    function url($route)
     {
-        return parent::url($definition);
+        return parent::url($route);
     }
 }
