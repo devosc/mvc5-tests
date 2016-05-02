@@ -3,12 +3,12 @@
  *
  */
 
-namespace Mvc5\Test\Service;
+namespace Mvc5\Test\Service\Config;
 
 use Mvc5\Config\Configuration;
-use Mvc5\Service\Config as Base;
+use Mvc5\Service\Config\Container as Base;
 
-class Config
+class Container
     implements Configuration
 {
     /**
