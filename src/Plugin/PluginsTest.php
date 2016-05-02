@@ -6,7 +6,7 @@
 namespace Mvc5\Test\Plugin;
 
 use Mvc5\Arg;
-use Mvc5\Plugins as _Plugins;
+use Mvc5\App;
 use Mvc5\Plugin\Args;
 use Mvc5\Plugin\Plugins;
 use Mvc5\Plugin\Link;
@@ -22,7 +22,7 @@ class PluginsTest
     {
         $plugin = new Plugins(['foo']);
 
-        $this->assertEquals(_Plugins::class, $plugin->name());
+        $this->assertEquals(App::class, $plugin->name());
         $this->assertEquals([new Args([Arg::SERVICES => ['foo']]), new Link, true], $plugin->args());
         $this->assertEquals([], $plugin->calls());
     }
@@ -34,8 +34,8 @@ class PluginsTest
     {
         $plugin = new Plugins(['foo'], null, false, ['bar']);
 
-        $this->assertEquals(_Plugins::class, $plugin->name());
-        $this->assertEquals([new Args([Arg::SERVICES => ['foo']]), null, false], $plugin->args());
+        $this->assertEquals(App::class, $plugin->name());
+        $this->assertEquals([new Args([Arg::SERVICES => new Args(['foo'])]), null, false], $plugin->args());
         $this->assertEquals(['bar'], $plugin->calls());
     }
 }
