@@ -15,7 +15,7 @@ class DispatchTest
     /**
      *
      */
-    public function test_construct()
+    function test_construct()
     {
         $this->assertInstanceOf(Dispatch::class, new Dispatch('foo'));
     }
@@ -23,7 +23,7 @@ class DispatchTest
     /**
      *
      */
-    public function test_args()
+    function test_args()
     {
         $dispatch = new Dispatch('foo');
 
@@ -33,7 +33,7 @@ class DispatchTest
     /**
      *
      */
-    public function test_invoke_response()
+    function test_invoke_response()
     {
         $dispatch = new Dispatch('foo', new Response);
 
@@ -43,7 +43,7 @@ class DispatchTest
     /**
      *
      */
-    public function test_invoke_error()
+    function test_invoke_error()
     {
         $dispatch = new Dispatch('foo');
 
@@ -53,7 +53,7 @@ class DispatchTest
     /**
      *
      */
-    public function test_invoke_not_response()
+    function test_invoke_not_response()
     {
         $dispatch = new Dispatch('foo');
 

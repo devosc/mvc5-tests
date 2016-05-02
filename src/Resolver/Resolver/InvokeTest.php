@@ -14,7 +14,7 @@ class InvokeTest
     /**
      *
      */
-    public function test_invoke()
+    function test_invoke()
     {
         $resolver = new Resolver;
 
@@ -24,7 +24,7 @@ class InvokeTest
     /**
      *
      */
-    public function test_invoke_with_callback()
+    function test_invoke_with_callback()
     {
         $resolver = new Resolver;
 

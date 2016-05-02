@@ -15,7 +15,7 @@ class ListenerTest
     /**
      *
      */
-    public function test_listener_not_event()
+    function test_listener_not_event()
     {
         $resolver = new Resolver;
 
@@ -25,7 +25,7 @@ class ListenerTest
     /**
      *
      */
-    public function test_listener_event()
+    function test_listener_event()
     {
         $resolver = new Resolver;
 

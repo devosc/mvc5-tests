@@ -14,7 +14,7 @@ class SignalTest
     /**
      *
      */
-    public function test_args()
+    function test_args()
     {
         $signal = new Signal;
 
@@ -24,7 +24,7 @@ class SignalTest
     /**
      *
      */
-    public function test_invoke()
+    function test_invoke()
     {
         $signal = new Signal;
 
@@ -34,7 +34,7 @@ class SignalTest
     /**
      *
      */
-    public function test_invoke_named()
+    function test_invoke_named()
     {
         $signal = new Signal;
 

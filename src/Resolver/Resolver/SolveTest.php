@@ -17,7 +17,7 @@ class SolveTest
     /**
      *
      */
-    public function test_solve_gem()
+    function test_solve_gem()
     {
         $resolver = new Resolver;
 
@@ -27,7 +27,7 @@ class SolveTest
     /**
      *
      */
-    public function test_solve_callback()
+    function test_solve_callback()
     {
         $resolver = new Resolver;
 
@@ -37,7 +37,7 @@ class SolveTest
     /**
      *
      */
-    public function test_solve_resolver()
+    function test_solve_resolver()
     {
         $resolver = new Resolver;
 

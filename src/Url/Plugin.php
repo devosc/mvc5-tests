@@ -15,7 +15,7 @@ class Plugin
     /**
      * @return callable
      */
-    public function generator()
+    function generator()
     {
         return parent::generator();
     }
@@ -24,7 +24,7 @@ class Plugin
      * @param null|string $name
      * @return string
      */
-    public function name($name = null)
+    function name($name = null)
     {
         return parent::name($name);
     }
@@ -33,7 +33,7 @@ class Plugin
      * @param array $options
      * @return array
      */
-    public function options(array $options = [])
+    function options(array $options = [])
     {
         return parent::options($options);
     }
@@ -43,7 +43,7 @@ class Plugin
      * @param array $args
      * @return array
      */
-    public function params($name = null, array $args = [])
+    function params($name = null, array $args = [])
     {
         return parent::params($name, $args);
     }
@@ -54,7 +54,7 @@ class Plugin
      * @param array $options
      * @return string
      */
-    public function url($name, array $args = [], array $options = [])
+    function url($name, array $args = [], array $options = [])
     {
         return parent::url($name, $args, $options);
     }

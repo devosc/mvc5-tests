@@ -13,7 +13,7 @@ class Middleware
     /**
      * @return \Closure
      */
-    public function next()
+    function next()
     {
         return parent::next();
     }

@@ -15,7 +15,7 @@ class SignalTest
     /**
      *
      */
-    public function test_signal_with_numeric_args()
+    function test_signal_with_numeric_args()
     {
         $signal = new Signal;
 
@@ -25,7 +25,7 @@ class SignalTest
     /**
      *
      */
-    public function test_signal_without_args()
+    function test_signal_without_args()
     {
         $signal = new Signal;
 
@@ -35,7 +35,7 @@ class SignalTest
     /**
      *
      */
-    public function test_signal_with_optional_arg()
+    function test_signal_with_optional_arg()
     {
         $signal = new Signal;
 
@@ -45,7 +45,7 @@ class SignalTest
     /**
      *
      */
-    public function test_signal_array()
+    function test_signal_array()
     {
         $signal = new Signal;
 
@@ -55,7 +55,7 @@ class SignalTest
     /**
      *
      */
-    public function test_signal_variadic_args()
+    function test_signal_variadic_args()
     {
         $signal = new Signal;
 
@@ -65,7 +65,7 @@ class SignalTest
     /**
      *
      */
-    public function test_signal_args()
+    function test_signal_args()
     {
         $signal = new Signal;
 
@@ -75,7 +75,7 @@ class SignalTest
     /**
      *
      */
-    public function test_signal_static_string()
+    function test_signal_static_string()
     {
         $signal = new Signal;
 
@@ -97,7 +97,7 @@ class SignalTest
     /**
      *
      */
-    public function test_signal_no_param_exception()
+    function test_signal_no_param_exception()
     {
         $signal = new Signal;
 
@@ -111,7 +111,7 @@ class SignalTest
     /**
      *
      */
-    public function test_signal_php_function()
+    function test_signal_php_function()
     {
         $signal = new Signal;
 

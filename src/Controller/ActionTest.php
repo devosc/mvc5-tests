@@ -16,7 +16,7 @@ class ActionTest
     /**
      *
      */
-    public function test_action()
+    function test_action()
     {
         $action = new Action;
 
@@ -26,7 +26,7 @@ class ActionTest
     /**
      *
      */
-    public function test_error()
+    function test_error()
     {
         $action = new Action;
 
@@ -36,7 +36,7 @@ class ActionTest
     /**
      *
      */
-    public function test_exception()
+    function test_exception()
     {
         $action = new Action;
 

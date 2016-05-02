@@ -14,7 +14,7 @@ class StatusTest
     /**
      *
      */
-    public function test_construct()
+    function test_construct()
     {
         $this->assertInstanceOf(Status::class, new Status(null));
     }
@@ -22,7 +22,7 @@ class StatusTest
     /**
      *
      */
-    public function test_invoke()
+    function test_invoke()
     {
         $status = new Status('200');
 

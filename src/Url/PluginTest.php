@@ -16,7 +16,7 @@ class PluginTest
     /**
      *
      */
-    public function test_construct()
+    function test_construct()
     {
         $this->assertInstanceOf(Plugin::class, new Plugin(new Route, function(){}));
     }
@@ -24,7 +24,7 @@ class PluginTest
     /**
      *
      */
-    public function test_generator()
+    function test_generator()
     {
         $generator = function(){};
         $plugin    = new Plugin(new Route, $generator);
@@ -35,7 +35,7 @@ class PluginTest
     /**
      *
      */
-    public function test_name_not_null()
+    function test_name_not_null()
     {
         $plugin = new Plugin(new Route, function(){});
 
@@ -45,7 +45,7 @@ class PluginTest
     /**
      *
      */
-    public function test_name_null_use_route()
+    function test_name_null_use_route()
     {
         $plugin = new Plugin(new Route([Arg::NAME => 'foo']), function(){});
 
@@ -55,7 +55,7 @@ class PluginTest
     /**
      *
      */
-    public function test_options()
+    function test_options()
     {
         $options = [
             Arg::SCHEME   => 'scheme',
@@ -71,7 +71,7 @@ class PluginTest
     /**
      *
      */
-    public function test_params_with_name()
+    function test_params_with_name()
     {
         $plugin = new Plugin(new Route, function(){});
 
@@ -81,7 +81,7 @@ class PluginTest
     /**
      *
      */
-    public function test_params_with_no_name_and_from_route()
+    function test_params_with_no_name_and_from_route()
     {
         $params = ['foo' => 'bar'];
 
@@ -93,7 +93,7 @@ class PluginTest
     /**
      *
      */
-    public function test_url()
+    function test_url()
     {
         $generator = function($name, array $args = []) {
             return $name . '/' . key($args) . '/' . current($args);
@@ -107,7 +107,7 @@ class PluginTest
     /**
      *
      */
-    public function test_invoke()
+    function test_invoke()
     {
         $plugin = new Plugin(new Route, function() { return 'foo'; });
 

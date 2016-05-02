@@ -18,7 +18,7 @@ class ProvideTest
     /**
      *
      */
-    public function test_provide_no_parent()
+    function test_provide_no_parent()
     {
         $resolver = new Resolver;
 
@@ -30,7 +30,7 @@ class ProvideTest
     /**
      *
      */
-    public function test_provide_no_parent_with_args()
+    function test_provide_no_parent_with_args()
     {
         $resolver = new Resolver;
 
@@ -42,7 +42,7 @@ class ProvideTest
     /**
      *
      */
-    public function test_provide_no_parent_with_named_args()
+    function test_provide_no_parent_with_named_args()
     {
         $resolver = new Resolver;
 
@@ -54,7 +54,7 @@ class ProvideTest
     /**
      *
      */
-    public function test_provide_same_parent()
+    function test_provide_same_parent()
     {
         $resolver = new Resolver;
 
@@ -68,7 +68,7 @@ class ProvideTest
     /**
      *
      */
-    public function test_provide_not_parent_type_plugin()
+    function test_provide_not_parent_type_plugin()
     {
         $resolver = new Resolver;
 
@@ -82,7 +82,7 @@ class ProvideTest
     /**
      *
      */
-    public function test_provide_with_merge()
+    function test_provide_with_merge()
     {
         $resolver = new Resolver;
 

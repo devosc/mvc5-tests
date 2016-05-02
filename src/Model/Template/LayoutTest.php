@@ -14,7 +14,7 @@ class LayoutTest
     /**
      *
      */
-    public function test_model()
+    function test_model()
     {
         $layout = new Layout(null, [Arg::CHILD_MODEL => 'foo']);
 
@@ -24,7 +24,7 @@ class LayoutTest
     /**
      *
      */
-    public function test_model_set()
+    function test_model_set()
     {
         $vars = ['foo' => 'bar'];
 
@@ -36,7 +36,7 @@ class LayoutTest
     /**
      *
      */
-    public function test_vars()
+    function test_vars()
     {
         $vars = ['foo' => 'bar'];
 
@@ -48,7 +48,7 @@ class LayoutTest
     /**
      *
      */
-    public function test_vars_set()
+    function test_vars_set()
     {
         $vars = ['foo' => 'bar'];
 

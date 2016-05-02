@@ -17,7 +17,7 @@ class PathTest
     /**
      *
      */
-    public function test_invoke()
+    function test_invoke()
     {
         $definition = new Definition;
         $path       = new Path;
@@ -29,7 +29,7 @@ class PathTest
     /**
      *
      */
-    public function test_invoke_not_matched()
+    function test_invoke_not_matched()
     {
         $definition = new Definition([Arg::REGEX => 'bar']);
         $path       = new Path;
@@ -41,7 +41,7 @@ class PathTest
     /**
      *
      */
-    public function test_params()
+    function test_params()
     {
         $path = new PathParams;
 

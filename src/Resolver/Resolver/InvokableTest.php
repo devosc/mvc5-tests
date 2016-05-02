@@ -17,7 +17,7 @@ class InvokableTest
     /**
      *
      */
-    public function test_invokable_string()
+    function test_invokable_string()
     {
         $resolver = new Resolver;
 
@@ -27,7 +27,7 @@ class InvokableTest
     /**
      *
      */
-    public function test_invokable_provider()
+    function test_invokable_provider()
     {
         $resolver = new Resolver;
 
@@ -39,7 +39,7 @@ class InvokableTest
     /**
      *
      */
-    public function test_invokable_closure_with_provider()
+    function test_invokable_closure_with_provider()
     {
         $plugin = new Config;
 
@@ -59,7 +59,7 @@ class InvokableTest
     /**
      *
      */
-    public function test_invokable_closure()
+    function test_invokable_closure()
     {
         $resolver = new Resolver;
 
@@ -75,7 +75,7 @@ class InvokableTest
     /**
      *
      */
-    public function test_invokable_with_fallback()
+    function test_invokable_with_fallback()
     {
         $resolver = new Resolver;
 
@@ -99,7 +99,7 @@ class InvokableTest
     /**
      *
      */
-    public function test_invokable_with_no_fallback()
+    function test_invokable_with_no_fallback()
     {
         $resolver = new Resolver;
 

@@ -14,7 +14,7 @@ class FilterTest
     /**
      *
      */
-    public function test_construct()
+    function test_construct()
     {
         $this->assertInstanceOf(Filter::class, new Filter([]));
     }
@@ -22,7 +22,7 @@ class FilterTest
     /**
      *
      */
-    public function test_config()
+    function test_config()
     {
         $filter = new Filter(['foo']);
 
@@ -32,7 +32,7 @@ class FilterTest
     /**
      *
      */
-    public function test_filter()
+    function test_filter()
     {
         $filter = new Filter([], ['foo']);
 
@@ -42,7 +42,7 @@ class FilterTest
     /**
      *
      */
-    public function test_args()
+    function test_args()
     {
         $filter = new Filter([], [], ['foo']);
 
@@ -52,7 +52,7 @@ class FilterTest
     /**
      *
      */
-    public function test_param()
+    function test_param()
     {
         $filter = new Filter([], [], [], 'foo');
 

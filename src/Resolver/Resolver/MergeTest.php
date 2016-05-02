@@ -16,7 +16,7 @@ class MergeTest
     /**
      *
      */
-    public function test_merge_with_not_named_args()
+    function test_merge_with_not_named_args()
     {
         $resolver = new Resolver;
 
@@ -32,7 +32,7 @@ class MergeTest
     /**
      *
      */
-    public function test_merge_with_named_args()
+    function test_merge_with_named_args()
     {
         $resolver = new Resolver;
 
@@ -48,7 +48,7 @@ class MergeTest
     /**
      *
      */
-    public function test_merge_with_parent_calls()
+    function test_merge_with_parent_calls()
     {
         $resolver = new Resolver;
 
@@ -64,7 +64,7 @@ class MergeTest
     /**
      *
      */
-    public function test_merge_do_not_merge_parent_calls()
+    function test_merge_do_not_merge_parent_calls()
     {
         $resolver = new Resolver;
 
@@ -80,7 +80,7 @@ class MergeTest
     /**
      *
      */
-    public function test_merge_specify_parent_name()
+    function test_merge_specify_parent_name()
     {
         $resolver = new Resolver;
 
@@ -96,7 +96,7 @@ class MergeTest
     /**
      *
      */
-    public function test_merge_no_parent_name()
+    function test_merge_no_parent_name()
     {
         $resolver = new Resolver;
 
@@ -114,7 +114,7 @@ class MergeTest
     /**
      *
      */
-    public function test_merge_param_name()
+    function test_merge_param_name()
     {
         $resolver = new Resolver;
 

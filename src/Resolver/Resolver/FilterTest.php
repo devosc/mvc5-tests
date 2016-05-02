@@ -20,7 +20,7 @@ class FilterTest
     /**
      *
      */
-    public function test_filter()
+    function test_filter()
     {
         $resolver = new Resolver;
 
@@ -30,7 +30,7 @@ class FilterTest
     /**
      *
      */
-    public function test_filter_named_param()
+    function test_filter_named_param()
     {
         $app = new App([
             Arg::SERVICES => [
@@ -67,7 +67,7 @@ class FilterTest
     /**
      *
      */
-    public function test_filter_merge_param()
+    function test_filter_merge_param()
     {
         $app = new App([
             Arg::SERVICES => [
@@ -104,7 +104,7 @@ class FilterTest
     /**
      *
      */
-    public function test_filter_false()
+    function test_filter_false()
     {
         $app = new App([
             Arg::SERVICES => [
@@ -149,7 +149,7 @@ class FilterTest
     /**
      *
      */
-    public function test_filter_null()
+    function test_filter_null()
     {
         $app = new App([
             Arg::SERVICES => [
@@ -194,7 +194,7 @@ class FilterTest
     /**
      *
      */
-    public function test_filter_resolvable()
+    function test_filter_resolvable()
     {
         $resolver = new Resolver;
 
@@ -206,7 +206,7 @@ class FilterTest
     /**
      *
      */
-    public function test_filter_args_plugin()
+    function test_filter_args_plugin()
     {
         $resolver = new Resolver;
 

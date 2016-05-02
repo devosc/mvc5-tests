@@ -16,7 +16,7 @@ class AddTest
     /**
      *
      */
-    public function test_invoke()
+    function test_invoke()
     {
         $add = new Add;
 
@@ -40,7 +40,7 @@ class AddTest
     /**
      *
      */
-    public function test_invoke_start()
+    function test_invoke_start()
     {
         $add = new Add;
 
@@ -64,7 +64,7 @@ class AddTest
     /**
      *
      */
-    public function test_invoke_no_parent()
+    function test_invoke_no_parent()
     {
         $add = new Add;
 
@@ -90,7 +90,7 @@ class AddTest
     /**
      *
      */
-    public function test_invoke_with_root()
+    function test_invoke_with_root()
     {
         $add = new Add;
 

@@ -10,7 +10,7 @@ class CallObject
     /**
      * @return string
      */
-    public function test3()
+    function test3()
     {
         return 'foo';
     }
@@ -19,7 +19,7 @@ class CallObject
      * @param $foo
      * @param $bar
      */
-    public function __invoke($foo, $bar)
+    function __invoke($foo, $bar)
     {
         return $foo;
     }

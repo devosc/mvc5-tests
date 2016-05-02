@@ -18,7 +18,7 @@ class HostnameTest
     /**
      *
      */
-    public function test_invoke()
+    function test_invoke()
     {
         $definition = new Definition([Arg::HOSTNAME => 'foo']);
         $hostname   = new Hostname;
@@ -30,7 +30,7 @@ class HostnameTest
     /**
      *
      */
-    public function test_invoke_not_matched()
+    function test_invoke_not_matched()
     {
         $definition = new Definition([Arg::HOSTNAME => 'foo']);
         $hostname   = new Hostname;

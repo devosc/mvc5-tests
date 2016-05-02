@@ -14,7 +14,7 @@ class ChildTest
     /**
      *
      */
-    public function test_construct()
+    function test_construct()
     {
         $this->assertInstanceOf(Child::class, new Child('foo', 'bar'));
     }

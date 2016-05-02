@@ -17,7 +17,7 @@ class ArgsTest
     /**
      *
      */
-    public function test_gem_args()
+    function test_gem_args()
     {
         $resolver = new Resolver;
 

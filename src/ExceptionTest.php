@@ -14,7 +14,7 @@ class ExceptionTest
     /**
      *
      */
-    public function test_invoke()
+    function test_invoke()
     {
         $msg = 'Empty call stack';
 

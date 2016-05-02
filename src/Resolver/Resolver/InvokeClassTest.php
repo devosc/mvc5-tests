@@ -15,7 +15,7 @@ class InvokeClassTest
     /**
      *
      */
-    public function test_invoke()
+    function test_invoke()
     {
         $resolver = new Resolver;
 
@@ -25,7 +25,7 @@ class InvokeClassTest
     /**
      *
      */
-    public function test_invoke_with_provider()
+    function test_invoke_with_provider()
     {
         $resolver = new Resolver;
 
@@ -37,7 +37,7 @@ class InvokeClassTest
     /**
      *
      */
-    public function test_invoke_with_empty_function()
+    function test_invoke_with_empty_function()
     {
         $resolver = new Resolver;
 

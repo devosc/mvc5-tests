@@ -15,7 +15,7 @@ class GetTest
     /**
      *
      */
-    public function test_get_shared()
+    function test_get_shared()
     {
         $resolver = new Resolver;
 
@@ -27,7 +27,7 @@ class GetTest
     /**
      *
      */
-    public function test_get_plugin_null()
+    function test_get_plugin_null()
     {
         $resolver = new Resolver;
 
@@ -37,7 +37,7 @@ class GetTest
     /**
      *
      */
-    public function test_get_plugin()
+    function test_get_plugin()
     {
         $resolver = new Resolver;
 

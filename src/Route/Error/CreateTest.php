@@ -16,7 +16,7 @@ class CreateTest
     /**
      *
      */
-    public function test_construct()
+    function test_construct()
     {
         $this->assertInstanceOf(Create::class, new Create('foo', 'bar'));
     }
@@ -24,7 +24,7 @@ class CreateTest
     /**
      *
      */
-    public function test_invoke()
+    function test_invoke()
     {
         $create = new Create('foo', 'bar');
 

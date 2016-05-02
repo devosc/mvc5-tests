@@ -15,7 +15,7 @@ class ScopeTest
     /**
      *
      */
-    public function test_scope_null()
+    function test_scope_null()
     {
         $resolver = new Resolver;
 
@@ -25,7 +25,7 @@ class ScopeTest
     /**
      *
      */
-    public function test_scope_set()
+    function test_scope_set()
     {
         $resolver = new Resolver;
 
@@ -37,7 +37,7 @@ class ScopeTest
     /**
      *
      */
-    public function test_scope_exists()
+    function test_scope_exists()
     {
         $resolver = new Resolver;
 

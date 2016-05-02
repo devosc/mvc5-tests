@@ -13,7 +13,7 @@ class ParamsTest
     /**
      *
      */
-    public function test_params()
+    function test_params()
     {
         $definition = new Params;
 

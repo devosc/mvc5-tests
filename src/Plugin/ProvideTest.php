@@ -14,7 +14,7 @@ class ProvideTest
     /**
      *
      */
-    public function test_construct()
+    function test_construct()
     {
         $this->assertInstanceOf(Provide::class, new Provide('foo'));
     }

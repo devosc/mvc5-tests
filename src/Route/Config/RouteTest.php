@@ -15,7 +15,7 @@ class RouteTest
     /**
      *
      */
-    public function test_controller()
+    function test_controller()
     {
         $route = new Route([Arg::CONTROLLER => 'foo']);
 
@@ -25,7 +25,7 @@ class RouteTest
     /**
      *
      */
-    public function test_error()
+    function test_error()
     {
         $route = new Route([Arg::ERROR => 'foo']);;
 
@@ -35,7 +35,7 @@ class RouteTest
     /**
      *
      */
-    public function test_hostname()
+    function test_hostname()
     {
         $route = new Route([Arg::HOSTNAME => 'foo']);
 
@@ -45,7 +45,7 @@ class RouteTest
     /**
      *
      */
-    public function test_length()
+    function test_length()
     {
         $route = new Route([Arg::LENGTH => 2]);
 
@@ -55,7 +55,7 @@ class RouteTest
     /**
      *
      */
-    public function test_length_zero()
+    function test_length_zero()
     {
         $route = new Route;
 
@@ -65,7 +65,7 @@ class RouteTest
     /**
      *
      */
-    public function test_matched()
+    function test_matched()
     {
         $route = new Route([Arg::MATCHED => true]);
 
@@ -75,7 +75,7 @@ class RouteTest
     /**
      *
      */
-    public function test_matched_false()
+    function test_matched_false()
     {
         $route = new Route;
 
@@ -85,7 +85,7 @@ class RouteTest
     /**
      *
      */
-    public function test_method()
+    function test_method()
     {
         $route = new Route([Arg::METHOD => 'foo']);
 
@@ -95,7 +95,7 @@ class RouteTest
     /**
      *
      */
-    public function test_name()
+    function test_name()
     {
         $route = new Route([Arg::NAME => 'foo']);
 
@@ -105,7 +105,7 @@ class RouteTest
     /**
      *
      */
-    public function test_param_not_null()
+    function test_param_not_null()
     {
         $route = new Route([Arg::PARAMS => ['foo' => 'bar']]);
 
@@ -115,7 +115,7 @@ class RouteTest
     /**
      *
      */
-    public function test_param_null()
+    function test_param_null()
     {
         $route = new Route;
 
@@ -125,7 +125,7 @@ class RouteTest
     /**
      *
      */
-    public function test_params()
+    function test_params()
     {
         $route = new Route([Arg::PARAMS => ['foo' => 'bar']]);
 
@@ -135,7 +135,7 @@ class RouteTest
     /**
      *
      */
-    public function test_params_empty()
+    function test_params_empty()
     {
         $route = new Route;
 
@@ -145,7 +145,7 @@ class RouteTest
     /**
      *
      */
-    public function test_path()
+    function test_path()
     {
         $route = new Route([Arg::PATH => 'foo']);
 
@@ -155,7 +155,7 @@ class RouteTest
     /**
      *
      */
-    public function test_port_exists()
+    function test_port_exists()
     {
         $route = new Route([Arg::PORT => '80']);
 
@@ -165,7 +165,7 @@ class RouteTest
     /**
      *
      */
-    public function test_port_not_exists()
+    function test_port_not_exists()
     {
         $route = new Route;
 
@@ -175,7 +175,7 @@ class RouteTest
     /**
      *
      */
-    public function test_scheme()
+    function test_scheme()
     {
         $route = new Route([Arg::SCHEME => 'foo']);
 

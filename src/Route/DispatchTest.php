@@ -17,7 +17,7 @@ class DispatchTest
     /**
      *
      */
-    public function test_invoke()
+    function test_invoke()
     {
         $dispatch = new Dispatch;
         $route    = new Route;
@@ -28,7 +28,7 @@ class DispatchTest
     /**
      *
      */
-    public function test_invoke_error()
+    function test_invoke_error()
     {
         $dispatch = new Dispatch;
 

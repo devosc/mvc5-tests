@@ -54,7 +54,7 @@ class RouterTest
     /**
      *
      */
-    public function test_construct()
+    function test_construct()
     {
         $this->assertInstanceOf(Router::class, new Router(new Definition));
     }
@@ -62,7 +62,7 @@ class RouterTest
     /**
      *
      */
-    public function test_routeDefinition()
+    function test_routeDefinition()
     {
         $definition = new Definition(['regex' => 'foo']);
         $router     = new Router(new Definition);
@@ -73,7 +73,7 @@ class RouterTest
     /**
      *
      */
-    public function test_create_without_definition()
+    function test_create_without_definition()
     {
         $router = new Router(new Definition);
 
@@ -85,7 +85,7 @@ class RouterTest
     /**
      *
      */
-    public function test_dispatch_match_not_route()
+    function test_dispatch_match_not_route()
     {
         $definition = new Definition([Arg::NAME => 'no_match']);
         $route      = new Route;
@@ -100,7 +100,7 @@ class RouterTest
     /**
      *
      */
-    public function test_dispatch_matched()
+    function test_dispatch_matched()
     {
         $definition = new Definition([Arg::NAME => 'matched']);
         $route      = new Route;
@@ -115,7 +115,7 @@ class RouterTest
     /**
      *
      */
-    public function test_dispatch_with_children()
+    function test_dispatch_with_children()
     {
         $definition = new Definition([Arg::ROUTE => '/', Arg::CHILDREN => ['baz' => [Arg::ROUTE => 'foo']]]);
         $route      = new Route;
@@ -132,7 +132,7 @@ class RouterTest
     /**
      *
      */
-    public function test_name()
+    function test_name()
     {
         $router = new Router(['name' => 'foo']);
 
@@ -142,7 +142,7 @@ class RouterTest
     /**
      *
      */
-    public function test_invoke()
+    function test_invoke()
     {
         $router = new Router(new Definition([Arg::ROUTE => '/']));
 

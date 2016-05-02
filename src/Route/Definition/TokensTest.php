@@ -13,7 +13,7 @@ class TokensTest
     /**
      *
      */
-    public function test_tokens()
+    function test_tokens()
     {
         $definition = new Tokens;
 
@@ -23,7 +23,7 @@ class TokensTest
     /**
      *
      */
-    public function test_tokens_empty_parameter_exception()
+    function test_tokens_empty_parameter_exception()
     {
         $definition = new Tokens;
 
@@ -35,7 +35,7 @@ class TokensTest
     /**
      *
      */
-    public function test_tokens_no_closing_bracket_exception()
+    function test_tokens_no_closing_bracket_exception()
     {
         $definition = new Tokens;
 
@@ -47,7 +47,7 @@ class TokensTest
     /**
      *
      */
-    public function test_tokens_unbalanced_exception()
+    function test_tokens_unbalanced_exception()
     {
         $definition = new Tokens;
 

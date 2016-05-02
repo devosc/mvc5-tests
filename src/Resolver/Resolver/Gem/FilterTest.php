@@ -15,7 +15,7 @@ class FilterTest
     /**
      *
      */
-    public function test_gem_filter()
+    function test_gem_filter()
     {
         $resolver = new Resolver;
 

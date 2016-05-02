@@ -15,7 +15,7 @@ class CombineTest
     /**
      *
      */
-    public function test_combine()
+    function test_combine()
     {
         $resolver = new Resolver;
 

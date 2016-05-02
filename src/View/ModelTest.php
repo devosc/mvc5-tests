@@ -14,7 +14,7 @@ class ModelTest
     /**
      *
      */
-    public function test_setModel()
+    function test_setModel()
     {
         $model = new Model;
 
@@ -26,7 +26,7 @@ class ModelTest
     /**
      *
      */
-    public function test_model()
+    function test_model()
     {
         $model = new Model;
 
@@ -36,7 +36,7 @@ class ModelTest
     /**
      *
      */
-    public function test_view()
+    function test_view()
     {
         $model = new Model;
 

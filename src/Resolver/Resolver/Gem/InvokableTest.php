@@ -17,7 +17,7 @@ class InvokableTest
     /**
      *
      */
-    public function test_gem_invokable_named()
+    function test_gem_invokable_named()
     {
         $resolver = new Resolver;
 
@@ -42,7 +42,7 @@ class InvokableTest
     /**
      *
      */
-    public function test_gem_invokable_merge()
+    function test_gem_invokable_merge()
     {
         $resolver = new Resolver;
 

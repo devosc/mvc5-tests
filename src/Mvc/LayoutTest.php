@@ -16,7 +16,7 @@ class LayoutTest
     /**
      *
      */
-    public function test_invoke_with_no_model()
+    function test_invoke_with_no_model()
     {
         $layout = new Layout;
         
@@ -26,7 +26,7 @@ class LayoutTest
     /**
      *
      */
-    public function test_invoke_with_string_model()
+    function test_invoke_with_string_model()
     {
         $layout = new Layout;
 
@@ -36,7 +36,7 @@ class LayoutTest
     /**
      *
      */
-    public function test_invoke_with_layout_model()
+    function test_invoke_with_layout_model()
     {
         $layout = new Layout;
 
@@ -46,7 +46,7 @@ class LayoutTest
     /**
      *
      */
-    public function test_invoke_child_model()
+    function test_invoke_child_model()
     {
         $layout = new Layout;
 

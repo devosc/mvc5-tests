@@ -14,7 +14,7 @@ class DependencyTest
     /**
      *
      */
-    public function test_construct()
+    function test_construct()
     {
         $this->assertInstanceOf(Dependency::class, new Dependency('foo'));
     }

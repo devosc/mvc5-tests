@@ -15,7 +15,7 @@ class VariadicTest
     /**
      *
      */
-    public function test_variadic_args()
+    function test_variadic_args()
     {
         $resolver = new Resolver;
 
@@ -25,7 +25,7 @@ class VariadicTest
     /**
      *
      */
-    public function test_variadic_not_args()
+    function test_variadic_not_args()
     {
         $resolver = new Resolver;
 

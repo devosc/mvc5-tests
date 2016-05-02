@@ -15,7 +15,7 @@ class FileIncludeTest
     /**
      *
      */
-    public function test_gem_file_include()
+    function test_gem_file_include()
     {
         $resolver = new Resolver;
 

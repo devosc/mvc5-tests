@@ -15,7 +15,7 @@ class ModelTest
     /**
      *
      */
-    public function test_code()
+    function test_code()
     {
         $model = new Model(null, [Arg::ERROR => [Arg::CODE => 'foo']]);
 
@@ -25,7 +25,7 @@ class ModelTest
     /**
      *
      */
-    public function test_errors()
+    function test_errors()
     {
         $model = new Model(null, [Arg::ERROR => [Arg::ERRORS => []]]);
 
@@ -35,7 +35,7 @@ class ModelTest
     /**
      *
      */
-    public function test_message()
+    function test_message()
     {
         $model = new Model(null, [Arg::ERROR => [Arg::MESSAGE => 'foo']]);
 

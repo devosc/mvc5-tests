@@ -14,7 +14,7 @@ class InvokableTest
     /**
      *
      */
-    public function test_construct()
+    function test_construct()
     {
         $this->assertInstanceOf(Invokable::class, new Invokable(['foo']));
     }

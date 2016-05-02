@@ -18,7 +18,7 @@ class MethodTest
     /**
      *
      */
-    public function test__invoke()
+    function test__invoke()
     {
         $definition = new Definition([Arg::METHOD => ['GET']]);
         $method     = new Method;
@@ -30,7 +30,7 @@ class MethodTest
     /**
      *
      */
-    public function test_invoke_not_matched()
+    function test_invoke_not_matched()
     {
         $definition = new Definition([Arg::METHOD => 'GET']);
         $method     = new Method;

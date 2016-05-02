@@ -16,7 +16,7 @@ class BuildTest
     /**
      *
      */
-    public function test_definition()
+    function test_definition()
     {
         $build = new Build;
 
@@ -36,7 +36,7 @@ class BuildTest
     /**
      *
      */
-    public function test_definition_no_route_exception()
+    function test_definition_no_route_exception()
     {
         $build = new Build;
 
@@ -48,7 +48,7 @@ class BuildTest
     /**
      *
      */
-    public function test_children()
+    function test_children()
     {
         $build = new Build;
 
@@ -70,7 +70,7 @@ class BuildTest
     /**
      *
      */
-    public function test_create_route_definition()
+    function test_create_route_definition()
     {
         $build = new Build;
 
@@ -90,7 +90,7 @@ class BuildTest
     /**
      *
      */
-    public function test_create_with_class_name()
+    function test_create_with_class_name()
     {
         $build = new Build;
 
@@ -111,7 +111,7 @@ class BuildTest
     /**
      *
      */
-    public function test_create()
+    function test_create()
     {
         $build = new Build;
 
@@ -131,7 +131,7 @@ class BuildTest
     /**
      *
      */
-    public function test_create_default()
+    function test_create_default()
     {
         $build = new Build;
 
@@ -151,7 +151,7 @@ class BuildTest
     /**
      *
      */
-    public function test_build()
+    function test_build()
     {
         $build = new Build;
 

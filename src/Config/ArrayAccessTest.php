@@ -14,7 +14,7 @@ class ArrayAccessTest
     /**
      *
      */
-    public function test_offsetExists()
+    function test_offsetExists()
     {
         $config = new Config(['foo' => 'bar']);
 
@@ -24,7 +24,7 @@ class ArrayAccessTest
     /**
      *
      */
-    public function test_offsetGet()
+    function test_offsetGet()
     {
         $config = new Config(['foo' => 'bar']);
 
@@ -34,7 +34,7 @@ class ArrayAccessTest
     /**
      *
      */
-    public function test_offsetSet()
+    function test_offsetSet()
     {
         $config = new Config;
 
@@ -44,7 +44,7 @@ class ArrayAccessTest
     /**
      *
      */
-    public function test_offsetUnset()
+    function test_offsetUnset()
     {
         $config = new Config(['foo' => 'bar']);
 

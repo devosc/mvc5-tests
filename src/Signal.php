@@ -22,7 +22,7 @@ class Signal
      * @param $foo
      * @return mixed
      */
-    public function staticTest($foo)
+    function staticTest($foo)
     {
         return $foo;
     }
@@ -31,7 +31,7 @@ class Signal
      * @param $foo
      * @return string
      */
-    public static function optionalArgTest($foo = 'foo')
+    static function optionalArgTest($foo = 'foo')
     {
         return $foo;
     }
@@ -40,7 +40,7 @@ class Signal
      * @param ...$args
      * @return mixed
      */
-    public static function variadicArgsTest(...$args)
+    static function variadicArgsTest(...$args)
     {
         return $args[0] instanceof SignalArgs ? $args[0]->args() : null;
     }
@@ -49,7 +49,7 @@ class Signal
      * @param ...$args
      * @return mixed
      */
-    public static function argsTest($args)
+    static function argsTest($args)
     {
         return $args;
     }
@@ -61,7 +61,7 @@ class Signal
      * @param array $args
      * @return string
      */
-    public function staticRequiredTest($foo, $baz, Config $config, array $args = [])
+    function staticRequiredTest($foo, $baz, Config $config, array $args = [])
     {
         return $foo . ' ' . $baz;
     }
@@ -71,7 +71,7 @@ class Signal
      * @param $baz
      * @return string
      */
-    public function staticRequiredExceptionTest($foo, $baz)
+    function staticRequiredExceptionTest($foo, $baz)
     {
         return $foo . ' ' . $baz;
     }

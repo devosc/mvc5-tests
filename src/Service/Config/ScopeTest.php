@@ -15,7 +15,7 @@ class ScopeTest
     /**
      *
      */
-    public function test_clone_not_object()
+    function test_clone_not_object()
     {
         $config = new Scope;
 
@@ -25,7 +25,7 @@ class ScopeTest
     /**
      *
      */
-    public function test_clone_object_not_scoped()
+    function test_clone_object_not_scoped()
     {
         $config = new Scope(new Config);
 
@@ -35,7 +35,7 @@ class ScopeTest
     /**
      *
      */
-    public function test_clone_object_scoped()
+    function test_clone_object_scoped()
     {
         $plugins = new Plugins;
 
@@ -49,7 +49,7 @@ class ScopeTest
     /**
      *
      */
-    public function test_clone_object_scoped_true()
+    function test_clone_object_scoped_true()
     {
         $plugins = new Plugins(null, null, true);
 
@@ -61,7 +61,7 @@ class ScopeTest
     /**
      *
      */
-    public function test_clone_object_scoped_different_object()
+    function test_clone_object_scoped_different_object()
     {
         $plugins = new Plugins;
 

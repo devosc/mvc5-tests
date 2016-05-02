@@ -14,7 +14,7 @@ class ParentTest
     /**
      *
      */
-    public function test_parent()
+    function test_parent()
     {
         $resolver = new Resolver;
 

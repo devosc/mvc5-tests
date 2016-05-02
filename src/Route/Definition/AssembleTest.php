@@ -25,7 +25,7 @@ class AssembleTest
     /**
      *
      */
-    public function test_assemble()
+    function test_assemble()
     {
         $assemble = new Assemble;
 
@@ -35,7 +35,7 @@ class AssembleTest
     /**
      *
      */
-    public function test_assemble_path_with_query_and_fragment()
+    function test_assemble_path_with_query_and_fragment()
     {
         $assemble = new Assemble;
 
@@ -50,7 +50,7 @@ class AssembleTest
     /**
      *
      */
-    public function test_assemble_options_only_not_canonical_standard_http()
+    function test_assemble_options_only_not_canonical_standard_http()
     {
         $assemble = new Assemble;
 
@@ -66,7 +66,7 @@ class AssembleTest
     /**
      *
      */
-    public function test_assemble_options_only_not_canonical_non_standard_http()
+    function test_assemble_options_only_not_canonical_non_standard_http()
     {
         $assemble = new Assemble;
 
@@ -82,7 +82,7 @@ class AssembleTest
     /**
      *
      */
-    public function test_assemble_options_only_canonical_standard_http()
+    function test_assemble_options_only_canonical_standard_http()
     {
         $assemble = new Assemble;
 
@@ -99,7 +99,7 @@ class AssembleTest
     /**
      *
      */
-    public function test_assemble_options_only_canonical_non_standard_http()
+    function test_assemble_options_only_canonical_non_standard_http()
     {
         $assemble = new Assemble;
 
@@ -116,7 +116,7 @@ class AssembleTest
     /**
      *
      */
-    public function test_assemble_not_canonical_no_options_standard_http()
+    function test_assemble_not_canonical_no_options_standard_http()
     {
         $assemble = new Assemble;
 
@@ -128,7 +128,7 @@ class AssembleTest
     /**
      *
      */
-    public function test_assemble_not_canonical_no_options_not_standard_http()
+    function test_assemble_not_canonical_no_options_not_standard_http()
     {
         $assemble = new Assemble;
 
@@ -140,7 +140,7 @@ class AssembleTest
     /**
      *
      */
-    public function test_assemble_not_canonical_with_options_standard_http()
+    function test_assemble_not_canonical_with_options_standard_http()
     {
         $assemble = new Assemble;
 
@@ -158,7 +158,7 @@ class AssembleTest
     /**
      *
      */
-    public function test_assemble_canonical_with_options_standard_http()
+    function test_assemble_canonical_with_options_standard_http()
     {
         $assemble = new Assemble;
 
@@ -177,7 +177,7 @@ class AssembleTest
     /**
      *
      */
-    public function test_assemble_canonical_with_options_standard_http_no_scheme()
+    function test_assemble_canonical_with_options_standard_http_no_scheme()
     {
         $assemble = new Assemble;
 
@@ -196,7 +196,7 @@ class AssembleTest
     /**
      *
      */
-    public function test_assemble_canonical_with_options_not_standard_http()
+    function test_assemble_canonical_with_options_not_standard_http()
     {
         $assemble = new Assemble;
 
@@ -215,7 +215,7 @@ class AssembleTest
     /**
      *
      */
-    public function test_assemble_different_domain_not_canonical_with_options_standard_http()
+    function test_assemble_different_domain_not_canonical_with_options_standard_http()
     {
         $assemble = new Assemble;
 
@@ -233,7 +233,7 @@ class AssembleTest
     /**
      *
      */
-    public function test_assemble_different_domain_not_canonical_with_options_not_standard_http()
+    function test_assemble_different_domain_not_canonical_with_options_not_standard_http()
     {
         $assemble = new Assemble;
 
@@ -251,7 +251,7 @@ class AssembleTest
     /**
      *
      */
-    public function test_assemble_different_domain_canonical_with_options_standard_http()
+    function test_assemble_different_domain_canonical_with_options_standard_http()
     {
         $assemble = new Assemble;
 
@@ -270,7 +270,7 @@ class AssembleTest
     /**
      *
      */
-    public function test_assemble_different_domain_canonical_with_options_not_standard_http()
+    function test_assemble_different_domain_canonical_with_options_not_standard_http()
     {
         $assemble = new Assemble;
 

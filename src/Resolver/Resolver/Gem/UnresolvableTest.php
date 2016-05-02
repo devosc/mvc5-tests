@@ -16,7 +16,7 @@ class UnresolvableTest
     /**
      *
      */
-    public function test_gem_unresolvable()
+    function test_gem_unresolvable()
     {
         $resolver = new Resolver;
 

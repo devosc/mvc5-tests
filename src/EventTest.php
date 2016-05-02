@@ -13,7 +13,7 @@ class EventTest
     /**
      *
      */
-    public function test_construct()
+    function test_construct()
     {
         $event = new Event('foo');
 
@@ -23,7 +23,7 @@ class EventTest
     /**
      *
      */
-    public function test_args()
+    function test_args()
     {
         $event = new Event;
 
@@ -33,7 +33,7 @@ class EventTest
     /**
      *
      */
-    public function test_invoke()
+    function test_invoke()
     {
         $event = new Event;
 
@@ -43,7 +43,7 @@ class EventTest
     /**
      *
      */
-    public function test_invoke_named()
+    function test_invoke_named()
     {
         $event = new Event;
 

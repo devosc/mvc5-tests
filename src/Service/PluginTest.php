@@ -13,7 +13,7 @@ class PluginTest
     /**
      *
      */
-    public function test_call()
+    function test_call()
     {
         $plugin = new Plugin(new Service);
 
@@ -23,7 +23,7 @@ class PluginTest
     /**
      *
      */
-    public function test_param()
+    function test_param()
     {
         $plugin = new Plugin(new Service);
 
@@ -33,7 +33,7 @@ class PluginTest
     /**
      *
      */
-    public function test_plugin()
+    function test_plugin()
     {
         $plugin = new Plugin(new Service);
 
@@ -43,7 +43,7 @@ class PluginTest
     /**
      *
      */
-    public function test_trigger()
+    function test_trigger()
     {
         $plugin = new Plugin(new Service);
 

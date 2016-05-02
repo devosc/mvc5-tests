@@ -15,7 +15,7 @@ class FirstTest
     /**
      *
      */
-    public function test_first_with_no_others()
+    function test_first_with_no_others()
     {
         $resolver = new Resolver;
 
@@ -25,7 +25,7 @@ class FirstTest
     /**
      *
      */
-    public function test_first_with_others()
+    function test_first_with_others()
     {
         $resolver = new Resolver;
 

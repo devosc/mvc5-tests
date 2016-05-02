@@ -15,7 +15,7 @@ class Test
     /**
      *
      */
-    public function test_invoke()
+    function test_invoke()
     {
         $e         = new \Exception;
         $exception = new Exception([]);

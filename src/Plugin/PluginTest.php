@@ -14,7 +14,7 @@ class PluginTest
     /**
      *
      */
-    public function test_construct()
+    function test_construct()
     {
         $plugin = new Plugin('foo');
 
@@ -28,7 +28,7 @@ class PluginTest
     /**
      *
      */
-    public function test_construct_false_param()
+    function test_construct_false_param()
     {
         $plugin = new Plugin('foo', [], [], null);
 
@@ -38,7 +38,7 @@ class PluginTest
     /**
      *
      */
-    public function test_construct_with_param()
+    function test_construct_with_param()
     {
         $plugin = new Plugin('foo', [], [], 'bar');
 
@@ -48,7 +48,7 @@ class PluginTest
     /**
      *
      */
-    public function test_construct_with_merge()
+    function test_construct_with_merge()
     {
         $plugin = new Plugin('foo', [], [], null, true);
 

@@ -14,7 +14,7 @@ class EventTest
     /**
      *
      */
-    public function test_event()
+    function test_event()
     {
         $resolver = new Resolver;
 

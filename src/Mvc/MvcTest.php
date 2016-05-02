@@ -27,7 +27,7 @@ class MvcTest
     /**
      *
      */
-    public function test_args()
+    function test_args()
     {
         $this->assertTrue(is_array($this->mvc()->args()));
     }
@@ -35,7 +35,7 @@ class MvcTest
     /**
      *
      */
-    public function test_invoke()
+    function test_invoke()
     {
         $mvc = $this->mvc();
 
@@ -45,7 +45,7 @@ class MvcTest
     /**
      *
      */
-    public function test_invoke_false()
+    function test_invoke_false()
     {
         $mvc = $this->mvc();
 
@@ -55,7 +55,7 @@ class MvcTest
     /**
      *
      */
-    public function test_invoke_route()
+    function test_invoke_route()
     {
         $mvc = $this->mvc();
 
@@ -65,7 +65,7 @@ class MvcTest
     /**
      *
      */
-    public function test_invoke_response()
+    function test_invoke_response()
     {
         $mvc = $this->mvc();
 

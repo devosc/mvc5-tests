@@ -16,7 +16,7 @@ class GeneratorTest
     /**
      *
      */
-    public function test_invoke()
+    function test_invoke()
     {
         $definition = [
             Arg::CHILDREN    => [],

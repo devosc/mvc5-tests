@@ -15,7 +15,7 @@ class PathParams
      * @param array $matches
      * @return array
      */
-    public function params(array $paramMap, array $matches)
+    function params(array $paramMap, array $matches)
     {
         return parent::params($paramMap, $matches);
     }

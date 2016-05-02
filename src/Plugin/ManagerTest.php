@@ -14,7 +14,7 @@ class ManagerTest
     /**
      *
      */
-    public function test_construct()
+    function test_construct()
     {
         $this->assertInstanceOf(Manager::class, new Manager('foo'));
     }

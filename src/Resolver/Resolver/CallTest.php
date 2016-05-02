@@ -15,7 +15,7 @@ class CallTest
     /**
      *
      */
-    public function test_call_string()
+    function test_call_string()
     {
         $resolver = new Resolver;
 
@@ -25,7 +25,7 @@ class CallTest
     /**
      *
      */
-    public function test_call_event()
+    function test_call_event()
     {
         $resolver = new Resolver;
 
@@ -37,7 +37,7 @@ class CallTest
     /**
      *
      */
-    public function test_call_invoke()
+    function test_call_invoke()
     {
         $resolver = new Resolver;
 

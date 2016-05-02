@@ -15,7 +15,7 @@ class ParamTest
     /**
      *
      */
-    public function test_gem_param()
+    function test_gem_param()
     {
         $resolver = new Resolver;
 

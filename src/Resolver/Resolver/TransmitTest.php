@@ -14,7 +14,7 @@ class TransmitTest
     /**
      *
      */
-    public function test_transmit()
+    function test_transmit()
     {
         $resolver = new Resolver;
 

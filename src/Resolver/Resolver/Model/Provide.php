@@ -27,7 +27,7 @@ class Provide
      * @param $b
      * @param $c
      */
-    public function __construct($a, $b = null, $c = null)
+    function __construct($a, $b = null, $c = null)
     {
         $this->a = $a;
         $this->b = $b;

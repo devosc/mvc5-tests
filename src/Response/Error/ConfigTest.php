@@ -14,7 +14,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_code()
+    function test_code()
     {
         $config = new Config([Arg::CODE => 'foo']);
 
@@ -24,7 +24,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_description()
+    function test_description()
     {
         $config = new Config([Arg::DESCRIPTION => 'foo']);
 
@@ -34,7 +34,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_errors()
+    function test_errors()
     {
         $config = new Config([Arg::ERRORS => ['foo']]);
 
@@ -44,7 +44,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_message()
+    function test_message()
     {
         $config = new Config([Arg::MESSAGE => 'foo']);
 
@@ -54,7 +54,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_status()
+    function test_status()
     {
         $config = new Config([Arg::STATUS => 'foo']);
 

@@ -15,7 +15,7 @@ class ResponseTest
     /**
      *
      */
-    public function test_invoke()
+    function test_invoke()
     {
         $response = new Response;
 

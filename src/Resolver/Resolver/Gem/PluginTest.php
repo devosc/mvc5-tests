@@ -16,7 +16,7 @@ class PluginTest
     /**
      *
      */
-    public function test_gem_plugin()
+    function test_gem_plugin()
     {
         $resolver = new Resolver;
 

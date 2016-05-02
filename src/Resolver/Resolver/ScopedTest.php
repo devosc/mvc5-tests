@@ -15,7 +15,7 @@ class ScopedTest
     /**
      *
      */
-    public function test_scoped_none()
+    function test_scoped_none()
     {
         $resolver = new Resolver;
 
@@ -27,7 +27,7 @@ class ScopedTest
     /**
      *
      */
-    public function test_scoped_with_boolean_true()
+    function test_scoped_with_boolean_true()
     {
         $resolver = new Resolver;
 
@@ -45,7 +45,7 @@ class ScopedTest
     /**
      *
      */
-    public function test_scoped_with_object()
+    function test_scoped_with_object()
     {
         $config = new Config;
 

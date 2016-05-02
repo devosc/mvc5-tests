@@ -22,7 +22,7 @@ class Generator
      * @param array|callable|object|string $config
      * @return callable|null
      */
-    public function callable($config) : callable
+    function callable($config) : callable
     {
         return function(){ return 'foo'; };
     }
@@ -32,7 +32,7 @@ class Generator
      * @param array $args
      * @return array|\Traversable|null
      */
-    public function traversable($event, array $args = [])
+    function traversable($event, array $args = [])
     {
         return ['bar'];
     }

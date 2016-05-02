@@ -17,7 +17,7 @@ class ChildTest
     /**
      *
      */
-    public function test_gem_child()
+    function test_gem_child()
     {
         $resolver = new Resolver;
 

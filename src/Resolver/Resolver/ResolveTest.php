@@ -14,7 +14,7 @@ class ResolveTest
     /**
      *
      */
-    public function test_resolve()
+    function test_resolve()
     {
         $resolver = new Resolver;
 

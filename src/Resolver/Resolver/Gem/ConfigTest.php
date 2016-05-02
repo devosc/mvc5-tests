@@ -15,7 +15,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_gem_config()
+    function test_gem_config()
     {
         $resolver = new Resolver;
 

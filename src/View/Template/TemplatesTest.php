@@ -13,7 +13,7 @@ class TemplatesTest
     /**
      *
      */
-    public function test_template()
+    function test_template()
     {
         $templates = new Templates;
 
@@ -25,7 +25,7 @@ class TemplatesTest
     /**
      *
      */
-    public function test_template_not_exist()
+    function test_template_not_exist()
     {
         $templates = new Templates;
 
@@ -35,7 +35,7 @@ class TemplatesTest
     /**
      *
      */
-    public function test_templates_empty()
+    function test_templates_empty()
     {
         $templates = new Templates;
 
@@ -45,7 +45,7 @@ class TemplatesTest
     /**
      *
      */
-    public function test_templates_not_empty()
+    function test_templates_not_empty()
     {
         $templates = new Templates;
 

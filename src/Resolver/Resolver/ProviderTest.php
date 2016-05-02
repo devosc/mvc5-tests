@@ -14,7 +14,7 @@ class ProviderTest
     /**
      *
      */
-    public function test_provider()
+    function test_provider()
     {
         $resolver = new Resolver;
 

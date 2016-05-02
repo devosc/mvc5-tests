@@ -16,7 +16,7 @@ class CallTest
     /**
      *
      */
-    public function test_gem_call_named()
+    function test_gem_call_named()
     {
         $resolver = new Resolver;
 
@@ -28,7 +28,7 @@ class CallTest
     /**
      *
      */
-    public function test_gem_call_not_named()
+    function test_gem_call_not_named()
     {
         $resolver = new Resolver;
 

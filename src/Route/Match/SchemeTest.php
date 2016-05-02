@@ -18,7 +18,7 @@ class SchemeTest
     /**
      *
      */
-    public function test_invoke()
+    function test_invoke()
     {
         $definition = new Definition;
         $route      = new Route;
@@ -30,7 +30,7 @@ class SchemeTest
     /**
      *
      */
-    public function test_invoke_matched()
+    function test_invoke_matched()
     {
         $definition = new Definition([Arg::SCHEME => 'http']);
         $route      = new Route([Arg::SCHEME => 'http']);
@@ -42,7 +42,7 @@ class SchemeTest
     /**
      *
      */
-    public function test_invoke_not_matched()
+    function test_invoke_not_matched()
     {
         $definition = new Definition([Arg::SCHEME => 'https']);
         $route      = new Route([Arg::SCHEME => 'http']);

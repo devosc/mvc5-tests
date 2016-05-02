@@ -13,7 +13,7 @@ class Dispatch
     /**
      * @return array
      */
-    public function args()
+    function args()
     {
         return parent::args();
     }

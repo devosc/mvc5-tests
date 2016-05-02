@@ -14,7 +14,7 @@ class ArgumentsTest
     /**
      *
      */
-    public function test_arguments()
+    function test_arguments()
     {
         $resolver = new Resolver;
 

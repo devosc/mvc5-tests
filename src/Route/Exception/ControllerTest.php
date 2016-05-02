@@ -14,7 +14,7 @@ class ControllerTest
     /**
      *
      */
-    public function test_construct()
+    function test_construct()
     {
         $this->assertInstanceOf(Controller::class, new Controller([]));
     }
@@ -22,7 +22,7 @@ class ControllerTest
     /**
      *
      */
-    public function test_invoke()
+    function test_invoke()
     {
         $controller = new Controller([]);
 

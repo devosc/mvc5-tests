@@ -19,7 +19,7 @@ class CompositeTest
     /**
      *
      */
-    public function test_composite_service_manager()
+    function test_composite_service_manager()
     {
         $plugin   = new App([Arg::SERVICES => ['foo' => Config::class]]);
 
@@ -31,7 +31,7 @@ class CompositeTest
     /**
      *
      */
-    public function test_composite_service_container()
+    function test_composite_service_container()
     {
         $plugin   = new Container(['foo' => 'bar']);
         $resolver = new Resolver;
@@ -44,7 +44,7 @@ class CompositeTest
     /**
      *
      */
-    public function test_composite_array_access()
+    function test_composite_array_access()
     {
         $plugin   = ['foo' => new Plugin(Config::class)];
         $resolver = new Resolver;

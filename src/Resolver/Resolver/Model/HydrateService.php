@@ -13,7 +13,7 @@ class HydrateService
      * @param $item
      * @param $foo
      */
-    public function __invoke($index, $item, $foo)
+    function __invoke($index, $item, $foo)
     {
         return $item[$index] = $foo;
     }

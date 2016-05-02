@@ -14,7 +14,7 @@ class InitializerTest
     /**
      *
      */
-    public function test_initialize()
+    function test_initialize()
     {
         $initializer = new Initializer;
 
@@ -24,7 +24,7 @@ class InitializerTest
     /**
      *
      */
-    public function test_initialize_not_initializing()
+    function test_initialize_not_initializing()
     {
         $initializer = new Initializer;
 
@@ -38,7 +38,7 @@ class InitializerTest
     /**
      *
      */
-    public function test_initialized()
+    function test_initialized()
     {
         $initializer = new Initializer;
 
@@ -48,7 +48,7 @@ class InitializerTest
     /**
      *
      */
-    public function test_initialized_set()
+    function test_initialized_set()
     {
         $initializer = new Initializer;
 
@@ -58,7 +58,7 @@ class InitializerTest
     /**
      *
      */
-    public function test_initializing()
+    function test_initializing()
     {
         $initializer = new Initializer;
 
@@ -72,7 +72,7 @@ class InitializerTest
     /**
      *
      */
-    public function test_initializing_not_pending()
+    function test_initializing_not_pending()
     {
         $initializer = new Initializer;
 

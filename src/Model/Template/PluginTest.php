@@ -16,7 +16,7 @@ class PluginTest
     /**
      *
      */
-    public function test_call()
+    function test_call()
     {
         $model   = new Mvc5Model;
         $service = new App([Arg::SERVICES => ['foo' => function() { return function($bar) { return $bar; }; }]]);

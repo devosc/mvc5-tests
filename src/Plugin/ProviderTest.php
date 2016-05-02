@@ -20,7 +20,7 @@ class ProviderTest
     /**
      *
      */
-    public function test_construct()
+    function test_construct()
     {
         $plugin = new Provider('foo', new Args(['bar']), 'baz');
 
@@ -34,7 +34,7 @@ class ProviderTest
     /**
      *
      */
-    public function test_provider()
+    function test_provider()
     {
         /** @var Plugins $plugins */
 
@@ -54,7 +54,7 @@ class ProviderTest
     /**
      *
      */
-    public function test_resolver_gem_with_class_name()
+    function test_resolver_gem_with_class_name()
     {
         $resolver = new Resolver;
 
@@ -66,7 +66,7 @@ class ProviderTest
     /**
      *
      */
-    public function test_resolver_gem_with_plugin_name()
+    function test_resolver_gem_with_plugin_name()
     {
         $resolver = new Resolver;
 

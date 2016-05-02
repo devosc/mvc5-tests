@@ -14,7 +14,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_construct()
+    function test_construct()
     {
         $this->assertInstanceOf(Config::class, new Config(null));
     }
@@ -22,7 +22,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_config()
+    function test_config()
     {
         $config = new Config('foo');
 

@@ -16,7 +16,7 @@ class MatchTest
     /**
      *
      */
-    public function test_construct()
+    function test_construct()
     {
         $this->assertInstanceOf(Match::class, new Match(new Definition, new Route));
     }
@@ -24,7 +24,7 @@ class MatchTest
     /**
      *
      */
-    public function test_args()
+    function test_args()
     {
         $match = new Match(new Definition, new Route);
 
@@ -34,7 +34,7 @@ class MatchTest
     /**
      *
      */
-    public function test_invoke()
+    function test_invoke()
     {
         $match = new Match(new Definition, new Route);
         $route = new Route;
@@ -45,7 +45,7 @@ class MatchTest
     /**
      *
      */
-    public function test_invoke_not_route()
+    function test_invoke_not_route()
     {
         $match = new Match(new Definition, new Route);
 

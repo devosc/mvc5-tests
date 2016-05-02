@@ -20,7 +20,7 @@ class Hydrate
     /**
      * @return mixed
      */
-    public function id()
+    function id()
     {
         return $this->id;
     }
@@ -29,7 +29,7 @@ class Hydrate
      * @param $name
      * @param $id
      */
-    public function init($name, $id)
+    function init($name, $id)
     {
         $this->name = $name;
         $this->id   = $id;
@@ -40,7 +40,7 @@ class Hydrate
      * @param self $object
      * @return self
      */
-    public function initialize($foo, self $object)
+    function initialize($foo, self $object)
     {
         $object->name($foo);
 
@@ -51,7 +51,7 @@ class Hydrate
      * @param null $name
      * @return null
      */
-    public function name($name = null)
+    function name($name = null)
     {
         return null !== $name ? $this->name = $name : $this->name;
     }
@@ -61,7 +61,7 @@ class Hydrate
      * @param self $object
      * @return self
      */
-    public function __invoke($foo, self $object)
+    function __invoke($foo, self $object)
     {
         $object->name($foo);
 

@@ -34,7 +34,7 @@ class ErrorTest
     /**
      *
      */
-    public function test_invoke()
+    function test_invoke()
     {
         $error = new Error;
 
@@ -46,7 +46,7 @@ class ErrorTest
     /**
      *
      */
-    public function test_invoke_no_error()
+    function test_invoke_no_error()
     {
         $error = new Error;
 

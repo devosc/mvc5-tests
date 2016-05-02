@@ -17,7 +17,7 @@ class ChildTest
     /**
      *
      */
-    public function test_child()
+    function test_child()
     {
         $resolver = new Resolver;
 

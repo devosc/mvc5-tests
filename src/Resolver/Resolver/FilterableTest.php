@@ -15,7 +15,7 @@ class FilterableTest
     /**
      *
      */
-    public function test_filterable()
+    function test_filterable()
     {
         $resolver = new Resolver;
 

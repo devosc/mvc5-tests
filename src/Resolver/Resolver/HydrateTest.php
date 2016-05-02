@@ -21,7 +21,7 @@ class HydrateTest
     /**
      *
      */
-    public function test_hydrate_does_nothing()
+    function test_hydrate_does_nothing()
     {
         $resolver = new Resolver;
 
@@ -31,7 +31,7 @@ class HydrateTest
     /**
      *
      */
-    public function test_hydrate_array_access_set()
+    function test_hydrate_array_access_set()
     {
         $resolver = new Resolver;
 
@@ -43,7 +43,7 @@ class HydrateTest
     /**
      *
      */
-    public function test_hydrate_property_access_set()
+    function test_hydrate_property_access_set()
     {
         $resolver = new Resolver;
 
@@ -59,7 +59,7 @@ class HydrateTest
     /**
      *
      */
-    public function test_hydrate_call_method_on_current_object_with_single_argument()
+    function test_hydrate_call_method_on_current_object_with_single_argument()
     {
         $resolver = new Resolver;
 
@@ -75,7 +75,7 @@ class HydrateTest
     /**
      *
      */
-    public function test_hydrate_call_method_on_current_object_with_multiple_args()
+    function test_hydrate_call_method_on_current_object_with_multiple_args()
     {
         $resolver = new Resolver;
 
@@ -93,7 +93,7 @@ class HydrateTest
     /**
      * [$service, $method]
      */
-    public function test_hydrate_call_service_object_and_pass_current_object_as_named_arg()
+    function test_hydrate_call_service_object_and_pass_current_object_as_named_arg()
     {
         $resolver = new Resolver;
 
@@ -113,7 +113,7 @@ class HydrateTest
     /**
      * $this->resolve($method)
      */
-    public function test_hydrate_call_function_with_args()
+    function test_hydrate_call_function_with_args()
     {
         $resolver = new Resolver;
 
@@ -133,7 +133,7 @@ class HydrateTest
     /**
      * $this->resolve($method)
      */
-    public function test_hydrate_call_function_with_args_and_current_object()
+    function test_hydrate_call_function_with_args_and_current_object()
     {
         $resolver = new Resolver;
 
@@ -157,7 +157,7 @@ class HydrateTest
     /**
      *
      */
-    public function test_hydrate_resolvable()
+    function test_hydrate_resolvable()
     {
         $resolver = new Resolver;
 

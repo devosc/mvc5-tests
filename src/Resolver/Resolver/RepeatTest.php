@@ -15,7 +15,7 @@ class RepeatTest
     /**
      *
      */
-    public function test_repeat_no_config()
+    function test_repeat_no_config()
     {
         $resolver = new Resolver;
 
@@ -25,7 +25,7 @@ class RepeatTest
     /**
      *
      */
-    public function test_repeat_config()
+    function test_repeat_config()
     {
         $resolver = new Resolver;
 

@@ -15,7 +15,7 @@ class AutowireMissingParam
     /**
      * @param $foo
      */
-    public function __construct($foo)
+    function __construct($foo)
     {
         $this->foo = $foo;
     }

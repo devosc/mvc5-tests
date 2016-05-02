@@ -17,7 +17,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_count()
+    function test_count()
     {
         $config = new Config([1, 2, 3, 4, 5]);
 
@@ -27,7 +27,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_current_array()
+    function test_current_array()
     {
         $config = new Config(['foo' => 'bar']);
 
@@ -37,7 +37,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_current_iterator()
+    function test_current_iterator()
     {
         $config = new Config(new Config(['foo' => 'bar']));
 
@@ -47,7 +47,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_get_isset_array()
+    function test_get_isset_array()
     {
         $config = new Config(['foo' => 'bar']);
 
@@ -57,7 +57,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_get_not_isset_array()
+    function test_get_not_isset_array()
     {
         $config = new Config;
 
@@ -67,7 +67,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_get_isset_object()
+    function test_get_isset_object()
     {
         $config = new Config(new Config(['foo' => 'bar']));
 
@@ -77,7 +77,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_get_not_isset_object()
+    function test_get_not_isset_object()
     {
         $config = new Config(new Config);
 
@@ -87,7 +87,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_get_isset_app_container()
+    function test_get_isset_app_container()
     {
         $config = new Config(new App([Arg::CONTAINER => ['foo' => 'bar']]));
 
@@ -97,7 +97,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_get_isset_app_services()
+    function test_get_isset_app_services()
     {
         $config = new Config(new App([Arg::SERVICES => ['foo' => new Value('bar')]]));
 
@@ -107,7 +107,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_get_not_isset_app()
+    function test_get_not_isset_app()
     {
         $config = new Config(new App);
 
@@ -117,7 +117,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_has()
+    function test_has()
     {
         $config = new Config(['foo' => 'bar']);
 
@@ -127,7 +127,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_has_not()
+    function test_has_not()
     {
         $config = new Config;
 
@@ -137,7 +137,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_key_array()
+    function test_key_array()
     {
         $config = new Config(['foo' => 'bar']);
 
@@ -147,7 +147,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_key_iterator()
+    function test_key_iterator()
     {
         $config = new Config(new Config(['foo' => 'bar']));
 
@@ -157,7 +157,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_next_array()
+    function test_next_array()
     {
         $config = new Config(['foo' => 'bar', 'baz' => 'bat']);
 
@@ -169,7 +169,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_next_iterator()
+    function test_next_iterator()
     {
         $config = new Config(new Config(['foo' => 'bar', 'baz' => 'bat']));
 
@@ -181,7 +181,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_remove()
+    function test_remove()
     {
         $config = new Config(['foo' => 'bar']);
 
@@ -195,7 +195,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_rewind_array()
+    function test_rewind_array()
     {
         $config = new Config(['foo' => 'bar', 'baz' => 'bat']);
 
@@ -213,7 +213,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_rewind_iterator()
+    function test_rewind_iterator()
     {
         $config = new Config(new Config(['foo' => 'bar', 'baz' => 'bat']));
 
@@ -231,7 +231,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_set()
+    function test_set()
     {
         $config = new Config;
 
@@ -241,7 +241,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_valid_array()
+    function test_valid_array()
     {
         $config = new Config(['foo' => 'bar']);
 
@@ -251,7 +251,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_valid_not_array()
+    function test_valid_not_array()
     {
         $config = new Config;
 
@@ -261,7 +261,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_valid_with_iterator()
+    function test_valid_with_iterator()
     {
         $config = new Config(new Config(['foo' => 'bar']));
 
@@ -271,7 +271,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_valid_not_with_iterator()
+    function test_valid_not_with_iterator()
     {
         $config = new Config(new Config);
 
@@ -281,7 +281,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_clone_array_config()
+    function test_clone_array_config()
     {
         $config = new Config(['a' => 'a']);
 
@@ -303,7 +303,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_clone_object_config()
+    function test_clone_object_config()
     {
         $config = new Config(new Config(['a' => 'a']));
 

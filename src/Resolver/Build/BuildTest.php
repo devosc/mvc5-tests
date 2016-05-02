@@ -15,7 +15,7 @@ class BuildTest
     /**
      *
      */
-    public function test_build()
+    function test_build()
     {
         $resolver = new Resolver;
 

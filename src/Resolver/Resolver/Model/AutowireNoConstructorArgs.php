@@ -11,7 +11,7 @@ class AutowireNoConstructorArgs
      *
      *
      */
-    public function __construct()
+    function __construct()
     {
         $args = func_get_args();
 

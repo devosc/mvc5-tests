@@ -16,7 +16,7 @@ class ArgsTest
     /**
      *
      */
-    public function test_args()
+    function test_args()
     {
         $resolver = new Resolver;
 
@@ -26,7 +26,7 @@ class ArgsTest
     /**
      *
      */
-    public function test_args_not_array()
+    function test_args_not_array()
     {
         $resolver = new Resolver;
 
@@ -36,7 +36,7 @@ class ArgsTest
     /**
      *
      */
-    public function test_args_array()
+    function test_args_array()
     {
         $resolver = new Resolver;
 

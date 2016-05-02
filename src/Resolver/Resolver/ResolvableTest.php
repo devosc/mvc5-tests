@@ -19,7 +19,7 @@ class ResolvableTest
     /**
      *
      */
-    public function test_resolvable()
+    function test_resolvable()
     {
         $resolver = new Resolver;
 
@@ -29,7 +29,7 @@ class ResolvableTest
     /**
      *
      */
-    public function test_resolvable_not()
+    function test_resolvable_not()
     {
         $resolver = new Resolver;
 
@@ -39,7 +39,7 @@ class ResolvableTest
     /**
      *
      */
-    public function test_resolvable_recursion()
+    function test_resolvable_recursion()
     {
         $resolver = new Resolver;
 
@@ -53,7 +53,7 @@ class ResolvableTest
     /**
      *
      */
-    public function test_resolvable_recursion_exception()
+    function test_resolvable_recursion_exception()
     {
         $resolver = new Resolver;
 

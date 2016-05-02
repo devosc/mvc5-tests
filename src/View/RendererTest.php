@@ -13,7 +13,7 @@ class RendererTest
     /**
      *
      */
-    public function test_exception()
+    function test_exception()
     {
         $renderer = new Renderer;
 
@@ -23,7 +23,7 @@ class RendererTest
     /**
      *
      */
-    public function test_render()
+    function test_render()
     {
         $renderer = new Renderer;
 

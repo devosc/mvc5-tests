@@ -14,7 +14,7 @@ class ComposeTest
     /**
      *
      */
-    public function test_compose_plugin()
+    function test_compose_plugin()
     {
         $resolver = new Resolver;
 
@@ -24,7 +24,7 @@ class ComposeTest
     /**
      *
      */
-    public function test_compose_once()
+    function test_compose_once()
     {
         $resolver = new Resolver;
 

@@ -16,7 +16,7 @@ class CloneTest
     /**
      *
      */
-    public function test_clone_with_arrays()
+    function test_clone_with_arrays()
     {
         $resolver = new Resolver;
 
@@ -44,7 +44,7 @@ class CloneTest
     /**
      *
      */
-    public function test_clone_with_objects()
+    function test_clone_with_objects()
     {
         $resolver = new Resolver;
 
@@ -82,7 +82,7 @@ class CloneTest
     /**
      *
      */
-    public function test_clone_with_config_object()
+    function test_clone_with_config_object()
     {
         $resolver = new Resolver;
         $resolver->config(new Config);
@@ -102,7 +102,7 @@ class CloneTest
     /**
      *
      */
-    public function test_clone_with_container_object()
+    function test_clone_with_container_object()
     {
         $resolver = new Resolver([Arg::CONTAINER => new Config]);
 
@@ -128,7 +128,7 @@ class CloneTest
     /**
      *
      */
-    public function test_clone_with_events_object()
+    function test_clone_with_events_object()
     {
         $resolver = new Resolver([Arg::EVENTS => new Config]);
 
@@ -154,7 +154,7 @@ class CloneTest
     /**
      *
      */
-    public function test_clone_with_services_object()
+    function test_clone_with_services_object()
     {
         $resolver = new Resolver([Arg::SERVICES => new Config]);
 
@@ -180,7 +180,7 @@ class CloneTest
     /**
      *
      */
-    public function test_clone_scope_object()
+    function test_clone_scope_object()
     {
         $resolver = new Resolver;
 
@@ -195,7 +195,7 @@ class CloneTest
     /**
      *
      */
-    public function test_clone_same_provider()
+    function test_clone_same_provider()
     {
         $resolver = new Resolver;
 

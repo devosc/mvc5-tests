@@ -60,7 +60,7 @@ class Resolver
      * @param array|callable|object|string $config
      * @return callable|null
      */
-    public function callableMethod($config) : callable
+    function callableMethod($config) : callable
     {
         return $this->callable($config);
     }
@@ -68,7 +68,7 @@ class Resolver
     /**
      * @param callable|null $provider
      */
-    public function setProvider(callable $provider)
+    function setProvider(callable $provider)
     {
         $this->provider = $provider;
     }

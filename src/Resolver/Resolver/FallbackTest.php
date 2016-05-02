@@ -16,7 +16,7 @@ class FallbackTest
     /**
      *
      */
-    public function test_fallback_exists()
+    function test_fallback_exists()
     {
         $resolver = new Resolver;
 
@@ -30,7 +30,7 @@ class FallbackTest
     /**
      *
      */
-    public function test_fallback_exception()
+    function test_fallback_exception()
     {
         $resolver = new Resolver;
 

@@ -22,7 +22,7 @@ class Event
     /**
      * @param $event
      */
-    public function __construct($event = null)
+    function __construct($event = null)
     {
         $event && $this->event = $event;
     }

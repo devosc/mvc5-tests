@@ -15,7 +15,7 @@ class VarsTest
     /**
      *
      */
-    public function test_vars()
+    function test_vars()
     {
         $resolver = new Resolver;
 
@@ -25,7 +25,7 @@ class VarsTest
     /**
      *
      */
-    public function test_vars_resolved()
+    function test_vars_resolved()
     {
         $resolver = new Resolver;
 

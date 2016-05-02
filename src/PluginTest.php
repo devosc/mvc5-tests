@@ -15,7 +15,7 @@ class PluginTest
     /**
      *
      */
-    public function test_service_empty()
+    function test_service_empty()
     {
         $plugin = new Plugin;
 
@@ -25,7 +25,7 @@ class PluginTest
     /**
      *
      */
-    public function test_service_not_empty()
+    function test_service_not_empty()
     {
         $plugin = new Plugin;
 

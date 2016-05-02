@@ -22,7 +22,7 @@ class Plugin
     /**
      * @param $service
      */
-    public function __construct(Service $service)
+    function __construct(Service $service)
     {
         $this->service = $service;
     }

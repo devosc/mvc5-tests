@@ -16,7 +16,7 @@ class RelayTest
     /**
      *
      */
-    public function test_relay_no_config()
+    function test_relay_no_config()
     {
         $resolver = new Resolver;
 
@@ -26,7 +26,7 @@ class RelayTest
     /**
      *
      */
-    public function test_relay_config()
+    function test_relay_config()
     {
         $app = new App([
             Arg::SERVICES => [

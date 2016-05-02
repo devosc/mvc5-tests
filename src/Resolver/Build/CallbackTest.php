@@ -15,7 +15,7 @@ class CallbackTest
     /**
      *
      */
-    public function test_callback_no_class_exists()
+    function test_callback_no_class_exists()
     {
         $resolver = new Resolver;
 
@@ -25,7 +25,7 @@ class CallbackTest
     /**
      *
      */
-    public function test_callback_no_callback_and_class_exists()
+    function test_callback_no_callback_and_class_exists()
     {
         $resolver = new Resolver;
 
@@ -35,7 +35,7 @@ class CallbackTest
     /**
      *
      */
-    public function test_callback_and_class_exists()
+    function test_callback_and_class_exists()
     {
         $resolver = new Resolver;
 

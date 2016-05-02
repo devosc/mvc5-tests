@@ -15,7 +15,7 @@ class CallableTest
     /**
      *
      */
-    public function test_callable_string()
+    function test_callable_string()
     {
         $resolver = new Resolver;
 
@@ -25,7 +25,7 @@ class CallableTest
     /**
      *
      */
-    public function test_callable_array_string()
+    function test_callable_array_string()
     {
         $resolver = new Resolver;
 
@@ -37,7 +37,7 @@ class CallableTest
     /**
      *
      */
-    public function test_callable_array_object()
+    function test_callable_array_object()
     {
         $resolver = new Resolver;
 
@@ -49,7 +49,7 @@ class CallableTest
     /**
      *
      */
-    public function test_callable_closure()
+    function test_callable_closure()
     {
         $resolver = new Resolver;
 
@@ -59,7 +59,7 @@ class CallableTest
     /**
      *
      */
-    public function test_callable_object()
+    function test_callable_object()
     {
         $resolver = new Resolver;
 

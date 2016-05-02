@@ -16,7 +16,7 @@ class HandlerTest
     /**
      *
      */
-    public function test_invoke()
+    function test_invoke()
     {
         $handler = new Handler;
 
@@ -26,7 +26,7 @@ class HandlerTest
     /**
      *
      */
-    public function test_invoke_not_found()
+    function test_invoke_not_found()
     {
         $handler = new Handler;
 

@@ -15,7 +15,7 @@ class ModelTest
     /**
      *
      */
-    public function test_construct_template()
+    function test_construct_template()
     {
         $model = new Model('foo');
 
@@ -25,7 +25,7 @@ class ModelTest
     /**
      *
      */
-    public function test_construct_template_const()
+    function test_construct_template_const()
     {
         $model = new Model;
 
@@ -35,7 +35,7 @@ class ModelTest
     /**
      *
      */
-    public function test_template()
+    function test_template()
     {
         $model = new Mvc5Model;
 
@@ -45,7 +45,7 @@ class ModelTest
     /**
      *
      */
-    public function test_template_set()
+    function test_template_set()
     {
         $model = new Mvc5Model;
 
@@ -55,7 +55,7 @@ class ModelTest
     /**
      *
      */
-    public function test_vars()
+    function test_vars()
     {
         $vars = ['foo' => 'bar'];
 
@@ -67,7 +67,7 @@ class ModelTest
     /**
      *
      */
-    public function test_vars_set()
+    function test_vars_set()
     {
         $vars = ['bar' => 'baz'];
 
@@ -79,7 +79,7 @@ class ModelTest
     /**
      *
      */
-    public function test_get()
+    function test_get()
     {
         $vars = ['foo' => 'bar'];
 
@@ -91,7 +91,7 @@ class ModelTest
     /**
      *
      */
-    public function test_isset()
+    function test_isset()
     {
         $vars = ['foo' => 'bar'];
 
@@ -103,7 +103,7 @@ class ModelTest
     /**
      *
      */
-    public function test_set()
+    function test_set()
     {
         $model = new Mvc5Model;
 
@@ -113,7 +113,7 @@ class ModelTest
     /**
      *
      */
-    public function test_unset()
+    function test_unset()
     {
         $vars = ['foo' => 'bar'];
 

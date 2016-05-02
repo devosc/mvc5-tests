@@ -14,7 +14,7 @@ class ChildTest
     /**
      *
      */
-    public function test_parent()
+    function test_parent()
     {
         $child = new Child([Arg::PARENT => 'foo']);
 

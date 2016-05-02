@@ -14,7 +14,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_config_empty()
+    function test_config_empty()
     {
         $config = new Config;
 
@@ -24,7 +24,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_config()
+    function test_config()
     {
         $config = new Config;
 
@@ -34,7 +34,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_configure()
+    function test_configure()
     {
         $config = new Config;
 
@@ -46,7 +46,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_configured_null()
+    function test_configured_null()
     {
         $config = new Config;
 
@@ -56,7 +56,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_configured_not_null()
+    function test_configured_not_null()
     {
         $config = new Config;
 
@@ -68,7 +68,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_container_empty()
+    function test_container_empty()
     {
         $config = new Config;
 
@@ -78,7 +78,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_container_not_empty()
+    function test_container_not_empty()
     {
         $config = new Config;
 
@@ -88,7 +88,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_count()
+    function test_count()
     {
         $config = new Config;
 
@@ -100,7 +100,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_current_array()
+    function test_current_array()
     {
         $config = new Config;
 
@@ -112,7 +112,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_current_iterator()
+    function test_current_iterator()
     {
         $config = new Config;
 
@@ -124,7 +124,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_get()
+    function test_get()
     {
         $config = new Config;
 
@@ -136,7 +136,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_has()
+    function test_has()
     {
         $config = new Config;
 
@@ -146,7 +146,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_key_array()
+    function test_key_array()
     {
         $config = new Config;
 
@@ -158,7 +158,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_key_iterator()
+    function test_key_iterator()
     {
         $config = new Config;
 
@@ -170,7 +170,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_next_array()
+    function test_next_array()
     {
         $config = new Config;
 
@@ -184,7 +184,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_next_iterator()
+    function test_next_iterator()
     {
         $config = new Config();
 
@@ -198,7 +198,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_remove()
+    function test_remove()
     {
         $config = new Config;
 
@@ -214,7 +214,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_rewind_array()
+    function test_rewind_array()
     {
         $config = new Config;
 
@@ -234,7 +234,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_rewind_iterator()
+    function test_rewind_iterator()
     {
         $config = new Config;
 
@@ -254,7 +254,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_shared_null()
+    function test_shared_null()
     {
         $config = new Config;
 
@@ -264,7 +264,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_shared_not_null()
+    function test_shared_not_null()
     {
         $config = new Config;
 
@@ -276,7 +276,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_services_empty()
+    function test_services_empty()
     {
         $config = new Config;
 
@@ -286,7 +286,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_services_not_empty()
+    function test_services_not_empty()
     {
         $config = new Config;
 
@@ -296,7 +296,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_set()
+    function test_set()
     {
         $config = new Config;
 
@@ -308,7 +308,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_valid_array()
+    function test_valid_array()
     {
         $config = new Config;
 
@@ -320,7 +320,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_valid_not_array()
+    function test_valid_not_array()
     {
         $config = new Config;
 
@@ -330,7 +330,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_valid_with_iterator()
+    function test_valid_with_iterator()
     {
         $config = new Config;
 
@@ -342,7 +342,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_valid_not_with_iterator()
+    function test_valid_not_with_iterator()
     {
         $config = new Config;
 
@@ -354,7 +354,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_clone_with_arrays()
+    function test_clone_with_arrays()
     {
         $config = new Config;
 
@@ -378,7 +378,7 @@ class ConfigTest
     /**
      *
      */
-    public function test_clone_with_objects()
+    function test_clone_with_objects()
     {
         $config = new Config(new Container);
 

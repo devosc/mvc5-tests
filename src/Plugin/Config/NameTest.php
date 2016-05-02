@@ -14,7 +14,7 @@ class NameTest
     /**
      *
      */
-    public function test_construct()
+    function test_construct()
     {
         $this->assertInstanceOf(Name::class, new Name(null));
     }
@@ -22,7 +22,7 @@ class NameTest
     /**
      *
      */
-    public function test_name()
+    function test_name()
     {
         $name = new Name('foo');
 

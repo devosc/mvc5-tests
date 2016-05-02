@@ -13,7 +13,7 @@ class Event
     /**
      * @return array
      */
-    public function args()
+    function args()
     {
         return parent::args();
     }

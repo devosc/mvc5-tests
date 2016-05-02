@@ -16,7 +16,7 @@ class DispatchTest
     /**
      *
      */
-    public function test_invoke_stopped()
+    function test_invoke_stopped()
     {
         $dispatch = new Dispatch;
 
@@ -28,7 +28,7 @@ class DispatchTest
     /**
      *
      */
-    public function test_invoke_resolvable_not_stopped()
+    function test_invoke_resolvable_not_stopped()
     {
         $dispatch = new Dispatch;
 
@@ -40,7 +40,7 @@ class DispatchTest
     /**
      *
      */
-    public function test_invoke_null_not_stopped()
+    function test_invoke_null_not_stopped()
     {
         $dispatch = new Dispatch;
 

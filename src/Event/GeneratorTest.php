@@ -15,7 +15,7 @@ class GeneratorTest
     /**
      *
      */
-    public function test_emit_callable_event()
+    function test_emit_callable_event()
     {
         $event     = function() { return 'foo'; };
         $generator = new Generator;
@@ -27,7 +27,7 @@ class GeneratorTest
     /**
      *
      */
-    public function test_emit_listener()
+    function test_emit_listener()
     {
         $generator = new Generator;
 
@@ -37,7 +37,7 @@ class GeneratorTest
     /**
      * @return mixed
      */
-    public function test_generate()
+    function test_generate()
     {
         $generator = new Generator;
 
@@ -47,7 +47,7 @@ class GeneratorTest
     /**
      *
      */
-    public function test_queue_array()
+    function test_queue_array()
     {
         $generator = new Generator;
 
@@ -57,7 +57,7 @@ class GeneratorTest
     /**
      *
      */
-    public function test_queue_traversable()
+    function test_queue_traversable()
     {
         $generator = new Generator;
 
@@ -67,7 +67,7 @@ class GeneratorTest
     /**
      *
      */
-    public function test_queue_not_array_or_traversable()
+    function test_queue_not_array_or_traversable()
     {
         $generator = new Generator;
 

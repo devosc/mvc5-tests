@@ -17,7 +17,7 @@ class PluginTest
     /**
      *
      */
-    public function test_plugin_false()
+    function test_plugin_false()
     {
         $resolver = new Resolver;
 
@@ -27,7 +27,7 @@ class PluginTest
     /**
      *
      */
-    public function test_plugin_string_build()
+    function test_plugin_string_build()
     {
         $resolver = new Resolver;
 
@@ -39,7 +39,7 @@ class PluginTest
     /**
      *
      */
-    public function test_plugin_array_without_named_args()
+    function test_plugin_array_without_named_args()
     {
         $resolver = new Resolver;
 
@@ -54,7 +54,7 @@ class PluginTest
     /**
      *
      */
-    public function test_plugin_array_with_named_args()
+    function test_plugin_array_with_named_args()
     {
         $resolver = new Resolver;
 
@@ -69,7 +69,7 @@ class PluginTest
     /**
      *
      */
-    public function test_plugin_closure_with_scope()
+    function test_plugin_closure_with_scope()
     {
         $resolver = new Resolver;
 
@@ -83,7 +83,7 @@ class PluginTest
     /**
      *
      */
-    public function test_plugin_closure_without_scope()
+    function test_plugin_closure_without_scope()
     {
         $resolver = new Resolver;
 
@@ -93,7 +93,7 @@ class PluginTest
     /**
      *
      */
-    public function test_plugin_resolvable()
+    function test_plugin_resolvable()
     {
         $resolver = new Resolver;
 

@@ -14,7 +14,7 @@ class DispatcherTest
     /**
      *
      */
-    public function test_definition()
+    function test_definition()
     {
         $dispatcher = new Dispatcher;
 
@@ -24,7 +24,7 @@ class DispatcherTest
     /**
      *
      */
-    public function test_match()
+    function test_match()
     {
         $dispatcher = new Dispatcher;
 
@@ -34,7 +34,7 @@ class DispatcherTest
     /**
      *
      */
-    public function test_exception()
+    function test_exception()
     {
         $dispatcher = new Dispatcher;
 
@@ -44,7 +44,7 @@ class DispatcherTest
     /**
      *
      */
-    public function test_route()
+    function test_route()
     {
         $dispatcher = new Dispatcher;
 

@@ -16,7 +16,7 @@ class FilterTest
     /**
      *
      */
-    public function test_invoke()
+    function test_invoke()
     {
         $filter = new Filter;
         $route  = new Route([Arg::PATH => 'foo']);
@@ -29,7 +29,7 @@ class FilterTest
     /**
      *
      */
-    public function test_invoke_no_path()
+    function test_invoke_no_path()
     {
         $filter = new Filter;
         $route  = new Route;

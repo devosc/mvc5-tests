@@ -46,7 +46,7 @@ class RouteTest
     /**
      *
      */
-    public function test_invoke()
+    function test_invoke()
     {
         $route = new Route;
 
@@ -58,7 +58,7 @@ class RouteTest
     /**
      *
      */
-    public function test_invoke_exception()
+    function test_invoke_exception()
     {
         $route = new Route;
 

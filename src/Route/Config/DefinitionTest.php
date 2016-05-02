@@ -15,7 +15,7 @@ class DefinitionTest
     /**
      *
      */
-    public function test_add()
+    function test_add()
     {
         $definition = new Definition;
 
@@ -27,7 +27,7 @@ class DefinitionTest
     /**
      *
      */
-    public function test_child_exists()
+    function test_child_exists()
     {
         $definition = new Definition([Arg::CHILDREN => ['bar' => ['name' => 'baz']]]);
 
@@ -37,7 +37,7 @@ class DefinitionTest
     /**
      *
      */
-    public function test_child_not_exists()
+    function test_child_not_exists()
     {
         $definition = new Definition;
 
@@ -47,7 +47,7 @@ class DefinitionTest
     /**
      *
      */
-    public function test_children_isset()
+    function test_children_isset()
     {
         $definition = new Definition([Arg::CHILDREN => ['foo' => 'bar']]);
 
@@ -57,7 +57,7 @@ class DefinitionTest
     /**
      *
      */
-    public function test_children_not_isset()
+    function test_children_not_isset()
     {
         $definition = new Definition;
 
@@ -67,7 +67,7 @@ class DefinitionTest
     /**
      *
      */
-    public function test_className()
+    function test_className()
     {
         $definition = new Definition([Arg::CLASS_NAME => 'foo']);
 
@@ -77,7 +77,7 @@ class DefinitionTest
     /**
      *
      */
-    public function test_constraints_exists()
+    function test_constraints_exists()
     {
         $definition = new Definition([Arg::CONSTRAINTS => ['foo' => 'bar']]);
 
@@ -87,7 +87,7 @@ class DefinitionTest
     /**
      *
      */
-    public function test_constraints_not_exists()
+    function test_constraints_not_exists()
     {
         $definition = new Definition;
 
@@ -97,7 +97,7 @@ class DefinitionTest
     /**
      *
      */
-    public function test_controller()
+    function test_controller()
     {
         $definition = new Definition([Arg::CONTROLLER => 'foo']);
 
@@ -107,7 +107,7 @@ class DefinitionTest
     /**
      *
      */
-    public function test_defaults_exists()
+    function test_defaults_exists()
     {
         $definition = new Definition(['defaults' => ['foo' => 'bar']]);
 
@@ -117,7 +117,7 @@ class DefinitionTest
     /**
      *
      */
-    public function test_defaults_not_exists()
+    function test_defaults_not_exists()
     {
         $definition = new Definition;
 
@@ -127,7 +127,7 @@ class DefinitionTest
     /**
      *
      */
-    public function test_hostname_exists()
+    function test_hostname_exists()
     {
         $definition = new Definition(['hostname' => 'foo']);
 
@@ -137,7 +137,7 @@ class DefinitionTest
     /**
      *
      */
-    public function test_hostname_not_exists()
+    function test_hostname_not_exists()
     {
         $definition = new Definition;
 
@@ -147,7 +147,7 @@ class DefinitionTest
     /**
      *
      */
-    public function test_name()
+    function test_name()
     {
         $definition = new Definition([Arg::NAME => 'foo']);
 
@@ -157,7 +157,7 @@ class DefinitionTest
     /**
      *
      */
-    public function test_method_exists()
+    function test_method_exists()
     {
         $definition = new Definition([Arg::METHOD => 'foo']);
 
@@ -167,7 +167,7 @@ class DefinitionTest
     /**
      *
      */
-    public function test_method_not_exists()
+    function test_method_not_exists()
     {
         $definition = new Definition;
 
@@ -177,7 +177,7 @@ class DefinitionTest
     /**
      *
      */
-    public function test_paramMap_exists()
+    function test_paramMap_exists()
     {
         $definition = new Definition([Arg::PARAM_MAP => ['foo' => 'bar']]);
 
@@ -187,7 +187,7 @@ class DefinitionTest
     /**
      *
      */
-    public function test_paramMap_not_exists()
+    function test_paramMap_not_exists()
     {
         $definition = new Definition;
 
@@ -197,7 +197,7 @@ class DefinitionTest
     /**
      *
      */
-    public function test_port_exists()
+    function test_port_exists()
     {
         $definition = new Definition([Arg::PORT => '80']);
 
@@ -207,7 +207,7 @@ class DefinitionTest
     /**
      *
      */
-    public function test_port_not_exists()
+    function test_port_not_exists()
     {
         $definition = new Definition;
 
@@ -217,7 +217,7 @@ class DefinitionTest
     /**
      *
      */
-    public function test_regex()
+    function test_regex()
     {
         $definition = new Definition([Arg::REGEX => 'foo']);
 
@@ -227,7 +227,7 @@ class DefinitionTest
     /**
      *
      */
-    public function test_action()
+    function test_action()
     {
         $definition = new Definition([Arg::ACTION => ['GET' => 'foo']]);
 
@@ -237,7 +237,7 @@ class DefinitionTest
     /**
      *
      */
-    public function test_actions()
+    function test_actions()
     {
         $definition = new Definition([Arg::ACTION => ['GET' => 'foo']]);
 
@@ -247,7 +247,7 @@ class DefinitionTest
     /**
      *
      */
-    public function test_route()
+    function test_route()
     {
         $definition = new Definition([Arg::ROUTE => 'foo']);
 
@@ -257,7 +257,7 @@ class DefinitionTest
     /**
      *
      */
-    public function test_scheme()
+    function test_scheme()
     {
         $definition = new Definition([Arg::SCHEME => 'foo']);
 
@@ -267,7 +267,7 @@ class DefinitionTest
     /**
      *
      */
-    public function test_tokens_exists()
+    function test_tokens_exists()
     {
         $definition = new Definition([Arg::TOKENS => ['foo' => 'bar']]);
 
@@ -277,7 +277,7 @@ class DefinitionTest
     /**
      *
      */
-    public function test_tokens_not_exists()
+    function test_tokens_not_exists()
     {
         $definition = new Definition;
 
@@ -287,7 +287,7 @@ class DefinitionTest
     /**
      *
      */
-    public function test_wildcard_exists()
+    function test_wildcard_exists()
     {
         $definition = new Definition([Arg::WILDCARD => 'foo']);
 
@@ -297,7 +297,7 @@ class DefinitionTest
     /**
      *
      */
-    public function test_wildcard_not_exists()
+    function test_wildcard_not_exists()
     {
         $definition = new Definition;
 

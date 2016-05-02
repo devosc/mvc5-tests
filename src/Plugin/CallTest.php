@@ -14,7 +14,7 @@ class CallTest
     /**
      *
      */
-    public function test_construct()
+    function test_construct()
     {
         $this->assertInstanceOf(Call::class, new Call(['foo']));
     }

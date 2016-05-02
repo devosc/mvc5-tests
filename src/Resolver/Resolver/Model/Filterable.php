@@ -11,7 +11,7 @@ class Filterable
      * @param $foo
      * @param $bar
      */
-    public function __invoke($foo, $bar)
+    function __invoke($foo, $bar)
     {
         return $foo;
     }

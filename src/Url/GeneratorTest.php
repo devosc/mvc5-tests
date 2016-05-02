@@ -38,7 +38,7 @@ class GeneratorTest
     /**
      *
      */
-    public function test_construct()
+    function test_construct()
     {
         $this->assertInstanceOf(Generator::class, new Generator);
     }
@@ -46,7 +46,7 @@ class GeneratorTest
     /**
      *
      */
-    public function test_child()
+    function test_child()
     {
         $definition = new Definition([
             Arg::NAME => 'app',
@@ -63,7 +63,7 @@ class GeneratorTest
     /**
      *
      */
-    public function test_config()
+    function test_config()
     {
         $definition = new Definition([Arg::NAME => 'app']);
         $generator  = new Generator($definition);
@@ -74,7 +74,7 @@ class GeneratorTest
     /**
      *
      */
-    public function test_config_child()
+    function test_config_child()
     {
         $definition = new Definition([Arg::NAME => 'app', Arg::CHILDREN => ['foo' => 'bar']]);
         $generator  = new Generator($definition);
@@ -85,7 +85,7 @@ class GeneratorTest
     /**
      *
      */
-    public function test_generate()
+    function test_generate()
     {
         $generator = new Generator(new Definition($this->definition));
 
@@ -95,7 +95,7 @@ class GeneratorTest
     /**
      *
      */
-    public function test_generate_child()
+    function test_generate_child()
     {
         $definition = new Definition([
             Arg::NAME     => 'app',
@@ -122,7 +122,7 @@ class GeneratorTest
     /**
      *
      */
-    public function test_generate_wildcard()
+    function test_generate_wildcard()
     {
         $generator = new Generator(new Definition($this->definition));
 
@@ -132,7 +132,7 @@ class GeneratorTest
     /**
      *
      */
-    public function test_generate_wildcard_defaults()
+    function test_generate_wildcard_defaults()
     {
         $generator = new Generator(new Definition($this->definition));
 
@@ -142,7 +142,7 @@ class GeneratorTest
     /**
      *
      */
-    public function test_merge()
+    function test_merge()
     {
         $generator  = new Generator;
 
@@ -164,7 +164,7 @@ class GeneratorTest
     /**
      *
      */
-    public function test_name()
+    function test_name()
     {
         $definition = new Definition([Arg::NAME => 'app']);
         $generator  = new Generator($definition);
@@ -175,7 +175,7 @@ class GeneratorTest
     /**
      *
      */
-    public function test_name_not_exists()
+    function test_name_not_exists()
     {
         $definition = new Definition([Arg::NAME => 'app']);
 
@@ -187,7 +187,7 @@ class GeneratorTest
     /**
      *
      */
-    public function test_options()
+    function test_options()
     {
         $generator = new Generator;
 
@@ -201,7 +201,7 @@ class GeneratorTest
     /**
      *
      */
-    public function test_url()
+    function test_url()
     {
         $generator = new Generator([Arg::NAME => 'app']);
 
@@ -211,7 +211,7 @@ class GeneratorTest
     /**
      *
      */
-    public function test_url_with_no_build()
+    function test_url_with_no_build()
     {
         $definition = new Definition($this->definition);
         $generator  = new Generator([Arg::NAME => 'app']);
@@ -222,7 +222,7 @@ class GeneratorTest
     /**
      *
      */
-    public function test_invoke()
+    function test_invoke()
     {
         $generator = new Generator([Arg::NAME => 'app', Arg::ROUTE => '/foo']);
 
@@ -232,7 +232,7 @@ class GeneratorTest
     /**
      *
      */
-    public function test_invoke_no_path()
+    function test_invoke_no_path()
     {
         $generator = new Generator([Arg::NAME => 'app', Arg::ROUTE => '/']);
 
@@ -242,7 +242,7 @@ class GeneratorTest
     /**
      *
      */
-    public function test_invoke_canonical_and_wildcard_params()
+    function test_invoke_canonical_and_wildcard_params()
     {
         $generator = new Generator([Arg::NAME => 'app', Arg::ROUTE => '/', Arg::WILDCARD => true]);
 

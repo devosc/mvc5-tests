@@ -15,7 +15,7 @@ class LinkTest
     /**
      *
      */
-    public function test_gem_link()
+    function test_gem_link()
     {
         $resolver = new Resolver;
 

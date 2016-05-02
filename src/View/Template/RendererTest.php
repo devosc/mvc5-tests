@@ -17,7 +17,7 @@ class RendererTest
     /**
      *
      */
-    public function test_construct()
+    function test_construct()
     {
         $this->assertInstanceOf(Renderer::class, new Renderer);
     }
@@ -25,7 +25,7 @@ class RendererTest
     /**
      *
      */
-    public function test_not_a_view_model()
+    function test_not_a_view_model()
     {
         $renderer = new Renderer;
 
@@ -35,7 +35,7 @@ class RendererTest
     /**
      *
      */
-    public function test_invoke()
+    function test_invoke()
     {
         $model  = new HomeModel('home', ['title' => 'foo']);
         $layout = new Layout('layout', [Arg::CHILD_MODEL => $model]);
@@ -51,7 +51,7 @@ class RendererTest
     /**
      *
      */
-    public function test_invoke_no_template_exception()
+    function test_invoke_no_template_exception()
     {
         $renderer = new Renderer;
 
@@ -63,7 +63,7 @@ class RendererTest
     /**
      *
      */
-    public function test_invoke_exception()
+    function test_invoke_exception()
     {
         $renderer = new Renderer;
         $template = __DIR__ . '/exception.phtml';

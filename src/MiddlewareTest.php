@@ -16,7 +16,7 @@ class MiddlewareTest
     /**
      *
      */
-    public function test_construct()
+    function test_construct()
     {
         $this->assertInstanceOf(Middleware::class, new Middleware([]));
     }
@@ -24,7 +24,7 @@ class MiddlewareTest
     /**
      *
      */
-    public function test_next()
+    function test_next()
     {
         $middleware = new Middleware();
 
@@ -34,7 +34,7 @@ class MiddlewareTest
     /**
      *
      */
-    public function test_invoke_string_response()
+    function test_invoke_string_response()
     {
         $middleware = new Middleware([
             function(Request $request, Response $response, callable $next) {
@@ -50,7 +50,7 @@ class MiddlewareTest
     /**
      *
      */
-    public function test_invoke_response()
+    function test_invoke_response()
     {
         $middleware = new Middleware([
             function(Request $request, Response $response, callable $next) {
@@ -66,7 +66,7 @@ class MiddlewareTest
     /**
      *
      */
-    public function test_invoke_empty_stack()
+    function test_invoke_empty_stack()
     {
         $middleware = new Middleware;
 

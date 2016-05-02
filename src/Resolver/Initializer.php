@@ -42,7 +42,7 @@ class Initializer
     /**
      * @param array $pending
      */
-    public function setPending(array $pending)
+    function setPending(array $pending)
     {
         $this->pending = $pending;
     }

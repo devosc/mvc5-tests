@@ -22,7 +22,7 @@ class AppTest
     /**
      *
      */
-    public function test_construct()
+    function test_construct()
     {
         $config = [
             Arg::SERVICES => [
@@ -38,7 +38,7 @@ class AppTest
     /**
      *
      */
-    public function test_app_array_access_with_provider()
+    function test_app_array_access_with_provider()
     {
         $app = new App([], function() { return 'bar'; });
 
@@ -48,7 +48,7 @@ class AppTest
     /**
      *
      */
-    public function test_app_invoke_with_provider()
+    function test_app_invoke_with_provider()
     {
         $app = new App([], function() { return 'bar'; });
 
@@ -58,7 +58,7 @@ class AppTest
     /**
      *
      */
-    public function test_app_provider_and_scope()
+    function test_app_provider_and_scope()
     {
         $app = new App([
             Arg::SERVICES => [
@@ -117,7 +117,7 @@ class AppTest
     /**
      *
      */
-    public function test_app_with_private_values()
+    function test_app_with_private_values()
     {
         $app = new App([
             'bat' => 'baz',
@@ -134,7 +134,7 @@ class AppTest
     /**
      *
      */
-    public function test_app_with_private_plugins()
+    function test_app_with_private_plugins()
     {
         $app = new App([
             'bat' => new Value('baz'),

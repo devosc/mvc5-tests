@@ -14,7 +14,7 @@ class ArgsTest
     /**
      *
      */
-    public function test_construct()
+    function test_construct()
     {
         $this->assertInstanceOf(Args::class, new Args([]));
     }
@@ -22,7 +22,7 @@ class ArgsTest
     /**
      *
      */
-    public function test_args()
+    function test_args()
     {
         $args = new Args([]);
 

@@ -17,7 +17,7 @@ class WildcardTest
     /**
      *
      */
-    public function test_invoke_no_wildcard()
+    function test_invoke_no_wildcard()
     {
         $definition = new Definition([Arg::WILDCARD => false]);
         $route      = new Route;
@@ -29,7 +29,7 @@ class WildcardTest
     /**
      *
      */
-    public function test_invoke_valid_pair()
+    function test_invoke_valid_pair()
     {
         $definition = new Definition([Arg::WILDCARD => true]);
         $route      = new Route([Arg::PATH => '/foo/bar/baz/bat', Arg::PARAMS => ['a' => 'b'], Arg::LENGTH => 8]);
@@ -41,7 +41,7 @@ class WildcardTest
     /**
      *
      */
-    public function test_invoke_invalid_pair()
+    function test_invoke_invalid_pair()
     {
         $definition = new Definition([Arg::WILDCARD => true]);
         $route      = new Route([Arg::PATH => '/foo/bar/baz', Arg::PARAMS => ['a' => 'b'], Arg::LENGTH => 8]);

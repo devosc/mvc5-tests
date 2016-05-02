@@ -45,7 +45,7 @@ class ViewTest
     /**
      *
      */
-    public function test_invoke()
+    function test_invoke()
     {
         $view = new View;
 
@@ -55,7 +55,7 @@ class ViewTest
     /**
      *
      */
-    public function test_invoke_render()
+    function test_invoke_render()
     {
         $view = new View;
 
@@ -67,7 +67,7 @@ class ViewTest
     /**
      *
      */
-    public function test_invoke_exception()
+    function test_invoke_exception()
     {
         $view = new View;
 

@@ -16,7 +16,7 @@ class DependencyTest
     /**
      *
      */
-    public function test_gem_dependency_shared()
+    function test_gem_dependency_shared()
     {
         $resolver = new Resolver;
 
@@ -30,7 +30,7 @@ class DependencyTest
     /**
      *
      */
-    public function test_gem_dependency_create()
+    function test_gem_dependency_create()
     {
         $resolver = new Resolver;
 
@@ -42,7 +42,7 @@ class DependencyTest
     /**
      *
      */
-    public function test_gem_dependency()
+    function test_gem_dependency()
     {
         $resolver = new Resolver;
 
@@ -54,7 +54,7 @@ class DependencyTest
     /**
      *
      */
-    public function test_gem_dependency_not_null()
+    function test_gem_dependency_not_null()
     {
         $resolver = new Resolver;
 
@@ -74,7 +74,7 @@ class DependencyTest
     /**
      *
      */
-    public function test_gem_dependency_null()
+    function test_gem_dependency_null()
     {
         $resolver = new Resolver;
 

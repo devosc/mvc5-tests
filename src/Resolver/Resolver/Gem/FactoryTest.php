@@ -17,7 +17,7 @@ class FactoryTest
     /**
      *
      */
-    public function test_gem_factory()
+    function test_gem_factory()
     {
         $resolver = new Resolver;
 

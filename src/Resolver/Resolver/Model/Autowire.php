@@ -23,7 +23,7 @@ class Autowire
      * @param null $bar
      * @param array $args
      */
-    public function __construct(CallEvent $event, $foo, $bar = null, array $args = [])
+    function __construct(CallEvent $event, $foo, $bar = null, array $args = [])
     {
         $this->event = $event;
         $this->foo   = $foo;

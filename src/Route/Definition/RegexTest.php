@@ -13,7 +13,7 @@ class RegexTest
     /**
      *
      */
-    public function test_regex()
+    function test_regex()
     {
         $definition = new Regex;
 
@@ -41,7 +41,7 @@ class RegexTest
     /**
      *
      */
-    public function test_regex_with_delimiter()
+    function test_regex_with_delimiter()
     {
         $definition = new Regex;
 
@@ -69,7 +69,7 @@ class RegexTest
     /**
      *
      */
-    public function test_regex_group_param()
+    function test_regex_group_param()
     {
         $definition = new Regex;
 

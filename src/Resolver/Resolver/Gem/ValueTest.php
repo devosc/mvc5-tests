@@ -15,7 +15,7 @@ class ValueTest
     /**
      *
      */
-    public function test_gem_value()
+    function test_gem_value()
     {
         $resolver = new Resolver;
 

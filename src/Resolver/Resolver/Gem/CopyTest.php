@@ -15,7 +15,7 @@ class CopyTest
     /**
      *
      */
-    public function test_gem_copy()
+    function test_gem_copy()
     {
         $resolver = new Resolver;
 

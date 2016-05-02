@@ -15,7 +15,7 @@ class BindTest
     /**
      *
      */
-    public function test_bind()
+    function test_bind()
     {
         $resolver = new Resolver;
 

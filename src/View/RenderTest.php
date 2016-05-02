@@ -15,7 +15,7 @@ class RenderTest
     /**
      *
      */
-    public function test_invoke()
+    function test_invoke()
     {
         $render = new Render;
 

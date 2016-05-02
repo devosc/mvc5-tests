@@ -15,7 +15,7 @@ class UniqueTest
     /**
      *
      */
-    public function test_unique_same()
+    function test_unique_same()
     {
         $resolver = new Resolver;
 
@@ -25,7 +25,7 @@ class UniqueTest
     /**
      *
      */
-    public function test_unique_null_parent()
+    function test_unique_null_parent()
     {
         $resolver = new Resolver;
 
@@ -35,7 +35,7 @@ class UniqueTest
     /**
      *
      */
-    public function test_unique_parent()
+    function test_unique_parent()
     {
         $resolver = new Resolver;
 
@@ -45,7 +45,7 @@ class UniqueTest
     /**
      *
      */
-    public function test_unique_callback()
+    function test_unique_callback()
     {
         $resolver = new Resolver;
 

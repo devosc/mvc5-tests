@@ -25,7 +25,7 @@ class Dispatcher
      * @param callable $callback
      * @return callable|mixed|null|object
      */
-    public function call($name, array $args = [], callable $callback = null)
+    function call($name, array $args = [], callable $callback = null)
     {
         return 'foo';
     }

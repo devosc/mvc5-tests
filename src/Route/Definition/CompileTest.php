@@ -14,7 +14,7 @@ class CompileTest
     /**
      *
      */
-    public function test_compile()
+    function test_compile()
     {
         $compile = new Compile;
 
@@ -46,7 +46,7 @@ class CompileTest
     /**
      *
      */
-    public function test_compile_no_default_param()
+    function test_compile_no_default_param()
     {
         $compile = new Compile;
 
@@ -78,7 +78,7 @@ class CompileTest
     /**
      *
      */
-    public function test_compile_param_path()
+    function test_compile_param_path()
     {
         $compile = new Compile;
 

@@ -15,7 +15,7 @@ class TriggerTest
     /**
      *
      */
-    public function test_trigger()
+    function test_trigger()
     {
         $resolver = new Resolver;
 

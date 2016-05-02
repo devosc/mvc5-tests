@@ -14,7 +14,7 @@ class PluginTest
     /**
      *
      */
-    public function test_args()
+    function test_args()
     {
         $plugin = new Plugin([Arg::ARGS => 'foo']);
 
@@ -24,7 +24,7 @@ class PluginTest
     /**
      *
      */
-    public function test_args_not_exist()
+    function test_args_not_exist()
     {
         $plugin = new Plugin;
 
@@ -34,7 +34,7 @@ class PluginTest
     /**
      *
      */
-    public function test_calls()
+    function test_calls()
     {
         $plugin = new Plugin([Arg::CALLS => 'foo']);
 
@@ -44,7 +44,7 @@ class PluginTest
     /**
      *
      */
-    public function test_calls_not_exist()
+    function test_calls_not_exist()
     {
         $plugin = new Plugin;
 
@@ -54,7 +54,7 @@ class PluginTest
     /**
      *
      */
-    public function test_merge()
+    function test_merge()
     {
         $plugin = new Plugin([Arg::MERGE => true]);
 
@@ -64,7 +64,7 @@ class PluginTest
     /**
      *
      */
-    public function test_merge_not_exist()
+    function test_merge_not_exist()
     {
         $plugin = new Plugin();
 
@@ -74,7 +74,7 @@ class PluginTest
     /**
      *
      */
-    public function test_name()
+    function test_name()
     {
         $plugin = new Plugin([Arg::NAME => 'foo']);
 
@@ -84,7 +84,7 @@ class PluginTest
     /**
      *
      */
-    public function test_param()
+    function test_param()
     {
         $plugin = new Plugin([Arg::PARAM => 'foo']);
 
@@ -94,7 +94,7 @@ class PluginTest
     /**
      *
      */
-    public function test_param_not_exist()
+    function test_param_not_exist()
     {
         $plugin = new Plugin;
 

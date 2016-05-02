@@ -25,7 +25,7 @@ class Action
      * @return callable|mixed|null|object
      * @throws \RuntimeException
      */
-    public function call($config, array $args = [], callable $callback = null)
+    function call($config, array $args = [], callable $callback = null)
     {
         return 'foo';
     }

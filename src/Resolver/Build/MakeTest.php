@@ -21,7 +21,7 @@ class MakeTest
     /**
      *
      */
-    public function test_make()
+    function test_make()
     {
         $resolver = new Resolver;
 
@@ -31,7 +31,7 @@ class MakeTest
     /**
      *
      */
-    public function test_make_without_constructor()
+    function test_make_without_constructor()
     {
         $resolver = new Resolver;
 
@@ -41,7 +41,7 @@ class MakeTest
     /**
      *
      */
-    public function test_make_no_named_args()
+    function test_make_no_named_args()
     {
         $resolver = new Resolver;
 
@@ -53,7 +53,7 @@ class MakeTest
     /**
      *
      */
-    public function test_make_with_named_args()
+    function test_make_with_named_args()
     {
         $resolver = new Resolver;
 
@@ -65,7 +65,7 @@ class MakeTest
     /**
      *
      */
-    public function test_make_with_named_args_but_no_constructor_args()
+    function test_make_with_named_args_but_no_constructor_args()
     {
         $resolver = new Resolver;
 
@@ -79,7 +79,7 @@ class MakeTest
     /**
      *
      */
-    public function test_make_with_callback_param()
+    function test_make_with_callback_param()
     {
         $resolver = new Resolver;
 
@@ -93,7 +93,7 @@ class MakeTest
     /**
      *
      */
-    public function test_make_with_missing_param()
+    function test_make_with_missing_param()
     {
         $resolver = new Resolver;
 

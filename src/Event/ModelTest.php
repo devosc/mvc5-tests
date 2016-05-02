@@ -13,7 +13,7 @@ class ModelTest
     /**
      *
      */
-    public function test_event()
+    function test_event()
     {
         $event = new Event('foo');
 
@@ -23,7 +23,7 @@ class ModelTest
     /**
      *
      */
-    public function test_event_const()
+    function test_event_const()
     {
         $event = new Event;
 
@@ -33,7 +33,7 @@ class ModelTest
     /**
      *
      */
-    public function test_event_class_name()
+    function test_event_class_name()
     {
         $event = new ModelEvent;
 
@@ -43,7 +43,7 @@ class ModelTest
     /**
      *
      */
-    public function test_stop()
+    function test_stop()
     {
         $event = new ModelEvent;
 
@@ -57,7 +57,7 @@ class ModelTest
     /**
      *
      */
-    public function test_stopped()
+    function test_stopped()
     {
         $event = new ModelEvent;
 

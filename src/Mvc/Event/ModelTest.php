@@ -17,7 +17,7 @@ class ModelTest
     /**
      *
      */
-    public function test_construct()
+    function test_construct()
     {
         new Model(null, new Config);
     }
@@ -25,7 +25,7 @@ class ModelTest
     /**
      *
      */
-    public function test_controller()
+    function test_controller()
     {
         $model = new Model(null, [Arg::ROUTE => new Route([Arg::CONTROLLER => 'foo'])]);
 
@@ -35,7 +35,7 @@ class ModelTest
     /**
      *
      */
-    public function test_model()
+    function test_model()
     {
         $response = new Response;
 
@@ -49,7 +49,7 @@ class ModelTest
     /**
      *
      */
-    public function test_model_set()
+    function test_model_set()
     {
         $response = new Response;
 
@@ -63,7 +63,7 @@ class ModelTest
     /**
      *
      */
-    public function test_response()
+    function test_response()
     {
         $model = new Model(null, [Arg::RESPONSE => new Response]);
 
@@ -73,7 +73,7 @@ class ModelTest
     /**
      *
      */
-    public function test_route()
+    function test_route()
     {
         $model = new Model(null, [Arg::ROUTE => new Route]);
 
@@ -83,7 +83,7 @@ class ModelTest
     /**
      *
      */
-    public function test_route_set()
+    function test_route_set()
     {
         $model = new Model(null, []);
 

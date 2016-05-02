@@ -14,7 +14,7 @@ class ParamTest
     /**
      *
      */
-    public function test_param()
+    function test_param()
     {
         $resolver = new Resolver;
 

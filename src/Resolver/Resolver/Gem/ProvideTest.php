@@ -15,7 +15,7 @@ class ProvideTest
     /**
      *
      */
-    public function test_gem_provide()
+    function test_gem_provide()
     {
         $resolver = new Resolver;
 
@@ -27,7 +27,7 @@ class ProvideTest
     /**
      *
      */
-    public function test_gem_provide_no_provider()
+    function test_gem_provide_no_provider()
     {
         $resolver = new Resolver;
 

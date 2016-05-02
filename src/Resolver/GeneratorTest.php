@@ -15,7 +15,7 @@ class GeneratorTest
     /**
      *
      */
-    public function test_event_name_string()
+    function test_event_name_string()
     {
         $generator = new Generator;
 
@@ -25,7 +25,7 @@ class GeneratorTest
     /**
      *
      */
-    public function test_event_name_event()
+    function test_event_name_event()
     {
         $generator = new Generator;
 
@@ -35,7 +35,7 @@ class GeneratorTest
     /**
      *
      */
-    public function test_event_name_object()
+    function test_event_name_object()
     {
         $generator = new Generator;
 
@@ -45,7 +45,7 @@ class GeneratorTest
     /**
      * @return mixed
      */
-    public function test_events()
+    function test_events()
     {
         $generator = new Generator;
 
@@ -55,7 +55,7 @@ class GeneratorTest
     /**
      * @return mixed
      */
-    public function test_events_return_config()
+    function test_events_return_config()
     {
         $generator = new Generator;
 
@@ -65,7 +65,7 @@ class GeneratorTest
     /**
      * @return mixed
      */
-    public function test_listeners_with_config()
+    function test_listeners_with_config()
     {
         $generator = new Generator;
 
@@ -77,7 +77,7 @@ class GeneratorTest
     /**
      *
      */
-    public function test_listeners_without_config()
+    function test_listeners_without_config()
     {
         $generator = new Generator;
 
@@ -89,7 +89,7 @@ class GeneratorTest
     /**
      *
      */
-    public function test_traversable()
+    function test_traversable()
     {
         $generator = new Generator;
 

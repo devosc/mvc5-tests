@@ -14,7 +14,7 @@ class ModelTest
     /**
      *
      */
-    public function test_construct()
+    function test_construct()
     {
         $this->assertInstanceOf(Model::class, new Model('foo'));
     }

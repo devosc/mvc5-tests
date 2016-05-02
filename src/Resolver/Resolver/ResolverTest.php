@@ -15,7 +15,7 @@ class ResolverTest
     /**
      *
      */
-    public function test_resolver_provider()
+    function test_resolver_provider()
     {
         $resolver = new Resolver;
 
@@ -27,7 +27,7 @@ class ResolverTest
     /**
      *
      */
-    public function test_resolver_service()
+    function test_resolver_service()
     {
         $resolver = new Resolver;
 

@@ -18,7 +18,7 @@ class PluginsTest
     /**
      *
      */
-    public function test_construct()
+    function test_construct()
     {
         $plugin = new Plugins(['foo']);
 
@@ -30,7 +30,7 @@ class PluginsTest
     /**
      *
      */
-    public function test_construct_no_provider_and_not_scoped_with_calls()
+    function test_construct_no_provider_and_not_scoped_with_calls()
     {
         $plugin = new Plugins(['foo'], null, false, ['bar']);
 

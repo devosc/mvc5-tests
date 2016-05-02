@@ -15,7 +15,7 @@ class CreateTest
     /**
      *
      */
-    public function test_create()
+    function test_create()
     {
         $resolver = new Resolver;
 

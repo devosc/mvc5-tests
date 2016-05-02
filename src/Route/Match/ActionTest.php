@@ -17,7 +17,7 @@ class ActionTest
     /**
      *
      */
-    public function test_invoke_no_actions()
+    function test_invoke_no_actions()
     {
         $action     = new Action;
         $definition = new Definition;
@@ -29,7 +29,7 @@ class ActionTest
     /**
      *
      */
-    public function test_invoke_action()
+    function test_invoke_action()
     {
         $action     = new Action;
         $definition = new Definition([Arg::ACTION => ['GET' => 'foo']]);
@@ -45,7 +45,7 @@ class ActionTest
     /**
      *
      */
-    public function test_invoke_no_action_default_is_controller()
+    function test_invoke_no_action_default_is_controller()
     {
         $action     = new Action;
         $definition = new Definition;

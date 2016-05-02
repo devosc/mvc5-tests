@@ -16,7 +16,7 @@ class LayoutTest
     /**
      *
      */
-    public function test_invoke_model()
+    function test_invoke_model()
     {
         $layout = new Layout;
 
@@ -26,7 +26,7 @@ class LayoutTest
     /**
      *
      */
-    public function test_invoke_string_model()
+    function test_invoke_string_model()
     {
         $layout = new Layout;
 

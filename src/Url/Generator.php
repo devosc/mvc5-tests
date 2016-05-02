@@ -16,7 +16,7 @@ class Generator
      * @param $name
      * @return Definition
      */
-    public function child(Definition $parent, $name)
+    function child(Definition $parent, $name)
     {
         return parent::child($parent, $name);
     }
@@ -25,7 +25,7 @@ class Generator
      * @param $name
      * @return array|Definition
      */
-    public function config($name)
+    function config($name)
     {
         return parent::config($name);
     }
@@ -38,7 +38,7 @@ class Generator
      * @param Definition $parent
      * @return string|void
      */
-    public function generate($name, array $args = [], array $options = [], $path = '', Definition $parent = null)
+    function generate($name, array $args = [], array $options = [], $path = '', Definition $parent = null)
     {
         return parent::generate($name, $args, $options, $path, $parent);
     }
@@ -48,7 +48,7 @@ class Generator
      * @param Definition $child
      * @return Definition
      */
-    public function merge(Definition $parent, Definition $child)
+    function merge(Definition $parent, Definition $child)
     {
         return parent::merge($parent, $child);
     }
@@ -57,7 +57,7 @@ class Generator
      * @param string $name
      * @return string
      */
-    public function name($name)
+    function name($name)
     {
         return parent::name($name);
     }
@@ -66,7 +66,7 @@ class Generator
      * @param array $options
      * @return array
      */
-    public function options(array $options = [])
+    function options(array $options = [])
     {
         return parent::options($options);
     }
@@ -75,7 +75,7 @@ class Generator
      * @param array|Definition $definition
      * @return Definition|null
      */
-    public function url($definition)
+    function url($definition)
     {
         return parent::url($definition);
     }

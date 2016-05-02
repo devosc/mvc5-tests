@@ -17,7 +17,7 @@ class CallsTest
     /**
      *
      */
-    public function test_gem_calls()
+    function test_gem_calls()
     {
         $resolver = new Resolver;
 
