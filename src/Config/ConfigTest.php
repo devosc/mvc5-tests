@@ -320,4 +320,63 @@ class ConfigTest
         $this->assertEquals(false, isset($config['b']));
         $this->assertEquals(true,  isset($clone['b']));
     }
+    /**
+     *
+     */
+    function test_clone_not_object()
+    {
+        $config = new Config;
+
+        $this->assertEquals(clone $config, $config);
+    }
+
+    /**
+     *
+     */
+    function test_clone_object_not_scoped()
+    {
+        $config = new Config(new Config);
+
+        $this->assertEquals(clone $config, $config);
+    }
+
+    /**
+     *
+     */
+    function test_clone_object_scoped()
+    {
+        $plugins = new App;
+
+        $config = new Config($plugins);
+
+        $plugins->scope($config);
+
+        $this->assertEquals(clone $config, $config);
+    }
+
+    /**
+     *
+     */
+    function test_clone_object_scoped_true()
+    {
+        $plugins = new App(null, null, true);
+
+        $config = new Config($plugins);
+
+        $this->assertEquals(clone $config, $config);
+    }
+
+    /**
+     *
+     */
+    function test_clone_object_scoped_different_object()
+    {
+        $plugins = new App;
+
+        $config = new Config($plugins);
+
+        $plugins->scope(new \stdClass);
+
+        $this->assertEquals(clone $config, $config);
+    }
 }
