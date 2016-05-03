@@ -31,6 +31,7 @@ class RequestTest
 
         $this->assertEquals(null, $route->arg('foo'));
     }
+
     /**
      *
      */
@@ -78,12 +79,11 @@ class RequestTest
      */
     function test_content_type()
     {
-        $request = new Request([
-            Arg::CONTENT_TYPE => 'foo'
-        ]);
+        $request = new Request([Arg::CONTENT_TYPE => 'foo']);
 
         $this->assertEquals('foo', $request->contentType());
     }
+
     /**
      *
      */
