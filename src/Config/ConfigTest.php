@@ -320,6 +320,21 @@ class ConfigTest
         $this->assertEquals(false, isset($config['b']));
         $this->assertEquals(true,  isset($clone['b']));
     }
+
+    /**
+     *
+     */
+    function test_clone_object_values()
+    {
+        $config = new Config(['a' => new Config]);
+
+        $clone = clone $config;
+
+        $this->assertEquals(true, $clone == $config);
+        $this->assertEquals(true, $clone['a'] == $config['a']);
+        $this->assertEquals(false, $clone['a'] === $config['a']);
+    }
+
     /**
      *
      */
