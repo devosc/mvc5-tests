@@ -3,7 +3,7 @@
  *
  */
 
-namespace Mvc5\Test\Http;
+namespace Mvc5\Test\Http\Response;
 
 use Mvc5\Test\Test\TestCase;
 
@@ -13,10 +13,10 @@ class StatusCodeTest
     /**
      *
      */
-    function test_statusCode()
+    function test_status_code_text()
     {
         $statusCode = new StatusCode;
 
-        $this->assertEquals('OK', $statusCode->statusCode('200'));
+        $this->assertEquals('OK', $statusCode->statusCodeText('200'));
     }
 }
