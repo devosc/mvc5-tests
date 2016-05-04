@@ -55,10 +55,30 @@ class ResponseTest
     /**
      * @return int
      */
+    function test_version_null()
+    {
+        $response = new Response;
+
+        $this->assertEquals(null, $response->version());
+    }
+
+    /**
+     * @return int
+     */
     function test_status()
     {
         $response = new Response([Arg::STATUS => '200']);
 
         $this->assertEquals('200', $response->status());
+    }
+
+    /**
+     * @return int
+     */
+    function test_status_null()
+    {
+        $response = new Response;
+
+        $this->assertEquals(null, $response->status());
     }
 }

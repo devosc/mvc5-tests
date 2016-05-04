@@ -61,4 +61,14 @@ class RequestTest
 
         $this->assertEquals('1.1', $request->version());
     }
+
+    /**
+     * @return int
+     */
+    function test_version_null()
+    {
+        $request = new Request;
+
+        $this->assertEquals(null, $request->version());
+    }
 }
