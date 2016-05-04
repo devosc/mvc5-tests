@@ -343,4 +343,14 @@ class RequestTest
 
         $this->assertEquals('foo', $request->user());
     }
+
+    /**
+     * @return string
+     */
+    function test_user_agent()
+    {
+        $request = new Request([Arg::USER_AGENT => 'foo']);
+
+        $this->assertEquals('foo', $request->userAgent());
+    }
 }
