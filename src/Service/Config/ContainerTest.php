@@ -38,9 +38,7 @@ class ContainerTest
     {
         $config = new Container;
 
-        $config->configure('foo', 'bar');
-
-        $this->assertEquals('bar', $config->configured('foo'));
+        $this->assertEquals('bar', $config->configure('foo', 'bar'));
     }
 
     /**
