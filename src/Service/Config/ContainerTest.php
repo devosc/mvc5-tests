@@ -392,7 +392,7 @@ class ContainerTest
         $this->assertEquals(true, $clone == $resolver);
         $this->assertInstanceOf(\stdClass::class, $clone->get('a'));
         $this->assertEquals($a, $clone->get('a'));
-        $this->assertTrue($a !== $clone->get('a'));
+        $this->assertTrue($a === $clone->get('a'));
     }
 
     /**
