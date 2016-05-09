@@ -281,6 +281,36 @@ class ConfigTest
     /**
      *
      */
+    function test_with()
+    {
+        $config = new Config(['baz' => 'bat']);
+
+        $new = $config->with('foo', 'bar');
+
+        $this->assertNotEquals($new, $config);
+        $this->assertEquals(null,    $config->get('foo'));
+        $this->assertEquals('bar',   $new->get('foo'));
+        $this->assertEquals('bat',   $new->get('baz'));
+    }
+
+    /**
+     *
+     */
+    function test_without()
+    {
+        $config = new Config(['foo' => 'bar', 'baz' => 'bat']);
+
+        $new = $config->without('foo');
+
+        $this->assertNotEquals($new, $config);
+        $this->assertEquals('bar',   $config->get('foo'));
+        $this->assertEquals(null,    $new->get('foo'));
+        $this->assertEquals('bat',   $new->get('baz'));
+    }
+
+    /**
+     *
+     */
     function test_clone_array_config()
     {
         $config = new Config(['a' => 'a']);
