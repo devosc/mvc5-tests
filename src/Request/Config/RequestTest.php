@@ -129,7 +129,7 @@ class RequestTest
      */
     function test_error()
     {
-        $route = new Request([Arg::ERROR => 'foo']);;
+        $route = new Request([Arg::ERROR => 'foo']);
 
         $this->assertEquals('foo', $route->error());
     }
@@ -139,9 +139,19 @@ class RequestTest
      */
     function test_files()
     {
-        $route = new Request([Arg::FILES => ['foo' => 'bar']]);;
+        $route = new Request([Arg::FILES => ['foo' => 'bar']]);
 
         $this->assertEquals(['foo' => 'bar'], $route->files());
+    }
+
+    /**
+     *
+     */
+    function test_files_not_set()
+    {
+        $route = new Request;
+
+        $this->assertEquals([], $route->files());
     }
 
     /**
