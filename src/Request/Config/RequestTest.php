@@ -137,6 +137,16 @@ class RequestTest
     /**
      *
      */
+    function test_files()
+    {
+        $route = new Request([Arg::FILES => ['foo' => 'bar']]);;
+
+        $this->assertEquals(['foo' => 'bar'], $route->files());
+    }
+
+    /**
+     *
+     */
     function test_header()
     {
         $request = new Request([Arg::HEADERS => ['foo' => 'bar']]);
