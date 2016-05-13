@@ -16,7 +16,7 @@ class PropertyAccessTest
      */
     function test_offsetExists()
     {
-        $config = new PropertyConfig(['foo' => 'bar']);
+        $config = new Config(['foo' => 'bar']);
 
         $this->assertTrue(isset($config->foo));
     }
@@ -26,7 +26,7 @@ class PropertyAccessTest
      */
     function test_offsetGet()
     {
-        $config = new PropertyConfig(['foo' => 'bar']);
+        $config = new Config(['foo' => 'bar']);
 
         $this->assertEquals('bar', $config->foo);
     }
@@ -36,7 +36,7 @@ class PropertyAccessTest
      */
     function test_offsetSet()
     {
-        $config = new PropertyConfig;
+        $config = new Config;
 
         $this->assertEquals('bar', $config->foo = 'bar');
     }
@@ -46,7 +46,7 @@ class PropertyAccessTest
      */
     function test_offsetUnset()
     {
-        $config = new PropertyConfig(['foo' => 'bar']);
+        $config = new Config(['foo' => 'bar']);
 
         $this->assertTrue(isset($config->foo));
 
