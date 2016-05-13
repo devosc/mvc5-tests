@@ -29,7 +29,7 @@ class RouterTest
                     function(Request $request, Route $route) {
                         switch($route->name()) {
                             default:
-                                if ('baz' == $request->name()) {
+                                if ('baz/bar' == $request->name()) {
                                     $request[Arg::MATCHED] = true;
                                 }
                                 return $request;
@@ -120,7 +120,21 @@ class RouterTest
      */
     function test_dispatch_with_children()
     {
-        $route   = new Route([Arg::ROUTE => '/', Arg::CHILDREN => ['baz' => [Arg::ROUTE => 'foo']]]);
+        $config = [
+            Arg::ROUTE => '/',
+            Arg::CHILDREN => [
+                'baz' => [
+                    Arg::ROUTE => 'foo',
+                    Arg::CHILDREN => [
+                        'bar' => [
+                            Arg::ROUTE => 'bat'
+                        ]
+                    ]
+                ]
+            ]
+        ];
+
+        $route   = new Route($config);
         $request = new Request(new Mvc5Request);
 
         $router = new Router(new Route);
@@ -129,7 +143,7 @@ class RouterTest
 
         $request = $router->dispatch($request, $route);
 
-        $this->assertEquals('baz', $request->name());
+        $this->assertEquals('baz/bar', $request->name());
     }
 
     /**
