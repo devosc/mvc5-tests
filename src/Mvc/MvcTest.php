@@ -65,10 +65,24 @@ class MvcTest
     /**
      *
      */
-    function test_invoke_response()
+    function test_invoke_response_equal_and_event_not_stopped()
     {
         $mvc = $this->mvc();
 
         $this->assertInstanceOf(Response::class, $mvc(function($response) { return $response; }));
+
+        $this->assertFalse($mvc->stopped());
+    }
+
+    /**
+     *
+     */
+    function test_invoke_response_not_equal_and_event_stopped()
+    {
+        $mvc = $this->mvc();
+
+        $this->assertInstanceOf(Response::class, $mvc(function() { return new Response; }));
+
+        $this->assertTrue($mvc->stopped());
     }
 }
