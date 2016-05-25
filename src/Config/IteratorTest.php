@@ -5,10 +5,7 @@
 
 namespace Mvc5\Test\Config;
 
-use Mvc5\App;
-use Mvc5\Arg;
 use Mvc5\Config;
-use Mvc5\Plugin\Value;
 use Mvc5\Test\Test\TestCase;
 
 class IteratorTest

@@ -32,7 +32,7 @@ class Generator
      * @param array $args
      * @return array|\Traversable|null
      */
-    function traversable($event, array $args = [])
+    function iterator($event, array $args = [])
     {
         return ['bar'];
     }

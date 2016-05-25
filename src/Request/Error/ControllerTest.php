@@ -5,8 +5,9 @@
 
 namespace Mvc5\Test\Request\Error;
 
-use Mvc5\Response\Error\BadRequest as Error;
+use Mvc5\Http\Error\BadRequest as Error;
 use Mvc5\Request\Error\Controller;
+use Mvc5\Request\Error\Model;
 use Mvc5\Request\Config as Request;
 use Mvc5\Model\ViewModel;
 use Mvc5\Test\Test\TestCase;
@@ -19,7 +20,7 @@ class ControllerTest
      */
     function test_invoke()
     {
-        $controller = new Controller;
+        $controller = new Controller(new Model);
 
         $this->assertInstanceOf(ViewModel::class, $controller(new Request));
     }
@@ -29,7 +30,7 @@ class ControllerTest
      */
     function test_invoke_with_error()
     {
-        $controller = new Controller;
+        $controller = new Controller(new Model);
 
         $this->assertInstanceOf(ViewModel::class, $controller(new Request, new Error));
     }

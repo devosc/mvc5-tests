@@ -3,13 +3,13 @@
  *
  */
 
-namespace Mvc5\Test\Request\Error;
+namespace Mvc5\Test\Request\Error\Config;
 
 use Mvc5\Arg;
 use Mvc5\Request\Error\Model;
 use Mvc5\Test\Test\TestCase;
 
-class ModelTest
+class ErrorModelTest
     extends TestCase
 {
     /**

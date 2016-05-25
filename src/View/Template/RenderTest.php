@@ -8,10 +8,10 @@ namespace Mvc5\Test\View\Template;
 use Mvc5\Arg;
 use Mvc5\Model;
 use Mvc5\Layout;
-use Mvc5\View\Template\Renderer;
+use Mvc5\Test\View\Render;
 use Mvc5\Test\Test\TestCase;
 
-class RendererTest
+class RenderTest
     extends TestCase
 {
     /**
@@ -19,7 +19,7 @@ class RendererTest
      */
     function test_construct()
     {
-        $this->assertInstanceOf(Renderer::class, new Renderer);
+        $this->assertInstanceOf(Render::class, new Render);
     }
 
     /**
@@ -27,9 +27,9 @@ class RendererTest
      */
     function test_not_a_view_model()
     {
-        $renderer = new Renderer;
+        $render = new Render;
 
-        $this->assertEquals(null, $renderer('foo'));
+        $this->assertEquals('foo', $render('foo'));
     }
 
     /**
@@ -40,12 +40,12 @@ class RendererTest
         $model  = new HomeModel('home', ['title' => 'foo']);
         $layout = new Layout('layout', [Arg::CHILD_MODEL => $model]);
 
-        $renderer = new Renderer([
+        $render = new Render([
             'home'   => __DIR__ . '/index.phtml',
             'layout' => __DIR__ . '/layout.phtml'
         ]);
 
-        $this->assertEquals('<h1>Home</h1>', trim($renderer($layout)));
+        $this->assertEquals('<h1>Home</h1>', trim($render($layout)));
     }
 
     /**
@@ -53,11 +53,11 @@ class RendererTest
      */
     function test_invoke_no_template_exception()
     {
-        $renderer = new Renderer;
+        $render = new Render;
 
         $this->setExpectedException('RuntimeException');
 
-        $renderer(new Model);
+        $render(new Model);
     }
 
     /**
@@ -65,11 +65,11 @@ class RendererTest
      */
     function test_invoke_exception()
     {
-        $renderer = new Renderer;
+        $render = new Render;
         $template = __DIR__ . '/exception.phtml';
 
         $this->setExpectedException('Exception', 'Exception Test');
 
-        $renderer(new Model($template));
+        $render(new Model($template));
     }
 }

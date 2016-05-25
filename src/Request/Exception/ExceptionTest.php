@@ -5,12 +5,11 @@
 
 namespace Mvc5\Test\Request\Exception;
 
-use Exception;
-use Mvc5\Request\Exception\Create;
+use Mvc5\Request\Exception;
 use Mvc5\Request\Config as Request;
 use Mvc5\Test\Test\TestCase;
 
-class CreateTest
+class ExceptionTest
     extends TestCase
 {
     /**
@@ -18,7 +17,7 @@ class CreateTest
      */
     function test_construct()
     {
-        $this->assertInstanceOf(Create::class, new Create('foo', 'bar'));
+        $this->assertInstanceOf(Exception::class, new Exception('foo', 'bar'));
     }
 
     /**
@@ -26,8 +25,8 @@ class CreateTest
      */
     function test_invoke()
     {
-        $create = new Create('foo', 'bar');
+        $exception = new Exception('foo', 'bar');
 
-        $this->assertInstanceOf(Request::class, $create(new Request, new Exception));
+        $this->assertInstanceOf(Request::class, $exception(new Request, new \Exception));
     }
 }

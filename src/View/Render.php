@@ -5,16 +5,15 @@
 
 namespace Mvc5\Test\View;
 
-use Mvc5\View\Renderer as Base;
+use Mvc5\View\Template\Render as _Render;
 
-class Renderer
+class Render
 {
     /**
      *
      */
-    use Base {
-        exception as public;
-        render    as public;
+    use _Render {
+        render as public;
     }
 
     /**

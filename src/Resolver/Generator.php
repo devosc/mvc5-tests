@@ -13,9 +13,9 @@ class Generator
      *
      */
     use Base {
-        eventName   as public;
-        listeners   as public;
-        traversable as public;
+        eventName as public;
+        listeners as public;
+        iterator  as public;
     }
 
     /**

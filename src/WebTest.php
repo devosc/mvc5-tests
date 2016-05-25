@@ -52,7 +52,7 @@ class WebTest
                         throw new \Exception;
                     };
                 },
-                Arg::RESPONSE_EXCEPTION => function() {
+                Arg::EXCEPTION_RESPONSE => function() {
                     return function() {
                         return 'foo';
                     };

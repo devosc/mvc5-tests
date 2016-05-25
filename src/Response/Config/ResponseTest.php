@@ -6,7 +6,7 @@
 namespace Mvc5\Test\Response\Config;
 
 use Mvc5\Cookie\Container as CookieJar;
-use Mvc5\Response\Headers\Config as ResponseHeaders;
+use Mvc5\Http\Headers\Config as HttpHeaders;
 use Mvc5\Response\Config as Response;
 use Mvc5\Test\Test\TestCase;
 
@@ -20,10 +20,10 @@ class ResponseTest
     {
         $response = new Response;
 
-        $this->assertEquals(null,                $response->body());
-        $this->assertEquals(new CookieJar,       $response->cookies());
-        $this->assertEquals(new ResponseHeaders, $response->headers());
-        $this->assertEquals(null,                $response->status());
+        $this->assertEquals(null,            $response->body());
+        $this->assertEquals(new CookieJar,   $response->cookies());
+        $this->assertEquals(new HttpHeaders, $response->headers());
+        $this->assertEquals(null,            $response->status());
     }
 
     /**
@@ -33,7 +33,7 @@ class ResponseTest
     {
         $response = new Response(null, null, ['foo' => 'bar']);
 
-        $this->assertEquals(new ResponseHeaders(['foo' => 'bar']), $response->headers());
+        $this->assertEquals(new HttpHeaders(['foo' => 'bar']), $response->headers());
     }
 
     /**
@@ -77,7 +77,7 @@ class ResponseTest
 
         $response->header('foo', 'bar');
 
-        $this->assertEquals(new ResponseHeaders(['foo' => 'bar']), $response->headers());
+        $this->assertEquals(new HttpHeaders(['foo' => 'bar']), $response->headers());
     }
 
     /**
@@ -89,11 +89,11 @@ class ResponseTest
 
         $response->header('foo', 'bar');
 
-        $this->assertEquals(new ResponseHeaders(['foo' => 'bar']), $response->headers());
+        $this->assertEquals(new HttpHeaders(['foo' => 'bar']), $response->headers());
 
         $response->header('foo', 'baz', true);
 
-        $this->assertEquals(new ResponseHeaders(['foo' => 'baz']), $response->headers());
+        $this->assertEquals(new HttpHeaders(['foo' => 'baz']), $response->headers());
     }
 
     /**
@@ -103,7 +103,7 @@ class ResponseTest
     {
         $response = new Response(null, null, ['foo' => 'bar']);
 
-        $this->assertEquals(new ResponseHeaders(['foo' => 'bar']), $response->headers());
+        $this->assertEquals(new HttpHeaders(['foo' => 'bar']), $response->headers());
     }
 
     /**

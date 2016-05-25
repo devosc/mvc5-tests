@@ -63,6 +63,18 @@ class GeneratorTest
     }
 
     /**
+     *
+     */
+    function test_iterator()
+    {
+        $generator = new Generator;
+
+        $generator->events(['foo' => ['bar']]);
+
+        $this->assertEquals(['bar'], $generator->iterator('foo'));
+    }
+
+    /**
      * @return mixed
      */
     function test_listeners_with_config()
@@ -84,17 +96,5 @@ class GeneratorTest
         $this->setExpectedException('RuntimeException');
 
         $generator->listeners('foo');
-    }
-
-    /**
-     *
-     */
-    function test_traversable()
-    {
-        $generator = new Generator;
-
-        $generator->events(['foo' => ['bar']]);
-
-        $this->assertEquals(['bar'], $generator->traversable('foo'));
     }
 }

@@ -6,6 +6,7 @@
 namespace Mvc5\Test\Response\Config;
 
 use Mvc5\Arg;
+use Mvc5\Http\Error\Config as Error;
 use Mvc5\Test\Test\TestCase;
 
 class ErrorTest

@@ -8,24 +8,15 @@ namespace Mvc5\Test\Controller;
 use Mvc5\Controller\Action as ControllerAction;
 
 class Action
+    extends ControllerAction
 {
     /**
-     *
-     */
-    use ControllerAction {
-        action    as public;
-        error     as public;
-        exception as public;
-    }
-
-    /**
-     * @param array|callable|object|string $config
+     * @param array|callable|object|string $name
      * @param array $args
      * @param callable $callback
      * @return callable|mixed|null|object
-     * @throws \RuntimeException
      */
-    function call($config, array $args = [], callable $callback = null)
+    protected function call($name, array $args = [], callable $callback = null)
     {
         return 'foo';
     }
