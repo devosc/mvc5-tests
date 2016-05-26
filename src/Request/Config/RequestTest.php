@@ -6,6 +6,7 @@
 namespace Mvc5\Test\Request\Config;
 
 use Mvc5\Arg;
+use Mvc5\Config;
 use Mvc5\Request\Config as Request;
 use Mvc5\Test\Test\TestCase;
 
@@ -58,6 +59,18 @@ class RequestTest
     function test_attr()
     {
         $request = new Request;
+
+        $request->attr('foo', 'bar');
+
+        $this->assertEquals('bar', $request->param('foo'));
+    }
+
+    /**
+     *
+     */
+    function test_attr_with_config_object()
+    {
+        $request = new Request(new Config);
 
         $request->attr('foo', 'bar');
 
