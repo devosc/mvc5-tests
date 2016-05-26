@@ -6,6 +6,7 @@
 namespace Mvc5\Test\Model\Template;
 
 use Mvc5\Arg;
+use Mvc5\Layout;
 use Mvc5\Test\Test\TestCase;
 
 class LayoutTest

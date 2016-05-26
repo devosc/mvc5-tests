@@ -5,6 +5,7 @@
 
 namespace Mvc5\Test\Request\Error;
 
+use Mvc5\Arg;
 use Mvc5\Http\Error\NotFound;
 use Mvc5\Request\Error;
 use Mvc5\Request\Config as Request;
@@ -24,10 +25,34 @@ class ErrorTest
     /**
      *
      */
-    function test_invoke()
+    function test_error()
     {
-        $error = new Error('foo', 'bar');
+        $error = new Error('error', 'error/controller');
 
-        $this->assertInstanceOf(Request::class, $error(new Request, new NotFound));
+        $request = new Request([
+            Arg::NAME => 'home', Arg::CONTROLLER => 'Home\Controller', Arg::ERROR => new NotFound
+        ]);
+
+        $request = $error($request);
+
+        $this->assertEquals('error',            $request[Arg::NAME]);
+        $this->assertEquals('error/controller', $request[Arg::CONTROLLER]);
+    }
+
+    /**
+     *
+     */
+    function test_no_error()
+    {
+        $error = new Error('error', 'error/controller');
+
+        $request = new Request([
+            Arg::NAME => 'home', Arg::CONTROLLER => 'Home\Controller'
+        ]);
+
+        $request = $error($request);
+
+        $this->assertEquals('home',            $request[Arg::NAME]);
+        $this->assertEquals('Home\Controller', $request[Arg::CONTROLLER]);
     }
 }

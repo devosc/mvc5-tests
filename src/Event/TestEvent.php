@@ -5,19 +5,21 @@
 
 namespace Mvc5\Test\Event;
 
-use Mvc5\Event\Model;
+use Mvc5\Event\Event;
+use Mvc5\Event\Signal;
 
-class Event
+class TestEvent
+    implements Event
 {
     /**
      *
      */
-    use Model;
+    use Signal;
 
     /**
      *
      */
-    const EVENT = 'baz';
+    const EVENT = 'test_event';
 
     /**
      * @param $event

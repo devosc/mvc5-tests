@@ -15,7 +15,7 @@ class ModelTest
      */
     function test_event()
     {
-        $event = new Event('foo');
+        $event = new TestEvent('foo');
 
         $this->assertEquals('foo', $event->event());
     }
@@ -25,9 +25,9 @@ class ModelTest
      */
     function test_event_const()
     {
-        $event = new Event;
+        $event = new TestEvent;
 
-        $this->assertEquals('baz', $event->event());
+        $this->assertEquals('test_event', $event->event());
     }
 
     /**
@@ -35,7 +35,7 @@ class ModelTest
      */
     function test_event_class_name()
     {
-        $event = new ModelEvent;
+        $event = new TestEventNoName;
 
         $this->assertEquals(get_class($event), $event->event());
     }
@@ -45,7 +45,7 @@ class ModelTest
      */
     function test_stop()
     {
-        $event = new ModelEvent;
+        $event = new TestEvent;
 
         $this->assertFalse($event->stopped());
 
@@ -59,7 +59,7 @@ class ModelTest
      */
     function test_stopped()
     {
-        $event = new ModelEvent;
+        $event = new TestEvent;
 
         $this->assertFalse($event->stopped());
     }

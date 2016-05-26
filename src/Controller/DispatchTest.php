@@ -5,8 +5,8 @@
 
 namespace Mvc5\Test\Controller;
 
-use Mvc5\Http\Request\Config as Request;
-use Mvc5\Http\Response\Config as Response;
+use Mvc5\Http\Request\Config as HttpRequest;
+use Mvc5\Http\Response\Config as HttpResponse;
 use Mvc5\Test\Test\TestCase;
 
 class DispatchTest
@@ -19,6 +19,6 @@ class DispatchTest
     {
         $dispatch = new Dispatch;
 
-        $this->assertEquals('foo', $dispatch(new Request, new Response));
+        $this->assertEquals('foo', $dispatch(new HttpRequest, new HttpResponse));
     }
 }

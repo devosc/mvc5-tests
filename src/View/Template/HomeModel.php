@@ -19,6 +19,11 @@ class HomeModel
     /**
      *
      */
+    const TEMPLATE_NAME = __DIR__ . '/index.phtml';
+
+    /**
+     *
+     */
     private $title = 'Home';
 
     /**

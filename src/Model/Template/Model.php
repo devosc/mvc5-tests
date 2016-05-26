@@ -6,7 +6,7 @@
 namespace Mvc5\Test\Model\Template;
 
 use Mvc5\Model\Template;
-use Mvc5\Model\Template\Model as Base;
+use Mvc5\Model\Plugin;
 
 class Model
     implements Template
@@ -14,7 +14,7 @@ class Model
     /**
      *
      */
-    use Base;
+    use Plugin;
 
     /**
      *

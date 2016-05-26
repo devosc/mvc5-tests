@@ -35,6 +35,16 @@ class DispatchTest
     /**
      *
      */
+    function test_invoke_request()
+    {
+        $dispatch = new Dispatch('foo', new Request, new Response);
+
+        $this->assertInstanceOf(Request::class, $dispatch(function($request) { return $request; }));
+    }
+
+    /**
+     *
+     */
     function test_invoke_response()
     {
         $dispatch = new Dispatch('foo', new Request, new Response);
