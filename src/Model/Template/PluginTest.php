@@ -7,7 +7,6 @@ namespace Mvc5\Test\Model\Template;
 
 use Mvc5\App;
 use Mvc5\Arg;
-use Mvc5\Model as Mvc5Model;
 use Mvc5\Test\Test\TestCase;
 
 class PluginTest
@@ -18,7 +17,7 @@ class PluginTest
      */
     function test_call()
     {
-        $model   = new Mvc5Model;
+        $model   = new Model;
         $service = new App([Arg::SERVICES => ['foo' => function() { return function($bar) { return $bar; }; }]]);
 
         $model->service($service);

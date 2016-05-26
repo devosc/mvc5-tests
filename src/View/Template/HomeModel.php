@@ -5,8 +5,8 @@
 
 namespace Mvc5\Test\View\Template;
 
-use Mvc5\Model\ViewModel;
 use Mvc5\Model\Plugin;
+use Mvc5\Model\ViewModel;
 
 class HomeModel
     implements ViewModel
@@ -15,6 +15,11 @@ class HomeModel
      *
      */
     use Plugin;
+
+    /**
+     *
+     */
+    const TEMPLATE_NAME = __DIR__ . '/index.phtml';
 
     /**
      *

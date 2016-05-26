@@ -11,7 +11,6 @@ use Mvc5\View\Render;
 class RenderTest
     extends TestCase
 {
-
     /**
      *
      */
@@ -19,6 +18,6 @@ class RenderTest
     {
         $render = new Render;
 
-        $this->assertEquals('foo', $render(function(){ return 'foo'; }));
+        $this->assertEquals('foo', $render('foo'));
     }
 }

@@ -3,6 +3,12 @@
     "description": "mvc5/mvc5-tests",
     "homepage": "https://github.com/mvc5/mvc5-tests",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Gregory Baboolal",
+            "email": "devosc@gmail.com"
+        }
+    ],
     "require": {
         "php": "^7.0"
     },

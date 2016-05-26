@@ -6,7 +6,7 @@
 namespace Mvc5\Test\Resolver;
 
 use Mvc5\Config\Configuration;
-use Mvc5\Resolver\Resolver as Base;
+use Mvc5\Resolver\Resolver as _Resolver;
 use Mvc5\Service\Service;
 
 class Resolver
@@ -15,7 +15,7 @@ class Resolver
     /**
      *
      */
-    use Base {
+    use _Resolver {
         args       as public;
         arguments  as public;
         bind       as public;

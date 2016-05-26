@@ -5,7 +5,7 @@
 
 namespace Mvc5\Test\Route\Definition;
 
-use Mvc5\Route\Definition\Compile as Base;
+use Mvc5\Route\Definition\Compile as _Compile;
 use Mvc5\Test\Test\TestCase;
 
 class Compile
@@ -14,7 +14,7 @@ class Compile
     /**
      *
      */
-    use Base {
+    use _Compile {
         compile as public;
     }
 }

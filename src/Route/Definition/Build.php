@@ -5,14 +5,14 @@
 
 namespace Mvc5\Test\Route\Definition;
 
-use Mvc5\Route\Definition\Build as Base;
+use Mvc5\Route\Definition\Build as _Build;
 
 class Build
 {
     /**
      *
      */
-    use Base {
+    use _Build {
         build         as public;
         definition    as public;
         children      as public;

@@ -5,17 +5,17 @@
 
 namespace Mvc5\Test\Resolver;
 
-use Mvc5\Resolver\Generator as Base;
+use Mvc5\Resolver\Generator as _Generator;
 
 class Generator
 {
     /**
      *
      */
-    use Base {
-        eventName   as public;
-        listeners   as public;
-        traversable as public;
+    use _Generator {
+        eventName as public;
+        listeners as public;
+        iterator  as public;
     }
 
     /**

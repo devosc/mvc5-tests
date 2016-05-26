@@ -5,10 +5,10 @@
 
 namespace Mvc5\Test\View\Template;
 
-use Mvc5\Model;
 use Mvc5\Layout as ViewLayout;
-use Mvc5\View\Template\Layout;
+use Mvc5\Model;
 use Mvc5\Test\Test\TestCase;
+use Mvc5\View\Template\Layout;
 
 class LayoutTest
     extends TestCase

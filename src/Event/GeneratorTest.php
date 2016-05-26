@@ -5,33 +5,89 @@
 
 namespace Mvc5\Test\Event;
 
+use Mvc5\App;
 use Mvc5\Config;
 use Mvc5\Test\Test\TestCase;
-use Traversable;
 
 class GeneratorTest
     extends TestCase
 {
     /**
-     *
+     * @return App
      */
-    function test_emit_callable_event()
+    protected function app()
     {
-        $event     = function() { return 'foo'; };
-        $generator = new Generator;
-        $listener  = function() {};
+        $config = [
+            'events' => [
+                'string_event' => [
+                    function() {
+                        return 'foo';
+                    }
+                ],
+                'test_event' => [
+                    function() {
+                        return 'foo';
+                    }
+                ],
+                'test_event_stopped' => [
+                    function() {
+                        return 'foo';
+                    },
+                    function(TestEvent $event) {
+                        $event->stop();
+                        return 'bar';
+                    },
+                    function() {
+                        return 'baz';
+                    },
+                ],
+                'test_event_iterator' => new Config([
+                    function() {
+                        return 'foo';
+                    },
+                    function() {
+                        return 'bar';
+                    },
+                    function() {
+                        return 'baz';
+                    },
+                ])
+            ],
+            'services' => [
+                'test_event' => TestEvent::class,
+                'test_event_array' => function() {
+                    return [
+                        function() {
+                            return 'a';
+                        },
+                        function() {
+                            return 'b';
+                        },
+                        function() {
+                            return 'c';
+                        },
+                    ];
+                }
+            ]
+        ];
 
-        $this->assertEquals('foo', $generator->emit($event, $listener));
+        return new App($config);
     }
 
     /**
      *
      */
-    function test_emit_listener()
+    function test_emit_event()
     {
-        $generator = new Generator;
+        $this->assertEquals('foo', $this->app()->trigger('test_event'));
+    }
 
-        $this->assertEquals('foo', $generator->emit(null, function() { return 'foo'; }));
+    /**
+     *
+     */
+    function test_emit_string_event_listener()
+    {
+        $this->assertEquals('foo', $this->app()->trigger('string_event'));
     }
 
     /**
@@ -39,38 +95,30 @@ class GeneratorTest
      */
     function test_generate()
     {
-        $generator = new Generator;
-
-        $this->assertEquals('foo', $generator->generate(new Event));
+        $this->assertEquals('foo', $this->app()->trigger(new TestEvent));
     }
 
     /**
-     *
+     * @return mixed
      */
-    function test_queue_array()
+    function test_iterate_event_stopped()
     {
-        $generator = new Generator;
-
-        $this->assertEquals(['foo'], $generator->queue(['foo']));
+        $this->assertEquals('bar', $this->app()->trigger(new TestEvent('test_event_stopped')));
     }
 
     /**
-     *
+     * @return mixed
      */
-    function test_queue_traversable()
+    function test_iterate_event_array()
     {
-        $generator = new Generator;
-
-        $this->assertInstanceOf(Traversable::class, $generator->queue(new Config));
+        $this->assertEquals('c', $this->app()->trigger('test_event_array'));
     }
 
     /**
-     *
+     * @return mixed
      */
-    function test_queue_not_array_or_traversable()
+    function test_iterate_event_iterator()
     {
-        $generator = new Generator;
-
-        $this->assertEquals(['bar'], $generator->queue('foo'));
+        $this->assertEquals('baz', $this->app()->trigger(new TestEvent('test_event_iterator')));
     }
 }
