@@ -13,8 +13,8 @@ use Mvc5\Route\Config;
 use Mvc5\Route\Generator;
 use Mvc5\Route\Match;
 use Mvc5\Route\Match\Path;
-use Mvc5\Web\Route;
 use Mvc5\Test\Test\TestCase;
+use Mvc5\Web\Route;
 
 class RouteTest
     extends TestCase

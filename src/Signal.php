@@ -7,14 +7,14 @@ namespace Mvc5\Test;
 
 use Mvc5\Plugin\Gem\SignalArgs;
 use Mvc5\Plugin\Gem\Config;
-use Mvc5\Signal as Base;
+use Mvc5\Signal as _Signal;
 
 class Signal
 {
     /**
      *
      */
-    use Base {
+    use _Signal {
         signal as public;
     }
 

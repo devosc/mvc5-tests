@@ -5,14 +5,14 @@
 
 namespace Mvc5\Test\Route\Definition;
 
-use Mvc5\Route\Definition\Assemble as Base;
+use Mvc5\Route\Definition\Assemble as _Assemble;
 
 class Assemble
 {
     /**
      *
      */
-    use Base {
+    use _Assemble {
         assemble as public;
     }
 }

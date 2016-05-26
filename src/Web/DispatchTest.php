@@ -8,8 +8,8 @@ namespace Mvc5\Test\Web;
 use Mvc5\App;
 use Mvc5\Http\Request\Config as Request;
 use Mvc5\Http\Response\Config as Response;
-use Mvc5\Web\Dispatch;
 use Mvc5\Test\Test\TestCase;
+use Mvc5\Web\Dispatch;
 
 class DispatchTest
     extends TestCase

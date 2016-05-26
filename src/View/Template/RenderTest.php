@@ -6,10 +6,10 @@
 namespace Mvc5\Test\View\Template;
 
 use Mvc5\Arg;
-use Mvc5\Model;
 use Mvc5\Layout;
-use Mvc5\Test\View\Render;
+use Mvc5\Model;
 use Mvc5\Test\Test\TestCase;
+use Mvc5\Test\View\Render;
 
 class RenderTest
     extends TestCase

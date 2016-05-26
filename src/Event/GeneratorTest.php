@@ -8,7 +8,6 @@ namespace Mvc5\Test\Event;
 use Mvc5\App;
 use Mvc5\Config;
 use Mvc5\Test\Test\TestCase;
-use Traversable;
 
 class GeneratorTest
     extends TestCase

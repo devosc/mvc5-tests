@@ -5,14 +5,14 @@
 
 namespace Mvc5\Test\Route\Definition;
 
-use Mvc5\Route\Definition\Tokens as Base;
+use Mvc5\Route\Definition\Tokens as _Tokens;
 
 class Tokens
 {
     /**
      *
      */
-    use Base {
+    use _Tokens {
         tokens as public;
     }
 }

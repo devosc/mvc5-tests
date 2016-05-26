@@ -6,7 +6,7 @@
 namespace Mvc5\Test\Service\Config;
 
 use Mvc5\Config\Configuration;
-use Mvc5\Service\Config\Container as Base;
+use Mvc5\Service\Config\Container as _Container;
 
 class Container
     implements Configuration
@@ -14,7 +14,7 @@ class Container
     /**
      *
      */
-    use Base {
+    use _Container {
         shared as public;
     }
 }

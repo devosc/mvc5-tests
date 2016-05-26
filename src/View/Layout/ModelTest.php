@@ -7,8 +7,8 @@ namespace Mvc5\Test\View\Layout;
 
 use Mvc5\Model as ViewModel;
 use Mvc5\Layout as LayoutModel;
-use Mvc5\View\Layout;
 use Mvc5\Test\Test\TestCase;
+use Mvc5\View\Layout;
 
 class ModelTest
     extends TestCase

@@ -6,9 +6,9 @@
 namespace Mvc5\Test\Route\Match;
 
 use Mvc5\Arg;
+use Mvc5\Route\Config as Route;
 use Mvc5\Route\Match\Wildcard;
 use Mvc5\Route\Request\Config as Request;
-use Mvc5\Route\Config as Route;
 use Mvc5\Test\Test\TestCase;
 
 class WildcardTest
