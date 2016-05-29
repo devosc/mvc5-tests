@@ -43,12 +43,12 @@ class PluginTest
     {
         $resolver = new Resolver;
 
-        $resolver->configure('exception\model', ['layout', 'error/exception']);
+        $resolver->configure('exception\model', ['layout', 'exception']);
         $resolver->configure('layout',          ['Mvc5\Layout', 'layout']);
 
         $model = $resolver->plugin('exception\model');
 
-        $this->assertEquals('error/exception', $model->template());
+        $this->assertEquals('exception', $model->template());
     }
 
     /**
@@ -58,12 +58,12 @@ class PluginTest
     {
         $resolver = new Resolver;
 
-        $resolver->configure('exception\model', ['layout', 'template' => 'error/exception']);
+        $resolver->configure('exception\model', ['layout', 'template' => 'exception']);
         $resolver->configure('layout',          ['Mvc5\Layout', 'template' => 'layout']);
 
         $model = $resolver->plugin('exception\model');
 
-        $this->assertEquals('error/exception', $model->template());
+        $this->assertEquals('exception', $model->template());
     }
 
     /**
