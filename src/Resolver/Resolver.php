@@ -50,6 +50,7 @@ class Resolver
         scope      as public;
         scoped     as public;
         solve      as public;
+        strict     as public;
         transmit   as public;
         unique     as public;
         variadic   as public;
@@ -71,5 +72,14 @@ class Resolver
     function setProvider(callable $provider)
     {
         $this->provider = $provider;
+    }
+
+    /**
+     * @param bool|false $strict
+     * @return void
+     */
+    function setStrict($strict = false)
+    {
+        $this->strict = $strict;
     }
 }

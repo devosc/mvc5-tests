@@ -147,4 +147,34 @@ class AppTest
 
         $this->assertEquals(new Config(['foo' => 'baz']), $app['foo']);
     }
+
+    /**
+     *
+     */
+    function test_app_not_strict()
+    {
+        $app = new App();
+
+        $this->assertEquals(new \ArrayObject, $app['ArrayObject']);
+    }
+
+    /**
+     *
+     */
+    function test_app_strict_with_no_config()
+    {
+        $app = new App([], null, null, true);
+
+        $this->assertEquals(null, $app['ArrayObject']);
+    }
+
+    /**
+     *
+     */
+    function test_app_strict_with_config()
+    {
+        $app = new App([Arg::SERVICES => ['ArrayObject' => 'ArrayObject']], null, null, true);
+
+        $this->assertEquals(new \ArrayObject, $app['ArrayObject']);
+    }
 }
