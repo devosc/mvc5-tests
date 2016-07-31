@@ -156,18 +156,6 @@ class ContainerTest
     /**
      *
      */
-    function test_has_service_config()
-    {
-        $config = new Container;
-        
-        $config->configure('foo', 'bar');
-
-        $this->assertEquals(true, $config->has('foo'));
-    }
-
-    /**
-     *
-     */
     function test_key_array()
     {
         $config = new Container;
