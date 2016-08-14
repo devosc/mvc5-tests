@@ -10,6 +10,7 @@ class Filterable
     /**
      * @param $foo
      * @param $bar
+     * @return mixed
      */
     function __invoke($foo, $bar)
     {
