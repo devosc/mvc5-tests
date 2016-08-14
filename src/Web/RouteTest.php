@@ -9,7 +9,6 @@ use Mvc5\App;
 use Mvc5\Arg;
 use Mvc5\Http\Request\Config as Request;
 use Mvc5\Http\Response\Config as Response;
-use Mvc5\Route\Config;
 use Mvc5\Route\Generator;
 use Mvc5\Route\Match;
 use Mvc5\Route\Match\Path;
