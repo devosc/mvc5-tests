@@ -5,7 +5,7 @@
 
 namespace Mvc5\Test\Config;
 
-use Mvc5\Object;
+use Mvc5\Immutable;
 use Mvc5\Test\Test\TestCase;
 
 class ImmutableTest
@@ -16,7 +16,7 @@ class ImmutableTest
      */
     function test_offset_set()
     {
-        $config = new Object;
+        $config = new Immutable;
 
         $this->setExpectedException(\Exception::class, 'Invalid operation: object cannot be modified');
 
@@ -28,7 +28,7 @@ class ImmutableTest
      */
     function test_property_set()
     {
-        $config = new Object;
+        $config = new Immutable;
 
         $this->setExpectedException(\Exception::class, 'Invalid operation: object cannot be modified');
 
