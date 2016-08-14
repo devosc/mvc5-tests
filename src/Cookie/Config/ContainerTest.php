@@ -5,7 +5,6 @@
 
 namespace Mvc5\Test\Cookie\Config;
 
-use Mvc5\Config;
 use Mvc5\Test\Test\TestCase;
 
 class ContainerTest
