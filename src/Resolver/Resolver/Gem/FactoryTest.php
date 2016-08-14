@@ -5,7 +5,6 @@
 
 namespace Mvc5\Test\Resolver\Resolver\Gem;
 
-use Mvc5\Config;
 use Mvc5\Plugin\Factory;
 use Mvc5\Plugin\Plugin;
 use Mvc5\Test\Resolver\Resolver;
