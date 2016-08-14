@@ -37,8 +37,8 @@ class Signal
     }
 
     /**
-     * @param ...$args
-     * @return mixed
+     * @param array ...$args
+     * @return array|null
      */
     static function variadicArgsTest(...$args)
     {
