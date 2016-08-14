@@ -37,8 +37,8 @@ class Hydrate
 
     /**
      * @param $foo
-     * @param self $object
-     * @return self
+     * @param Hydrate $object
+     * @return Hydrate
      */
     function initialize($foo, self $object)
     {
@@ -58,8 +58,8 @@ class Hydrate
 
     /**
      * @param $foo
-     * @param self $object
-     * @return self
+     * @param Hydrate $object
+     * @return Hydrate
      */
     function __invoke($foo, self $object)
     {

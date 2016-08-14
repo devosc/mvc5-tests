@@ -8,6 +8,7 @@ namespace Mvc5\Test\Config;
 use Mvc5\App;
 use Mvc5\Arg;
 use Mvc5\Config;
+use Mvc5\Immutable;
 use Mvc5\Plugin\Value;
 use Mvc5\Test\Test\TestCase;
 
@@ -146,9 +147,39 @@ class ConfigTest
     /**
      *
      */
+    function test_with_immutable()
+    {
+        $config = new Config(new Immutable(['baz' => 'bat']));
+
+        $new = $config->with('foo', 'bar');
+
+        $this->assertNotEquals($new, $config);
+        $this->assertEquals(null,    $config->get('foo'));
+        $this->assertEquals('bar',   $new->get('foo'));
+        $this->assertEquals('bat',   $new->get('baz'));
+    }
+
+    /**
+     *
+     */
     function test_without()
     {
         $config = new Config(['foo' => 'bar', 'baz' => 'bat']);
+
+        $new = $config->without('foo');
+
+        $this->assertNotEquals($new, $config);
+        $this->assertEquals('bar',   $config->get('foo'));
+        $this->assertEquals(null,    $new->get('foo'));
+        $this->assertEquals('bat',   $new->get('baz'));
+    }
+
+    /**
+     *
+     */
+    function test_without_immutable()
+    {
+        $config = new Config(new Immutable(['foo' => 'bar', 'baz' => 'bat']));
 
         $new = $config->without('foo');
 

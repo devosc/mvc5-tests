@@ -8,7 +8,6 @@ namespace Mvc5\Test\Resolver\Resolver;
 use Mvc5\App;
 use Mvc5\Arg;
 use Mvc5\Plugin\Args;
-use Mvc5\Plugin\Config;
 use Mvc5\Plugin\Filter;
 use Mvc5\Plugin\Plugin;
 use Mvc5\Test\Resolver\Resolver;

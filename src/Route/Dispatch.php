@@ -5,14 +5,14 @@
 
 namespace Mvc5\Test\Route;
 
-use Mvc5\Route\Dispatch\Router;
+use Mvc5\Route\Dispatch\Router as _Router;
 
 class Dispatch
 {
     /**
      *
      */
-    use Router {
+    use _Router {
         definition      as public;
         dispatch        as public;
         match           as public;
