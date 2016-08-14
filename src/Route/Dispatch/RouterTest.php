@@ -7,7 +7,6 @@ namespace Mvc5\Test\Route\Router;
 
 use Mvc5\Arg;
 use Mvc5\App;
-use Mvc5\Event;
 use Mvc5\Http\Error\NotFound;
 use Mvc5\Http\Error\MethodNotAllowed;
 use Mvc5\Request\Config as Mvc5Request;
