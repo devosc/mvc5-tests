@@ -147,6 +147,21 @@ class ConfigTest
     /**
      *
      */
+    function test_with_config()
+    {
+        $config = new Config(new Config(['baz' => 'bat']));
+
+        $new = $config->with('foo', 'bar');
+
+        $this->assertNotEquals($new, $config);
+        $this->assertEquals(null,    $config->get('foo'));
+        $this->assertEquals('bar',   $new->get('foo'));
+        $this->assertEquals('bat',   $new->get('baz'));
+    }
+
+    /**
+     *
+     */
     function test_with_immutable()
     {
         $config = new Config(new Immutable(['baz' => 'bat']));
@@ -165,6 +180,21 @@ class ConfigTest
     function test_without()
     {
         $config = new Config(['foo' => 'bar', 'baz' => 'bat']);
+
+        $new = $config->without('foo');
+
+        $this->assertNotEquals($new, $config);
+        $this->assertEquals('bar',   $config->get('foo'));
+        $this->assertEquals(null,    $new->get('foo'));
+        $this->assertEquals('bat',   $new->get('baz'));
+    }
+
+    /**
+     *
+     */
+    function test_without_config()
+    {
+        $config = new Config(new Config(['foo' => 'bar', 'baz' => 'bat']));
 
         $new = $config->without('foo');
 
