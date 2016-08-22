@@ -6,10 +6,10 @@
 namespace Mvc5\Test\Url;
 
 use Mvc5\Route\Route;
-use Mvc5\Url\Generator as Base;
+use Mvc5\Url\Generator as _Generator;
 
 class Generator
-    extends Base
+    extends _Generator
 {
     /**
      * @param Route $parent

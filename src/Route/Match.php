@@ -5,10 +5,10 @@
 
 namespace Mvc5\Test\Route;
 
-use Mvc5\Route\Match as Base;
+use Mvc5\Route\Match as _Match;
 
 class Match
-    extends Base
+    extends _Match
 {
 
     /**

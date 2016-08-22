@@ -5,10 +5,10 @@
 
 namespace Mvc5\Test;
 
-use Mvc5\Event as Base;
+use Mvc5\Event as _Event;
 
 class Event
-    extends Base
+    extends _Event
 {
     /**
      * @return array

@@ -5,14 +5,14 @@
 
 namespace Mvc5\Test\Plugin\Config;
 
-use Mvc5\Plugin\Gem\Plugin as Base;
-use Mvc5\Plugin\Config\Plugin as _Plugin;
+use Mvc5\Plugin\Gem\Plugin as _Plugin;
+use Mvc5\Plugin\Config\Plugin as Config;
 
 class Plugin
-    implements Base
+    implements _Plugin
 {
     /**
      *
      */
-    use _Plugin;
+    use Config;
 }

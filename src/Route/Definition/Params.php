@@ -5,14 +5,14 @@
 
 namespace Mvc5\Test\Route\Definition;
 
-use Mvc5\Route\Definition\Params as Base;
+use Mvc5\Route\Definition\Params as _Params;
 
 class Params
 {
     /**
      *
      */
-    use Base {
+    use _Params {
         params as public;
     }
 }

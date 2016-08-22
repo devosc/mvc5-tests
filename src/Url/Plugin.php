@@ -5,10 +5,10 @@
 
 namespace Mvc5\Test\Url;
 
-use Mvc5\Url\Plugin as Base;
+use Mvc5\Url\Plugin as _Plugin;
 
 class Plugin
-    extends Base
+    extends _Plugin
 {
     /**
      * @param null|string $name
