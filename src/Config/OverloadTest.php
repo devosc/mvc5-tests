@@ -46,7 +46,7 @@ class OverloadTest
     /**
      *
      */
-    function test_get_overload_model_config()
+    function test_get_overload_config()
     {
         $config = new Config(new Config);
 

@@ -5,14 +5,14 @@
 
 namespace Mvc5\Test\Plugin\Config;
 
-use Mvc5\Plugin\Gem\Child as Base;
-use Mvc5\Plugin\Config\Child as _Child;
+use Mvc5\Plugin\Gem\Child as _Child;
+use Mvc5\Plugin\Config\Child as Config;
 
 class Child
-    implements Base
+    implements _Child
 {
     /**
      *
      */
-    use _Child;
+    use Config;
 }

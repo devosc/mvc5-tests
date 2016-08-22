@@ -5,14 +5,14 @@
 
 namespace Mvc5\Test\Resolver;
 
-use Mvc5\Resolver\Initializer as Base;
+use Mvc5\Resolver\Initializer as _Initializer;
 
 class Initializer
 {
     /**
      *
      */
-    use Base {
+    use _Initializer {
         initialize   as public;
         initialized  as public;
         initializing as public;

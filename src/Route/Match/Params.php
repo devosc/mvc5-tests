@@ -5,10 +5,10 @@
 
 namespace Mvc5\Test\Route\Match;
 
-use Mvc5\Route\Match\Path as Base;
+use Mvc5\Route\Match\Path;
 
 class Params
-    extends Base
+    extends Path
 {
     /**
      * @param array $map
