@@ -14,7 +14,7 @@ class PropertyAccessTest
     /**
      *
      */
-    function test_offsetExists()
+    function test_isset()
     {
         $config = new Config(['foo' => 'bar']);
 
@@ -24,7 +24,7 @@ class PropertyAccessTest
     /**
      *
      */
-    function test_offsetGet()
+    function test_get()
     {
         $config = new Config(['foo' => 'bar']);
 
@@ -34,7 +34,7 @@ class PropertyAccessTest
     /**
      *
      */
-    function test_offsetSet()
+    function test_set()
     {
         $config = new Config;
 
@@ -44,7 +44,7 @@ class PropertyAccessTest
     /**
      *
      */
-    function test_offsetUnset()
+    function test_unset()
     {
         $config = new Config(['foo' => 'bar']);
 
