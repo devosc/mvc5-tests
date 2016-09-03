@@ -91,7 +91,7 @@ class GeneratorTest
     }
 
     /**
-     * @return mixed
+     *
      */
     function test_generate()
     {
@@ -99,7 +99,7 @@ class GeneratorTest
     }
 
     /**
-     * @return mixed
+     *
      */
     function test_iterate_event_stopped()
     {
@@ -107,7 +107,7 @@ class GeneratorTest
     }
 
     /**
-     * @return mixed
+     *
      */
     function test_iterate_event_array()
     {
@@ -115,7 +115,7 @@ class GeneratorTest
     }
 
     /**
-     * @return mixed
+     *
      */
     function test_iterate_event_iterator()
     {

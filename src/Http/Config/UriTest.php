@@ -13,7 +13,7 @@ class UriTest
     extends TestCase
 {
     /**
-     * @return string
+     *
      */
     function test_fragment()
     {
@@ -23,7 +23,7 @@ class UriTest
     }
 
     /**
-     * @return string|string[]
+     *
      */
     function test_host()
     {
@@ -33,7 +33,7 @@ class UriTest
     }
 
     /**
-     * @return string|string[]
+     *
      */
     function test_method()
     {
@@ -43,7 +43,7 @@ class UriTest
     }
 
     /**
-     * @return string
+     *
      */
     function test_password()
     {
@@ -53,7 +53,7 @@ class UriTest
     }
 
     /**
-     * @return string
+     *
      */
     function test_path()
     {
@@ -63,7 +63,7 @@ class UriTest
     }
 
     /**
-     * @return string
+     *
      */
     function test_query()
     {
@@ -73,7 +73,7 @@ class UriTest
     }
 
     /**
-     * @return int|null|string
+     *
      */
     function test_port()
     {
@@ -83,7 +83,7 @@ class UriTest
     }
 
     /**
-     * @return string|string[]
+     *
      */
     function test_scheme()
     {
@@ -93,7 +93,7 @@ class UriTest
     }
 
     /**
-     * @return string
+     *
      */
     function test_user()
     {
@@ -103,7 +103,7 @@ class UriTest
     }
 
     /**
-     * @return string
+     *
      */
     function test_to_string()
     {

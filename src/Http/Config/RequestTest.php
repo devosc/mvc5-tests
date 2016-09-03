@@ -13,7 +13,7 @@ class RequestTest
     extends TestCase
 {
     /**
-     * @return string
+     *
      */
     function test_body()
     {
@@ -23,7 +23,7 @@ class RequestTest
     }
 
     /**
-     * @return string
+     *
      */
     function test_headers()
     {
@@ -33,7 +33,7 @@ class RequestTest
     }
 
     /**
-     * @return string|string[]
+     *
      */
     function test_method()
     {
@@ -43,7 +43,7 @@ class RequestTest
     }
 
     /**
-     * @return mixed
+     *
      */
     function test_uri()
     {
@@ -53,7 +53,7 @@ class RequestTest
     }
 
     /**
-     * @return int
+     *
      */
     function test_version()
     {
@@ -63,7 +63,7 @@ class RequestTest
     }
 
     /**
-     * @return int
+     *
      */
     function test_version_null()
     {
