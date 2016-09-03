@@ -13,7 +13,7 @@ class ResponseTest
     extends TestCase
 {
     /**
-     * @return string
+     *
      */
     function test_body()
     {
@@ -23,7 +23,7 @@ class ResponseTest
     }
 
     /**
-     * @return string
+     *
      */
     function test_headers()
     {
@@ -33,7 +33,7 @@ class ResponseTest
     }
 
     /**
-     * @return int
+     *
      */
     function test_reason()
     {
@@ -43,7 +43,7 @@ class ResponseTest
     }
 
     /**
-     * @return int
+     *
      */
     function test_version()
     {
@@ -53,7 +53,7 @@ class ResponseTest
     }
 
     /**
-     * @return int
+     *
      */
     function test_version_null()
     {
@@ -63,7 +63,7 @@ class ResponseTest
     }
 
     /**
-     * @return int
+     *
      */
     function test_status()
     {
@@ -73,7 +73,7 @@ class ResponseTest
     }
 
     /**
-     * @return int
+     *
      */
     function test_status_null()
     {

@@ -78,7 +78,7 @@ class RequestTest
     }
 
     /**
-     * @return mixed
+     *
      */
     function test_client_address()
     {
@@ -178,7 +178,7 @@ class RequestTest
     }
 
     /**
-     * @return string|string[]
+     *
      */
     function test_host()
     {
@@ -258,7 +258,7 @@ class RequestTest
     }
 
     /**
-     * @return string
+     *
      */
     function test_path()
     {
@@ -298,7 +298,7 @@ class RequestTest
     }
 
     /**
-     * @return string
+     *
      */
     function test_query()
     {
@@ -308,7 +308,7 @@ class RequestTest
     }
 
     /**
-     * @return string|string[]
+     *
      */
     function test_scheme()
     {
@@ -368,7 +368,7 @@ class RequestTest
     }
 
     /**
-     * @return string
+     *
      */
     function test_user()
     {
@@ -378,7 +378,7 @@ class RequestTest
     }
 
     /**
-     * @return string
+     *
      */
     function test_user_agent()
     {

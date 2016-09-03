@@ -43,7 +43,7 @@ class GeneratorTest
     }
 
     /**
-     * @return mixed
+     *
      */
     function test_events()
     {
@@ -53,7 +53,7 @@ class GeneratorTest
     }
 
     /**
-     * @return mixed
+     *
      */
     function test_events_return_config()
     {
@@ -75,7 +75,7 @@ class GeneratorTest
     }
 
     /**
-     * @return mixed
+     *
      */
     function test_listeners_with_config()
     {
