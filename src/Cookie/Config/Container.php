@@ -6,10 +6,10 @@
 namespace Mvc5\Test\Cookie\Config;
 
 use Mvc5\Cookie\Config\Container as Config;
-use Mvc5\Cookie\Cookies as CookieJar;
+use Mvc5\Cookie\Cookies as _Cookies;
 
 class Container
-    implements CookieJar
+    implements _Cookies
 {
     use Config {
         cookie    as public;

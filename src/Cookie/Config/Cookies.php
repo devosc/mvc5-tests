@@ -5,11 +5,11 @@
 
 namespace Mvc5\Test\Cookie\Config;
 
-use Mvc5\Cookie\Config\Cookies as Config;
+use Mvc5\Cookie\Config\Cookies as _Cookies;
 
 class Cookies
 {
-    use Config;
+    use _Cookies;
 
     /**
      * @return array
@@ -24,7 +24,7 @@ class Cookies
      */
     function container()
     {
-        return $this->container;
+        return $this->cookies;
     }
 
     /**
