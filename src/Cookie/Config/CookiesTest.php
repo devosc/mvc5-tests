@@ -17,8 +17,8 @@ class CookiesTest
     {
         $cookies = new Cookies(new Container, ['foo']);
 
-        $this->assertEquals(new Container,   $cookies->container());
-        $this->assertEquals(['foo'],         $cookies->config());
+        $this->assertEquals(new Container, $cookies->container());
+        $this->assertEquals(['foo'],       $cookies->config());
     }
 
     /**
