@@ -10,6 +10,7 @@ use Mvc5\Cookie\Config as Cookies;
 use Mvc5\Model\Config as Model;
 use Mvc5\Session\Config;
 use Mvc5\Session\Container;
+use Mvc5\Test\Session\Invalid;
 use Mvc5\Test\Test\TestCase;
 
 class ContainerTest
@@ -28,33 +29,9 @@ class ContainerTest
      */
     function test_construct()
     {
-        @session_start();
+        $container = new Container($this->session(), 'app');
 
-        new Container($this->session(), 'app');
-
-        $this->assertInstanceOf(Model::class, $_SESSION['app']);
-
-        session_destroy();
-    }
-
-    /**
-     *
-     */
-    function test_construct_exists()
-    {
-        @session_start();
-
-        new Container($this->session(), 'app');
-
-        session_write_close();
-
-        @session_start();
-
-        new Container($this->session(), 'app');
-
-        $this->assertInstanceOf(Model::class, $_SESSION['app']);
-
-        session_destroy();
+        $this->assertEquals('app', $container->label());
     }
 
     /**
@@ -153,6 +130,48 @@ class ContainerTest
     /**
      *
      */
+    function test_register_with_reset()
+    {
+        @session_start();
+
+        $container = new Container($this->session());
+
+        $this->assertFalse(isset($_SESSION[$container->label()]));
+
+        $container->register();
+
+        $this->assertInstanceOf(Model::class, $_SESSION[$container->label()]);
+
+        @session_destroy();
+    }
+
+    /**
+     *
+     */
+    function test_register_without_reset()
+    {
+        @session_start();
+
+        $container = new Container($this->session());
+
+        $this->assertFalse(isset($_SESSION[$container->label()]));
+
+        $model = new Model;
+
+        $_SESSION[$container->label()] = $model;
+
+        $container->register();
+
+        $container->set('foo', 'bar');
+
+        $this->assertEquals('bar', $model->get('foo'));
+
+        @session_destroy();
+    }
+
+    /**
+     *
+     */
     function test_reset()
     {
         @session_start();
@@ -168,6 +187,32 @@ class ContainerTest
         $this->assertEquals(0, $container->count());
 
         session_destroy();
+    }
+
+    /**
+     *
+     */
+    function test_start()
+    {
+        $container = new Container($this->session());
+
+        $this->assertEquals(PHP_SESSION_NONE, $container->status());
+
+        @$container->start();
+
+        $this->assertEquals(PHP_SESSION_ACTIVE, $container->status());
+
+        $container->destroy();
+    }
+
+    /**
+     *
+     */
+    function test_start_invalid()
+    {
+        $container = new Container(new Invalid(new Cookies(new CookieContainer)));
+
+        $this->assertFalse(@$container->start());
     }
 
     /**
