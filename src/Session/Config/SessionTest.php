@@ -289,6 +289,44 @@ class SessionTest
     /**
      *
      */
+    function test_start()
+    {
+        $session = $this->session();
+
+        $this->assertEquals(PHP_SESSION_NONE, $session->status());
+
+        @$session->start();
+
+        $this->assertEquals(PHP_SESSION_ACTIVE, $session->status());
+
+        $session->destroy();
+    }
+
+    /**
+     *
+     */
+    function test_start_ini_settings()
+    {
+        $session = $this->session();
+
+        $this->assertEquals(PHP_SESSION_NONE, $session->status());
+
+        $this->assertEquals('PHPSESSID', ini_get('session.name'));
+
+        @$session->start(['name' => 'app']);
+
+        $this->assertEquals(PHP_SESSION_ACTIVE, $session->status());
+
+        $this->assertEquals('app', ini_get('session.name'));
+
+        $session->destroy();
+
+        $this->assertEquals('app', ini_get('session.name'));
+    }
+
+    /**
+     *
+     */
     function test_status()
     {
         @session_start();
