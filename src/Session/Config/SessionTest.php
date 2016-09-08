@@ -305,6 +305,26 @@ class SessionTest
     /**
      *
      */
+    function test_start_already_active()
+    {
+        $session = $this->session();
+
+        $this->assertEquals(PHP_SESSION_NONE, $session->status());
+
+        @session_start();
+
+        $this->assertEquals(PHP_SESSION_ACTIVE, $session->status());
+
+        @$session->start();
+
+        $this->assertTrue($session->start());
+
+        $session->destroy();
+    }
+
+    /**
+     *
+     */
     function test_start_ini_settings()
     {
         $session = $this->session();

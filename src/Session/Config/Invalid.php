@@ -3,7 +3,7 @@
  *
  */
 
-namespace Mvc5\Test\Session;
+namespace Mvc5\Test\Session\Config;
 
 use Mvc5\Session\Config;
 
