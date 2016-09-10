@@ -42,11 +42,11 @@ class ContainerTest
 
         @$container->start();
 
-        $this->assertEquals(PHP_SESSION_ACTIVE, session_status());
+        $this->assertEquals(PHP_SESSION_ACTIVE, $container->status());
 
         $container->close();
 
-        $this->assertEquals(PHP_SESSION_NONE, session_status());
+        $this->assertEquals(PHP_SESSION_NONE, $container->status());
     }
 
     /**
@@ -163,7 +163,7 @@ class ContainerTest
     {
         $container = new Container(new Invalid(new Cookies(new CookieContainer)));
 
-        $this->assertFalse(@$container->start());
+        $this->assertFalse($container->start());
     }
 
     /**
@@ -187,7 +187,7 @@ class ContainerTest
     {
         $container = new Container($this->session());
 
-        @$container->start();
+        @session_start();
 
         $model = new Model;
 
