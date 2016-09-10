@@ -7,7 +7,7 @@ namespace Mvc5\Test\Session\Config;
 
 use Mvc5\Cookie\Config as Cookies;
 use Mvc5\Cookie\Container as CookieContainer;
-use Mvc5\Session\Config;
+use Mvc5\Session\Config as Session;
 use Mvc5\Session\Container;
 use Mvc5\Session\Model;
 use Mvc5\Test\Test\TestCase;
@@ -16,19 +16,11 @@ class ContainerTest
     extends TestCase
 {
     /**
-     * @return Config
-     */
-    protected function session()
-    {
-        return new Config(new Cookies(new CookieContainer));
-    }
-
-    /**
      *
      */
     function test_construct()
     {
-        $container = new Container($this->session(), 'app');
+        $container = new Container(new Session, 'app');
 
         $this->assertEquals('app', $container->label());
     }
@@ -38,7 +30,7 @@ class ContainerTest
      */
     function test_close()
     {
-        $container = new Container($this->session());
+        $container = new Container(new Session);
 
         @$container->start();
 
@@ -52,9 +44,25 @@ class ContainerTest
     /**
      *
      */
-    function test_destroy()
+    function test_destroy_without_removing_cookie()
     {
-        $container = new Container($this->session());
+        $container = new Container(new Session);
+
+        @$container->start();
+
+        $this->assertNotEmpty($container->id());
+
+        $container->destroy(false);
+
+        $this->assertEmpty($container->id());
+    }
+
+    /**
+     *
+     */
+    function test_destroy_with_cookie_container()
+    {
+        $container = new Container(new Session(new Cookies(new CookieContainer)));
 
         @$container->start();
 
@@ -68,9 +76,25 @@ class ContainerTest
     /**
      *
      */
+    function test_destroy_without_cookie_container()
+    {
+        $container = new Container(new Session);
+
+        @$container->start();
+
+        $this->assertNotEmpty($container->id());
+
+        @$container->destroy();
+
+        $this->assertEmpty($container->id());
+    }
+
+    /**
+     *
+     */
     function test_id()
     {
-        $container = new Container($this->session());
+        $container = new Container(new Session);
 
         $this->assertEmpty($container->id());
 
@@ -78,7 +102,7 @@ class ContainerTest
 
         $this->assertEquals(session_id(), $container->id());
 
-        $container->destroy();
+        $container->destroy(false);
     }
 
     /**
@@ -86,7 +110,7 @@ class ContainerTest
      */
     function test_label()
     {
-        $container = new Container($this->session(), 'app');
+        $container = new Container(new Session, 'app');
 
         $this->assertEquals('app', $container->label());
     }
@@ -96,7 +120,7 @@ class ContainerTest
      */
     function test_name()
     {
-        $container = new Container($this->session());
+        $container = new Container(new Session);
 
         $this->assertEquals(session_name(), $container->name());
     }
@@ -106,7 +130,7 @@ class ContainerTest
      */
     function test_regenerate()
     {
-        $container = new Container($this->session());
+        $container = new Container(new Session);
 
         @$container->start();
 
@@ -117,7 +141,7 @@ class ContainerTest
         $this->assertEquals(session_id(), $container->id());
         //$this->assertNotEquals($id, $container->id()); //stderr=true
 
-        $container->destroy();
+        $container->destroy(false);
     }
 
     /**
@@ -125,7 +149,7 @@ class ContainerTest
      */
     function test_reset()
     {
-        $container = new Container($this->session());
+        $container = new Container(new Session);
 
         @$container->start();
 
@@ -137,7 +161,7 @@ class ContainerTest
 
         $this->assertEquals(0, $container->count());
 
-        $container->destroy();
+        $container->destroy(false);
     }
 
     /**
@@ -145,7 +169,7 @@ class ContainerTest
      */
     function test_start()
     {
-        $container = new Container($this->session());
+        $container = new Container(new Session);
 
         $this->assertEquals(PHP_SESSION_NONE, $container->status());
 
@@ -153,7 +177,7 @@ class ContainerTest
 
         $this->assertEquals(PHP_SESSION_ACTIVE, $container->status());
 
-        $container->destroy();
+        $container->destroy(false);
     }
 
     /**
@@ -161,7 +185,7 @@ class ContainerTest
      */
     function test_start_invalid()
     {
-        $container = new Container(new Invalid(new Cookies(new CookieContainer)));
+        $container = new Container(new Invalid);
 
         $this->assertFalse($container->start());
     }
@@ -171,13 +195,13 @@ class ContainerTest
      */
     function test_start_with_reset()
     {
-        $container = new Container($this->session());
+        $container = new Container(new Session);
 
         @$container->start();
 
         $this->assertInstanceOf(Model::class, $_SESSION[$container->label()]);
 
-        $container->destroy();
+        $container->destroy(false);
     }
 
     /**
@@ -185,7 +209,7 @@ class ContainerTest
      */
     function test_start_without_reset()
     {
-        $container = new Container($this->session());
+        $container = new Container(new Session);
 
         @session_start();
 
@@ -195,36 +219,32 @@ class ContainerTest
 
         $this->assertTrue($container->start());
 
-        $container->destroy();
+        $container->destroy(false);
     }
     /**
      *
      */
     function test_start_multiple_containers()
     {
-        $app = new Container($this->session(), 'app');
+        $app = new Container(new Session, 'app');
 
         $this->assertEquals(PHP_SESSION_NONE, $app->status());
 
         @$app->start();
 
         $this->assertEquals(PHP_SESSION_ACTIVE, $app->status());
-
         $this->assertEquals('app', $app->label());
-
         $this->assertTrue(isset($_SESSION[$app->label()]));
 
-        $mod = new Container($this->session(), 'mod');
+        $mod = new Container(new Session, 'mod');
 
         $mod->start();
 
         $this->assertEquals('mod', $mod->label());
-
         $this->assertTrue(isset($_SESSION[$mod->label()]));
-
         $this->assertTrue($_SESSION[$app->label()] !== $_SESSION[$mod->label()]);
 
-        $mod->destroy();
+        @$mod->destroy();
     }
 
     /**
@@ -232,22 +252,20 @@ class ContainerTest
      */
     function test_start_nested_container()
     {
-        $app = new Container($this->session(), 'app');
+        $app = new Container(new Session, 'app');
         $mod = new Container($app, 'mod');
 
         @$mod->start();
 
         $this->assertEquals(PHP_SESSION_ACTIVE, $app->status());
-
         $this->assertEquals('mod', $mod->label());
-
         $this->assertTrue(isset($_SESSION[$app->label()][$mod->label()]));
 
         $mod->set('foo', 'bar');
 
         $this->assertEquals('bar', $_SESSION[$app->label()][$mod->label()]['foo']);
 
-        $mod->destroy();
+        @$mod->destroy();
     }
 
     /**
@@ -255,13 +273,13 @@ class ContainerTest
      */
     function test_status()
     {
-        $container = new Container($this->session());
+        $container = new Container(new Session);
 
         @$container->start();
 
         $this->assertEquals(PHP_SESSION_ACTIVE, $container->status());
 
-        $container->destroy();
+        $container->destroy(false);
     }
 
     /**
@@ -269,14 +287,14 @@ class ContainerTest
      */
     function test_with()
     {
-        $container = new Container($this->session());
+        $container = new Container(new Session);
 
         @$container->start();
 
         $this->assertTrue($container === $container->with('foo', 'bar'));
         $this->assertEquals('bar', $container->get('foo'));
 
-        $container->destroy();
+        $container->destroy(false);
     }
 
     /**
@@ -284,7 +302,7 @@ class ContainerTest
      */
     function test_without()
     {
-        $container = new Container($this->session());
+        $container = new Container(new Session);
 
         @$container->start();
 
@@ -294,6 +312,6 @@ class ContainerTest
         $this->assertEquals($container, $container->without('foo'));
         $this->assertEmpty($container->get('foo'));
 
-        $container->destroy();
+        $container->destroy(false);
     }
 }
