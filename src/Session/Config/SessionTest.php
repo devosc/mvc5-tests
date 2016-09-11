@@ -24,46 +24,6 @@ class SessionTest
     /**
      *
      */
-    function test_abort()
-    {
-        $session = new Session;
-
-        @$session->start();
-
-        $this->assertEquals(PHP_SESSION_ACTIVE, $session->status());
-
-        $session['foo'] = 'bar';
-
-        $this->assertEquals('bar', $session->get('foo'));
-        $this->assertEquals('bar', $_SESSION['foo']);
-
-        $session->close();
-
-        $this->assertEquals(PHP_SESSION_NONE, $session->status());
-
-        @$session->start();
-
-        $session['foo'] = 'baz';
-
-        $this->assertEquals('baz', $session->get('foo'));
-        $this->assertEquals('baz', $_SESSION['foo']);
-
-        $session->abort();
-
-        $this->assertEquals('baz', $session->get('foo'));
-        $this->assertEquals('baz', $_SESSION['foo']);
-
-        @$session->start();
-
-        $this->assertEquals('bar', $session->get('foo'));
-        $this->assertEquals('bar', $_SESSION['foo']);
-
-        $session->destroy(false);
-    }
-
-    /**
-     *
-     */
     function test_clear()
     {
         $session = new Session;
@@ -360,41 +320,6 @@ class SessionTest
         $session->remove('foo');
 
         $this->assertEmpty($session['foo']);
-
-        $session->destroy(false);
-    }
-
-    /**
-     *
-     */
-    function test_reset()
-    {
-        $session = new Session;
-
-        @$session->start();
-
-        $this->assertEquals(PHP_SESSION_ACTIVE, $session->status());
-
-        $session['foo'] = 'bar';
-
-        $this->assertEquals('bar', $session->get('foo'));
-        $this->assertEquals('bar', $_SESSION['foo']);
-
-        $session->close();
-
-        $this->assertEquals(PHP_SESSION_NONE, $session->status());
-
-        @$session->start();
-
-        $session['foo'] = 'baz';
-
-        $this->assertEquals('baz', $session->get('foo'));
-        $this->assertEquals('baz', $_SESSION['foo']);
-
-        $session->reset();
-
-        $this->assertEquals('bar', $session->get('foo'));
-        $this->assertEquals('bar', $_SESSION['foo']);
 
         $session->destroy(false);
     }
