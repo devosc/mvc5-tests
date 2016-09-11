@@ -28,6 +28,61 @@ class ContainerTest
     /**
      *
      */
+    function test_abort()
+    {
+        $container = new Container(new Session, 'app');
+
+        @$container->start();
+
+        $this->assertEquals(PHP_SESSION_ACTIVE, $container->status());
+
+        $container['foo'] = 'bar';
+
+        $this->assertEquals('bar', $container->get('foo'));
+        $this->assertEquals('bar', $_SESSION['app']['foo']);
+
+        $container->close();
+
+        $this->assertEquals(PHP_SESSION_NONE, $container->status());
+
+        @$container->start();
+
+        $container['foo'] = 'baz';
+
+        $this->assertEquals('baz', $container->get('foo'));
+        $this->assertEquals('baz', $_SESSION['app']['foo']);
+
+        $container->abort();
+
+        $this->assertEquals('bar', $container->get('foo'));
+        $this->assertEquals('bar', $_SESSION['app']['foo']);
+
+        $this->assertEquals(PHP_SESSION_NONE, $container->status());
+    }
+
+    /**
+     *
+     */
+    function test_clear()
+    {
+        $container = new Container(new Session);
+
+        @$container->start();
+
+        $container['foo'] = 'bar';
+
+        $this->assertEquals(1, $container->count());
+
+        $container->clear();
+
+        $this->assertEquals(0, $container->count());
+
+        $container->destroy(false);
+    }
+
+    /**
+     *
+     */
     function test_close()
     {
         $container = new Container(new Session);
@@ -108,6 +163,23 @@ class ContainerTest
     /**
      *
      */
+    function test_id_new()
+    {
+        $container = new Container(new Session);
+
+        $this->assertEquals($container->id(), $container->id('foo'));
+
+        @$container->start();
+
+        $this->assertEquals(session_id(), $container->id());
+        $this->assertEquals('foo', $container->id());
+
+        $container->destroy(false);
+    }
+
+    /**
+     *
+     */
     function test_label()
     {
         $container = new Container(new Session, 'app');
@@ -123,6 +195,20 @@ class ContainerTest
         $container = new Container(new Session);
 
         $this->assertEquals(session_name(), $container->name());
+    }
+
+    /**
+     *
+     */
+    function test_name_new()
+    {
+        $container = new Container(new Session);
+
+        $current = $container->name();
+
+        $this->assertEquals($current, $container->name('foo'));
+
+        $container->name($current);
     }
 
     /**
@@ -149,17 +235,32 @@ class ContainerTest
      */
     function test_reset()
     {
-        $container = new Container(new Session);
+        $container = new Container(new Session, 'app');
 
         @$container->start();
 
+        $this->assertEquals(PHP_SESSION_ACTIVE, $container->status());
+
         $container['foo'] = 'bar';
 
-        $this->assertEquals(1, $container->count());
+        $this->assertEquals('bar', $container->get('foo'));
+        $this->assertEquals('bar', $_SESSION['app']['foo']);
+
+        $container->close();
+
+        $this->assertEquals(PHP_SESSION_NONE, $container->status());
+
+        @$container->start();
+
+        $container['foo'] = 'baz';
+
+        $this->assertEquals('baz', $container->get('foo'));
+        $this->assertEquals('baz', $_SESSION['app']['foo']);
 
         $container->reset();
 
-        $this->assertEquals(0, $container->count());
+        $this->assertEquals('bar', $container->get('foo'));
+        $this->assertEquals('bar', $_SESSION['app']['foo']);
 
         $container->destroy(false);
     }

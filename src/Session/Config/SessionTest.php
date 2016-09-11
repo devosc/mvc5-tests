@@ -24,6 +24,61 @@ class SessionTest
     /**
      *
      */
+    function test_abort()
+    {
+        $session = new Session;
+
+        @$session->start();
+
+        $this->assertEquals(PHP_SESSION_ACTIVE, $session->status());
+
+        $session['foo'] = 'bar';
+
+        $this->assertEquals('bar', $session->get('foo'));
+        $this->assertEquals('bar', $_SESSION['foo']);
+
+        $session->close();
+
+        $this->assertEquals(PHP_SESSION_NONE, $session->status());
+
+        @$session->start();
+
+        $session['foo'] = 'baz';
+
+        $this->assertEquals('baz', $session->get('foo'));
+        $this->assertEquals('baz', $_SESSION['foo']);
+
+        $session->abort();
+
+        $this->assertEquals('bar', $session->get('foo'));
+        $this->assertEquals('bar', $_SESSION['foo']);
+
+        $this->assertEquals(PHP_SESSION_NONE, $session->status());
+    }
+
+    /**
+     *
+     */
+    function test_clear()
+    {
+        $session = new Session;
+
+        @$session->start();
+
+        $session['foo'] = 'bar';
+
+        $this->assertEquals(1, $session->count());
+
+        $session->clear();
+
+        $this->assertEquals(0, $session->count());
+
+        $session->destroy(false);
+    }
+
+    /**
+     *
+     */
     function test_close()
     {
         $session = new Session;
@@ -170,6 +225,25 @@ class SessionTest
     /**
      *
      */
+    function test_id_new()
+    {
+        $session = new Session;
+
+        $this->assertEmpty($session->id());
+
+        $session->id('foo');
+
+        @$session->start();
+
+        $this->assertEquals(session_id(), $session->id());
+        $this->assertEquals('foo', $session->id());
+
+        $session->destroy(false);
+    }
+
+    /**
+     *
+     */
     function test_key()
     {
         $session = new Session;
@@ -195,6 +269,20 @@ class SessionTest
         $this->assertEquals(session_name(), $session->name());
 
         $session->destroy(false);
+    }
+
+    /**
+     *
+     */
+    function test_name_new()
+    {
+        $session = new Session;
+
+        $current = $session->name();
+
+        $this->assertEquals($current, $session->name('foo'));
+
+        $session->name($current);
     }
 
     /**
@@ -274,6 +362,41 @@ class SessionTest
     /**
      *
      */
+    function test_reset()
+    {
+        $session = new Session;
+
+        @$session->start();
+
+        $this->assertEquals(PHP_SESSION_ACTIVE, $session->status());
+
+        $session['foo'] = 'bar';
+
+        $this->assertEquals('bar', $session->get('foo'));
+        $this->assertEquals('bar', $_SESSION['foo']);
+
+        $session->close();
+
+        $this->assertEquals(PHP_SESSION_NONE, $session->status());
+
+        @$session->start();
+
+        $session['foo'] = 'baz';
+
+        $this->assertEquals('baz', $session->get('foo'));
+        $this->assertEquals('baz', $_SESSION['foo']);
+
+        $session->reset();
+
+        $this->assertEquals('bar', $session->get('foo'));
+        $this->assertEquals('bar', $_SESSION['foo']);
+
+        $session->destroy(false);
+    }
+
+    /**
+     *
+     */
     function test_rewind()
     {
         $session = new Session;
@@ -338,7 +461,6 @@ class SessionTest
         @session_start();
 
         $this->assertEquals(PHP_SESSION_ACTIVE, $session->status());
-
         $this->assertTrue($session->start());
 
         $session->destroy(false);
