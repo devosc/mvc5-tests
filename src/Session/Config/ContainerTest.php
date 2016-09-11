@@ -54,10 +54,15 @@ class ContainerTest
 
         $container->abort();
 
+        $this->assertEquals('baz', $container->get('foo'));
+        $this->assertEquals('baz', $_SESSION['app']['foo']);
+
+        @$container->start();
+
         $this->assertEquals('bar', $container->get('foo'));
         $this->assertEquals('bar', $_SESSION['app']['foo']);
 
-        $this->assertEquals(PHP_SESSION_NONE, $container->status());
+        $container->destroy(false);
     }
 
     /**
@@ -335,17 +340,17 @@ class ContainerTest
 
         $this->assertEquals(PHP_SESSION_ACTIVE, $app->status());
         $this->assertEquals('app', $app->label());
-        $this->assertTrue(isset($_SESSION[$app->label()]));
+        $this->assertTrue(isset($_SESSION['app']));
 
         $mod = new Container(new Session, 'mod');
 
         $mod->start();
 
         $this->assertEquals('mod', $mod->label());
-        $this->assertTrue(isset($_SESSION[$mod->label()]));
-        $this->assertTrue($_SESSION[$app->label()] !== $_SESSION[$mod->label()]);
+        $this->assertTrue(isset($_SESSION['mod']));
+        $this->assertTrue($_SESSION['app'] !== $_SESSION['mod']);
 
-        @$mod->destroy();
+        $mod->destroy(false);
     }
 
     /**
@@ -360,13 +365,13 @@ class ContainerTest
 
         $this->assertEquals(PHP_SESSION_ACTIVE, $app->status());
         $this->assertEquals('mod', $mod->label());
-        $this->assertTrue(isset($_SESSION[$app->label()][$mod->label()]));
+        $this->assertTrue(isset($_SESSION['app']['mod']));
 
         $mod->set('foo', 'bar');
 
-        $this->assertEquals('bar', $_SESSION[$app->label()][$mod->label()]['foo']);
+        $this->assertEquals('bar', $_SESSION['app']['mod']['foo']);
 
-        @$mod->destroy();
+        $mod->destroy(false);
     }
 
     /**
