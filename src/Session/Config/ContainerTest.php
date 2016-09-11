@@ -28,46 +28,6 @@ class ContainerTest
     /**
      *
      */
-    function test_abort()
-    {
-        $container = new Container(new Session, 'app');
-
-        @$container->start();
-
-        $this->assertEquals(PHP_SESSION_ACTIVE, $container->status());
-
-        $container['foo'] = 'bar';
-
-        $this->assertEquals('bar', $container->get('foo'));
-        $this->assertEquals('bar', $_SESSION['app']['foo']);
-
-        $container->close();
-
-        $this->assertEquals(PHP_SESSION_NONE, $container->status());
-
-        @$container->start();
-
-        $container['foo'] = 'baz';
-
-        $this->assertEquals('baz', $container->get('foo'));
-        $this->assertEquals('baz', $_SESSION['app']['foo']);
-
-        $container->abort();
-
-        $this->assertEquals('baz', $container->get('foo'));
-        $this->assertEquals('baz', $_SESSION['app']['foo']);
-
-        @$container->start();
-
-        $this->assertEquals('bar', $container->get('foo'));
-        $this->assertEquals('bar', $_SESSION['app']['foo']);
-
-        $container->destroy(false);
-    }
-
-    /**
-     *
-     */
     function test_clear()
     {
         $container = new Container(new Session);
@@ -238,41 +198,6 @@ class ContainerTest
     /**
      *
      */
-    function test_reset()
-    {
-        $container = new Container(new Session, 'app');
-
-        @$container->start();
-
-        $this->assertEquals(PHP_SESSION_ACTIVE, $container->status());
-
-        $container['foo'] = 'bar';
-
-        $this->assertEquals('bar', $container->get('foo'));
-        $this->assertEquals('bar', $_SESSION['app']['foo']);
-
-        $container->close();
-
-        $this->assertEquals(PHP_SESSION_NONE, $container->status());
-
-        @$container->start();
-
-        $container['foo'] = 'baz';
-
-        $this->assertEquals('baz', $container->get('foo'));
-        $this->assertEquals('baz', $_SESSION['app']['foo']);
-
-        $container->reset();
-
-        $this->assertEquals('bar', $container->get('foo'));
-        $this->assertEquals('bar', $_SESSION['app']['foo']);
-
-        $container->destroy(false);
-    }
-
-    /**
-     *
-     */
     function test_start()
     {
         $container = new Container(new Session);
@@ -299,7 +224,7 @@ class ContainerTest
     /**
      *
      */
-    function test_start_with_reset()
+    function test_start_with_reset_session_model()
     {
         $container = new Container(new Session);
 
@@ -313,7 +238,7 @@ class ContainerTest
     /**
      *
      */
-    function test_start_without_reset()
+    function test_start_without_resetting_session_model()
     {
         $container = new Container(new Session);
 
