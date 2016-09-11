@@ -50,10 +50,15 @@ class SessionTest
 
         $session->abort();
 
+        $this->assertEquals('baz', $session->get('foo'));
+        $this->assertEquals('baz', $_SESSION['foo']);
+
+        @$session->start();
+
         $this->assertEquals('bar', $session->get('foo'));
         $this->assertEquals('bar', $_SESSION['foo']);
 
-        $this->assertEquals(PHP_SESSION_NONE, $session->status());
+        $session->destroy(false);
     }
 
     /**
