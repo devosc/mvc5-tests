@@ -6,6 +6,7 @@
 namespace Mvc5\Test\Route\Definition;
 
 use Mvc5\Arg;
+use Mvc5\Config as _Config;
 use Mvc5\Route\Route;
 use Mvc5\Route\Config;
 use Mvc5\Test\Test\TestCase;
@@ -144,6 +145,26 @@ class BuildTest
             Arg::ROUTE       => '/',
             Arg::TOKENS      => null
         ];
+
+        $this->assertInstanceOf(Config::class, $build->createDefault($route));
+    }
+
+    /**
+     *
+     */
+    function test_create_default_with_object()
+    {
+        $build = new Build;
+
+        $route = new _Config([
+            Arg::CHILDREN    => [],
+            Arg::CONSTRAINTS => [],
+            Arg::NAME        => null,
+            Arg::MAP         => [],
+            Arg::REGEX       => null,
+            Arg::ROUTE       => '/',
+            Arg::TOKENS      => null
+        ]);
 
         $this->assertInstanceOf(Config::class, $build->createDefault($route));
     }

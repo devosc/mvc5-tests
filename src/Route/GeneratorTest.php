@@ -6,6 +6,7 @@
 namespace Mvc5\Test\Route;
 
 use Mvc5\Arg;
+use Mvc5\Config;
 use Mvc5\Route\Config as Route;
 use Mvc5\Route\Generator;
 use Mvc5\Test\Test\TestCase;
@@ -27,6 +28,26 @@ class GeneratorTest
             Arg::ROUTE       => '/',
             Arg::TOKENS      => null
         ];
+
+        $generator = new Generator;
+
+        $this->assertInstanceOf(Route::class, $generator($route));
+    }
+
+    /**
+     *
+     */
+    function test_invoke_with_object()
+    {
+        $route = new Config([
+            Arg::CHILDREN    => [],
+            Arg::CONSTRAINTS => [],
+            Arg::NAME        => null,
+            Arg::MAP         => [],
+            Arg::REGEX       => null,
+            Arg::ROUTE       => '/',
+            Arg::TOKENS      => null
+        ]);
 
         $generator = new Generator;
 
