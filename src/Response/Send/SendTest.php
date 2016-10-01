@@ -6,6 +6,7 @@
 namespace Mvc5\Test\Response\Send;
 
 use Mvc5\Response\Config as Response;
+use Mvc5\Response\Emitter\Callback;
 use Mvc5\Test\Test\TestCase;
 
 class SendTest
@@ -37,6 +38,30 @@ class SendTest
      *
      */
     function test_body()
+    {
+        $send = new Send;
+
+        $send->body(new Response('Hello!'));
+
+        $this->assertEquals('Hello!', $this->getActualOutput());
+    }
+
+    /**
+     *
+     */
+    function test_emit()
+    {
+        $send = new Send;
+
+        $send->body(new Response(new Callback(function () { echo 'Hello!'; })));
+
+        $this->assertEquals('Hello!', $this->getActualOutput());
+    }
+
+    /**
+     *
+     */
+    function test_emit_print()
     {
         $send = new Send;
 
