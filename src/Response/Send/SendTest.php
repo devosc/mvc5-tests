@@ -61,6 +61,18 @@ class SendTest
     /**
      *
      */
+    function test_emit_closure()
+    {
+        $send = new Send;
+
+        $send->body(new Response(function () { echo 'Hello!'; }));
+
+        $this->assertEquals('Hello!', $this->getActualOutput());
+    }
+
+    /**
+     *
+     */
     function test_emit_print()
     {
         $send = new Send;
