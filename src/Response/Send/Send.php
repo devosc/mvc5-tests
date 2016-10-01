@@ -14,6 +14,7 @@ class Send
      */
     use ResponseSend {
         body    as public;
+        emit    as public;
         headers as public;
         send    as public;
     }
