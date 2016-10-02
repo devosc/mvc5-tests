@@ -98,11 +98,7 @@ class ControllerTest
     {
         $class = __NAMESPACE__ . '\\Home\Controller';
 
-        $loader = function($name) use($class) {
-            if ( $class == $name) {
-                return new $class;
-            }
-        };
+        $loader = function($name) use($class) { return $class == $name ? new $class : null; };
 
         $controller = new Controller($loader);
         $route      = new Route([Arg::OPTIONS => [Arg::PREFIX => __NAMESPACE__ . '\\']]);
