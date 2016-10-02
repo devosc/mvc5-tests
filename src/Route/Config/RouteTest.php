@@ -197,26 +197,6 @@ class RouteTest
     /**
      *
      */
-    function test_options_exists()
-    {
-        $route = new Route([Arg::OPTIONS => ['foo']]);
-
-        $this->assertEquals(['foo'], $route->options());
-    }
-
-    /**
-     *
-     */
-    function test_options_not_exists()
-    {
-        $route = new Route;
-
-        $this->assertEquals([], $route->options());
-    }
-
-    /**
-     *
-     */
     function test_port_exists()
     {
         $route = new Route([Arg::PORT => '80']);
