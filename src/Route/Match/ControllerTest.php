@@ -18,6 +18,16 @@ class ControllerTest
     /**
      *
      */
+    const ACTION = 'action';
+
+    /**
+     *
+     */
+    const CONTROLLER = 'controller';
+
+    /**
+     *
+     */
     function test_controller_exists()
     {
         $controller = new Controller;
@@ -46,7 +56,7 @@ class ControllerTest
     {
         $controller = new Controller;
         $route      = new Route;
-        $request    = new Request(new Mvc5Request([Arg::PARAMS => [Arg::CONTROLLER => '-']]));
+        $request    = new Request(new Mvc5Request([Arg::PARAMS => [self::CONTROLLER => '-']]));
 
         $this->assertNull($controller($request, $route));
     }
@@ -58,7 +68,7 @@ class ControllerTest
     {
         $controller = new Controller;
         $route      = new Route;
-        $request    = new Request(new Mvc5Request([Arg::PARAMS => [Arg::CONTROLLER => 'home', Arg::ACTION => '-_-']]));
+        $request    = new Request(new Mvc5Request([Arg::PARAMS => [self::CONTROLLER => 'home', self::ACTION => '-_-']]));
 
         $this->assertNull($controller($request, $route));
     }
@@ -70,7 +80,7 @@ class ControllerTest
     {
         $controller = new Controller;
         $route      = new Route;
-        $request    = new Request(new Mvc5Request([Arg::PARAMS => [Arg::CONTROLLER => 'foo']]));
+        $request    = new Request(new Mvc5Request([Arg::PARAMS => [self::CONTROLLER => 'foo']]));
 
         $this->assertNull($controller($request, $route));
     }
@@ -82,7 +92,7 @@ class ControllerTest
     {
         $controller = new Controller;
         $route      = new Route([Arg::OPTIONS => [Arg::PREFIX => __NAMESPACE__ . '\\']]);
-        $request    = new Request(new Mvc5Request([Arg::PARAMS => [Arg::CONTROLLER => 'home']]));
+        $request    = new Request(new Mvc5Request([Arg::PARAMS => [self::CONTROLLER => 'home']]));
 
         $this->assertNull($request[Arg::CONTROLLER]);
 
@@ -102,7 +112,7 @@ class ControllerTest
 
         $controller = new Controller($loader);
         $route      = new Route([Arg::OPTIONS => [Arg::PREFIX => __NAMESPACE__ . '\\']]);
-        $request    = new Request(new Mvc5Request([Arg::PARAMS => [Arg::CONTROLLER => 'home']]));
+        $request    = new Request(new Mvc5Request([Arg::PARAMS => [self::CONTROLLER => 'home']]));
 
         $this->assertNull($request[Arg::CONTROLLER]);
 
@@ -119,7 +129,7 @@ class ControllerTest
         $controller = new Controller;
         $route      = new Route([Arg::OPTIONS => [Arg::PREFIX => __NAMESPACE__ . '\\']]);
         $request    = new Request(new Mvc5Request([
-            Arg::PARAMS => [Arg::CONTROLLER => 'home', Arg::ACTION => 'view']
+            Arg::PARAMS => [self::CONTROLLER => 'home', self::ACTION => 'view']
         ]));
 
         $this->assertNull($request[Arg::CONTROLLER]);
@@ -143,7 +153,7 @@ class ControllerTest
         $controller = new Controller(null, $options);
         $route      = new Route;
         $request    = new Request(new Mvc5Request([
-            Arg::PARAMS => [Arg::CONTROLLER => 'foo', Arg::ACTION => 'bar']
+            Arg::PARAMS => [self::CONTROLLER => 'foo', self::ACTION => 'bar']
         ]));
 
         $this->assertNull($request[Arg::CONTROLLER]);
@@ -161,7 +171,7 @@ class ControllerTest
         $controller = new Controller;
         $route      = new Route([Arg::OPTIONS => [Arg::PREFIX => __NAMESPACE__ . '\\']]);
         $request    = new Request(new Mvc5Request([
-            Arg::PARAMS => [Arg::CONTROLLER => 'home-news', Arg::ACTION => 'show_latest']
+            Arg::PARAMS => [self::CONTROLLER => 'home-news', self::ACTION => 'show_latest']
         ]));
 
         $this->assertNull($request[Arg::CONTROLLER]);
@@ -169,5 +179,31 @@ class ControllerTest
         $request = $controller($request, $route);
 
         $this->assertEquals(Home\News\Show_Latest\Controller::class, $request[Arg::CONTROLLER]);
+    }
+
+    /**
+     *
+     */
+    function test_custom_action_and_controller_name()
+    {
+        $config = [
+            Arg::OPTIONS => [
+                Arg::ACTION     => 'bar',
+                Arg::CONTROLLER => 'foo',
+                Arg::PREFIX => __NAMESPACE__ . '\\'
+            ]
+        ];
+
+        $controller = new Controller;
+        $route      = new Route($config);
+        $request    = new Request(new Mvc5Request([
+            Arg::PARAMS => ['foo' => 'home', 'bar' => 'view']
+        ]));
+
+        $this->assertNull($request[Arg::CONTROLLER]);
+
+        $request = $controller($request, $route);
+
+        $this->assertEquals(Home\View\Controller::class, $request[Arg::CONTROLLER]);
     }
 }
