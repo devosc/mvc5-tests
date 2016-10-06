@@ -112,13 +112,13 @@ class RouterTest
     /**
      *
      */
-    function test_match()
+    function test_no_match()
     {
         $dispatch = new Dispatch(new Route);
 
         $dispatch->service($this->app());
 
-        $this->assertInstanceOf(Request::class, $dispatch->match(new Route, new Request));
+        $this->assertNull($dispatch->match(new Route, new Request));
     }
 
     /**
