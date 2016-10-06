@@ -17,7 +17,7 @@ class WildcardTest
     /**
      *
      */
-    function test_invoke_matched()
+    function test_matched()
     {
         $route    = new Route([Arg::MATCHED => true]);
         $request  = new Request;
@@ -29,7 +29,7 @@ class WildcardTest
     /**
      *
      */
-    function test_invoke_no_wildcard()
+    function test_no_wildcard()
     {
         $route    = new Route([Arg::WILDCARD => false]);
         $request  = new Request;
@@ -41,56 +41,72 @@ class WildcardTest
     /**
      *
      */
-    function test_invoke_empty_path()
+    function test_empty_path()
     {
         $route    = new Route([Arg::WILDCARD => true]);
-        $request  = new Request([Arg::URI => [Arg::PATH => '/foo/bar/'], Arg::LENGTH => 8]);
+        $request  = new Request;
         $wildcard = new Wildcard;
 
-        $this->assertEquals(null, $wildcard($request, $route));
+        $this->assertEquals($request, $wildcard($request, $route));
     }
 
     /**
      *
      */
-    function test_invoke_invalid_path()
+    function test_invalid_path()
     {
         $route    = new Route([Arg::WILDCARD => true]);
-        $request  = new Request([Arg::URI => [Arg::PATH => '/foo/bar/a'], Arg::LENGTH => 8]);
+        $request  = new Request([Arg::PARAMS => [Arg::WILDCARD => 'foo/bar/baz']]);
         $wildcard = new Wildcard;
 
-        $this->assertEquals(null, $wildcard($request, $route));
+        $this->assertEquals($request, $wildcard($request, $route));
     }
 
     /**
      *
      */
-    function test_invoke_valid_pair()
+    function test_valid_path()
     {
         $route    = new Route([Arg::WILDCARD => true]);
-        $request  = new Request([
-            Arg::URI => [Arg::PATH => '/foo/bar/baz/bat'], Arg::LENGTH => 8, Arg::PARAMS => ['a' => 'b']
-        ]);
+        $request  = new Request([Arg::PARAMS => [Arg::WILDCARD => 'foo/bar/baz/bat']]);
         $wildcard = new Wildcard;
+
+        $this->assertEquals($request, $wildcard($request, $route));
 
         $request = $wildcard($request, $route);
 
-        $this->assertEquals(['a' => 'b', 'baz' => 'bat'], $request[Arg::PARAMS]);
+        $this->assertEquals(['foo' => 'bar', 'baz' => 'bat'], $request[Arg::PARAMS]);
     }
 
     /**
      *
      */
-    function test_invoke_param_exists()
+    function test_param_exists()
     {
         $route    = new Route([Arg::WILDCARD => true]);
-        $request  = new Request([
-            Arg::URI => [Arg::PATH => '/foo/bar/baz/xyz/a/b'], Arg::LENGTH => 8, Arg::PARAMS => ['baz' => 'bat']
-        ]);
+        $request  = new Request([Arg::PARAMS => [Arg::WILDCARD => 'foo/bar/baz/bat', 'foo' => 'foobar']]);
         $wildcard = new Wildcard;
+
+        $this->assertEquals($request, $wildcard($request, $route));
 
         $request = $wildcard($request, $route);
 
-        $this->assertEquals(['baz' => 'bat', 'a' => 'b'], $request[Arg::PARAMS]);
+        $this->assertEquals(['foo' => 'foobar', 'baz' => 'bat'], $request[Arg::PARAMS]);
+    }
+
+    /**
+     *
+     */
+    function test_custom_name()
+    {
+        $route    = new Route([Arg::WILDCARD => true, Arg::OPTIONS => [Arg::WILDCARD => 'foobar']]);
+        $request  = new Request([Arg::PARAMS => ['foobar'=> 'foo/bar/baz/bat']]);
+        $wildcard = new Wildcard;
+
+        $this->assertEquals($request, $wildcard($request, $route));
+
+        $request = $wildcard($request, $route);
+
+        $this->assertEquals(['foo' => 'bar', 'baz' => 'bat'], $request[Arg::PARAMS]);
     }
 }
