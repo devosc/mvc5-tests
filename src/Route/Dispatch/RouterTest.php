@@ -7,6 +7,7 @@ namespace Mvc5\Test\Route\Router;
 
 use Mvc5\Arg;
 use Mvc5\App;
+use Mvc5\Config;
 use Mvc5\Http\Error\NotFound;
 use Mvc5\Http\Error\MethodNotAllowed;
 use Mvc5\Request\Config as Mvc5Request;
@@ -30,10 +31,12 @@ class RouterTest
             'name'     => 'home',
             'route'    => '/',
             'children' => [
-                'baz' => [
+                [
+                    'name'     => 'baz',
                     'route' => 'foo',
                     'children' => [
-                        'bat' => [
+                        [
+                            'name'     => 'bat',
                             'route' => '/bar'
                         ]
                     ]
@@ -102,11 +105,12 @@ class RouterTest
      */
     function test_dispatch()
     {
-        $dispatch = new Dispatch(new Route([Arg::ROUTE => '/']));
+        $route    = new Route([Arg::NAME => 'home', Arg::REGEX => '/']);
+        $dispatch = new Dispatch($route);
 
         $dispatch->service($this->app());
 
-        $this->assertInstanceOf(Mvc5Request::class, $dispatch->dispatch(new Mvc5Request));
+        $this->assertInstanceOf(Mvc5Request::class, $dispatch->dispatch(new Mvc5Request([Arg::URI => [Arg::PATH => '/']]), $route));
     }
 
     /**
@@ -118,17 +122,27 @@ class RouterTest
 
         $dispatch->service($this->app());
 
-        $this->assertNull($dispatch->match(new Route, new Request));
+        $this->assertNull($dispatch->match(new Request, new Route));
     }
 
     /**
      *
      */
-    function test_name()
+    function test_name_parent_is_root()
     {
         $dispatch = new Dispatch(['name' => 'foo']);
 
-        $this->assertEquals('foo', $dispatch->name());
+        $this->assertEquals('bar', $dispatch->name('bar', 'foo'));
+    }
+
+    /**
+     *
+     */
+    function test_name_parent_is_not_root()
+    {
+        $dispatch = new Dispatch(['name' => 'foo']);
+
+        $this->assertEquals('bar/baz', $dispatch->name('baz', 'bar'));
     }
 
     /**
@@ -179,6 +193,24 @@ class RouterTest
     function test_route_with_children()
     {
         $dispatch = new Dispatch(new Route($this->config['routes']));
+        $request  = new Mvc5Request([Arg::URI => [Arg::PATH => '/foo/bar']]);
+
+        $dispatch->service($this->app());
+
+        $request = $dispatch->request($request);
+
+        $this->assertEquals('baz/bat', $request->name());
+    }
+
+    /**
+     *
+     */
+    function test_route_with_children_as_iterator_object()
+    {
+        $config = $this->config['routes'];
+        $config['children'] = new Config($config['children']);
+
+        $dispatch = new Dispatch(new Route($config));
         $request  = new Mvc5Request([Arg::URI => [Arg::PATH => '/foo/bar']]);
 
         $dispatch->service($this->app());
