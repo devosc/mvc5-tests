@@ -162,6 +162,30 @@ class RouterTest
     /**
      *
      */
+    function test_request_child_not_found()
+    {
+        $config = $this->config['routes'];
+        $config['children'][] = [
+            'name' => 'wildcard',
+            'route' => ':wildcard',
+            'constraints' => [
+                'wildcard' => '.*'
+            ]
+        ];
+
+        $dispatch = new Dispatch(new Route($config));
+
+        $dispatch->service($this->app());
+
+        $request = $dispatch->request(new Request([Arg::URI => [Arg::PATH => '/foo/baz']]));
+
+        $this->assertNotEquals('wildcard', $request->name());
+        $this->assertInstanceOf(NotFound::class, $request[Arg::ERROR]);
+    }
+
+    /**
+     *
+     */
     function test_request_error()
     {
         $dispatch = new Dispatch(new Route([Arg::NAME => 'home', Arg::ROUTE => '/', Arg::METHOD => 'GET']));
