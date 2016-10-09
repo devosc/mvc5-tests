@@ -6,6 +6,7 @@
 namespace Mvc5\Test\Route\Match;
 
 use Mvc5\Arg;
+use Mvc5\Http\Error\NotFound;
 use Mvc5\Request\Config as Mvc5Request;
 use Mvc5\Route\Match\Controller;
 use Mvc5\Route\Request\Config as Request;
@@ -24,6 +25,11 @@ class ControllerTest
      *
      */
     const CONTROLLER = 'controller';
+
+    protected $options = [
+        Arg::PREFIX     => __NAMESPACE__ . '\\',
+        Arg::SEPARATORS => ['_' => '_', '-' => '\\'],
+    ];
 
     /**
      *
@@ -55,7 +61,7 @@ class ControllerTest
     function test_invalid_controller()
     {
         $controller = new Controller;
-        $route      = new Route;
+        $route      = new Route([Arg::OPTIONS => $this->options]);
         $request    = new Request(new Mvc5Request([Arg::PARAMS => [self::CONTROLLER => '-']]));
 
         $this->assertNull($controller($request, $route));
@@ -67,7 +73,7 @@ class ControllerTest
     function test_invalid_action()
     {
         $controller = new Controller;
-        $route      = new Route;
+        $route      = new Route([Arg::OPTIONS => $this->options]);
         $request    = new Request(new Mvc5Request([Arg::PARAMS => [self::CONTROLLER => 'home', self::ACTION => '-_-']]));
 
         $this->assertNull($controller($request, $route));
@@ -82,7 +88,7 @@ class ControllerTest
         $route      = new Route;
         $request    = new Request(new Mvc5Request([Arg::PARAMS => [self::CONTROLLER => 'foo']]));
 
-        $this->assertNull($controller($request, $route));
+        $this->assertEquals(new NotFound, $controller($request, $route));
     }
 
     /**
@@ -127,7 +133,7 @@ class ControllerTest
     function test_controller_action()
     {
         $controller = new Controller;
-        $route      = new Route([Arg::OPTIONS => [Arg::PREFIX => __NAMESPACE__ . '\\']]);
+        $route      = new Route([Arg::OPTIONS => $this->options]);
         $request    = new Request(new Mvc5Request([
             Arg::PARAMS => [self::CONTROLLER => 'home', self::ACTION => 'view']
         ]));
@@ -145,12 +151,11 @@ class ControllerTest
     function test_controller_action_name_strict()
     {
         $options = [
-            Arg::PREFIX => __NAMESPACE__ . '\\',
-            Arg::SUFFIX  => '\controller',
-            Arg::STRICT  => true
+            Arg::STRICT => true,
+            Arg::SUFFIX => '\controller'
         ];
 
-        $controller = new Controller(null, $options);
+        $controller = new Controller(null, $options + $this->options);
         $route      = new Route;
         $request    = new Request(new Mvc5Request([
             Arg::PARAMS => [self::CONTROLLER => 'foo', self::ACTION => 'bar']
@@ -169,7 +174,7 @@ class ControllerTest
     function test_controller_action_name_not_strict()
     {
         $controller = new Controller;
-        $route      = new Route([Arg::OPTIONS => [Arg::PREFIX => __NAMESPACE__ . '\\']]);
+        $route      = new Route([Arg::OPTIONS => $this->options]);
         $request    = new Request(new Mvc5Request([
             Arg::PARAMS => [self::CONTROLLER => 'home-news', self::ACTION => 'show_latest']
         ]));
@@ -186,16 +191,13 @@ class ControllerTest
      */
     function test_custom_action_and_controller_name()
     {
-        $config = [
-            Arg::OPTIONS => [
-                Arg::ACTION     => 'bar',
-                Arg::CONTROLLER => 'foo',
-                Arg::PREFIX => __NAMESPACE__ . '\\'
-            ]
+        $options = [
+            Arg::ACTION     => 'bar',
+            Arg::CONTROLLER => 'foo',
         ];
 
         $controller = new Controller;
-        $route      = new Route($config);
+        $route      = new Route([Arg::OPTIONS => $options + $this->options]);
         $request    = new Request(new Mvc5Request([
             Arg::PARAMS => ['foo' => 'home', 'bar' => 'view']
         ]));
