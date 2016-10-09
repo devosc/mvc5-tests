@@ -257,9 +257,10 @@ class RouterTest
     {
         $config = [
             Arg::REGEX => '/(?P<controller>[a-zA-Z0-9]+)',
+            Arg::DEFAULTS => ['limit' => '10'],
             Arg::CHILDREN => [
-                [Arg::REGEX => '(?:/(?P<foobar>bar))?'],
-                [Arg::REGEX => '(?:/(?P<action>bars))?']
+                [Arg::REGEX => '(?:/(?P<foobar>bar))?', Arg::DEFAULTS => ['limit' => '5']],
+                [Arg::REGEX => '(?:/(?P<action>bars))?', Arg::DEFAULTS => ['limit' => '15']]
             ]
         ];
 
@@ -271,7 +272,7 @@ class RouterTest
 
         $request = $dispatch->request($request);
 
-        $this->assertEquals(['controller' => 'foo', 'action' => 'bars'], $request[Arg::PARAMS]);
+        $this->assertEquals(['controller' => 'foo', 'action' => 'bars', 'limit' => '15'], $request[Arg::PARAMS]);
     }
 
     /**
@@ -281,18 +282,21 @@ class RouterTest
     {
         $config = [
             Arg::REGEX => '/(?P<param1>[a-zA-Z0-9]+)',
+            Arg::DEFAULTS => ['limit' => '10'],
             Arg::MAP => [
                 'param1' => 'controller'
             ],
             Arg::CHILDREN => [
                 [
                     Arg::REGEX => '(?:/(?P<param2>bat))?',
+                    Arg::DEFAULTS => ['limit' => '5'],
                     Arg::MAP => [
                         'param2' => 'foobar'
                     ],
                 ],
                 [
                     Arg::REGEX => '(?:/(?P<param3>bats))?',
+                    Arg::DEFAULTS => ['limit' => '15'],
                     Arg::MAP => [
                         'param3' => 'action'
                     ],
@@ -308,7 +312,7 @@ class RouterTest
 
         $request = $dispatch->request($request);
 
-        $this->assertEquals(['controller' => 'foo', 'action' => 'bats'], $request[Arg::PARAMS]);
+        $this->assertEquals(['controller' => 'foo', 'action' => 'bats', 'limit' => '15'], $request[Arg::PARAMS]);
     }
 
     /**
