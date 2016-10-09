@@ -253,6 +253,67 @@ class RouterTest
     /**
      *
      */
+    function test_match_parent_named_params()
+    {
+        $config = [
+            Arg::REGEX => '/(?P<controller>[a-zA-Z0-9]+)',
+            Arg::CHILDREN => [
+                [Arg::REGEX => '(?:/(?P<foobar>bar))?'],
+                [Arg::REGEX => '(?:/(?P<action>bars))?']
+            ]
+        ];
+
+        $route = new Route($config);
+        $dispatch = new Dispatch($route);
+        $request  = new Mvc5Request([Arg::URI => [Arg::PATH => '/foo/bars']]);
+
+        $dispatch->service($this->app());
+
+        $request = $dispatch->request($request);
+
+        $this->assertEquals(['controller' => 'foo', 'action' => 'bars'], $request[Arg::PARAMS]);
+    }
+
+    /**
+     *
+     */
+    function test_match_parent_mapped_params()
+    {
+        $config = [
+            Arg::REGEX => '/(?P<param1>[a-zA-Z0-9]+)',
+            Arg::MAP => [
+                'param1' => 'controller'
+            ],
+            Arg::CHILDREN => [
+                [
+                    Arg::REGEX => '(?:/(?P<param2>bat))?',
+                    Arg::MAP => [
+                        'param2' => 'foobar'
+                    ],
+                ],
+                [
+                    Arg::REGEX => '(?:/(?P<param3>bats))?',
+                    Arg::MAP => [
+                        'param3' => 'action'
+                    ],
+                ]
+            ]
+        ];
+
+        $route = new Route($config);
+        $dispatch = new Dispatch($route);
+        $request  = new Mvc5Request([Arg::URI => [Arg::PATH => '/foo/bats']]);
+
+        $dispatch->service($this->app());
+
+        $request = $dispatch->request($request);
+
+        $this->assertEquals(['controller' => 'foo', 'action' => 'bats'], $request[Arg::PARAMS]);
+    }
+
+    /**
+     *
+     */
     function test_route_definition()
     {
         $route  = new Route(['regex' => 'foo']);
