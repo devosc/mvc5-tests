@@ -37,11 +37,21 @@ class BuildTest
     /**
      *
      */
-    function test_definition_no_route_exception()
+    function test_definition_regex_only()
     {
         $build = new Build;
 
-        $this->setExpectedException('RuntimeException');
+        $this->assertEquals([Arg::REGEX => '/'], $build->definition([Arg::REGEX => '/']));
+    }
+
+    /**
+     *
+     */
+    function test_definition_no_route_or_regex_exception()
+    {
+        $build = new Build;
+
+        $this->setExpectedException('Exception');
 
         $build->definition([]);
     }

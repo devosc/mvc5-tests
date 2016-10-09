@@ -188,11 +188,14 @@ class RouterTest
      */
     function test_request_error()
     {
-        $dispatch = new Dispatch(new Route([Arg::NAME => 'home', Arg::ROUTE => '/', Arg::METHOD => 'GET']));
+        $request = new Request([Arg::METHOD => 'POST']);
+        $route = new Route([Arg::ROUTE => '/', Arg::METHOD => 'GET']);
+
+        $dispatch = new Dispatch($route);
 
         $dispatch->service($this->app());
 
-        $request = $dispatch->request(new Request([Arg::URI => [Arg::PATH => '/'], Arg::METHOD => 'POST']));
+        $request = $dispatch->request($request);
 
         $this->assertInstanceOf(MethodNotAllowed::class, $request[Arg::ERROR]);
     }
@@ -202,11 +205,13 @@ class RouterTest
      */
     function test_request_ok()
     {
-        $dispatch = new Dispatch(new Route([Arg::NAME => 'home', Arg::ROUTE => '/']));
+        $request = new Request;
+        $route = new Route([Arg::NAME => 'home', Arg::ROUTE => '/']);
+        $dispatch = new Dispatch($route);
 
         $dispatch->service($this->app());
 
-        $request = $dispatch->request(new Request);
+        $request = $dispatch->request($request);
 
         $this->assertEquals('home', $request->name());
     }
@@ -216,7 +221,8 @@ class RouterTest
      */
     function test_route_with_children()
     {
-        $dispatch = new Dispatch(new Route($this->config['routes']));
+        $route = new Route($this->config['routes']);
+        $dispatch = new Dispatch($route);
         $request  = new Mvc5Request([Arg::URI => [Arg::PATH => '/foo/bar']]);
 
         $dispatch->service($this->app());

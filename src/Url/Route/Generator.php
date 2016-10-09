@@ -3,7 +3,7 @@
  *
  */
 
-namespace Mvc5\Test\Url;
+namespace Mvc5\Test\Url\Route;
 
 use Mvc5\Route\Route;
 use Mvc5\Url\Generator as _Generator;
