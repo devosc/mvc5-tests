@@ -19,7 +19,7 @@ class CompileTest
         $compile = new Compile;
 
         $route = (new Generator)->__invoke([
-            'route'      => '[:no_constraint]/:author[/:category]',
+            'route'      => '[{no_constraint}]/{author}[/{category}]',
             'defaults'   => [
                 'author'   => 'owner',
                 'category' => 'web'
@@ -46,12 +46,30 @@ class CompileTest
     /**
      *
      */
+    function test_compile_not_named()
+    {
+        $compile = new Compile;
+
+        $route = (new Generator)->__invoke(['route' => '/{:$}']);
+
+        $params = ['category' => 'bar'];
+
+        $tokens = $route['tokens'];
+
+        $defaults = $route['defaults'];
+
+        $this->assertEquals('/', $compile->compile($tokens, $params, $defaults));
+    }
+
+    /**
+     *
+     */
     function test_compile_no_default_arg()
     {
         $compile = new Compile;
 
         $route = (new Generator)->__invoke([
-            'route'      => '[:no_constraint]/:author[/:category]',
+            'route'      => '[{no_constraint}]/{author}[/{category}]',
             'defaults'   => [
                 //'author'   => 'owner',
                 'category' => 'web'
@@ -83,7 +101,7 @@ class CompileTest
         $compile = new Compile;
 
         $route = (new Generator)->__invoke([
-            'route'      => '/[:author[/:category]]',
+            'route'      => '/[{author}[/{category}]]',
             'defaults'   => [
                 'author'   => 'owner',
                 'category' => 'web'
@@ -99,7 +117,6 @@ class CompileTest
         $params = ['author' => 'foo', 'category' => 'bar'];
 
         $tokens = $route['tokens'];
-        //$tokens = array_merge($route['tokens'], [['foo', 'bar']]);
 
         $defaults = $route['defaults'];
 

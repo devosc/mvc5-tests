@@ -23,13 +23,11 @@ class TokensTest
     /**
      *
      */
-    function test_tokens_empty_arg_exception()
+    function test_tokens_empty_arg()
     {
         $tokens = new Tokens;
 
-        $this->setExpectedException('RuntimeException');
-
-        $tokens->tokens(':');
+        $this->assertEquals([['literal',':']], $tokens->tokens(':'));
     }
 
     /**

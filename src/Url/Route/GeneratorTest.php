@@ -102,7 +102,7 @@ class GeneratorTest
             Arg::ROUTE    => '/',
             Arg::CHILDREN => [
                 'foo' => [
-                    Arg::ROUTE => 'foo/:controller',
+                    Arg::ROUTE => 'foo/{controller}',
                     Arg::CHILDREN => [
                         'bar' => [
                             Arg::ROUTE => '/bat'
