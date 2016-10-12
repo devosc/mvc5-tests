@@ -17,25 +17,20 @@ class RegexTest
     {
         $regex = new Regex;
 
-        $constraints = [
-            //'author'   => '[a-zA-Z0-9_-]*',
-            'category' => '[a-zA-Z0-9_-]*'
-        ];
-
         $tokens = [
             ['literal', '/'],
             ['optional-start'],
-            ['param', 'author', NULL],
+            ['param', 'author', '[^/]+'],
             ['optional-start'],
             ['literal', '/'],
-            ['param', 'category', NULL],
+            ['param', 'category', '[a-zA-Z0-9_-]*'],
             ['optional-end'],
             ['optional-end']
         ];
 
-        $pattern = "/(?:(?P<param1>[^/]+)(?:/(?P<param2>[a-zA-Z0-9_-]*))?)?";
+        $pattern = "/(?:(?P<author>[^/]+)(?:/(?P<category>[a-zA-Z0-9_-]*))?)?";
 
-        $this->assertEquals($pattern, $regex->regex($tokens, $constraints));
+        $this->assertEquals($pattern, $regex->regex($tokens));
     }
 
     /**
@@ -45,25 +40,20 @@ class RegexTest
     {
         $regex = new Regex;
 
-        $constraints = [
-            //'author'   => '[a-zA-Z0-9_-]*',
-            'category' => '[a-zA-Z0-9_-]*'
-        ];
-
         $tokens = [
             ['literal', '/'],
             ['optional-start'],
-            ['param', 'author', 'abc'],
+            ['param', 'author', '[^abc]+'],
             ['optional-start'],
             ['literal', '/'],
-            ['param', 'category', NULL],
+            ['param', 'category', '[a-zA-Z0-9_-]*'],
             ['optional-end'],
             ['optional-end']
         ];
 
-        $pattern = "/(?:(?P<param1>[^abc]+)(?:/(?P<param2>[a-zA-Z0-9_-]*))?)?";
+        $pattern = "/(?:(?P<author>[^abc]+)(?:/(?P<category>[a-zA-Z0-9_-]*))?)?";
 
-        $this->assertEquals($pattern, $regex->regex($tokens, $constraints));
+        $this->assertEquals($pattern, $regex->regex($tokens));
     }
 
     /**
@@ -73,24 +63,19 @@ class RegexTest
     {
         $regex = new Regex;
 
-        $constraints = [
-            //'author'   => '[a-zA-Z0-9_-]*',
-            'category' => '[a-zA-Z0-9_-]*'
-        ];
-
         $tokens = [
             ['literal', '/'],
             ['optional-start'],
-            ['param', 'author', 'abc'],
+            ['param', 'author', '[^abc]+'],
             ['optional-start'],
             ['literal', '/'],
-            ['param', 'category', NULL],
+            ['param', 'category', '[a-zA-Z0-9_-]*'],
             ['optional-end'],
             ['optional-end']
         ];
 
-        $pattern = "/(?:(?P<param1>[^abc]+)(?:/(?P<param2>[a-zA-Z0-9_-]*))?)?";
+        $pattern = "/(?:(?P<author>[^abc]+)(?:/(?P<category>[a-zA-Z0-9_-]*))?)?";
 
-        $this->assertEquals($pattern, $regex->regex($tokens, $constraints));
+        $this->assertEquals($pattern, $regex->regex($tokens));
     }
 }
