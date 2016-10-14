@@ -26,7 +26,7 @@ class AddTest
             Arg::CHILDREN    => [],
             Arg::CONSTRAINTS => [],
             Arg::NAME        => null,
-            Arg::MAP         => [],
+            Arg::OPTIONS     => [],
             Arg::REGEX       => null,
             Arg::ROUTE       => null,
             Arg::TOKENS      => null
@@ -50,7 +50,7 @@ class AddTest
             Arg::CHILDREN    => [],
             Arg::CONSTRAINTS => [],
             Arg::NAME        => 'foo',
-            Arg::MAP         => [],
+            Arg::OPTIONS     => [],
             Arg::REGEX       => null,
             Arg::ROUTE       => null,
             Arg::TOKENS      => null
@@ -74,7 +74,7 @@ class AddTest
             Arg::CHILDREN    => [],
             Arg::CONSTRAINTS => [],
             Arg::NAME        => null,
-            Arg::MAP         => [],
+            Arg::OPTIONS     => [],
             Arg::REGEX       => null,
             Arg::ROUTE       => null,
             Arg::TOKENS      => null
@@ -100,7 +100,7 @@ class AddTest
             ],
             Arg::CONSTRAINTS => [],
             Arg::NAME        => null,
-            Arg::MAP         => [],
+            Arg::OPTIONS     => [],
             Arg::REGEX       => null,
             Arg::ROUTE       => null,
             Arg::TOKENS      => null

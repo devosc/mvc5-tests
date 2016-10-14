@@ -25,7 +25,7 @@ class BuildTest
             Arg::CHILDREN    => ['foo' => [Arg::ROUTE => 'foo']],
             Arg::CONSTRAINTS => null,
             Arg::NAME        => null,
-            Arg::MAP         => null,
+            Arg::OPTIONS     => null,
             Arg::REGEX       => null,
             Arg::ROUTE       => '/',
             Arg::TOKENS      => null
@@ -68,7 +68,7 @@ class BuildTest
                 Arg::CHILDREN    => [],
                 Arg::CONSTRAINTS => [],
                 Arg::NAME        => null,
-                Arg::MAP         => [],
+                Arg::OPTIONS     => [],
                 Arg::REGEX       => null,
                 Arg::ROUTE       => '/',
                 Arg::TOKENS      => null
@@ -89,7 +89,7 @@ class BuildTest
             Arg::CHILDREN    => [],
             Arg::CONSTRAINTS => [],
             Arg::NAME        => null,
-            Arg::MAP         => [],
+            Arg::OPTIONS     => [],
             Arg::REGEX       => null,
             Arg::ROUTE       => '/',
             Arg::TOKENS      => null
@@ -110,7 +110,7 @@ class BuildTest
             Arg::CLASS_NAME  => Config::class,
             Arg::CONSTRAINTS => [],
             Arg::NAME        => null,
-            Arg::MAP         => [],
+            Arg::OPTIONS     => [],
             Arg::REGEX       => null,
             Arg::ROUTE       => '/',
             Arg::TOKENS      => null
@@ -130,7 +130,7 @@ class BuildTest
             Arg::CHILDREN    => [],
             Arg::CONSTRAINTS => [],
             Arg::NAME        => null,
-            Arg::MAP         => [],
+            Arg::OPTIONS     => [],
             Arg::REGEX       => null,
             Arg::ROUTE       => '/',
             Arg::TOKENS      => null
@@ -150,7 +150,7 @@ class BuildTest
             Arg::CHILDREN    => [],
             Arg::CONSTRAINTS => [],
             Arg::NAME        => null,
-            Arg::MAP         => [],
+            Arg::OPTIONS     => [],
             Arg::REGEX       => null,
             Arg::ROUTE       => '/',
             Arg::TOKENS      => null
@@ -170,7 +170,7 @@ class BuildTest
             Arg::CHILDREN    => [],
             Arg::CONSTRAINTS => [],
             Arg::NAME        => null,
-            Arg::MAP         => [],
+            Arg::OPTIONS     => [],
             Arg::REGEX       => null,
             Arg::ROUTE       => '/',
             Arg::TOKENS      => null
@@ -190,7 +190,7 @@ class BuildTest
             Arg::CHILDREN    => [],
             Arg::CONSTRAINTS => [],
             Arg::NAME        => null,
-            Arg::MAP         => [],
+            Arg::OPTIONS     => [],
             Arg::REGEX       => null,
             Arg::ROUTE       => '/',
             Arg::TOKENS      => null

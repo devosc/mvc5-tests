@@ -17,7 +17,7 @@ class TokensTest
     {
         $tokens = new Tokens;
 
-        $this->assertTrue(is_array($tokens->tokens('/:foo')));
+        $this->assertTrue(is_array($tokens->tokens('/{foo}')));
     }
 
     /**
@@ -39,7 +39,7 @@ class TokensTest
 
         $this->setExpectedException('RuntimeException');
 
-        $tokens->tokens('/:foo]');
+        $tokens->tokens('/{foo}]');
     }
 
     /**
@@ -51,6 +51,16 @@ class TokensTest
 
         $this->setExpectedException('RuntimeException');
 
-        $tokens->tokens('/[:foo');
+        $tokens->tokens('/[{foo}');
+    }
+
+    /**
+     *
+     */
+    function test_tokens_with_expression()
+    {
+        $tokens = new Tokens;
+
+        $this->assertEquals([['param', '', 'bar']], $tokens->tokens('{:foo}', [], ['foo' => 'bar']));
     }
 }
