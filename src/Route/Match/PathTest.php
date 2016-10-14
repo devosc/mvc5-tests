@@ -87,26 +87,6 @@ class PathTest
     /**
      *
      */
-    function test_match_map_params()
-    {
-        $config = [
-            Arg::REGEX => '/(?P<param1>[a-zA-Z0-9]+)(?:/(?P<param2>[a-zA-Z0-9/]+[a-zA-Z0-9]$))?',
-            Arg::MAP => ['param1' => 'controller', 'param2' => 'wildcard']
-        ];
-
-        $event   = new Event;
-        $route   = new Route($config);
-        $path    = new Path;
-        $request = new Request(new Mvc5Request([Arg::URI => [Arg::PATH => '/home/foo/bar/baz/bat']]));
-
-        $request = $path($event, $request, $route);
-
-        $this->assertEquals(['controller' => 'home', 'wildcard' => 'foo/bar/baz/bat'], $request[Arg::PARAMS]);
-    }
-
-    /**
-     *
-     */
     function test_match_named_params()
     {
         $config = [Arg::REGEX => '/(?P<controller>[a-zA-Z0-9]+)(?:/(?P<action>[a-zA-Z0-9]+$))?'];
