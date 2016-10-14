@@ -50,7 +50,7 @@ class CompileTest
     {
         $compile = new Compile;
 
-        $route = (new Generator)->__invoke(['route' => '/{:$}']);
+        $route = (new Generator)->__invoke(['route' => '/{$}']);
 
         $params = ['category' => 'bar'];
 

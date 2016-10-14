@@ -278,46 +278,6 @@ class RouterTest
     /**
      *
      */
-    function test_match_parent_mapped_params()
-    {
-        $config = [
-            Arg::REGEX => '/(?P<param1>[a-zA-Z0-9]+)',
-            Arg::DEFAULTS => ['limit' => '10'],
-            Arg::MAP => [
-                'param1' => 'controller'
-            ],
-            Arg::CHILDREN => [
-                [
-                    Arg::REGEX => '/(?P<param2>bat)',
-                    Arg::DEFAULTS => ['limit' => '5'],
-                    Arg::MAP => [
-                        'param2' => 'foobar'
-                    ],
-                ],
-                [
-                    Arg::REGEX => '/(?P<param3>bats)',
-                    Arg::DEFAULTS => ['limit' => '15'],
-                    Arg::MAP => [
-                        'param3' => 'action'
-                    ],
-                ]
-            ]
-        ];
-
-        $route = new Route($config);
-        $dispatch = new Dispatch($route);
-        $request  = new Mvc5Request([Arg::URI => [Arg::PATH => '/foo/bats']]);
-
-        $dispatch->service($this->app());
-
-        $request = $dispatch->request($request);
-
-        $this->assertEquals(['controller' => 'foo', 'action' => 'bats', 'limit' => '15'], $request[Arg::PARAMS]);
-    }
-
-    /**
-     *
-     */
     function test_route_definition()
     {
         $route  = new Route(['regex' => 'foo']);
