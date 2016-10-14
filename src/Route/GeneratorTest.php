@@ -23,7 +23,7 @@ class GeneratorTest
             Arg::CHILDREN    => [],
             Arg::CONSTRAINTS => [],
             Arg::NAME        => null,
-            Arg::MAP         => [],
+            Arg::OPTIONS     => [],
             Arg::REGEX       => null,
             Arg::ROUTE       => '/',
             Arg::TOKENS      => null
@@ -43,7 +43,7 @@ class GeneratorTest
             Arg::CHILDREN    => [],
             Arg::CONSTRAINTS => [],
             Arg::NAME        => null,
-            Arg::MAP         => [],
+            Arg::OPTIONS     => [],
             Arg::REGEX       => null,
             Arg::ROUTE       => '/',
             Arg::TOKENS      => null
