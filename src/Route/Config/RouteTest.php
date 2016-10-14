@@ -147,26 +147,6 @@ class RouteTest
     /**
      *
      */
-    function test_map_exists()
-    {
-        $route = new Route([Arg::MAP => ['foo' => 'bar']]);
-
-        $this->assertEquals(['foo' => 'bar'], $route->map());
-    }
-
-    /**
-     *
-     */
-    function test_map_not_exists()
-    {
-        $route = new Route;
-
-        $this->assertEquals([], $route->map());
-    }
-
-    /**
-     *
-     */
     function test_method_exists()
     {
         $route = new Route([Arg::METHOD => 'foo']);
@@ -192,6 +172,26 @@ class RouteTest
         $route = new Route([Arg::NAME => 'foo']);
 
         $this->assertEquals('foo', $route->name());
+    }
+
+    /**
+     *
+     */
+    function test_options_exists()
+    {
+        $route = new Route([Arg::OPTIONS => ['foo' => 'bar']]);
+
+        $this->assertEquals(['foo' => 'bar'], $route->options());
+    }
+
+    /**
+     *
+     */
+    function test_options_not_exists()
+    {
+        $route = new Route;
+
+        $this->assertEquals([], $route->options());
     }
 
     /**
