@@ -16,8 +16,7 @@ class TokensTest
     function test_tokens()
     {
         $tokens = new Tokens;
-
-        $this->assertTrue(is_array($tokens('/{foo}')));
+        $this->assertEquals([['literal', '/'], ['param', '__foo__', '[^/]+']], $tokens('/{__foo__}'));
     }
 
     /**
