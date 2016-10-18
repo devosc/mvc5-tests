@@ -6,7 +6,6 @@
 namespace Mvc5\Test\Request\Config;
 
 use Mvc5\Arg;
-use Mvc5\Config;
 use Mvc5\Request\Config as Request;
 use Mvc5\Test\Test\TestCase;
 
@@ -51,30 +50,6 @@ class RequestTest
         $request = new Request;
 
         $this->assertEquals([], $request->args());
-    }
-
-    /**
-     *
-     */
-    function test_attr()
-    {
-        $request = new Request;
-
-        $request->attr('foo', 'bar');
-
-        $this->assertEquals('bar', $request->param('foo'));
-    }
-
-    /**
-     *
-     */
-    function test_attr_with_config_object()
-    {
-        $request = new Request(new Config);
-
-        $request->attr('foo', 'bar');
-
-        $this->assertEquals('bar', $request->param('foo'));
     }
 
     /**
@@ -233,14 +208,10 @@ class RequestTest
     function test_param()
     {
         $request = new Request([
-            Arg::PARAMS => ['foo' => 'bar'],
-            Arg::ARGS   => ['bat' => 'baz'],
-            Arg::DATA   => ['dir' => 'asc'],
+            Arg::PARAMS => ['foo' => 'bar']
         ]);
 
         $this->assertEquals('bar', $request->param('foo'));
-        $this->assertEquals('baz', $request->param('bat'));
-        $this->assertEquals('asc', $request->param('dir'));
     }
 
     /**
@@ -249,12 +220,10 @@ class RequestTest
     function test_params()
     {
         $request = new Request([
-            Arg::PARAMS => ['foo' => 'bar'],
-            Arg::ARGS   => ['bat' => 'baz'],
-            Arg::DATA   => ['dir' => 'asc'],
+            Arg::PARAMS => ['foo' => 'bar']
         ]);
 
-        $this->assertEquals($request->params() + $request->args() + $request->data(), $request->params());
+        $this->assertEquals(['foo' => 'bar'], $request->params());
     }
 
     /**
@@ -385,5 +354,51 @@ class RequestTest
         $request = new Request([Arg::USER_AGENT => 'foo']);
 
         $this->assertEquals('foo', $request->userAgent());
+    }
+
+    /**
+     *
+     */
+    function test_variable()
+    {
+        $request = new Request([
+            Arg::PARAMS => ['foo' => 'bar'],
+            Arg::ARGS   => ['bat' => 'baz'],
+            Arg::DATA   => ['dir' => 'asc'],
+        ]);
+
+        $this->assertEquals('bar', $request->variable('foo'));
+        $this->assertEquals('baz', $request->variable('bat'));
+        $this->assertEquals('asc', $request->variable('dir'));
+    }
+
+    /**
+     *
+     */
+    function test_variable_order()
+    {
+        $request = new Request([
+            Arg::PARAMS => ['foo' => 'bar'],
+            Arg::ARGS   => ['foo' => 'baz', 'bat' => 'bar'],
+            Arg::DATA   => ['foo' => 'bat', 'bat' => 'baz', 'foobar' => 'bar'],
+        ]);
+
+        $this->assertEquals('bar', $request->variable('foo'));
+        $this->assertEquals('bar', $request->variable('bat'));
+        $this->assertEquals('bar', $request->variable('foobar'));
+    }
+
+    /**
+     *
+     */
+    function test_vars()
+    {
+        $request = new Request([
+            Arg::PARAMS => ['foo' => 'bar'],
+            Arg::ARGS   => ['bat' => 'baz'],
+            Arg::DATA   => ['dir' => 'asc'],
+        ]);
+
+        $this->assertEquals($request->params() + $request->args() + $request->data(), $request->vars());
     }
 }
