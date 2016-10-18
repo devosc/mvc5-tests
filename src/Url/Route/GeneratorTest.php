@@ -17,22 +17,21 @@ class GeneratorTest
      */
     protected $route = [
         'name'        => 'app',
-        'route'       => '/[:controller[/:action]]',
+        'route'       => '/[{controller}[/{action}]]',
         'wildcard'    => true,
         'constraints' => ['controller' => '[a-zA-Z0-9_-]*', 'action' => '[a-zA-Z0-9_-]*'],
         'defaults'    => ['controller' => 'home', 'action' => 'index'],
         'tokens'      => [
             ['literal', '/'],
             ['optional-start'],
-            ['param', 'controller', null],
+            ['param', 'controller', '[a-zA-Z0-9_-]*'],
             ['optional-start'],
             ['literal', '/'],
-            ['param','action', null],
+            ['param','action', '[a-zA-Z0-9_-]*'],
             ['optional-end'],
             ['optional-end']
         ],
-        'regex'  => '/(?:(?P<param1>[a-zA-Z0-9_-]*)(?:/(?P<param2>[a-zA-Z0-9_-]*))?)?',
-        'map'    => ['param1' => 'controller', 'param2' => 'action'],
+        'regex'  => '/(?:(?P<controller>[a-zA-Z0-9_-]*)(?:/(?P<action>[a-zA-Z0-9_-]*))?)?',
     ];
 
     /**
