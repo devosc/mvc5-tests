@@ -83,22 +83,6 @@ class ResponseTest
     /**
      *
      */
-    function test_set_header_replace()
-    {
-        $response = new Response;
-
-        $response->header('foo', 'bar');
-
-        $this->assertEquals(new HttpHeaders(['foo' => 'bar']), $response->headers());
-
-        $response->header('foo', 'baz', true);
-
-        $this->assertEquals(new HttpHeaders(['foo' => 'baz']), $response->headers());
-    }
-
-    /**
-     *
-     */
     function test_headers()
     {
         $response = new Response(null, null, ['foo' => 'bar']);
