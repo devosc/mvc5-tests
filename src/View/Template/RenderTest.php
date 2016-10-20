@@ -37,7 +37,7 @@ class RenderTest
      */
     function test_invoke()
     {
-        $model  = new HomeModel('home', ['title' => 'foo']);
+        $model  = new HomeModel('home');
         $layout = new Layout('layout', [Arg::CHILD_MODEL => $model]);
 
         $render = new Render([
@@ -46,6 +46,18 @@ class RenderTest
         ]);
 
         $this->assertEquals('<h1>Home</h1>', trim($render($layout)));
+    }
+
+    /**
+     *
+     */
+    function test_default_view_directory()
+    {
+        $model  = new HomeModel('home', ['title' => 'foo']);
+
+        $render = new Render([], __DIR__);
+
+        $this->assertEquals('<h1>foo</h1>', trim($render($model)));
     }
 
     /**
