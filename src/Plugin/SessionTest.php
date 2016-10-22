@@ -23,9 +23,9 @@ class SessionTest
 
         $app = new App(['services' => ['session' => new Config]]);
 
-        $register = new Session($name);
+        $session = new Session($name);
 
-        $result = $register->register($app, ['name' => $name, 'service' => $service, 'plugin' => null]);
+        $result = $session->register($app, ['name' => $name, 'service' => $service, 'plugin' => null]);
 
         $this->assertNull($result);
     }
@@ -41,9 +41,9 @@ class SessionTest
 
         $app = new App(['services' => ['session' => new Config(['foo' => $plugin])]]);
 
-        $register = new Session($name);
+        $session = new Session($name);
 
-        $result = $register->register($app, ['name' => $name, 'service' => $service, 'plugin' => null]);
+        $result = $session->register($app, ['name' => $name, 'service' => $service, 'plugin' => null]);
 
         $this->assertTrue($plugin === $result);
         $this->assertTrue($plugin === $app['session'][$name]);
@@ -60,9 +60,9 @@ class SessionTest
 
         $app = new App(['services' => ['session' => new Config]]);
 
-        $register = new Session($name, $plugin);
+        $session = new Session($name, $plugin);
 
-        $result = $register->register($app, ['name' => $name, 'service' => $service, 'plugin' => $plugin]);
+        $result = $session->register($app, ['name' => $name, 'service' => $service, 'plugin' => $plugin]);
 
         $this->assertTrue($plugin === $result);
         $this->assertTrue($plugin === $app['session'][$name]);
