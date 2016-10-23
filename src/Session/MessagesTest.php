@@ -26,7 +26,7 @@ class MessagesTest
     function test_message()
     {
         $messages = new Messages;
-        $messages->flash('Hello!', 'info', 'foo');
+        $messages->add('Hello!', 'info', 'foo');
 
         $this->assertEmpty($messages->message());
         $this->assertEmpty($messages());
@@ -37,14 +37,25 @@ class MessagesTest
     /**
      *
      */
-    function test_named_message()
+    function test_serialize()
     {
         $messages = new Messages;
-        $messages->flash('Hello!', 'info', 'foo');
+        $messages->add('Hello!');
+        $messages->add('Hello!', 'info', 'foo');
 
-        $this->assertEmpty($messages->message());
-        $this->assertEmpty($messages());
+        $messages = unserialize(serialize($messages));
+
+        $this->assertEquals(['message' => 'Hello!', 'type' => 'info'], $messages());
         $this->assertEquals(['message' => 'Hello!', 'type' => 'info'], $messages('foo'));
+        $this->assertEmpty($messages());
         $this->assertEmpty($messages('foo'));
+
+        $messages->add('Success!', 'success', 'login');
+
+        $messages = unserialize(serialize($messages));
+
+        $this->assertEmpty($messages());
+        $this->assertEquals(['message' => 'Success!', 'type' => 'success'], $messages('login'));
+        $this->assertEmpty($messages('login'));
     }
 }
