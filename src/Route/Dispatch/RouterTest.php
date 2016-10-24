@@ -17,6 +17,7 @@ use Mvc5\Route\Generator;
 use Mvc5\Route\Match;
 use Mvc5\Route\Match\Path;
 use Mvc5\Route\Match\Method;
+use Mvc5\Response\Config as Response;
 use Mvc5\Test\Route\Dispatch;
 use Mvc5\Test\Test\TestCase;
 
@@ -214,6 +215,26 @@ class RouterTest
         $request = $dispatch->request($request);
 
         $this->assertEquals('home', $request->name());
+    }
+
+    /**
+     *
+     */
+    function test_return_response()
+    {
+        $request = new Request;
+        $route = new Route([Arg::NAME => 'home', Arg::ROUTE => '/']);
+        $dispatch = new Dispatch($route);
+
+        $config = $this->config;
+
+        $config['events']['route\match'] = [function() {
+            return new Response('foo');
+        }];
+
+        $dispatch->service(new App($config));
+
+        $this->assertInstanceOf(Response::class, $dispatch->request($request));
     }
 
     /**
