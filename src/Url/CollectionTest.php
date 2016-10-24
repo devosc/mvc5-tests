@@ -5,7 +5,6 @@
 
 namespace Mvc5\Test\Url;
 
-use Mvc5\Arg;
 use Mvc5\Url\Collection;
 use Mvc5\Test\Test\TestCase;
 
