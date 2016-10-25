@@ -14,18 +14,6 @@ class ErrorTest
     /**
      *
      */
-    function test_throw_exception()
-    {
-        $log = new Error(true);
-
-        $this->setExpectedException(\Exception::class, 'Hello!');
-
-        $log(new \Exception('Hello!'));
-    }
-
-    /**
-     *
-     */
     function test_error_log()
     {
         $log = new Error;
