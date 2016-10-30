@@ -11,16 +11,6 @@ class Plugin
     extends _Plugin
 {
     /**
-     * @param null|string $name
-     * @param array $args
-     * @return array
-     */
-    function args($name = null, array $args = [])
-    {
-        return parent::args($name, $args);
-    }
-
-    /**
      * @return callable
      */
     function generator()
