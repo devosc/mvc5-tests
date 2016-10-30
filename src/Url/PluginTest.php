@@ -23,28 +23,6 @@ class PluginTest
     /**
      *
      */
-    function test_args_with_name()
-    {
-        $plugin = new Plugin(new Request, function(){});
-
-        $this->assertEquals(['foo' => 'bar'], $plugin->args('foo', ['foo' => 'bar']));
-    }
-
-    /**
-     *
-     */
-    function test_args_with_no_name_and_from_route()
-    {
-        $args = ['foo' => 'bar'];
-
-        $plugin = new Plugin(new Request([Arg::ARGS => $args]), function(){});
-
-        $this->assertEquals(['baz' => 'bat'] + $args, $plugin->args(null, ['baz' => 'bat']));
-    }
-
-    /**
-     *
-     */
     function test_generator()
     {
         $generator = function(){};
