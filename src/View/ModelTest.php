@@ -44,4 +44,31 @@ class ModelTest
 
         $this->assertInstanceOf(Mvc5Model::class, $model->view('foo', ['foo']));
     }
+
+    /**
+     *
+     */
+    function test_view_template()
+    {
+        $model = new Model;
+
+        $model->setModel(new Mvc5Model);
+
+        $view = $model->view('foo', ['bar']);
+
+        $this->assertEquals('foo', $view->template());
+    }
+
+    /**
+     *
+     */
+    function test_view_constant()
+    {
+        $controller = new Controller;
+
+        $view = $controller->model(['bar']);
+
+        $this->assertInstanceOf(Mvc5Model::class, $view);
+        $this->assertEquals('home', $view->template());
+    }
 }
