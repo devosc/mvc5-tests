@@ -6,6 +6,7 @@
 namespace Mvc5\Test\View;
 
 use Mvc5\Model as Mvc5Model;
+use Mvc5\Model\ViewModel;
 use Mvc5\Test\Test\TestCase;
 
 class ModelTest
@@ -14,61 +15,49 @@ class ModelTest
     /**
      *
      */
-    function test_setModel()
+    function test_model_injected()
     {
-        $model = new Model;
+        $model = new Mvc5Model;
 
-        $model->setModel(new Mvc5Model);
+        $controller = new ModelController($model);
 
-        $this->assertInstanceOf(Mvc5Model::class, $model->model());
+        /** @var ViewModel $vm */
+        $vm = $controller(['foo' => 'bar']);
+
+        $this->assertTrue($vm === $model);
+        $this->assertEquals(['foo' => 'bar'], $vm->vars());
+
+        $vm = $controller(['baz' => 'bat'], 'foobar');
+
+        $this->assertTrue($vm === $model);
+        $this->assertEquals(['foo' => 'bar', 'baz' => 'bat', '__template' => 'foobar'], $vm->vars());
     }
 
     /**
      *
      */
-    function test_model()
+    function test_model_not_injected()
     {
-        $model = new Model;
+        $controller = new ModelController;
 
-        $this->assertInstanceOf(Mvc5Model::class, $model->model(['foo']));
+        /** @var ViewModel $vm */
+        $model = $controller(['foo' => 'bar']);
+        $vm    = $controller(['baz' => 'bat'], 'foobar');
+
+        $this->assertTrue($vm !== $model);
     }
 
     /**
      *
      */
-    function test_view()
-    {
-        $model = new Model;
-
-        $model->setModel(new Mvc5Model);
-
-        $this->assertInstanceOf(Mvc5Model::class, $model->view('foo', ['foo']));
-    }
-
-    /**
-     *
-     */
-    function test_view_template()
-    {
-        $model = new Model;
-
-        $model->setModel(new Mvc5Model);
-
-        $view = $model->view('foo', ['bar']);
-
-        $this->assertEquals('foo', $view->template());
-    }
-
-    /**
-     *
-     */
-    function test_view_constant()
+    function test_model_constant()
     {
         $controller = new Controller;
 
-        $view = $controller->model(['bar']);
+        /** @var ViewModel $view */
+        $view = $controller(['bar']);
 
-        $this->assertInstanceOf(Mvc5Model::class, $view);
+        $this->assertInstanceOf(Model::class, $view);
         $this->assertEquals('home', $view->template());
     }
 }

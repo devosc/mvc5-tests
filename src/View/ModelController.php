@@ -8,7 +8,7 @@ namespace Mvc5\Test\View;
 use Mvc5\Model\ViewModel;
 use Mvc5\View\Model as _ViewModel;
 
-class Controller
+class ModelController
 {
     /**
      *
@@ -16,14 +16,12 @@ class Controller
     use _ViewModel;
 
     /**
-     *
+     * @param ViewModel $model
      */
-    const VIEW_MODEL = Model::class;
-
-    /**
-     *
-     */
-    const TEMPLATE_NAME = 'home';
+    function __construct(ViewModel $model = null)
+    {
+        $this->model = $model;
+    }
 
     /**
      * @param array $vars
@@ -32,6 +30,6 @@ class Controller
      */
     function __invoke(array $vars = [], $template = null)
     {
-        return $this->view($template, $vars);
+        return $this->model($vars, $template);
     }
 }
