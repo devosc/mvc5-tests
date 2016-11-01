@@ -6,7 +6,6 @@
 namespace Mvc5\Test\View;
 
 use Mvc5\Model as Mvc5Model;
-use Mvc5\Model\ViewModel;
 use Mvc5\Test\Test\TestCase;
 
 class ModelTest
@@ -15,49 +14,52 @@ class ModelTest
     /**
      *
      */
-    function test_model_injected()
+    function test_set_model()
     {
-        $model = new Mvc5Model;
+        $model   = new Model;
+        $service = new ModelService;
 
-        $controller = new ModelController($model);
-
-        /** @var ViewModel $vm */
-        $vm = $controller(['foo' => 'bar']);
-
-        $this->assertTrue($vm === $model);
-        $this->assertEquals(['foo' => 'bar'], $vm->vars());
-
-        $vm = $controller(['baz' => 'bat'], 'foobar');
-
-        $this->assertTrue($vm === $model);
-        $this->assertEquals(['foo' => 'bar', 'baz' => 'bat', '__template' => 'foobar'], $vm->vars());
+        $this->assertInstanceOf(Model::class, $service->setModel($model));
+        $this->assertTrue($model === $service->model(['foo' => 'bar']));
+        $this->assertTrue($model === $service->view('foobar'));
     }
 
     /**
      *
      */
-    function test_model_not_injected()
+    function test_model()
     {
-        $controller = new ModelController;
+        $service = new ModelService;
 
-        /** @var ViewModel $vm */
-        $model = $controller(['foo' => 'bar']);
-        $vm    = $controller(['baz' => 'bat'], 'foobar');
-
-        $this->assertTrue($vm !== $model);
+        $this->assertInstanceOf(Mvc5Model::class, $service->model());
     }
 
     /**
      *
      */
-    function test_model_constant()
+    function test_view()
     {
-        $controller = new Controller;
+        $service = new ModelService;
 
-        /** @var ViewModel $view */
-        $view = $controller(['bar']);
+        $this->assertInstanceOf(Mvc5Model::class, $service->view('foo', ['foo']));
+    }
 
+    /**
+     *
+     */
+    function test_constants()
+    {
+        $service = new ViewService;
+
+        $model = $service->model(['foo' => 'bar']);
+        $view  = $service->view('bar', ['baz' => 'bat']);
+
+        $this->assertInstanceOf(Model::class, $model);
         $this->assertInstanceOf(Model::class, $view);
-        $this->assertEquals('home', $view->template());
+        $this->assertTrue($model !== $view);
+        $this->assertEquals('foobar', $model->template());
+        $this->assertEquals(['foo' => 'bar', '__template' => 'foobar'], $model->vars());
+        $this->assertEquals('bar', $view->template());
+        $this->assertEquals(['baz' => 'bat', '__template' => 'bar'], $view->vars());
     }
 }
