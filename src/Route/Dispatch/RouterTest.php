@@ -3,7 +3,7 @@
  *
  */
 
-namespace Mvc5\Test\Route\Router;
+namespace Mvc5\Test\Route\Dispatch;
 
 use Mvc5\Arg;
 use Mvc5\App;
@@ -15,7 +15,9 @@ use Mvc5\Route\Request\Config as Request;
 use Mvc5\Route\Config as Route;
 use Mvc5\Route\Generator;
 use Mvc5\Route\Match;
+use Mvc5\Route\Match\Controller;
 use Mvc5\Route\Match\Path;
+use Mvc5\Route\Match\Merge;
 use Mvc5\Route\Match\Method;
 use Mvc5\Response\Config as Response;
 use Mvc5\Test\Route\Dispatch;
@@ -31,14 +33,18 @@ class RouterTest
         'routes' => [
             'name'     => 'home',
             'route'    => '/',
+            'options'  => ['prefix' => __NAMESPACE__ . '\\'],
             'children' => [
                 [
                     'name'     => 'baz',
                     'route' => 'foo',
                     'children' => [
                         [
-                            'name'     => 'bat',
-                            'route' => '/bar'
+                            'name'  => 'bat',
+                            'route' => '/bar',
+                            'defaults' => [
+                                'controller' => 'foo/bar'
+                            ],
                         ]
                     ]
                 ]
@@ -51,10 +57,12 @@ class RouterTest
             ]
         ],
         'services' => [
-            'route\generator'      => Generator::class,
-            'route\match'          => Match::class,
-            'route\match\path'     => Path::class,
-            'route\match\method'   => Method::class
+            'route\generator'        => Generator::class,
+            'route\match'            => Match::class,
+            'route\match\controller' => Controller::class,
+            'route\match\merge'      => Merge::class,
+            'route\match\method'     => Method::class,
+            'route\match\path'       => Path::class
         ]
     ];
 
@@ -269,6 +277,31 @@ class RouterTest
         $request = $dispatch->request($request);
 
         $this->assertEquals('baz/bat', $request->name());
+    }
+
+    /**
+     *
+     */
+    function test_child_controller_options()
+    {
+        $config = $this->config;
+
+        $match = $config['events']['route\match'];
+
+        array_unshift($match, 'route\match\merge') ;
+        $match[] = 'route\match\controller';
+
+        $config['events']['route\match'] = $match;
+
+        $dispatch = new Dispatch(new Route($config['routes']));
+        $request  = new Mvc5Request([Arg::URI => [Arg::PATH => '/foo/bar']]);
+
+        $dispatch->service(new App($config));
+
+        $request = $dispatch->request($request);
+
+        $this->assertEquals('baz/bat', $request->name());
+        $this->assertEquals(Foo\Bar\Controller::class, $request->controller());
     }
 
     /**
