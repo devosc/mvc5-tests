@@ -3,7 +3,7 @@
  *
  */
 
-namespace Mvc5\Test\Route\Router;
+namespace Mvc5\Test\Route\Dispatch;
 
 use Mvc5\Arg;
 use Mvc5\App;
