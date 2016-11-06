@@ -19,7 +19,7 @@ class MethodTest
     /**
      *
      */
-    function test__invoke()
+    function test_matched()
     {
         $route   = new Route([Arg::METHOD => ['GET']]);
         $method  = new Method;
@@ -31,7 +31,19 @@ class MethodTest
     /**
      *
      */
-    function test_invoke_not_matched()
+    function test_optional_match()
+    {
+        $route   = new Route([Arg::METHOD => 'GET', Arg::OPTIONAL => [Arg::METHOD]]);
+        $method  = new Method;
+        $request = new Request(new Mvc5Request([Arg::METHOD => 'POST']));
+
+        $this->assertNull($method($request, $route));
+    }
+
+    /**
+     *
+     */
+    function test_not_matched()
     {
         $route   = new Route([Arg::METHOD => 'GET']);
         $method  = new Method;
