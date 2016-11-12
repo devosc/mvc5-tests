@@ -32,15 +32,15 @@ class Generator
 
     /**
      * @param array|string $name
-     * @param array $args
+     * @param array $params
      * @param array $options
      * @param string $path
      * @param Route $parent
      * @return string|void
      */
-    function generate($name, array $args = [], array $options = [], $path = '', Route $parent = null)
+    function generate($name, array $params = [], array $options = [], $path = '', Route $parent = null)
     {
-        return parent::generate($name, $args, $options, $path, $parent);
+        return parent::generate($name, $params, $options, $path, $parent);
     }
 
     /**
