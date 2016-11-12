@@ -14,89 +14,60 @@ class CompileTest
     /**
      *
      */
-    function test_compile()
+    function test_missing_required_parameter()
     {
         $compile = new Compile;
 
         $route = (new Generator)->__invoke([
-            'route'      => '[{no_constraint}]/{author}[/{category}]',
+            'route'      => '/{author}[/{category}][/{optional_missing_param}]',
             'defaults'   => [
-                'author'   => 'owner',
                 'category' => 'web'
-            ],
-            'wildcard'   => false,
-            'controller' => '@blog:create',
-            'constraints' => [
-                'author'   => '[a-zA-Z0-9_-]*',
-                'category' => '[a-zA-Z0-9_-]*'
             ]
         ]);
 
         $params = ['category' => 'bar'];
 
-        $tokens = $route['tokens'];
-
-        $defaults = $route['defaults'];
-
         $this->setExpectedException('InvalidArgumentException', 'Missing parameter "author"');
 
-        $compile->compile($tokens, $params, $defaults);
+        $compile->compile($route['tokens'], $params, $route['defaults']);
     }
 
     /**
      *
      */
-    function test_compile_not_named()
+    function test_use_default_if_required_parameter()
+    {
+        $compile = new Compile;
+
+        $route = (new Generator)->__invoke([
+            'route'      => '/{author}[/{category}][/{optional_missing_param}]',
+            'defaults'   => [
+                'author'   => 'owner',
+                'category' => 'web'
+            ],
+        ]);
+
+        $params = ['category' => 'bar'];
+
+        $this->assertEquals('/owner/bar', $compile->compile($route['tokens'], $params, $route['defaults']));
+    }
+
+    /**
+     *
+     */
+    function test_param_with_no_name()
     {
         $compile = new Compile;
 
         $route = (new Generator)->__invoke(['route' => '/{$}']);
 
-        $params = ['category' => 'bar'];
-
-        $tokens = $route['tokens'];
-
-        $defaults = $route['defaults'];
-
-        $this->assertEquals('/', $compile->compile($tokens, $params, $defaults));
+        $this->assertEquals('/', $compile->compile($route['tokens'], [], $route['defaults']));
     }
 
     /**
      *
      */
-    function test_compile_no_default_arg()
-    {
-        $compile = new Compile;
-
-        $route = (new Generator)->__invoke([
-            'route'      => '[{no_constraint}]/{author}[/{category}]',
-            'defaults'   => [
-                //'author'   => 'owner',
-                'category' => 'web'
-            ],
-            'wildcard'   => false,
-            'controller' => '@blog:create',
-            'constraints' => [
-                'author'   => '[a-zA-Z0-9_-]*',
-                'category' => '[a-zA-Z0-9_-]*'
-            ]
-        ]);
-
-        $params = ['category' => 'bar'];
-
-        $tokens = $route['tokens'];
-
-        $defaults = $route['defaults'];
-
-        $this->setExpectedException('InvalidArgumentException', 'Missing parameter "author"');
-
-        $compile->compile($tokens, $params, $defaults);
-    }
-
-    /**
-     *
-     */
-    function test_compile_arg_path()
+    function test_optional_params_provided()
     {
         $compile = new Compile;
 
@@ -105,21 +76,11 @@ class CompileTest
             'defaults'   => [
                 'author'   => 'owner',
                 'category' => 'web'
-            ],
-            'wildcard'   => false,
-            'controller' => '@blog:create',
-            'constraints' => [
-                'author'   => '[a-zA-Z0-9_-]*',
-                'category' => '[a-zA-Z0-9_-]*'
             ]
         ]);
 
         $params = ['author' => 'foo', 'category' => 'bar'];
 
-        $tokens = $route['tokens'];
-
-        $defaults = $route['defaults'];
-
-        $this->assertEquals('/foo/bar', $compile->compile($tokens, $params, $defaults));
+        $this->assertEquals('/foo/bar', $compile->compile($route['tokens'], $params, $route['defaults']));
     }
 }
