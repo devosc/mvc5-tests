@@ -19,7 +19,7 @@ class HostTest
     /**
      *
      */
-    function test_invoke()
+    function test_matched()
     {
         $route   = new Route([Arg::HOST => 'foo']);
         $host    = new Host;
@@ -31,12 +31,24 @@ class HostTest
     /**
      *
      */
-    function test_invoke_not_matched()
+    function test_not_matched()
     {
         $route   = new Route([Arg::HOST => 'foo']);
         $host    = new Host;
         $request = new Request(new Mvc5Request([Arg::URI => [Arg::HOST => 'bar']]));
 
         $this->assertInstanceOf(BadRequest::class, $host($request, $route));
+    }
+
+    /**
+     *
+     */
+    function test_optional()
+    {
+        $route   = new Route([Arg::HOST => 'foo', Arg::OPTIONAL => ['host']]);
+        $host    = new Host;
+        $request = new Request(new Mvc5Request([Arg::URI => [Arg::HOST => 'bar']]));
+
+        $this->assertEquals(null, $host($request, $route));
     }
 }
