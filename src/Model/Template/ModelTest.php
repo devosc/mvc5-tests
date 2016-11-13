@@ -25,6 +25,17 @@ class ModelTest
     /**
      *
      */
+    function test_construct_array()
+    {
+        $model = new Model(['__template' => 'foo', 'bar' => 'baz']);
+
+        $this->assertEquals('foo', $model->template());
+        $this->assertEquals('baz', $model->get('bar'));
+    }
+
+    /**
+     *
+     */
     function test_construct_template_const()
     {
         $model = new Model;
