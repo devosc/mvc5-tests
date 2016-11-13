@@ -9,7 +9,7 @@ use Mvc5\Arg;
 use Mvc5\Http\Request\Config as Request;
 use Mvc5\Http\Response\Config as Response;
 use Mvc5\Test\Test\TestCase;
-use Mvc5\Test\View\Template\HomeModel as Model;
+use Mvc5\Test\View\HomeModel as Model;
 use Mvc5\View\Render as ViewRenderer;
 use Mvc5\Web\Render;
 

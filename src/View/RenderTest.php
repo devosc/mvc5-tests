@@ -3,7 +3,7 @@
  *
  */
 
-namespace Mvc5\Test\View\Template;
+namespace Mvc5\Test\View;
 
 use Mvc5\Arg;
 use Mvc5\Layout;
@@ -58,18 +58,6 @@ class RenderTest
         $render = new Render([], __DIR__);
 
         $this->assertEquals('<h1>foo</h1>', trim($render($model)));
-    }
-
-    /**
-     *
-     */
-    function test_invoke_no_template_exception()
-    {
-        $render = new Render;
-
-        $this->setExpectedException('RuntimeException');
-
-        $render(new Model);
     }
 
     /**
