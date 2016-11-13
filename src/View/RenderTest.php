@@ -5,6 +5,7 @@
 
 namespace Mvc5\Test\View;
 
+use Mvc5\App;
 use Mvc5\Arg;
 use Mvc5\Layout;
 use Mvc5\Model;
@@ -58,6 +59,31 @@ class RenderTest
         $render = new Render([], __DIR__);
 
         $this->assertEquals('<h1>foo</h1>', trim($render($model)));
+    }
+
+    /**
+     *
+     */
+    function test_view_model_provider()
+    {
+        $render = new Render([], __DIR__, function($name) {
+            return new HomeModel('home', ['title' => 'foo']);
+        });
+
+        $render->service(new App);
+
+        $this->assertEquals('<h1>foo</h1>', trim($render->render('baz')));
+    }
+
+    /**
+     *
+     */
+    function test_no_view_model_provider()
+    {
+        $render = new Render([], __DIR__);
+        $render->service(new App);
+
+        $this->assertEquals('<h1>foo</h1>', trim($render->render(['__template' => 'home', 'title' => 'foo'])));
     }
 
     /**
