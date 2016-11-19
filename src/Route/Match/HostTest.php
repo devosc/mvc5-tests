@@ -7,6 +7,7 @@ namespace Mvc5\Test\Route\Match;
 
 use Mvc5\Arg;
 use Mvc5\Http\Error\BadRequest;
+use Mvc5\Http\Error\NotFound;
 use Mvc5\Request\Config as Mvc5Request;
 use Mvc5\Route\Config as Route;
 use Mvc5\Route\Match\Host;
@@ -35,6 +36,18 @@ class HostTest
     {
         $route   = new Route([Arg::HOST => 'foo']);
         $host    = new Host;
+        $request = new Request(new Mvc5Request([Arg::URI => [Arg::HOST => 'bar']]));
+
+        $this->assertInstanceOf(NotFound::class, $host($request, $route));
+    }
+
+    /**
+     *
+     */
+    function test_bad_request()
+    {
+        $route   = new Route([Arg::HOST => 'foo']);
+        $host    = new Host(BadRequest::class);
         $request = new Request(new Mvc5Request([Arg::URI => [Arg::HOST => 'bar']]));
 
         $this->assertInstanceOf(BadRequest::class, $host($request, $route));
