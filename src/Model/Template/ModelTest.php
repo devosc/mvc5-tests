@@ -36,6 +36,17 @@ class ModelTest
     /**
      *
      */
+    function test_construct_model_template_constant()
+    {
+        $model = new Model(['bar' => 'baz']);
+
+        $this->assertEquals('baz', $model->template());
+        $this->assertEquals('baz', $model->get('bar'));
+    }
+
+    /**
+     *
+     */
     function test_construct_template_const()
     {
         $model = new Model;
