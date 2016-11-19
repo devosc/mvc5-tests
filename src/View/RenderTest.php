@@ -11,6 +11,7 @@ use Mvc5\Layout;
 use Mvc5\Model;
 use Mvc5\Test\Test\TestCase;
 use Mvc5\View\Render;
+use Mvc5\View\Template\NotFound;
 
 class RenderTest
     extends TestCase
@@ -97,5 +98,29 @@ class RenderTest
         $this->setExpectedException('Exception', 'Exception Test');
 
         $render(new Model($template));
+    }
+
+    /**
+     *
+     */
+    function test_empty_filename_exception()
+    {
+        $render = new Render;
+
+        $this->setExpectedException(NotFound::class, 'Template name cannot be empty: Mvc5\Model');
+
+        $render(new Model);
+    }
+
+    /**
+     *
+     */
+    function test_file_not_found_exception()
+    {
+        $render = new Render(null, null, null, null, null, true);
+
+        $this->setExpectedException(NotFound::class, 'File not found: ' . __DIR__ . '/foo.phtml');
+
+        $render(new Model(['__template' => __DIR__ . '/foo.phtml']));
     }
 }
