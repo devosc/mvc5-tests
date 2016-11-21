@@ -40,6 +40,7 @@ class Resolver
         make       as public;
         merge      as public;
         parent     as public;
+        pluginArray as public;
         provide    as public;
         provider   as public;
         relay      as public;

@@ -69,6 +69,18 @@ class PluginTest
     /**
      *
      */
+    function test_plugin_with_recursive_service_array_config()
+    {
+        $resolver = new Resolver;
+
+        $resolver->configure('stdClass', ['stdClass']);
+
+        $this->assertEquals(new \stdClass, $resolver->plugin('stdClass'));
+    }
+
+    /**
+     *
+     */
     function test_plugin_closure_with_scope()
     {
         $resolver = new Resolver;
