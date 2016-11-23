@@ -6,43 +6,42 @@
 namespace Mvc5\Test\Exception;
 
 use Mvc5\Exception;
-use Mvc5\Exception\InvalidArgument;
 use Mvc5\Test\Test\TestCase;
 
-class InvalidArgumentTest
+class ExceptionTest
     extends TestCase
 {
     /**
      *
      */
-    function test_invalid_argument_exception()
+    function test_exception()
     {
         try {
 
-            Exception::invalidArgument('foo');
+            Exception::exception('foo');
 
         } catch(\Exception $exception) {}
 
         $this->assertEquals('foo', $exception->getMessage());
         $this->assertEquals(__FILE__, $exception->getFile());
-        $this->assertEquals(22, $exception->getLine());
-        $this->assertInstanceOf(InvalidArgument::class, $exception);
+        $this->assertEquals(21, $exception->getLine());
+        $this->assertInstanceOf(Exception::class, $exception);
     }
 
     /**
      *
      */
-    function test_php_invalid_argument_exception()
+    function test_php_exception()
     {
         try {
 
-            PHPException::invalidArgument('foo');
+            PHPException::exception('foo');
 
         } catch(\Exception $exception) {}
 
         $this->assertEquals('foo', $exception->getMessage());
         $this->assertEquals(__FILE__, $exception->getFile());
-        $this->assertEquals(39, $exception->getLine());
-        $this->assertInstanceOf(\InvalidArgumentException::class, $exception);
+        $this->assertEquals(38, $exception->getLine());
+        $this->assertInstanceOf(PHPException::class, $exception);
     }
 }

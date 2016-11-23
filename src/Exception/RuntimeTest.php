@@ -5,6 +5,7 @@
 
 namespace Mvc5\Test\Exception;
 
+use Mvc5\Exception;
 use Mvc5\Exception\Runtime;
 use Mvc5\Test\Test\TestCase;
 
@@ -14,12 +15,34 @@ class RuntimeTest
     /**
      *
      */
-    function test_invalid_argument()
+    function test_runtime_exception()
     {
-        $exception = new Runtime('foo', 0, null, ['file' => 'bar.php', 'line' => 99]);
+        try {
+
+            Exception::runtime('foo');
+
+        } catch(\Exception $exception) {}
 
         $this->assertEquals('foo', $exception->getMessage());
-        $this->assertEquals('bar.php', $exception->getFile());
-        $this->assertEquals(99, $exception->getLine());
+        $this->assertEquals(__FILE__, $exception->getFile());
+        $this->assertEquals(22, $exception->getLine());
+        $this->assertInstanceOf(Runtime::class, $exception);
+    }
+
+    /**
+     *
+     */
+    function test_php_runtime_exception()
+    {
+        try {
+
+            PHPException::runtime('foo');
+
+        } catch(\Exception $exception) {}
+
+        $this->assertEquals('foo', $exception->getMessage());
+        $this->assertEquals(__FILE__, $exception->getFile());
+        $this->assertEquals(39, $exception->getLine());
+        $this->assertInstanceOf(\RuntimeException::class, $exception);
     }
 }
