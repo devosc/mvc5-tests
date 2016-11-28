@@ -77,4 +77,25 @@ class MiddlewareTest
 
         $this->assertInstanceOf(Response::class, $middleware(new Request, new Response));
     }
+
+
+    /**
+     *
+     */
+    function test_reset()
+    {
+        $middleware = new Middleware([
+            function(Request $request, Response $response, callable $next) {
+                return $next($request, $response);
+            },
+            function(Request $request, Response $response, callable $next) {
+                return $next($request, $response);
+            }
+        ]);
+
+        $middleware->service(new App);
+
+        $this->assertInstanceOf(Response::class, $middleware(new Request, new Response));
+        $this->assertInstanceOf(Response::class, $middleware(new Request, new Response));
+    }
 }
