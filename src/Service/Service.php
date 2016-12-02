@@ -43,6 +43,16 @@ class Service
     }
 
     /**
+     * @param string $name
+     * @param $config
+     * @return callable|null|object
+     */
+    function shared($name, $config = null)
+    {
+        return 'foo';
+    }
+
+    /**
      * @param array|object|string|\Traversable $event
      * @param array $args
      * @param callable $callback

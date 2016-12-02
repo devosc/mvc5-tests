@@ -16,6 +16,7 @@ class Plugin
         call    as public;
         param   as public;
         plugin  as public;
+        shared  as public;
         trigger as public;
     }
 

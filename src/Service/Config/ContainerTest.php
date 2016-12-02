@@ -144,10 +144,10 @@ class ContainerTest
     /**
      *
      */
-    function test_has_shared()
+    function test_has_stored()
     {
         $config = new Container;
-        
+
         $config->container(['foo' => 'bar']);
 
         $this->assertEquals(true, $config->has('foo'));
@@ -264,23 +264,23 @@ class ContainerTest
     /**
      *
      */
-    function test_shared_null()
+    function test_stored_null()
     {
         $config = new Container;
 
-        $this->assertEquals(null, $config->shared('foo'));
+        $this->assertEquals(null, $config->stored('foo'));
     }
 
     /**
      *
      */
-    function test_shared_not_null()
+    function test_stored_not_null()
     {
         $config = new Container;
 
         $config->set('foo', 'bar');
 
-        $this->assertEquals('bar', $config->shared('foo'));
+        $this->assertEquals('bar', $config->stored('foo'));
     }
 
     /**

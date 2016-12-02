@@ -22,7 +22,7 @@ class Signal
      * @param $foo
      * @return mixed
      */
-    function staticTest($foo)
+    static function staticTest($foo)
     {
         return $foo;
     }
@@ -61,7 +61,7 @@ class Signal
      * @param array $args
      * @return string
      */
-    function staticRequiredTest($foo, $baz, Config $config, array $args = [])
+    static function staticRequiredTest($foo, $baz, Config $config, array $args = [])
     {
         return $foo . ' ' . $baz;
     }
@@ -71,7 +71,7 @@ class Signal
      * @param $baz
      * @return string
      */
-    function staticRequiredExceptionTest($foo, $baz)
+    static function staticRequiredExceptionTest($foo, $baz)
     {
         return $foo . ' ' . $baz;
     }

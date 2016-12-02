@@ -43,6 +43,16 @@ class PluginTest
     /**
      *
      */
+    function test_shared()
+    {
+        $plugin = new Plugin(new Service);
+
+        $this->assertEquals('foo', $plugin->shared(null));
+    }
+
+    /**
+     *
+     */
     function test_trigger()
     {
         $plugin = new Plugin(new Service);
