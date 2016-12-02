@@ -15,7 +15,7 @@ class GetTest
     /**
      *
      */
-    function test_get_shared()
+    function test_get_stored()
     {
         $resolver = new Resolver;
 

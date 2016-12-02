@@ -15,6 +15,6 @@ class Container
      *
      */
     use _Container {
-        shared as public;
+        stored as public;
     }
 }
