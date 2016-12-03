@@ -18,6 +18,11 @@ class PHPException
     /**
      *
      */
+    const ERROR_EXCEPTION = \ErrorException::class;
+
+    /**
+     *
+     */
     const INVALID_ARGUMENT = \InvalidArgumentException::class;
 
     /**
