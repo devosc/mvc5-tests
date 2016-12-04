@@ -42,6 +42,6 @@ class ExceptionTest
         $this->assertEquals('foo', $exception->getMessage());
         $this->assertEquals(__FILE__, $exception->getFile());
         $this->assertEquals(38, $exception->getLine());
-        $this->assertInstanceOf(PHPException::class, $exception);
+        $this->assertInstanceOf(\Exception::class, $exception);
     }
 }
