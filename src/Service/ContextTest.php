@@ -72,7 +72,7 @@ class ContextTest
 
         $context = new Context;
 
-        call_user_func($context, $app);
+        $context($app);
 
         $this->assertEquals($app, $context->service());
     }
