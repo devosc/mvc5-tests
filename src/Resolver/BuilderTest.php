@@ -21,7 +21,7 @@ class BuilderTest
     /**
      *
      */
-    function test_make()
+    function test_create()
     {
         $this->assertInstanceOf(
             Autowire::class, Builder::create(Autowire::class, ['foo' => 'bar'], new Resolver)
@@ -31,7 +31,7 @@ class BuilderTest
     /**
      *
      */
-    function test_make_without_constructor()
+    function test_create_without_constructor()
     {
         $this->assertInstanceOf(
             AutowireNoConstructor::class, Builder::create(AutowireNoConstructor::class, [], new Resolver)
@@ -41,7 +41,7 @@ class BuilderTest
     /**
      *
      */
-    function test_make_no_named_args()
+    function test_create_no_named_args()
     {
         $this->assertInstanceOf(
             Autowire::class, Builder::create(Autowire::class, [new CallEvent, 'foo'], new Resolver)
@@ -51,7 +51,7 @@ class BuilderTest
     /**
      *
      */
-    function test_make_with_named_args()
+    function test_create_with_named_args()
     {
         $this->assertInstanceOf(
             Autowire::class, Builder::create(Autowire::class, ['event' => new CallEvent, 'foo' => 'bar'], new Resolver)
@@ -61,7 +61,7 @@ class BuilderTest
     /**
      *
      */
-    function test_make_with_named_args_but_no_constructor_args()
+    function test_create_with_named_args_but_no_constructor_args()
     {
         $class = AutowireNoConstructorArgs::class;
 
@@ -73,7 +73,7 @@ class BuilderTest
     /**
      *
      */
-    function test_make_with_callback_param()
+    function test_create_with_callback_param()
     {
         $resolver = new Resolver;
 
@@ -87,7 +87,7 @@ class BuilderTest
     /**
      *
      */
-    function test_make_with_missing_param()
+    function test_create_with_missing_param()
     {
         $this->setExpectedException('RuntimeException');
 
@@ -104,7 +104,6 @@ class BuilderTest
         $reflection1 = Builder::reflectionClass(self::class);
         $reflection2 = Builder::reflectionClass(self::class);
 
-        $this->assertEquals($reflection1, $reflection2);
         $this->assertTrue($reflection1 === $reflection2);
     }
 }
