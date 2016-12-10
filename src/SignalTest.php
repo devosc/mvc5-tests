@@ -97,15 +97,57 @@ class SignalTest
     /**
      *
      */
-    function test_signal_no_param_exception()
+    function test_signal_no_param_function()
     {
         $signal = new Signal;
 
-        $name = 'Mvc5\Test\Signal::staticRequiredExceptionTest';
+        $this->setExpectedException('RuntimeException', 'Missing required parameter $haystack for strpos');
 
-        $this->setExpectedException('RuntimeException');
+        $signal->signal('strpos');
+    }
+
+    /**
+     *
+     */
+    function test_signal_no_param_exception_static_method()
+    {
+        $signal = new Signal;
+
+        $name = 'Mvc5\Test\Signal::requiredExceptionTest';
+
+        $this->setExpectedException(
+            'RuntimeException', 'Missing required parameter $baz for Mvc5\Test\Signal::requiredExceptionTest'
+        );
 
         $signal->signal($name, ['foo' => 'bar']);
+    }
+
+    /**
+     *
+     */
+    function test_signal_no_param_exception_class_method()
+    {
+        $signal = new Signal;
+
+        $this->setExpectedException(
+            'RuntimeException', 'Missing required parameter $baz for Mvc5\Test\Signal::requiredExceptionTest'
+        );
+
+        $signal->signal([new Signal, 'requiredExceptionTest'], ['foo' => 'bar']);
+    }
+
+    /**
+     *
+     */
+    function test_signal_no_param_exception_invoke()
+    {
+        $signal = new Signal;
+
+        $this->setExpectedException(
+            'RuntimeException', 'Missing required parameter $baz for Mvc5\Test\Signal::__invoke'
+        );
+
+        $signal->signal(new Signal, ['foo' => 'bar']);
     }
 
     /**
