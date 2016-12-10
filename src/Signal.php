@@ -71,7 +71,17 @@ class Signal
      * @param $baz
      * @return string
      */
-    static function staticRequiredExceptionTest($foo, $baz)
+    static function requiredExceptionTest($foo, $baz)
+    {
+        return $foo . ' ' . $baz;
+    }
+
+    /**
+     * @param $foo
+     * @param $baz
+     * @return string
+     */
+    function __invoke($foo, $baz)
     {
         return $foo . ' ' . $baz;
     }
