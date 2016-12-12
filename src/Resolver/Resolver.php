@@ -76,6 +76,15 @@ class Resolver
     }
 
     /**
+     * @param bool|callable $scope
+     * @return void
+     */
+    function setScope($scope = true)
+    {
+        $this->scope = $scope;
+    }
+
+    /**
      * @param bool|false $strict
      * @return void
      */
