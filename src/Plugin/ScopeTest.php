@@ -22,11 +22,11 @@ class ProviderTest
      */
     function test_construct()
     {
-        $plugin = new Scope('foo', new Args(['bar']), 'baz');
+        $plugin = new Scope('foo', ['bar', 'baz']);
 
         $this->assertTrue(is_callable($plugin->config()));
 
-        $args = [new Link, new Plugin(App::class, [new Args(['bar']), new Link]), 'foo', new Args(['baz'])];
+        $args = ['foo', new Link, new Args(['bar', 'baz'])];
 
         $this->assertEquals($args, $plugin->args());
     }
@@ -36,19 +36,19 @@ class ProviderTest
      */
     function test_scope()
     {
-        /** @var App $plugins */
+        $app = new App;
 
-        $provider = new Scope(Config::class, []);
+        $provider = new Scope(Config::class, [$app]);
 
         $resolver = new Resolver;
 
-        list($service, $plugins, $name) = $resolver->args($provider->args());
+        list($name, $service, $args) = $resolver->args($provider->args());
 
-        $plugin = $provider->scope($service, $plugins, $name);
+        $plugin = $provider->scope($name, $service, $args);
 
         $this->assertInstanceOf(Config::class, $plugin);
 
-        $this->assertEquals($plugin, $plugins->scope());
+        $this->assertEquals($plugin, $app->scope());
     }
 
     /**
@@ -58,7 +58,7 @@ class ProviderTest
     {
         $resolver = new Resolver;
 
-        $plugin = $resolver->gem(new Scope(Config::class, []));
+        $plugin = $resolver->gem(new Scope(Config::class, [new App]));
 
         $this->assertInstanceOf(Config::class, $plugin);
     }
@@ -72,7 +72,7 @@ class ProviderTest
 
         $resolver->configure('foo', Config::class);
 
-        $plugin = $resolver->gem(new Scope('foo', []));
+        $plugin = $resolver->gem(new Scope('foo', [new App]));
 
         $this->assertInstanceOf(Config::class, $plugin);
     }
