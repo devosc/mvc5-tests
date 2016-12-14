@@ -23,8 +23,6 @@ class EndTest
     {
         $plugin = new End('foo', 'bar');
 
-        $this->assertTrue(is_callable($plugin->config()));
-
         $this->assertEquals([new Args(['foo', 'bar'])], $plugin->args());
     }
 
