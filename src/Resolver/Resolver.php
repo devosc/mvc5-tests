@@ -10,7 +10,7 @@ use Mvc5\Resolver\Resolver as _Resolver;
 use Mvc5\Service\Service;
 
 class Resolver
-    implements Configuration, Service
+    implements Configuration, \Serializable, Service
 {
     /**
      *
