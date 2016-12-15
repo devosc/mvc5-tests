@@ -31,13 +31,12 @@ class UnserializeTest
         $resolver->container($container);
 
         $events = ['bar' => 'baz'];
-        $resolver->config($events);
+        $resolver->events($events);
 
         $provider = new App;
         $resolver->setProvider($provider);
 
         $resolver->setScope(true);
-
         $resolver->setStrict(true);
 
         $session['resolver'] = $resolver;
@@ -46,7 +45,13 @@ class UnserializeTest
 
         @$session->start();
 
-        $this->assertEquals([], $session['resolver']->container());
+        $resolver = $session['resolver'];
+        $this->assertEquals($config, $resolver->config());
+        $this->assertEmpty($resolver->container());
+        $this->assertEquals($events, $resolver->events());
+        $this->assertEquals($provider, $resolver->provider());
+        $this->assertTrue($resolver->scope());
+        $this->assertTrue($resolver->strict());
 
         $session->destroy(false);
     }
