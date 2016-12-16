@@ -136,6 +136,29 @@ class GeneratorTest
     /**
      *
      */
+    function test_repeat_event()
+    {
+        $app = new App([
+            'events' => [
+                'test_event_repeat' => [
+                    '@Mvc5\Test\Event\GeneratorTest::foo',
+                    '@Mvc5\Test\Event\GeneratorTest::bar',
+                    '@Mvc5\Test\Event\GeneratorTest::baz'
+                ]
+            ],
+            'services' => [
+                'event\model' => Event::class
+            ]
+        ]);
+
+        $this->assertEquals('baz', $app->call('test_event_repeat'));
+
+        $this->assertEquals('baz', $app->call('test_event_repeat'));
+    }
+
+    /**
+     *
+     */
     function test_repeat_event_iterator()
     {
         $app = new App([
@@ -152,6 +175,31 @@ class GeneratorTest
         ]);
 
         $this->assertEquals('baz', $app->call('test_event_repeat'));
+
+        $this->assertEquals('baz', $app->call('test_event_repeat'));
+    }
+
+    /**
+     *
+     */
+    function test_serialized_repeat_event()
+    {
+        $app = new App([
+            'events' => [
+                'test_event_repeat' => [
+                    '@Mvc5\Test\Event\GeneratorTest::foo',
+                    '@Mvc5\Test\Event\GeneratorTest::bar',
+                    '@Mvc5\Test\Event\GeneratorTest::baz',
+                ]
+            ],
+            'services' => [
+                'event\model' => Event::class
+            ]
+        ]);
+
+        $this->assertEquals('baz', $app->call('test_event_repeat'));
+
+        $app = unserialize(serialize($app));
 
         $this->assertEquals('baz', $app->call('test_event_repeat'));
     }
