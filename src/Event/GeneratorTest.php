@@ -7,6 +7,7 @@ namespace Mvc5\Test\Event;
 
 use Mvc5\App;
 use Mvc5\Config;
+use Mvc5\Event;
 use Mvc5\Test\Test\TestCase;
 
 class GeneratorTest
@@ -20,58 +21,68 @@ class GeneratorTest
         $config = [
             'events' => [
                 'string_event' => [
-                    function() {
-                        return 'foo';
-                    }
+                    '@Mvc5\Test\Event\GeneratorTest::foo'
                 ],
                 'test_event' => [
-                    function() {
-                        return 'foo';
-                    }
+                    '@Mvc5\Test\Event\GeneratorTest::foo'
                 ],
                 'test_event_stopped' => [
-                    function() {
-                        return 'foo';
-                    },
+                    '@Mvc5\Test\Event\GeneratorTest::foo',
                     function(TestEvent $event) {
                         $event->stop();
                         return 'bar';
                     },
-                    function() {
-                        return 'baz';
-                    },
+                    '@Mvc5\Test\Event\GeneratorTest::baz',
                 ],
                 'test_event_iterator' => new Config([
-                    function() {
-                        return 'foo';
-                    },
-                    function() {
-                        return 'bar';
-                    },
-                    function() {
-                        return 'baz';
-                    },
-                ])
+                    '@Mvc5\Test\Event\GeneratorTest::foo',
+                    '@Mvc5\Test\Event\GeneratorTest::bar',
+                    '@Mvc5\Test\Event\GeneratorTest::baz',
+                ]),
+                'test_event_repeat' => [
+                    '@Mvc5\Test\Event\GeneratorTest::foo',
+                    '@Mvc5\Test\Event\GeneratorTest::bar',
+                    '@Mvc5\Test\Event\GeneratorTest::baz',
+                ]
             ],
             'services' => [
+                'event\model' => Event::class,
                 'test_event' => TestEvent::class,
                 'test_event_array' => function() {
                     return [
-                        function() {
-                            return 'a';
-                        },
-                        function() {
-                            return 'b';
-                        },
-                        function() {
-                            return 'c';
-                        },
+                        '@Mvc5\Test\Event\GeneratorTest::foo',
+                        '@Mvc5\Test\Event\GeneratorTest::bar',
+                        '@Mvc5\Test\Event\GeneratorTest::baz',
                     ];
                 }
             ]
         ];
 
         return new App($config);
+    }
+
+    /**
+     * @return string
+     */
+    static function bar()
+    {
+        return 'bar';
+    }
+
+    /**
+     * @return string
+     */
+    static function baz()
+    {
+        return 'baz';
+    }
+
+    /**
+     * @return string
+     */
+    static function foo()
+    {
+        return 'foo';
     }
 
     /**
@@ -111,7 +122,7 @@ class GeneratorTest
      */
     function test_iterate_event_array()
     {
-        $this->assertEquals('c', $this->app()->trigger('test_event_array'));
+        $this->assertEquals('baz', $this->app()->trigger('test_event_array'));
     }
 
     /**
@@ -120,5 +131,101 @@ class GeneratorTest
     function test_iterate_event_iterator()
     {
         $this->assertEquals('baz', $this->app()->trigger(new TestEvent('test_event_iterator')));
+    }
+
+    /**
+     *
+     */
+    function test_repeat_event()
+    {
+        $app = new App([
+            'events' => [
+                'test_event_repeat' => [
+                    '@Mvc5\Test\Event\GeneratorTest::foo',
+                    '@Mvc5\Test\Event\GeneratorTest::bar',
+                    '@Mvc5\Test\Event\GeneratorTest::baz'
+                ]
+            ],
+            'services' => [
+                'event\model' => Event::class
+            ]
+        ]);
+
+        $this->assertEquals('baz', $app->call('test_event_repeat'));
+
+        $this->assertEquals('baz', $app->call('test_event_repeat'));
+    }
+
+    /**
+     *
+     */
+    function test_repeat_event_iterator()
+    {
+        $app = new App([
+            'events' => [
+                'test_event_repeat' => new Config([
+                    '@Mvc5\Test\Event\GeneratorTest::foo',
+                    '@Mvc5\Test\Event\GeneratorTest::bar',
+                    '@Mvc5\Test\Event\GeneratorTest::baz'
+                ])
+            ],
+            'services' => [
+                'event\model' => Event::class
+            ]
+        ]);
+
+        $this->assertEquals('baz', $app->call('test_event_repeat'));
+
+        $this->assertEquals('baz', $app->call('test_event_repeat'));
+    }
+
+    /**
+     *
+     */
+    function test_serialized_repeat_event()
+    {
+        $app = new App([
+            'events' => [
+                'test_event_repeat' => [
+                    '@Mvc5\Test\Event\GeneratorTest::foo',
+                    '@Mvc5\Test\Event\GeneratorTest::bar',
+                    '@Mvc5\Test\Event\GeneratorTest::baz',
+                ]
+            ],
+            'services' => [
+                'event\model' => Event::class
+            ]
+        ]);
+
+        $this->assertEquals('baz', $app->call('test_event_repeat'));
+
+        $app = unserialize(serialize($app));
+
+        $this->assertEquals('baz', $app->call('test_event_repeat'));
+    }
+
+    /**
+     *
+     */
+    function test_serialized_repeat_event_iterator()
+    {
+        $app = new App([
+            'events' => [
+                'test_event_repeat' => new Config([
+                    '@Mvc5\Test\Event\GeneratorTest::foo',
+                    '@Mvc5\Test\Event\GeneratorTest::bar',
+                    '@Mvc5\Test\Event\GeneratorTest::baz'
+                ])
+            ],
+            'services' => [
+                'event\model' => Event::class
+            ]
+        ]);
+
+        $this->assertEquals('baz', $app->call('test_event_repeat'));
+
+        $app = unserialize(serialize($app));
+
+        $this->assertEquals('baz', $app->call('test_event_repeat'));
     }
 }
