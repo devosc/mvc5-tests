@@ -152,7 +152,6 @@ class GeneratorTest
         ]);
 
         $this->assertEquals('baz', $app->call('test_event_repeat'));
-
         $this->assertEquals('baz', $app->call('test_event_repeat'));
     }
 
@@ -175,7 +174,6 @@ class GeneratorTest
         ]);
 
         $this->assertEquals('baz', $app->call('test_event_repeat'));
-
         $this->assertEquals('baz', $app->call('test_event_repeat'));
     }
 
@@ -198,9 +196,11 @@ class GeneratorTest
         ]);
 
         $this->assertEquals('baz', $app->call('test_event_repeat'));
+        $this->assertEquals('baz', $app->call('test_event_repeat'));
 
         $app = unserialize(serialize($app));
 
+        $this->assertEquals('baz', $app->call('test_event_repeat'));
         $this->assertEquals('baz', $app->call('test_event_repeat'));
     }
 
@@ -223,9 +223,11 @@ class GeneratorTest
         ]);
 
         $this->assertEquals('baz', $app->call('test_event_repeat'));
+        $this->assertEquals('baz', $app->call('test_event_repeat'));
 
         $app = unserialize(serialize($app));
 
+        $this->assertEquals('baz', $app->call('test_event_repeat'));
         $this->assertEquals('baz', $app->call('test_event_repeat'));
     }
 }
