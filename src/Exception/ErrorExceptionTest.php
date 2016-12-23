@@ -24,7 +24,7 @@ class ErrorExceptionTest
 
         $this->assertEquals('foo', $exception->getMessage());
         $this->assertEquals(__FILE__, $exception->getFile());
-        $this->assertEquals(22, $exception->getLine());
+        $this->assertEquals(21, $exception->getLine());
         $this->assertInstanceOf(\ErrorException::class, $exception);
     }
 
@@ -41,7 +41,7 @@ class ErrorExceptionTest
 
         $this->assertEquals('foo', $exception->getMessage());
         $this->assertEquals(__FILE__, $exception->getFile());
-        $this->assertEquals(39, $exception->getLine());
+        $this->assertEquals(38, $exception->getLine());
         $this->assertInstanceOf(\ErrorException::class, $exception);
     }
 }
