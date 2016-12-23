@@ -29,7 +29,17 @@ class RequestTest
     {
         $route = new Request;
 
-        $this->assertEquals(null, $route->arg('foo'));
+        $this->assertNull($route->arg('foo'));
+    }
+
+    /**
+     *
+     */
+    function test_arg_default()
+    {
+        $route = new Request;
+
+        $this->assertEquals('bar', $route->arg('foo', 'bar'));
     }
 
     /**
@@ -110,6 +120,26 @@ class RequestTest
         $request = new Request([Arg::DATA => ['foo' => 'bar']]);
 
         $this->assertEquals('bar', $request->data('foo'));
+    }
+
+    /**
+     *
+     */
+    function test_data_null()
+    {
+        $request = new Request;
+
+        $this->assertNull($request->data('foo'));
+    }
+
+    /**
+     *
+     */
+    function test_data_default()
+    {
+        $request = new Request;
+
+        $this->assertEquals('bar', $request->data('foo', 'bar'));
     }
 
     /**
@@ -207,11 +237,29 @@ class RequestTest
      */
     function test_param()
     {
-        $request = new Request([
-            Arg::PARAMS => ['foo' => 'bar']
-        ]);
+        $request = new Request([Arg::PARAMS => ['foo' => 'bar']]);
 
         $this->assertEquals('bar', $request->param('foo'));
+    }
+
+    /**
+     *
+     */
+    function test_param_null()
+    {
+        $request = new Request;
+
+        $this->assertNull($request->param('foo'));
+    }
+
+    /**
+     *
+     */
+    function test_param_default()
+    {
+        $request = new Request;
+
+        $this->assertEquals('bar', $request->param('foo', 'bar'));
     }
 
     /**
@@ -249,6 +297,26 @@ class RequestTest
     /**
      *
      */
+    function test_post_null()
+    {
+        $request = new Request;
+
+        $this->assertNull($request->post('foo'));
+    }
+
+    /**
+     *
+     */
+    function test_post_default()
+    {
+        $request = new Request;
+
+        $this->assertEquals('bar', $request->post('foo', 'bar'));
+    }
+
+    /**
+     *
+     */
     function test_port_exists()
     {
         $request = new Request([Arg::URI => [Arg::PORT => '80']]);
@@ -263,7 +331,7 @@ class RequestTest
     {
         $request = new Request;
 
-        $this->assertEquals(null, $request->port());
+        $this->assertNull($request->port());
     }
 
     /**
@@ -309,6 +377,26 @@ class RequestTest
     /**
      *
      */
+    function test_server_param_null()
+    {
+        $request = new Request;
+
+        $this->assertNull($request->server('foo'));
+    }
+
+    /**
+     *
+     */
+    function test_server_param_default()
+    {
+        $request = new Request;
+
+        $this->assertEquals('bar', $request->server('foo', 'bar'));
+    }
+
+    /**
+     *
+     */
     function test_session()
     {
         $request = new Request([Arg::SESSION => ['foo' => 'bar']]);
@@ -324,6 +412,26 @@ class RequestTest
         $request = new Request([Arg::SESSION => ['foo' => 'bar']]);
 
         $this->assertEquals('bar', $request->session('foo'));
+    }
+
+    /**
+     *
+     */
+    function test_session_var_null()
+    {
+        $request = new Request;
+
+        $this->assertNull($request->session('foo'));
+    }
+
+    /**
+     *
+     */
+    function test_session_var_default()
+    {
+        $request = new Request;
+
+        $this->assertEquals('bar', $request->session('foo', 'bar'));
     }
 
     /**
@@ -386,6 +494,26 @@ class RequestTest
         $this->assertEquals('bar', $request->variable('foo'));
         $this->assertEquals('bar', $request->variable('bat'));
         $this->assertEquals('bar', $request->variable('foobar'));
+    }
+
+    /**
+     *
+     */
+    function test_variable_null()
+    {
+        $request = new Request;
+
+        $this->assertNull($request->variable('foo'));
+    }
+
+    /**
+     *
+     */
+    function test_variable_default()
+    {
+        $request = new Request;
+
+        $this->assertEquals('bar', $request->variable('foo', 'bar'));
     }
 
     /**
