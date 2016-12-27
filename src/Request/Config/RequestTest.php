@@ -17,9 +17,9 @@ class RequestTest
      */
     function test_arg_not_null()
     {
-        $route = new Request([Arg::ARGS => ['foo' => 'bar']]);
+        $request = new Request([Arg::ARGS => ['foo' => 'bar']]);
 
-        $this->assertEquals('bar', $route->arg('foo'));
+        $this->assertEquals('bar', $request->arg('foo'));
     }
 
     /**
@@ -27,9 +27,9 @@ class RequestTest
      */
     function test_arg_null()
     {
-        $route = new Request;
+        $request = new Request;
 
-        $this->assertNull($route->arg('foo'));
+        $this->assertNull($request->arg('foo'));
     }
 
     /**
@@ -37,9 +37,9 @@ class RequestTest
      */
     function test_arg_default()
     {
-        $route = new Request;
+        $request = new Request;
 
-        $this->assertEquals('bar', $route->arg('foo', 'bar'));
+        $this->assertEquals('bar', $request->arg('foo', 'bar'));
     }
 
     /**
@@ -87,9 +87,9 @@ class RequestTest
      */
     function test_controller()
     {
-        $route = new Request([Arg::CONTROLLER => 'foo']);
+        $request = new Request([Arg::CONTROLLER => 'foo']);
 
-        $this->assertEquals('foo', $route->controller());
+        $this->assertEquals('foo', $request->controller());
     }
 
     /**
@@ -147,9 +147,9 @@ class RequestTest
      */
     function test_error()
     {
-        $route = new Request([Arg::ERROR => 'foo']);
+        $request = new Request([Arg::ERROR => 'foo']);
 
-        $this->assertEquals('foo', $route->error());
+        $this->assertEquals('foo', $request->error());
     }
 
     /**
@@ -157,9 +157,9 @@ class RequestTest
      */
     function test_files()
     {
-        $route = new Request([Arg::FILES => ['foo' => 'bar']]);
+        $request = new Request([Arg::FILES => ['foo' => 'bar']]);
 
-        $this->assertEquals(['foo' => 'bar'], $route->files());
+        $this->assertEquals(['foo' => 'bar'], $request->files());
     }
 
     /**
@@ -167,9 +167,9 @@ class RequestTest
      */
     function test_files_not_set()
     {
-        $route = new Request;
+        $request = new Request;
 
-        $this->assertEquals([], $route->files());
+        $this->assertEquals([], $request->files());
     }
 
     /**

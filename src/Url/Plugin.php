@@ -38,12 +38,12 @@ class Plugin
 
     /**
      * @param string $name
-     * @param array $args
+     * @param array $params
      * @param array $options
      * @return string
      */
-    function url($name, array $args = [], array $options = [])
+    function url($name = null, array $params = [], array $options = [])
     {
-        return parent::url($name, $args, $options);
+        return parent::url($name, $params, $options);
     }
 }
