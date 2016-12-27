@@ -72,8 +72,8 @@ class PluginTest
      */
     function test_url()
     {
-        $generator = function($name, array $args = []) {
-            return $name . '/' . key($args) . '/' . current($args);
+        $generator = function($name, array $params = []) {
+            return $name . '/' . key($params) . '/' . current($params);
         };
 
         $plugin = new Plugin(new Request, $generator);
@@ -84,10 +84,16 @@ class PluginTest
     /**
      *
      */
-    function test_invoke()
+    function test_current()
     {
-        $plugin = new Plugin(new Request, function() { return 'foo'; });
+        $generator = function($name, array $params = []) {
+            return $name . '/' . key($params) . '/' . current($params);
+        };
 
-        $this->assertEquals('foo', $plugin());
+        $request = new Request([Arg::NAME => 'foo', Arg::PARAMS => ['bar' => 'baz']]);
+
+        $plugin = new Plugin($request, $generator);
+
+        $this->assertEquals('foo/bar/baz', $plugin());
     }
 }
