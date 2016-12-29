@@ -19,7 +19,7 @@ class AssembleTest
      */
     protected function options(array $options = [])
     {
-        return $options + [Arg::SCHEME => null, Arg::HOST => null, Arg::PORT => null];
+        return $options + [Arg::SCHEME => null, Arg::HOST => null, Arg::PORT => null, Arg::QUERY => []];
     }
 
     /**
