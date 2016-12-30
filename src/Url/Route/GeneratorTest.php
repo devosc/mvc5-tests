@@ -27,7 +27,10 @@ class GeneratorTest
                     Arg::WILDCARD => true,
                     ARG::TOKENS   => [['literal','foo']]
                 ])
-            ]
+            ],
+            Arg::SCHEME    => 'http',
+            Arg::HOST      => 'localhost',
+            Arg::PORT      => '8000'
         ];
 
         $options = [
