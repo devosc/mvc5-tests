@@ -5,6 +5,7 @@
 
 namespace Mvc5\Test\Event;
 
+use Mvc5\Event\Event;
 use Mvc5\Test\Test\TestCase;
 
 class SignalTest
@@ -15,21 +16,21 @@ class SignalTest
      */
     function test_no_args()
     {
-        $event = new TestEvent;
+        $event = new SignalEvent;
 
-        $callable = function(TestEvent $event){
+        $callable = function(Event $event){
             return $event->event();
         };
 
-        $this->assertEquals('test_event', $event($callable));
+        $this->assertEquals(SignalEvent::class, $event($callable));
     }
 
     /**
      *
      */
-    function test_no_string_key_args()
+    function test_numeric_args()
     {
-        $event = new TestEvent;
+        $event = new SignalEvent;
 
         $callable = function($foo, $bar){
             return $foo. '/' . $bar;
@@ -41,14 +42,14 @@ class SignalTest
     /**
      *
      */
-    function test_string_key_args()
+    function test_named_args()
     {
-        $event = new TestEvent;
+        $event = new SignalEvent;
 
-        $callable = function(TestEvent $event, $foo){
-            return $event->event() . $foo;
+        $callable = function($foo){
+            return 'foo' . $foo;
         };
 
-        $this->assertEquals('test_event/bar', $event($callable, ['foo' => '/bar']));
+        $this->assertEquals('foo/bar', $event($callable, ['foo' => '/bar']));
     }
 }
