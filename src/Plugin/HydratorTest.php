@@ -14,8 +14,12 @@ class HydratorTest
     /**
      *
      */
-    function test_construct()
+    function test()
     {
-        $this->assertInstanceOf(Hydrator::class, new Hydrator('foo', []));
+        $hydrator = new Hydrator('foo', []);
+
+        $this->assertEquals('foo', $hydrator->name());
+        $this->assertEquals([], $hydrator->args());
+        $this->assertEquals('item', $hydrator->param());
     }
 }

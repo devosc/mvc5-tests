@@ -16,7 +16,7 @@ class AppTest
     /**
      *
      */
-    function test_construct()
+    function test_with_provider()
     {
         $plugin = new App(['foo']);
 
@@ -28,7 +28,7 @@ class AppTest
     /**
      *
      */
-    function test_construct_no_provider_no_scope_with_calls()
+    function test_without_provider()
     {
         $plugin = new App(['foo'], null, false, ['bar']);
 

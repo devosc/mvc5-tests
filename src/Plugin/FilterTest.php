@@ -14,48 +14,13 @@ class FilterTest
     /**
      *
      */
-    function test_construct()
+    function test()
     {
-        $this->assertInstanceOf(Filter::class, new Filter([]));
-    }
+        $filter = new Filter(['foo'], ['bar'], ['baz'], 'foobar');
 
-    /**
-     *
-     */
-    function test_config()
-    {
-        $filter = new Filter(['foo']);
-
-        $this->assertEquals(['foo'], $filter->config());
-    }
-
-    /**
-     *
-     */
-    function test_filter()
-    {
-        $filter = new Filter([], ['foo']);
-
-        $this->assertEquals(['foo'], $filter->filter());
-    }
-
-    /**
-     *
-     */
-    function test_args()
-    {
-        $filter = new Filter([], [], ['foo']);
-
-        $this->assertEquals(['foo'], $filter->args());
-    }
-
-    /**
-     *
-     */
-    function test_param()
-    {
-        $filter = new Filter([], [], [], 'foo');
-
-        $this->assertEquals('foo', $filter->param());
+        $this->assertEquals(['foo'],  $filter->config());
+        $this->assertEquals(['bar'],  $filter->filter());
+        $this->assertEquals(['baz'],  $filter->args());
+        $this->assertEquals('foobar', $filter->param());
     }
 }

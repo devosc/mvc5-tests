@@ -5,6 +5,8 @@
 
 namespace Mvc5\Test\Cookie\Config;
 
+use Mvc5\Cookie\Container;
+use Mvc5\Cookie\Config as Cookies;
 use Mvc5\Test\Test\TestCase;
 
 class CookiesTest
@@ -13,26 +15,24 @@ class CookiesTest
     /**
      *
      */
-    function test_construct()
-    {
-        $cookies = new Cookies(new Container, ['foo']);
-
-        $this->assertEquals(new Container, $cookies->container());
-        $this->assertEquals(['foo'],       $cookies->config());
-    }
-
-    /**
-     *
-     */
     function test_remove()
     {
-        $cookies = new Cookies(new Container);
+        $container = new Container;
+        $cookies = new Cookies($container);
 
         $cookies->remove('foo');
 
-        $cookie = $cookies->container()['foo'];
+        $cookie =  [
+            'name'     => 'foo',
+            'value'    => false,
+            'expire'   => 946706400,
+            'path'     => '/',
+            'domain'   => '',
+            'secure'   => false,
+            'httponly' => true
+        ];
 
-        $this->assertEquals(['name' => 'foo', 'value' => false, 'expire' => 946706400] + $cookies->defaults(), $cookie);
+        $this->assertEquals($cookie, $container['foo']);
     }
 
     /**
@@ -44,8 +44,16 @@ class CookiesTest
 
         $cookies->set('foo', 'bar');
 
-        $cookie = $cookies->container()['foo'];
+        $this->assertEquals('bar', $cookies->set('foo', 'bar'));
+    }
 
-        $this->assertEquals(['name' => 'foo', 'value' => 'bar'] + $cookies->defaults(), $cookie);
+    /**
+     *
+     */
+    function test_value()
+    {
+        $cookies = new Cookies(new Container, ['foo' => 'bar']);
+
+        $this->assertEquals('bar', $cookies['foo']);
     }
 }

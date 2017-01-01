@@ -18,7 +18,7 @@ class ContextTest
     /**
      *
      */
-    function test_constructor()
+    function test_instantiate_with_service()
     {
         $app = new App;
 

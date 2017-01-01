@@ -5,7 +5,8 @@
 
 namespace Mvc5\Test\View;
 
-use Mvc5\Model\ViewModel;
+use Mvc5\Model;
+use Mvc5\Model\ViewModel as _Model;
 use Mvc5\View\Model as _ViewModel;
 
 class Controller
@@ -28,7 +29,7 @@ class Controller
     /**
      * @param array $vars
      * @param null $template
-     * @return ViewModel
+     * @return _Model
      */
     function __invoke(array $vars = [], $template = null)
     {

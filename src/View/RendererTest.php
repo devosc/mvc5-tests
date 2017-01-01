@@ -15,13 +15,6 @@ class RendererTest
     /**
      *
      */
-    function test_construct()
-    {
-        $this->assertInstanceOf(Renderer::class, new Renderer(new Render));
-    }
-    /**
-     *
-     */
     function test_render_object()
     {
         $renderer = new Renderer(new Render);

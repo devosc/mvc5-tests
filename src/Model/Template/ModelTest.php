@@ -6,7 +6,7 @@
 namespace Mvc5\Test\Model\Template;
 
 use Mvc5\Arg;
-use Mvc5\Model as Mvc5Model;
+use Mvc5\Model;
 use Mvc5\Test\Test\TestCase;
 
 class ModelTest
@@ -15,7 +15,7 @@ class ModelTest
     /**
      *
      */
-    function test_construct_template()
+    function test_template_name()
     {
         $model = new Model('foo');
 
@@ -25,7 +25,7 @@ class ModelTest
     /**
      *
      */
-    function test_construct_array()
+    function test_array_construct()
     {
         $model = new Model(['__template' => 'foo', 'bar' => 'baz']);
 
@@ -36,30 +36,30 @@ class ModelTest
     /**
      *
      */
-    function test_construct_model_template_constant()
+    function test_array_construct_with_template_constant()
     {
-        $model = new Model(['bar' => 'baz']);
+        $model = new TestModel(['bar' => 'baz']);
 
-        $this->assertEquals('baz', $model->template());
+        $this->assertEquals('foo', $model->template());
         $this->assertEquals('baz', $model->get('bar'));
     }
 
     /**
      *
      */
-    function test_construct_template_const()
+    function test_template_const()
     {
-        $model = new Model;
+        $model = new TestModel;
 
-        $this->assertEquals('baz', $model->template());
+        $this->assertEquals('foo', $model->template());
     }
 
     /**
      *
      */
-    function test_template()
+    function test_empty_template()
     {
-        $model = new Mvc5Model;
+        $model = new Model;
 
         $this->assertEquals(null, $model->template());
     }
@@ -67,9 +67,9 @@ class ModelTest
     /**
      *
      */
-    function test_template_set()
+    function test_set_template()
     {
-        $model = new Mvc5Model;
+        $model = new Model;
 
         $this->assertEquals('foo', $model->template('foo'));
     }
@@ -77,11 +77,11 @@ class ModelTest
     /**
      *
      */
-    function test_vars()
+    function test_vars_without_template()
     {
         $vars = ['foo' => 'bar'];
 
-        $model = new Mvc5Model(null, $vars);
+        $model = new Model(null, $vars);
 
         $this->assertEquals($vars, $model->vars());
     }
@@ -89,11 +89,11 @@ class ModelTest
     /**
      *
      */
-    function test_vars_set()
+    function test_set_vars()
     {
         $vars = ['bar' => 'baz'];
 
-        $model = new Mvc5Model('foo', $vars);
+        $model = new Model('foo');
 
         $this->assertEquals([Arg::TEMPLATE_MODEL => 'foo'] + $vars, $model->vars($vars));
     }

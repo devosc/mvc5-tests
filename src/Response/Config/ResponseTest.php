@@ -16,7 +16,7 @@ class ResponseTest
     /**
      *
      */
-    function test_construct()
+    function test_default_values()
     {
         $response = new Response;
 
@@ -29,7 +29,7 @@ class ResponseTest
     /**
      *
      */
-    function test_construct_array_headers()
+    function test_array_headers()
     {
         $response = new Response(null, null, ['foo' => 'bar']);
 
@@ -39,7 +39,7 @@ class ResponseTest
     /**
      *
      */
-    function test_cookie_set()
+    function test_set_cookie()
     {
         $response = new Response;
 
@@ -61,7 +61,7 @@ class ResponseTest
     /**
      *
      */
-    function test_cookies_set()
+    function test_set_cookies()
     {
         $response = new Response;
 
@@ -93,7 +93,7 @@ class ResponseTest
     /**
      *
      */
-    function test_headers_set()
+    function test_set_headers()
     {
         $response = new Response;
 

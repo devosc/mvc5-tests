@@ -9,7 +9,6 @@ use Mvc5\Config;
 use Mvc5\App;
 use Mvc5\Plugin\Args;
 use Mvc5\Plugin\Link;
-use Mvc5\Plugin\Plugin;
 use Mvc5\Plugin\Scope;
 use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
@@ -22,13 +21,12 @@ class ProviderTest
      */
     function test_construct()
     {
-        $plugin = new Scope('foo', ['bar', 'baz']);
-
-        $this->assertTrue(is_callable($plugin->config()));
+        $scope = new Scope('foo', ['bar', 'baz']);
 
         $args = ['foo', new Link, new Args(['bar', 'baz'])];
 
-        $this->assertEquals($args, $plugin->args());
+        $this->assertTrue(is_callable($scope->config()));
+        $this->assertEquals($args, $scope->args());
     }
 
     /**
@@ -44,11 +42,11 @@ class ProviderTest
 
         list($name, $service, $args) = $resolver->args($provider->args());
 
-        $plugin = $provider->scope($name, $service, $args);
+        $scope = $provider->scope($name, $service, $args);
 
-        $this->assertInstanceOf(Config::class, $plugin);
+        $this->assertInstanceOf(Config::class, $scope);
 
-        $this->assertEquals($plugin, $app->scope());
+        $this->assertEquals($scope, $app->scope());
     }
 
     /**
@@ -58,9 +56,9 @@ class ProviderTest
     {
         $resolver = new Resolver;
 
-        $plugin = $resolver->gem(new Scope(Config::class, [new App]));
+        $scope = $resolver->gem(new Scope(Config::class, [new App]));
 
-        $this->assertInstanceOf(Config::class, $plugin);
+        $this->assertInstanceOf(Config::class, $scope);
     }
 
     /**
@@ -72,8 +70,8 @@ class ProviderTest
 
         $resolver->configure('foo', Config::class);
 
-        $plugin = $resolver->gem(new Scope('foo', [new App]));
+        $scope = $resolver->gem(new Scope('foo', [new App]));
 
-        $this->assertInstanceOf(Config::class, $plugin);
+        $this->assertInstanceOf(Config::class, $scope);
     }
 }

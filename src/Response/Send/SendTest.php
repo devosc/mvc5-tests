@@ -7,17 +7,68 @@ namespace Mvc5\Test\Response\Send;
 
 use Mvc5\Response\Config as Response;
 use Mvc5\Response\Emitter\Callback;
+use Mvc5\Response\Send;
 use Mvc5\Test\Test\TestCase;
 
 class SendTest
     extends TestCase
 {
     /**
-     * @return Response
+     * @runInSeparateProcess
      */
-    protected function response()
+    function test_emitter()
     {
-        return new Response(null, 200, [
+        $send = new Send;
+
+        $send(new Response(new Callback(function () { echo 'Hello!'; })));
+
+        $this->assertEquals('Hello!', $this->getActualOutput());
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    function test_closure()
+    {
+        $send = new Send;
+
+        $send(new Response(function () { echo 'Hello!'; }));
+
+        $this->assertEquals('Hello!', $this->getActualOutput());
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    function test_string()
+    {
+        $send = new Send;
+
+        $send(new Response('Hello!'));
+
+        $this->assertEquals('Hello!', $this->getActualOutput());
+    }
+
+    /**
+     *
+     */
+    function test_headers_sent()
+    {
+        $send = new Send;
+
+        $send(new Response);
+
+        $this->assertEmpty($this->getActualOutput());
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    function test_with_cookie()
+    {
+        $send = new Send;
+
+        $response = new Response(null, 200, [
             'Content-Type' => 'text\html'
         ], [
             'cookies' => [
@@ -32,95 +83,7 @@ class SendTest
                 ]
             ]
         ]);
-    }
 
-    /**
-     *
-     */
-    function test_body()
-    {
-        $send = new Send;
-
-        $send->body(new Response('Hello!'));
-
-        $this->assertEquals('Hello!', $this->getActualOutput());
-    }
-
-    /**
-     *
-     */
-    function test_emit()
-    {
-        $send = new Send;
-
-        $send->body(new Response(new Callback(function () { echo 'Hello!'; })));
-
-        $this->assertEquals('Hello!', $this->getActualOutput());
-    }
-
-    /**
-     *
-     */
-    function test_emit_closure()
-    {
-        $send = new Send;
-
-        $send->body(new Response(function () { echo 'Hello!'; }));
-
-        $this->assertEquals('Hello!', $this->getActualOutput());
-    }
-
-    /**
-     *
-     */
-    function test_emit_print()
-    {
-        $send = new Send;
-
-        $send->body(new Response('Hello!'));
-
-        $this->assertEquals('Hello!', $this->getActualOutput());
-    }
-
-    /**
-     *
-     */
-    function test_headers_sent()
-    {
-        $send = new Send;
-
-        $this->assertTrue(headers_sent());
-
-        $send->headers(new Response);
-    }
-
-    /**
-     * @runInSeparateProcess
-     */
-    function test_headers_send()
-    {
-        $send = new Send;
-
-        $send->headers($this->response());
-    }
-
-    /**
-     * @runInSeparateProcess
-     */
-    function test_send()
-    {
-        $send = new Send;
-
-        $this->assertEquals($this->response(), $send->send($this->response()));
-    }
-
-    /**
-     * @runInSeparateProcess
-     */
-    function test_invoke()
-    {
-        $send = new Send;
-
-        $this->assertEquals($this->response(), $send($this->response()));
+        $this->assertEquals($response, $send($response));
     }
 }

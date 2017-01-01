@@ -18,24 +18,28 @@ class PluginsTest
     /**
      *
      */
-    function test_construct()
+    function test_array_services()
     {
-        $plugin = new Plugins(['foo']);
+        $plugin = new Plugins(['foo'], true, true, ['bar']);
 
         $this->assertEquals(App::class, $plugin->name());
         $this->assertEquals([new Args([Arg::SERVICES => ['foo']]), new Link, true], $plugin->args());
-        $this->assertEquals([], $plugin->calls());
+        $this->assertEquals(['bar'], $plugin->calls());
+        $this->assertEquals('item', $plugin->param());
+        $this->assertFalse($plugin->merge());
     }
 
     /**
      *
      */
-    function test_construct_no_provider_and_not_scoped_with_calls()
+    function test_no_provider_and_no_scope()
     {
         $plugin = new Plugins(['foo'], null, false, ['bar']);
 
         $this->assertEquals(App::class, $plugin->name());
         $this->assertEquals([new Args([Arg::SERVICES => new Args(['foo'])]), null, false], $plugin->args());
         $this->assertEquals(['bar'], $plugin->calls());
+        $this->assertEquals('item', $plugin->param());
+        $this->assertFalse($plugin->merge());
     }
 }

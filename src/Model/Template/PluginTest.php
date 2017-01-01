@@ -7,6 +7,7 @@ namespace Mvc5\Test\Model\Template;
 
 use Mvc5\App;
 use Mvc5\Arg;
+use Mvc5\Model;
 use Mvc5\Test\Test\TestCase;
 
 class PluginTest

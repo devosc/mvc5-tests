@@ -28,7 +28,7 @@ class GeneratorTest
                 ],
                 'test_event_stopped' => [
                     '@Mvc5\Test\Event\GeneratorTest::foo',
-                    function(TestEvent $event) {
+                    function(Event $event) {
                         $event->stop();
                         return 'bar';
                     },
@@ -47,7 +47,6 @@ class GeneratorTest
             ],
             'services' => [
                 'event\model' => Event::class,
-                'test_event' => TestEvent::class,
                 'test_event_array' => function() {
                     return [
                         '@Mvc5\Test\Event\GeneratorTest::foo',
@@ -106,7 +105,7 @@ class GeneratorTest
      */
     function test_generate()
     {
-        $this->assertEquals('foo', $this->app()->trigger(new TestEvent));
+        $this->assertEquals('foo', $this->app()->trigger(new Event('test_event')));
     }
 
     /**
@@ -114,7 +113,7 @@ class GeneratorTest
      */
     function test_iterate_event_stopped()
     {
-        $this->assertEquals('bar', $this->app()->trigger(new TestEvent('test_event_stopped')));
+        $this->assertEquals('bar', $this->app()->trigger(new Event('test_event_stopped')));
     }
 
     /**
@@ -130,7 +129,7 @@ class GeneratorTest
      */
     function test_iterate_event_iterator()
     {
-        $this->assertEquals('baz', $this->app()->trigger(new TestEvent('test_event_iterator')));
+        $this->assertEquals('baz', $this->app()->trigger(new Event('test_event_iterator')));
     }
 
     /**

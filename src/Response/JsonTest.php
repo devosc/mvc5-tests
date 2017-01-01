@@ -16,7 +16,7 @@ class JsonTest
     /**
      *
      */
-    function test_construct()
+    function test()
     {
         $data = ['PHP' => phpversion(), 'System' => php_uname()];
 

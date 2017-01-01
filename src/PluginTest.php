@@ -6,7 +6,6 @@
 namespace Mvc5\Test;
 
 use Mvc5\App;
-use Mvc5\Service\Service;
 use Mvc5\Test\Test\TestCase;
 
 class PluginTest
@@ -19,7 +18,7 @@ class PluginTest
     {
         $plugin = new Plugin;
 
-        $this->assertEquals(null, $plugin->service());
+        $this->assertNull($plugin->service());
     }
 
     /**
@@ -27,8 +26,9 @@ class PluginTest
      */
     function test_service_not_empty()
     {
+        $app = new App;
         $plugin = new Plugin;
 
-        $this->assertInstanceOf(Service::class, $plugin->service(new App));
+        $this->assertEquals($app, $plugin->service($app));
     }
 }

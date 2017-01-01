@@ -5,6 +5,7 @@
 
 namespace Mvc5\Test\Cookie\Config;
 
+use Mvc5\Cookie\Sender;
 use Mvc5\Test\Test\TestCase;
 
 class SenderTest
@@ -17,6 +18,6 @@ class SenderTest
     {
         $cookies = new Sender;
 
-        $this->assertTrue($cookies->setCookie('foo', 'bar', null, null, null, null, null));
+        $this->assertEquals('bar', $cookies->set('foo', 'bar', null, null, null, null, null));
     }
 }

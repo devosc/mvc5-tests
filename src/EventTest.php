@@ -5,6 +5,7 @@
 
 namespace Mvc5\Test;
 
+use Mvc5\Event;
 use Mvc5\Test\Test\TestCase;
 
 class EventTest
@@ -13,7 +14,7 @@ class EventTest
     /**
      *
      */
-    function test_construct()
+    function test_name()
     {
         $event = new Event('foo');
 
@@ -23,17 +24,17 @@ class EventTest
     /**
      *
      */
-    function test_args()
+    function test_named()
     {
         $event = new Event;
 
-        $this->assertTrue(is_array($event->args()));
+        $this->assertEquals('bar', $event(function($bar, $foo) { return $foo; }, ['foo' => 'bar', 'bar' => 'baz']));
     }
 
     /**
      *
      */
-    function test_invoke()
+    function test_numeric()
     {
         $event = new Event;
 
@@ -43,10 +44,12 @@ class EventTest
     /**
      *
      */
-    function test_invoke_named()
+    function test_stopped()
     {
         $event = new Event;
 
-        $this->assertEquals('bar', $event(function($bar, $foo) { return $foo; }, ['foo' => 'bar', 'bar' => 'baz']));
+        $event(function(Event $event) { $event->stop(); });
+
+        $this->assertTrue($event->stopped());
     }
 }

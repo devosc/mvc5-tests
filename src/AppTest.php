@@ -22,7 +22,7 @@ class AppTest
     /**
      *
      */
-    function test_construct()
+    function test_config()
     {
         $config = [
             Arg::SERVICES => [
@@ -100,17 +100,11 @@ class AppTest
         ]);
 
         $this->assertEquals('foobar', $app['bat']);
-
         $this->assertEquals('foobar', $app('bat'));
-
         $this->assertEquals('foobar', $app->get('bat'));
-
         $this->assertEquals('foobar', $app->plugin('bat'));
-
         $this->assertEquals('6', $app['foo']['var2']['var3']);
-
         $this->assertEquals('foobar59360', $app->call($app['foo']['bar']['baz'], ['param2' => '0']));
-
         $this->assertEquals('foobar59360', $app->call('foo->bar->baz', ['param2' => '0']));
     }
 
@@ -127,7 +121,6 @@ class AppTest
         ]);
 
         $this->assertEquals(null, $app['bat']);
-
         $this->assertEquals(new Config(['foo' => 'baz']), $app['foo']);
     }
 
@@ -144,7 +137,6 @@ class AppTest
         ]);
 
         $this->assertEquals(null, $app['bat']);
-
         $this->assertEquals(new Config(['foo' => 'baz']), $app['foo']);
     }
 

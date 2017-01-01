@@ -14,8 +14,11 @@ class ProvideTest
     /**
      *
      */
-    function test_construct()
+    function test()
     {
-        $this->assertInstanceOf(Provide::class, new Provide('foo'));
+        $provide = new Provide('foo', ['bar']);
+
+        $this->assertEquals('foo', $provide->config());
+        $this->assertEquals(['bar'], $provide->args());
     }
 }

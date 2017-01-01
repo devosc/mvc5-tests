@@ -14,8 +14,12 @@ class ChildTest
     /**
      *
      */
-    function test_construct()
+    function test()
     {
-        $this->assertInstanceOf(Child::class, new Child('foo', 'bar'));
+        $child = new Child('foo', 'bar', ['baz']);
+
+        $this->assertEquals('foo', $child->name());
+        $this->assertEquals('bar', $child->parent());
+        $this->assertEquals(['baz'], $child->args());
     }
 }

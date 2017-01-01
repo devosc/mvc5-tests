@@ -14,11 +14,11 @@ class ScopedTest
     /**
      *
      */
-    function test_scoped()
+    function test()
     {
-        $plugin = new Scoped([$this, 'foo']);
+        $scoped = new Scoped([$this, 'foo']);
 
-        $this->assertInstanceOf(\Closure::class, $plugin->closure());
+        $this->assertInstanceOf(\Closure::class, $scoped->closure());
     }
 
     /**

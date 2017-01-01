@@ -14,8 +14,11 @@ class InvokeTest
     /**
      *
      */
-    function test_construct()
+    function test()
     {
-        $this->assertInstanceOf(Invoke::class, new Invoke(['foo']));
+        $invoke = new Invoke('foo', ['bar']);
+
+        $this->assertEquals('foo', $invoke->config());
+        $this->assertEquals(['bar'], $invoke->args());
     }
 }

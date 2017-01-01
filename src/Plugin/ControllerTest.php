@@ -14,8 +14,14 @@ class ControllerTest
     /**
      *
      */
-    function test_construct()
+    function test()
     {
-        $this->assertInstanceOf(Controller::class, new Controller('foo'));
+        $controller = new Controller('foo', ['bar'], ['baz']);
+
+        $this->assertEquals('foo', $controller->name());
+        $this->assertEquals('controller', $controller->parent());
+        $this->assertTrue($controller->merge());
+        $this->assertEquals(['bar'], $controller->args());
+        $this->assertEquals(['baz'], $controller->calls());
     }
 }
