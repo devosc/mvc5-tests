@@ -18,16 +18,6 @@ class ContainerTest
     /**
      *
      */
-    function test_construct()
-    {
-        $container = new Container(new Session, 'app');
-
-        $this->assertEquals('app', $container->label());
-    }
-
-    /**
-     *
-     */
     function test_clear()
     {
         $container = new Container(new Session);

@@ -19,14 +19,6 @@ class RenderTest
     /**
      *
      */
-    function test_construct()
-    {
-        $this->assertInstanceOf(Render::class, new Render);
-    }
-
-    /**
-     *
-     */
     function test_not_a_view_model()
     {
         $render = new Render;

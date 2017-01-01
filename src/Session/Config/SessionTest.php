@@ -16,14 +16,6 @@ class SessionTest
     /**
      *
      */
-    function test_construct()
-    {
-        $this->assertInstanceOf(Session::class, new Session);
-    }
-
-    /**
-     *
-     */
     function test_clear()
     {
         $session = new Session;

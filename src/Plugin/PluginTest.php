@@ -14,7 +14,7 @@ class PluginTest
     /**
      *
      */
-    function test_construct()
+    function test_defaults()
     {
         $plugin = new Plugin('foo');
 
@@ -28,30 +28,10 @@ class PluginTest
     /**
      *
      */
-    function test_construct_false_param()
+    function test_param_false()
     {
         $plugin = new Plugin('foo', [], [], null);
 
         $this->assertEquals('item', $plugin->param());
-    }
-
-    /**
-     *
-     */
-    function test_construct_with_param()
-    {
-        $plugin = new Plugin('foo', [], [], 'bar');
-
-        $this->assertEquals('bar', $plugin->param());
-    }
-
-    /**
-     *
-     */
-    function test_construct_with_merge()
-    {
-        $plugin = new Plugin('foo', [], [], null, true);
-
-        $this->assertEquals(true, $plugin->merge());
     }
 }

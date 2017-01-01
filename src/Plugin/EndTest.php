@@ -5,11 +5,10 @@
 
 namespace Mvc5\Test\Plugin;
 
-use Mvc5\Config;
 use Mvc5\Plugin\Args;
 use Mvc5\Plugin\End;
 use Mvc5\Plugin\Call;
-use Mvc5\Plugin\Plugin;
+use Mvc5\Plugin\Value;
 use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
 
@@ -19,22 +18,17 @@ class EndTest
     /**
      *
      */
-    function test_construct()
-    {
-        $plugin = new End('foo', 'bar');
-
-        $this->assertEquals([new Args(['foo', 'bar'])], $plugin->args());
-    }
-
-    /**
-     *
-     */
-    function test_end()
+    function test()
     {
         $resolver = new Resolver;
 
-        $plugin = new End(new Call('@phpversion'), new Plugin(Config::class, [['foo' => 'bar']]));
+        $end = new End(
+            new Call('@phpversion'),
+            new Value('foo')
+        );
 
-        $this->assertEquals(new Config(['foo' => 'bar']), $resolver->gem($plugin));
+        $this->assertEquals('@end', $end->config());
+        $this->assertEquals([new Args([new Call('@phpversion'), new Value('foo')])], $end->args());
+        $this->assertEquals('foo', $resolver->gem($end));
     }
 }

@@ -15,7 +15,7 @@ class RedirectTest
     /**
      *
      */
-    function test_construct()
+    function test()
     {
         $redirect = new Redirect('foobar', 302, ['foo' => 'bar']);
 

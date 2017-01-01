@@ -14,8 +14,11 @@ class FormTest
     /**
      *
      */
-    function test_construct()
+    function test()
     {
-        $this->assertInstanceOf(Form::class, new Form('foo'));
+        $form = new Form('foo');
+
+        $this->assertEquals('foo', $form->name());
+        $this->assertEquals('form', $form->parent());
     }
 }

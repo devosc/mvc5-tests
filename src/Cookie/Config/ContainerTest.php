@@ -5,6 +5,7 @@
 
 namespace Mvc5\Test\Cookie\Config;
 
+use Mvc5\Cookie\Container;
 use Mvc5\Test\Test\TestCase;
 
 class ContainerTest
@@ -13,64 +14,32 @@ class ContainerTest
     /**
      *
      */
-    function test_construct()
+    function test_remove_cookie()
     {
-        $cookies = new Container(['expire' => 1]);
+        $container = new Container;
 
-        $this->assertEquals(['expire' => 1] + $cookies->defaults(), $cookies->defaults());
+        $container->remove('foo');
+
+        $cookie =  [
+            'name'     => 'foo',
+            'value'    => false,
+            'expire'   => 946706400,
+            'path'     => '/',
+            'domain'   => '',
+            'secure'   => false,
+            'httponly' => true
+        ];
+
+        $this->assertEquals($cookie, $container['foo']);
     }
 
     /**
      *
      */
-    function test_cookie()
+    function test_set_cookie()
     {
-        $cookies = new Container;
+        $container = new Container;
 
-        $cookie = $cookies->cookie('foo', 'bar', null, null, null, null, null);
-
-        $this->assertEquals(['name' => 'foo', 'value' => 'bar'] + $cookies->defaults(), $cookie);
-    }
-
-    /**
-     *
-     */
-    function test_remove()
-    {
-        $cookies = new Container;
-
-        $cookies->remove('foo');
-
-        $cookie = $cookies->config()['foo'];
-
-        $this->assertEquals(['name' => 'foo', 'value' => false, 'expire' => 946706400] + $cookies->defaults(), $cookie);
-    }
-
-    /**
-     *
-     */
-    function test_set()
-    {
-        $cookies = new Container;
-
-        $cookies->set('foo', 'bar');
-
-        $cookie = $cookies->config()['foo'];
-
-        $this->assertEquals(['name' => 'foo', 'value' => 'bar'] + $cookies->defaults(), $cookie);
-    }
-
-    /**
-     *
-     */
-    function test_store()
-    {
-        $cookies = new Container;
-
-        $cookies->setCookie('foo', 'bar', null, null, null, null, null);
-
-        $cookie = $cookies->config()['foo'];
-
-        $this->assertEquals(['name' => 'foo', 'value' => 'bar'] + $cookies->defaults(), $cookie);
+        $this->assertEquals('bar', $container->set('foo', 'bar', null, null, null, null, null));
     }
 }

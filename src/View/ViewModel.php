@@ -5,16 +5,17 @@
 
 namespace Mvc5\Test\View;
 
-use Mvc5\View\Model as ViewModel;
+use Mvc5\Model;
+use Mvc5\View\Model as _ViewModel;
 use Mvc5\View\Model\Service;
 
-class ViewService
+class ViewModel
     implements Service
 {
     /**
      *
      */
-    use ViewModel;
+    use _ViewModel;
 
     /**
      *

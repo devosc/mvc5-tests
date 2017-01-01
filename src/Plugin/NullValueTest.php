@@ -14,7 +14,7 @@ class NullValueTest
     /**
      *
      */
-    function test_construct()
+    function test()
     {
         $this->assertNull((new NullValue)->config());
     }

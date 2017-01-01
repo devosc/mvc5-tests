@@ -8,7 +8,7 @@ namespace Mvc5\Test\Model\Template;
 use Mvc5\Model\Template;
 use Mvc5\Model\Plugin;
 
-class Model
+class TestModel
     implements Template
 {
     /**
@@ -19,5 +19,5 @@ class Model
     /**
      *
      */
-    const TEMPLATE_NAME = 'baz';
+    const TEMPLATE_NAME = 'foo';
 }

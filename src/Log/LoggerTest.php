@@ -5,6 +5,7 @@
 
 namespace Mvc5\Test\Log;
 
+use Mvc5\Log\Logger;
 use Mvc5\Test\Test\TestCase;
 
 class LoggerTest
@@ -37,8 +38,7 @@ class LoggerTest
     {
         $logger = new Logger;
 
-        $this->assertNull($logger->message());
         $this->assertEquals('foo', $logger(function() { return 'foo'; }));
-        $this->assertEquals('foo', $logger->message());
+        $this->assertEquals('foo', $logger(function($message) { return $message; }));
     }
 }

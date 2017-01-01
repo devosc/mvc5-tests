@@ -15,12 +15,12 @@ class ScopedCallTest
     /**
      *
      */
-    function test_scoped_call()
+    function test()
     {
-        $plugin = new ScopedCall([$this, 'foo'], ['bar' => 'baz']);
+        $scopedCall = new ScopedCall([$this, 'foo'], ['bar' => 'baz']);
 
-        $this->assertEquals(['bar' => 'baz'], $plugin->args());
-        $this->assertInstanceOf(Scoped::class, $plugin->config());
+        $this->assertEquals(['bar' => 'baz'], $scopedCall->args());
+        $this->assertInstanceOf(Scoped::class, $scopedCall->config());
     }
 
     /**

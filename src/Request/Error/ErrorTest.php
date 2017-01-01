@@ -17,14 +17,6 @@ class ErrorTest
     /**
      *
      */
-    function test_construct()
-    {
-        $this->assertInstanceOf(Error::class, new Error('foo', 'bar'));
-    }
-
-    /**
-     *
-     */
     function test_error()
     {
         $error = new Error('error', 'error/controller');

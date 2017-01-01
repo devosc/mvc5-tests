@@ -15,7 +15,7 @@ class SignalTest
     /**
      *
      */
-    function test_signal_with_numeric_args()
+    function test_numeric_args()
     {
         $signal = new Signal;
 
@@ -25,7 +25,7 @@ class SignalTest
     /**
      *
      */
-    function test_signal_without_args()
+    function test_empty_args()
     {
         $signal = new Signal;
 
@@ -35,7 +35,7 @@ class SignalTest
     /**
      *
      */
-    function test_signal_with_optional_arg()
+    function test_optional_arg()
     {
         $signal = new Signal;
 
@@ -45,7 +45,7 @@ class SignalTest
     /**
      *
      */
-    function test_signal_array()
+    function test_named_arg()
     {
         $signal = new Signal;
 
@@ -55,7 +55,7 @@ class SignalTest
     /**
      *
      */
-    function test_signal_variadic_args()
+    function test_variadic_args()
     {
         $signal = new Signal;
 
@@ -65,7 +65,7 @@ class SignalTest
     /**
      *
      */
-    function test_signal_args()
+    function test_args()
     {
         $signal = new Signal;
 
@@ -75,7 +75,7 @@ class SignalTest
     /**
      *
      */
-    function test_signal_static_string()
+    function test_static_string()
     {
         $signal = new Signal;
 
@@ -97,7 +97,7 @@ class SignalTest
     /**
      *
      */
-    function test_signal_no_param_function()
+    function test_no_param_function()
     {
         $signal = new Signal;
 
@@ -109,7 +109,7 @@ class SignalTest
     /**
      *
      */
-    function test_signal_no_param_exception_static_method()
+    function test_no_param_exception_static_method()
     {
         $signal = new Signal;
 
@@ -125,7 +125,7 @@ class SignalTest
     /**
      *
      */
-    function test_signal_no_param_exception_class_method()
+    function test_no_param_exception_class_method()
     {
         $signal = new Signal;
 
@@ -139,7 +139,7 @@ class SignalTest
     /**
      *
      */
-    function test_signal_no_param_exception_invoke()
+    function test_no_param_exception_invoke()
     {
         $signal = new Signal;
 
@@ -153,7 +153,7 @@ class SignalTest
     /**
      *
      */
-    function test_signal_php_function()
+    function test_php_function()
     {
         $signal = new Signal;
 

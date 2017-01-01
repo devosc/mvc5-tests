@@ -9,6 +9,7 @@ use Mvc5\Http\Error as HttpError;
 use Mvc5\Http\Error\Config as Error;
 use Mvc5\Request\Config as Request;
 use Mvc5\Response\Config as Response;
+use Mvc5\Response\Dispatch;
 use Mvc5\Test\Test\TestCase;
 
 class DispatchTest
@@ -17,25 +18,7 @@ class DispatchTest
     /**
      *
      */
-    function test_construct()
-    {
-        $this->assertInstanceOf(Dispatch::class, new Dispatch('foo'));
-    }
-
-    /**
-     *
-     */
-    function test_args()
-    {
-        $dispatch = new Dispatch('foo', new Request, new Response);
-
-        $this->assertTrue(is_array($dispatch->args()));
-    }
-
-    /**
-     *
-     */
-    function test_invoke_request()
+    function test_request()
     {
         $dispatch = new Dispatch('foo', new Request, new Response);
 
@@ -45,7 +28,7 @@ class DispatchTest
     /**
      *
      */
-    function test_invoke_response()
+    function test_response()
     {
         $dispatch = new Dispatch('foo', new Request, new Response);
 
@@ -55,7 +38,7 @@ class DispatchTest
     /**
      *
      */
-    function test_invoke_error()
+    function test_error()
     {
         $dispatch = new Dispatch('foo', new Request, new Response);
 
@@ -65,7 +48,7 @@ class DispatchTest
     /**
      *
      */
-    function test_invoke_not_response()
+    function test_any_response()
     {
         $dispatch = new Dispatch('foo', new Request, new Response);
 

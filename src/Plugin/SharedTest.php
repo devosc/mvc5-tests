@@ -14,8 +14,11 @@ class SharedTest
     /**
      *
      */
-    function test_construct()
+    function test()
     {
-        $this->assertInstanceOf(Shared::class, new Shared('foo'));
+        $shared = new Shared('foo', 'bar');
+
+        $this->assertEquals('foo', $shared->name());
+        $this->assertEquals('bar', $shared->config());
     }
 }

@@ -15,14 +15,6 @@ class WebTest
     /**
      *
      */
-    function test_construct()
-    {
-        $this->assertInstanceOf(Web::class, new Web);
-    }
-
-    /**
-     *
-     */
     function test_invoke()
     {
         $config = [
@@ -43,7 +35,7 @@ class WebTest
     /**
      *
      */
-    function test_invoke_exception()
+    function test_exception()
     {
         $config = [
             Arg::SERVICES => [
