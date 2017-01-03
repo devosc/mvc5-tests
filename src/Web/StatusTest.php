@@ -16,7 +16,7 @@ class StatusTest
     /**
      *
      */
-    function test_invoke()
+    function test()
     {
         $status = new Status;
 

@@ -16,7 +16,7 @@ class SendTest
     /**
      *
      */
-    function test_invoke()
+    function test()
     {
         $send = new Send;
 

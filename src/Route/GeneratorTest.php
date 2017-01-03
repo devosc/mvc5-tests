@@ -17,7 +17,7 @@ class GeneratorTest
     /**
      *
      */
-    function test_invoke()
+    function test_route_array()
     {
         $route = [
             Arg::CHILDREN    => [],
@@ -37,7 +37,7 @@ class GeneratorTest
     /**
      *
      */
-    function test_invoke_with_object()
+    function test_route_object()
     {
         $route = new Config([
             Arg::CHILDREN    => [],

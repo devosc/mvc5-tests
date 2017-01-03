@@ -31,7 +31,7 @@ class CollectionTest
     /**
      *
      */
-    function test_url()
+    function test()
     {
         $url = new Collection($this->routes);
 

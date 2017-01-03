@@ -18,7 +18,7 @@ class ContextTest
     /**
      *
      */
-    function test_invoke()
+    function test()
     {
         $app      = new App;
         $request  = new Request;

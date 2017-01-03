@@ -19,7 +19,7 @@ class SchemeTest
     /**
      *
      */
-    function test_invoke()
+    function test_no_scheme()
     {
         $route   = new Route;
         $request = new Request(new Mvc5Request);
@@ -31,7 +31,7 @@ class SchemeTest
     /**
      *
      */
-    function test_invoke_matched()
+    function test_matched()
     {
         $route   = new Route([Arg::SCHEME => 'http']);
         $request = new Request(new Mvc5Request([Arg::URI => [Arg::SCHEME => 'http']]));
@@ -43,7 +43,7 @@ class SchemeTest
     /**
      *
      */
-    function test_invoke_not_matched()
+    function test_not_matched()
     {
         $route   = new Route([Arg::SCHEME => 'https']);
         $request = new Request(new Mvc5Request([Arg::URI => [Arg::SCHEME => 'http']]));

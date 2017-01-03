@@ -3,7 +3,7 @@
  *
  */
 
-namespace Mvc5\Test\Request\Config;
+namespace Mvc5\Test\Request;
 
 use Mvc5\Arg;
 use Mvc5\Request\Config as Request;

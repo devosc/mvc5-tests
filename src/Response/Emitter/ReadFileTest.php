@@ -14,7 +14,7 @@ class ReadFileTest
     /**
      *
      */
-    function test_emit()
+    function test()
     {
         $emitter = new ReadFile(__DIR__ . '/test.txt');
 
