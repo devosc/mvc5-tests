@@ -18,7 +18,7 @@ class ActionTest
     /**
      *
      */
-    function test_invoke_no_actions()
+    function test_no_actions()
     {
         $action  = new Action;
         $route   = new Route;
@@ -30,7 +30,7 @@ class ActionTest
     /**
      *
      */
-    function test_invoke_action()
+    function test_action()
     {
         $action  = new Action;
         $route   = new Route([Arg::ACTION => ['GET' => 'foo']]);
@@ -46,7 +46,7 @@ class ActionTest
     /**
      *
      */
-    function test_invoke_no_action_default_is_controller()
+    function test_no_action_default_is_controller()
     {
         $action  = new Action;
         $route   = new Route;

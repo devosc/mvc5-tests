@@ -3,7 +3,7 @@
  *
  */
 
-namespace Mvc5\Test\Request\Error\Config;
+namespace Mvc5\Test\Request\Error;
 
 use Mvc5\Arg;
 use Mvc5\Request\Error\Model;

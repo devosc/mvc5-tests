@@ -17,7 +17,7 @@ class ServiceTest
     /**
      *
      */
-    function test_invoke()
+    function test()
     {
         $config = new Config;
 

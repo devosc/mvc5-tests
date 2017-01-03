@@ -29,7 +29,7 @@ class RenderTest
     /**
      *
      */
-    function test_invoke()
+    function test_render_child()
     {
         $model  = new HomeModel('home');
         $layout = new Layout('layout', [Arg::CHILD_MODEL => $model]);
@@ -82,7 +82,7 @@ class RenderTest
     /**
      *
      */
-    function test_invoke_exception()
+    function test_exception()
     {
         $render = new Render;
         $template = __DIR__ . '/exception.phtml';

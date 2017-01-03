@@ -18,7 +18,7 @@ class StatusTest
     /**
      *
      */
-    function test_invoke_ok()
+    function test_ok()
     {
         $status = new Status;
 
@@ -31,7 +31,7 @@ class StatusTest
     /**
      *
      */
-    function test_invoke_error()
+    function test_error()
     {
         $status = new Status;
 

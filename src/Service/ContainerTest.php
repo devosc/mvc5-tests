@@ -3,7 +3,7 @@
  *
  */
 
-namespace Mvc5\Test\Service\Config;
+namespace Mvc5\Test\Service;
 
 use Mvc5\Config;
 use Mvc5\Test\Test\TestCase;

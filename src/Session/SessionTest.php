@@ -3,7 +3,7 @@
  *
  */
 
-namespace Mvc5\Test\Session\Config;
+namespace Mvc5\Test\Session;
 
 use Mvc5\Cookie\Config as Cookies;
 use Mvc5\Cookie\Container;

@@ -3,7 +3,7 @@
  *
  */
 
-namespace Mvc5\Test\Model\Template;
+namespace Mvc5\Test\Model;
 
 use Mvc5\Arg;
 use Mvc5\Model;

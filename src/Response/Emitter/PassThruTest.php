@@ -14,7 +14,7 @@ class PassThruTest
     /**
      *
      */
-    function test_emit()
+    function test()
     {
         $emitter = new PassThru('pwd');
 

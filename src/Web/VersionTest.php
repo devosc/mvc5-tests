@@ -16,7 +16,7 @@ class VersionTest
     /**
      *
      */
-    function test_invoke()
+    function test()
     {
         $version = new Version;
 

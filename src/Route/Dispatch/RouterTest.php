@@ -13,6 +13,7 @@ use Mvc5\Http\Error\MethodNotAllowed;
 use Mvc5\Request\Config as Mvc5Request;
 use Mvc5\Route\Request\Config as Request;
 use Mvc5\Route\Config as Route;
+use Mvc5\Route\Dispatch;
 use Mvc5\Route\Generator;
 use Mvc5\Route\Match;
 use Mvc5\Route\Match\Controller;
@@ -20,294 +21,166 @@ use Mvc5\Route\Match\Path;
 use Mvc5\Route\Match\Merge;
 use Mvc5\Route\Match\Method;
 use Mvc5\Response\Config as Response;
-use Mvc5\Test\Route\Dispatch;
 use Mvc5\Test\Test\TestCase;
 
 class RouterTest
     extends TestCase
 {
     /**
-     * @var array
-     */
-    protected $config = [
-        'routes' => [
-            'name'     => 'home',
-            'route'    => '/',
-            'options'  => ['prefix' => __NAMESPACE__ . '\\'],
-            'children' => [
-                [
-                    'name'     => 'baz',
-                    'route' => 'foo',
-                    'children' => [
-                        [
-                            'name'  => 'bat',
-                            'route' => '/bar',
-                            'defaults' => [
-                                'controller' => 'foo/bar'
-                            ],
-                        ]
-                    ]
-                ]
-            ]
-        ],
-        'events' => [
-            'route\match' => [
-                'route\match\method',
-                'route\match\path',
-            ]
-        ],
-        'services' => [
-            'route\generator'        => Generator::class,
-            'route\match'            => Match::class,
-            'route\match\controller' => Controller::class,
-            'route\match\merge'      => Merge::class,
-            'route\match\method'     => Method::class,
-            'route\match\path'       => Path::class
-        ]
-    ];
-
-    /**
      * @return App
      */
     protected function app()
     {
-        return new App($this->config);
+        return new App($this->config());
+    }
+
+    /**
+     * @param array $config
+     * @return array
+     */
+    protected function config(array $config = [])
+    {
+        return $config + [
+                'routes' => [
+                    'name'     => 'home',
+                    'route'    => '/',
+                    'options'  => ['prefix' => __NAMESPACE__ . '\\'],
+                    'children' => [
+                        'foo' => [
+                            'route' => 'foo',
+                            'children' => [
+                                'bar' => new Route([
+                                    'defaults' => ['controller' => 'foo/bar'],
+                                    'route'    => '/bar',
+                                    'regex'    => '/bar'
+                                ])
+                            ]
+                        ]
+                    ]
+                ],
+                'events' => [
+                    'route\match' => [
+                        'route\match\method',
+                        'route\match\path',
+                    ]
+                ],
+                'services' => [
+                    'route\generator'        => Generator::class,
+                    'route\match'            => Match::class,
+                    'route\match\controller' => Controller::class,
+                    'route\match\merge'      => Merge::class,
+                    'route\match\method'     => Method::class,
+                    'route\match\path'       => Path::class
+                ]
+            ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function routes()
+    {
+        return $this->config()['routes'];
     }
 
     /**
      *
      */
-    function test_construct()
+    function test_child_not_found()
     {
-        $route    = new Route;
-        $dispatch = new Dispatch($route);
+        $dispatch = new Dispatch(new Route($this->routes()));
+        $dispatch->service($this->app());
 
-        $this->assertEquals(Request::class, $dispatch->requestClass());
-        $this->assertTrue($route === $dispatch->configuredRoute());
+        $request = $dispatch(new Mvc5Request([Arg::URI => [Arg::PATH => '/foo/baz']]));
+
+        $this->assertInstanceOf(NotFound::class, $request->error());
     }
 
     /**
      *
      */
-    function test_construct_with_route_request_class_name()
+    function test_child_route()
     {
-        $route    = new Route;
-        $dispatch = new Dispatch($route, 'foo');
+        $dispatch = new Dispatch(new Route($this->routes()));
+        $dispatch->service($this->app());
 
-        $this->assertEquals('foo', $dispatch->requestClass());
+        $request = $dispatch(new Mvc5Request([Arg::URI => [Arg::PATH => '/foo/bar']]));
+
+        $this->assertEquals('foo/bar', $request->name());
     }
 
     /**
      *
      */
-    function test_definition()
+    function test_child_route_iterator()
     {
-        $dispatch = new Dispatch(new Route);
+        $routes = $this->routes();
+        $routes['children'] = new Config($routes['children']);
+
+        $dispatch = new Dispatch(new Route($routes));
 
         $dispatch->service($this->app());
 
-        $this->assertInstanceOf(Route::class, $dispatch->definition([Arg::NAME => 'home', Arg::ROUTE => '/']));
+        $request = $dispatch(new Mvc5Request([Arg::URI => [Arg::PATH => '/foo/bar']]));
+
+        $this->assertEquals('foo/bar', $request->name());
     }
 
     /**
      *
      */
-    function test_dispatch()
+    function test_error()
     {
-        $route    = new Route([Arg::NAME => 'home', Arg::REGEX => '/']);
-        $dispatch = new Dispatch($route);
-
+        $dispatch = new Dispatch(new Route([Arg::ROUTE => '/', Arg::METHOD => 'GET']));
         $dispatch->service($this->app());
 
-        $this->assertInstanceOf(Mvc5Request::class, $dispatch->dispatch(new Mvc5Request([Arg::URI => [Arg::PATH => '/']]), $route));
+        $request = $dispatch(new Mvc5Request([Arg::METHOD => 'POST']));
+
+        $this->assertInstanceOf(MethodNotAllowed::class, $request->error());
     }
 
     /**
      *
      */
-    function test_no_match()
+    function test_not_found()
     {
-        $dispatch = new Dispatch(new Route);
-
+        $dispatch = new Dispatch(new Route([Arg::ROUTE => '/']));
         $dispatch->service($this->app());
 
-        $this->assertNull($dispatch->match(new Request, new Route));
+        $request = $dispatch(new Mvc5Request([Arg::URI => [Arg::PATH => '/foo']]));
+
+        $this->assertInstanceOf(NotFound::class, $request->error());
     }
 
     /**
      *
      */
-    function test_name_parent_is_root()
+    function test_parent_controller_options()
     {
-        $dispatch = new Dispatch(['name' => 'foo']);
-
-        $this->assertEquals('bar', $dispatch->name('bar', 'foo'));
-    }
-
-    /**
-     *
-     */
-    function test_name_parent_is_not_root()
-    {
-        $dispatch = new Dispatch(['name' => 'foo']);
-
-        $this->assertEquals('bar/baz', $dispatch->name('baz', 'bar'));
-    }
-
-    /**
-     *
-     */
-    function test_request_not_found()
-    {
-        $dispatch = new Dispatch(new Route([Arg::NAME => 'home', Arg::ROUTE => '/']));
-
-        $dispatch->service($this->app());
-
-        $request = $dispatch->request(new Request([Arg::URI => [Arg::PATH => '/foo']]));
-
-        $this->assertInstanceOf(NotFound::class, $request[Arg::ERROR]);
-    }
-
-    /**
-     *
-     */
-    function test_request_child_not_found()
-    {
-        $config = $this->config['routes'];
-        $config['children'][] = [
-            'name' => 'wildcard',
-            'route' => ':wildcard',
-            'constraints' => [
-                'wildcard' => '.*'
+        $config = $this->config([
+            'events' => [
+                'route\match' => [
+                    'route\match\merge',
+                    'route\match\method',
+                    'route\match\path',
+                    'route\match\controller'
+                ]
             ]
-        ];
-
-        $dispatch = new Dispatch(new Route($config));
-
-        $dispatch->service($this->app());
-
-        $request = $dispatch->request(new Request([Arg::URI => [Arg::PATH => '/foo/baz']]));
-
-        $this->assertNotEquals('wildcard', $request->name());
-        $this->assertInstanceOf(NotFound::class, $request[Arg::ERROR]);
-    }
-
-    /**
-     *
-     */
-    function test_request_error()
-    {
-        $request = new Request([Arg::METHOD => 'POST']);
-        $route = new Route([Arg::ROUTE => '/', Arg::METHOD => 'GET']);
-
-        $dispatch = new Dispatch($route);
-
-        $dispatch->service($this->app());
-
-        $request = $dispatch->request($request);
-
-        $this->assertInstanceOf(MethodNotAllowed::class, $request[Arg::ERROR]);
-    }
-
-    /**
-     *
-     */
-    function test_request_ok()
-    {
-        $request = new Request;
-        $route = new Route([Arg::NAME => 'home', Arg::ROUTE => '/']);
-        $dispatch = new Dispatch($route);
-
-        $dispatch->service($this->app());
-
-        $request = $dispatch->request($request);
-
-        $this->assertEquals('home', $request->name());
-    }
-
-    /**
-     *
-     */
-    function test_return_response()
-    {
-        $request = new Request;
-        $route = new Route([Arg::NAME => 'home', Arg::ROUTE => '/']);
-        $dispatch = new Dispatch($route);
-
-        $config = $this->config;
-
-        $config['events']['route\match'] = [function() {
-            return new Response('foo');
-        }];
-
-        $dispatch->service(new App($config));
-
-        $this->assertInstanceOf(Response::class, $dispatch->request($request));
-    }
-
-    /**
-     *
-     */
-    function test_route_with_children()
-    {
-        $route = new Route($this->config['routes']);
-        $dispatch = new Dispatch($route);
-        $request  = new Mvc5Request([Arg::URI => [Arg::PATH => '/foo/bar']]);
-
-        $dispatch->service($this->app());
-
-        $request = $dispatch->request($request);
-
-        $this->assertEquals('baz/bat', $request->name());
-    }
-
-    /**
-     *
-     */
-    function test_route_with_children_as_iterator_object()
-    {
-        $config = $this->config['routes'];
-        $config['children'] = new Config($config['children']);
-
-        $dispatch = new Dispatch(new Route($config));
-        $request  = new Mvc5Request([Arg::URI => [Arg::PATH => '/foo/bar']]);
-
-        $dispatch->service($this->app());
-
-        $request = $dispatch->request($request);
-
-        $this->assertEquals('baz/bat', $request->name());
-    }
-
-    /**
-     *
-     */
-    function test_child_controller_options()
-    {
-        $config = $this->config;
-
-        $match = $config['events']['route\match'];
-
-        array_unshift($match, 'route\match\merge') ;
-        $match[] = 'route\match\controller';
-
-        $config['events']['route\match'] = $match;
+        ]);
 
         $dispatch = new Dispatch(new Route($config['routes']));
-        $request  = new Mvc5Request([Arg::URI => [Arg::PATH => '/foo/bar']]);
-
         $dispatch->service(new App($config));
 
-        $request = $dispatch->request($request);
+        $request = $dispatch(new Mvc5Request([Arg::URI => [Arg::PATH => '/foo/bar']]));
 
-        $this->assertEquals('baz/bat', $request->name());
+        $this->assertEquals('foo/bar', $request->name());
         $this->assertEquals(Foo\Bar\Controller::class, $request->controller());
     }
 
     /**
      *
      */
-    function test_match_parent_named_params()
+    function test_parent_params()
     {
         $config = [
             Arg::REGEX => '/(?P<controller>[a-zA-Z0-9]+)',
@@ -318,49 +191,57 @@ class RouterTest
             ]
         ];
 
-        $route = new Route($config);
-        $dispatch = new Dispatch($route);
-        $request  = new Mvc5Request([Arg::URI => [Arg::PATH => '/foo/bars']]);
-
+        $dispatch = new Dispatch(new Route($config));
         $dispatch->service($this->app());
 
-        $request = $dispatch->request($request);
+        $request = $dispatch(new Mvc5Request([Arg::URI => [Arg::PATH => '/foo/bars']]));
 
-        $this->assertEquals(['controller' => 'foo', 'action' => 'bars', 'limit' => '15'], $request[Arg::PARAMS]);
+        $this->assertEquals(['controller' => 'foo', 'action' => 'bars', 'limit' => '15'], $request->params());
     }
 
     /**
      *
      */
-    function test_route_definition()
+    function test_request()
     {
-        $route  = new Route(['regex' => 'foo']);
-        $dispatch = new Dispatch(new Route);
-
-        $this->assertEquals($route, $dispatch->routeDefinition($route));
-    }
-
-    /**
-     *
-     */
-    function test_route_definition_without_regex()
-    {
-        $dispatch = new Dispatch(new Route);
-
+        $dispatch = new Dispatch(new Route([Arg::NAME => 'app', Arg::ROUTE => '/']));
         $dispatch->service($this->app());
 
-        $this->assertInstanceOf(Route::class, $dispatch->routeDefinition([Arg::ROUTE => '/']));
+        $request = $dispatch(new Mvc5Request);
+
+        $this->assertEquals('app', $request->name());
+        $this->assertEquals('/', $request->path());
+        $this->assertInstanceOf(Mvc5Request::class, $request);
     }
 
     /**
      *
      */
-    function test_invoke()
+    function test_request_with_route_request_class()
     {
-        $dispatch = new Dispatch(new Route([Arg::ROUTE => '/']));
-
+        $dispatch = new Dispatch(new Route([Arg::ROUTE => '/']), Request::class);
         $dispatch->service($this->app());
 
         $this->assertInstanceOf(Mvc5Request::class, $dispatch(new Mvc5Request));
+    }
+
+    /**
+     *
+     */
+    function test_return_response()
+    {
+        $dispatch = new Dispatch(new Route([Arg::ROUTE => '/']));
+
+        $config = $this->config([
+            'events' => [
+                'route\match' => [function() {
+                    return new Response('foo');
+                }]
+            ]
+        ]);
+
+        $dispatch->service(new App($config));
+
+        $this->assertInstanceOf(Response::class, $dispatch(new Mvc5Request));
     }
 }

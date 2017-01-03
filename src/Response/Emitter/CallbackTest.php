@@ -14,7 +14,7 @@ class CallbackTest
     /**
      *
      */
-    function test_emit()
+    function test()
     {
         $emitter = new Callback(function() { echo 'Hello!'; });
 

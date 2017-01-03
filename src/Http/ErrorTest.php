@@ -3,7 +3,7 @@
  *
  */
 
-namespace Mvc5\Test\Response\Config;
+namespace Mvc5\Test\Http;
 
 use Mvc5\Arg;
 use Mvc5\Http\Error\Config as Error;

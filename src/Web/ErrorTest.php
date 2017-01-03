@@ -16,7 +16,7 @@ class ErrorTest
     /**
      *
      */
-    function test_invoke()
+    function test()
     {
         $error = new Error('error', 'error\controller');
 

@@ -19,7 +19,7 @@ class LayoutTest
     /**
      *
      */
-    function test_invoke()
+    function test()
     {
         $layout = new Layout(new ViewLayout);
 

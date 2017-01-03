@@ -18,7 +18,7 @@ class ControllerTest
     /**
      *
      */
-    function test_invoke()
+    function test_controller()
     {
         $controller = new Controller(new Model);
 
@@ -28,7 +28,7 @@ class ControllerTest
     /**
      *
      */
-    function test_invoke_with_error()
+    function test_controller_with_error()
     {
         $controller = new Controller(new Model);
 
