@@ -5,8 +5,8 @@
 
 namespace Mvc5\Test\Resolver\Resolver\Gem;
 
+use Mvc5\App;
 use Mvc5\Plugin\Value;
-use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
 
 class ValueTest
@@ -15,10 +15,8 @@ class ValueTest
     /**
      *
      */
-    function test_gem_value()
+    function test()
     {
-        $resolver = new Resolver;
-
-        $this->assertEquals('foo', $resolver->gem(new Value('foo')));
+        $this->assertEquals('foo', (new App)->plugin(new Value('foo')));
     }
 }

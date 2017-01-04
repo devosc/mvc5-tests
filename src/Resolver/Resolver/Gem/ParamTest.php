@@ -5,8 +5,8 @@
 
 namespace Mvc5\Test\Resolver\Resolver\Gem;
 
+use Mvc5\App;
 use Mvc5\Plugin\Param;
-use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
 
 class ParamTest
@@ -15,12 +15,11 @@ class ParamTest
     /**
      *
      */
-    function test_gem_param()
+    function test()
     {
-        $resolver = new Resolver;
+        $app = new App;
+        $app->config(['foo' => 'bar']);
 
-        $resolver->config(['foo' => 'bar']);
-
-        $this->assertEquals('bar', $resolver->gem(new Param('foo')));
+        $this->assertEquals('bar', $app->plugin(new Param('foo')));
     }
 }

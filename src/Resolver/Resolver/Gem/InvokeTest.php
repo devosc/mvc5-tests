@@ -5,8 +5,8 @@
 
 namespace Mvc5\Test\Resolver\Resolver\Gem;
 
+use Mvc5\App;
 use Mvc5\Plugin\Invoke;
-use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
 
 class InvokeTest
@@ -15,44 +15,44 @@ class InvokeTest
     /**
      *
      */
-    function test_gem_invoke_named()
+    function test_merge()
     {
-        $resolver = new Resolver;
+        $app = new App;
+
+        $invoke = new Invoke(function($foo, $bar, $baz) { return $foo . $bar . $baz; }, ['s']);
+
+        $callable = $app->plugin($invoke);
+
+        $this->assertEquals('foobars', $callable('foo', 'bar'));
+        $this->assertEquals('foobars', $app->call($callable, ['foo', 'bar']));
+    }
+
+    /**
+     *
+     */
+    function test_named()
+    {
+        $app = new App;
 
         $invoke = new Invoke(function($foo, $bar, $baz) { return $foo . $bar . $baz; }, ['baz' => 's']);
 
-        $callable = $resolver->gem($invoke);
+        $callable = $app->plugin($invoke);
 
-        $this->assertEquals('foobars', $resolver->call($callable, ['bar' => 'bar', 'foo' => 'foo']));
+        $this->assertEquals('foobars', $app->call($callable, ['bar' => 'bar', 'foo' => 'foo']));
     }
 
     /**
      *
      */
-    function test_gem_invoke_not_named()
+    function test_not_named()
     {
-        $resolver = new Resolver;
+        $app = new App;
 
         $invoke = new Invoke(function($foo, $bar, $baz) { return $foo . $bar . $baz; }, ['s']);
 
-        $callable = $resolver->gem($invoke);
+        $callable = $app->plugin($invoke);
 
         $this->assertEquals('foobars', $callable('foo', 'bar'));
-        $this->assertEquals('foobars', $resolver->call($callable, ['foo', 'bar']));
-    }
-
-    /**
-     *
-     */
-    function test_gem_invoke_merge()
-    {
-        $resolver = new Resolver;
-
-        $invoke = new Invoke(function($foo, $bar, $baz) { return $foo . $bar . $baz; }, ['s']);
-
-        $callable = $resolver->gem($invoke);
-
-        $this->assertEquals('foobars', $callable('foo', 'bar'));
-        $this->assertEquals('foobars', $resolver->call($callable, ['foo', 'bar']));
+        $this->assertEquals('foobars', $app->call($callable, ['foo', 'bar']));
     }
 }

@@ -5,7 +5,7 @@
 
 namespace Mvc5\Test\Resolver\Resolver\Gem;
 
-use Mvc5\Test\Resolver\Resolver;
+use Mvc5\App;
 use Mvc5\Test\Resolver\Resolver\Model\Unresolvable;
 use Mvc5\Test\Test\TestCase;
 use RuntimeException;
@@ -16,12 +16,12 @@ class UnresolvableTest
     /**
      *
      */
-    function test_gem_unresolvable()
+    function test()
     {
-        $resolver = new Resolver;
+        $this->setExpectedException(
+            RuntimeException::class, 'Unresolvable plugin: Mvc5\Test\Resolver\Resolver\Model\Unresolvable'
+        );
 
-        $this->setExpectedException(RuntimeException::class);
-
-        $resolver->gem(new Unresolvable);
+        (new App)->plugin(new Unresolvable);
     }
 }

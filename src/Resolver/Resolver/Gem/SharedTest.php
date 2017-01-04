@@ -5,9 +5,9 @@
 
 namespace Mvc5\Test\Resolver\Resolver\Gem;
 
+use Mvc5\App;
 use Mvc5\Plugin\Args;
 use Mvc5\Plugin\Shared;
-use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
 
 class SharedTest
@@ -16,70 +16,62 @@ class SharedTest
     /**
      *
      */
-    function test_gem_shared()
+    function test_create()
     {
-        $resolver = new Resolver;
+        $app = new App;
 
-        $resolver->set('foo', 'bar');
-
-        $this->assertEquals('bar', $resolver->gem(new Shared('foo')));
-
-        $this->assertEquals('bar', $resolver->get('foo'));
+        $this->assertEquals('bar', $app->plugin(new Shared('foo', function() { return 'bar'; })));
+        $this->assertEquals('bar', $app->get('foo'));
     }
 
     /**
      *
      */
-    function test_gem_shared_create()
+    function test_not_null()
     {
-        $resolver = new Resolver;
-
-        $this->assertEquals('bar', $resolver->gem(new Shared('foo', function() { return 'bar'; })));
-
-        $this->assertEquals('bar', $resolver->get('foo'));
-    }
-
-    /**
-     *
-     */
-    function test_gem_shared_with_config()
-    {
-        $resolver = new Resolver;
-
-        $this->assertEquals('bar', $resolver->gem(new Shared('foo', new Args('bar'))));
-
-        $this->assertEquals('bar', $resolver->get('foo'));
-    }
-
-    /**
-     *
-     */
-    function test_gem_shared_not_null()
-    {
-        $resolver = new Resolver;
+        $app = new App;
 
         $value = 0;
 
-        $this->assertTrue(false === $resolver->has('foo'));
-
-        $this->assertTrue($value === $resolver->gem(new Shared('foo', new Args($value))));
-
-        $this->assertTrue(true === $resolver->has('foo'));
-
-        $this->assertTrue(['foo' => $value] === $resolver->container());
-
-        $this->assertTrue($value === $resolver->gem(new Shared('foo')));
+        $this->assertFalse($app->has('foo'));
+        $this->assertEquals($value, $app->plugin(new Shared('foo', new Args($value))));
+        $this->assertTrue($app->has('foo'));
+        $this->assertEquals(['foo' => $value], $app->container());
+        $this->assertEquals($value, $app->plugin(new Shared('foo')));
     }
 
     /**
      *
      */
-    function test_gem_shared_null()
+    function test_null()
     {
-        $resolver = new Resolver;
+        $app = new App;
 
-        $this->assertEquals(null, $resolver->gem(new Shared('foo', new Args(null))));
+        $this->assertEquals(null, $app->plugin(new Shared('foo', new Args(null))));
+        $this->assertFalse($app->has('foo'));
+        $this->assertNull($app->get('foo'));
+    }
 
-        $this->assertTrue(false === $resolver->has('foo'));
+    /**
+     *
+     */
+    function test_shared()
+    {
+        $app = new App;
+        $app->set('foo', 'bar');
+
+        $this->assertEquals('bar', $app->plugin(new Shared('foo')));
+        $this->assertEquals('bar', $app->get('foo'));
+    }
+
+    /**
+     *
+     */
+    function test_with_config()
+    {
+        $app = new App;
+
+        $this->assertEquals('bar', $app->plugin(new Shared('foo', new Args('bar'))));
+        $this->assertEquals('bar', $app->get('foo'));
     }
 }

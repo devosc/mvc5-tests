@@ -5,8 +5,8 @@
 
 namespace Mvc5\Test\Resolver\Resolver\Gem;
 
+use Mvc5\App;
 use Mvc5\Plugin\FileInclude;
-use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
 
 class FileIncludeTest
@@ -15,12 +15,10 @@ class FileIncludeTest
     /**
      *
      */
-    function test_gem_file_include()
+    function test()
     {
-        $resolver = new Resolver;
-
         $plugin = new FileInclude(__DIR__ . '/../Model/config.inc.php');
 
-        $this->assertEquals(['foo' => 'bar'], $resolver->gem($plugin));
+        $this->assertEquals(['foo' => 'bar'], (new App)->plugin($plugin));
     }
 }
