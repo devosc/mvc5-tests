@@ -14,13 +14,13 @@ class UnserializeTest
     extends TestCase
 {
     /**
-     *
+     * @runInSeparateProcess
      */
     function test_serialize()
     {
         $session = new Session;
 
-        @$session->start();
+        $session->start();
 
         $resolver = new Resolver;
 
@@ -43,7 +43,7 @@ class UnserializeTest
 
         $session->close();
 
-        @$session->start();
+        $session->start();
 
         $resolver = $session['resolver'];
         $this->assertEquals($config, $resolver->config());

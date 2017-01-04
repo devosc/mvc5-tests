@@ -5,10 +5,10 @@
 
 namespace Mvc5\Test\Resolver\Resolver\Gem;
 
+use Mvc5\App;
 use Mvc5\Config;
 use Mvc5\Plugin\Child;
 use Mvc5\Plugin\Plugin;
-use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
 
 class ChildTest
@@ -17,12 +17,11 @@ class ChildTest
     /**
      *
      */
-    function test_gem_child()
+    function test()
     {
-        $resolver = new Resolver;
+        $app = new App;
+        $app->configure('bar', new Plugin(Config::class));
 
-        $resolver->configure('bar', new Plugin(Config::class));
-
-        $this->assertInstanceOf(Config::class, $resolver->gem(new Child('foo', 'bar')));
+        $this->assertInstanceOf(Config::class, $app->plugin(new Child('foo', 'bar')));
     }
 }

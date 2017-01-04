@@ -5,7 +5,10 @@
 
 namespace Mvc5\Test\Resolver;
 
+use Mvc5\App;
 use Mvc5\Config;
+use Mvc5\Plugin\Plugin;
+use Mvc5\Plugin\Shared;
 use Mvc5\Test\Test\TestCase;
 
 class InitializerTest
@@ -14,68 +17,24 @@ class InitializerTest
     /**
      *
      */
-    function test_initialize()
-    {
-        $initializer = new Initializer;
-
-        $this->assertInstanceOf(Config::class, $initializer->initialize(Config::class));
-    }
-
-    /**
-     *
-     */
-    function test_initialize_not_initializing()
-    {
-        $initializer = new Initializer;
-
-        $initializer->setPending(['foo' => true]);
-
-        $this->setExpectedException('RuntimeException');
-
-        $initializer->initialize('foo');
-    }
-
-    /**
-     *
-     */
     function test_initialized()
     {
-        $initializer = new Initializer;
+        $app = new App;
 
-        $this->assertEquals(null, $initializer->initialized('foo'));
+        $this->assertNull($app->get('foo'));
+        $this->assertInstanceOf(Config::class, $app->plugin(new Shared('foo', Config::class)));
+        $this->assertInstanceOf(Config::class, $app->get('foo'));
     }
 
     /**
      *
      */
-    function test_initialized_set()
+    function test_circular_dependency_exception()
     {
-        $initializer = new Initializer;
+        $app = new App(['services' => ['foo' => new Shared('foo', new Plugin('foo'))]]);
 
-        $this->assertEquals('bar', $initializer->initialized('foo', 'bar'));
-    }
+        $this->setExpectedException('RuntimeException', 'Circular dependency: foo');
 
-    /**
-     *
-     */
-    function test_initializing()
-    {
-        $initializer = new Initializer;
-
-        $initializer->setPending(['foo' => true]);
-
-        $this->setExpectedException('RuntimeException');
-
-        $initializer->initializing('foo');
-    }
-
-    /**
-     *
-     */
-    function test_initializing_not_pending()
-    {
-        $initializer = new Initializer;
-
-        $this->assertEquals(null, $initializer->initializing('foo'));
+        $app->get('foo');
     }
 }

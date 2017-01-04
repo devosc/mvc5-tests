@@ -5,9 +5,9 @@
 
 namespace Mvc5\Test\Resolver\Resolver\Gem;
 
+use Mvc5\App;
 use Mvc5\Plugin\Factory;
 use Mvc5\Plugin\Plugin;
-use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
 
 class FactoryTest
@@ -16,14 +16,12 @@ class FactoryTest
     /**
      *
      */
-    function test_gem_factory()
+    function test()
     {
-        $resolver = new Resolver;
+        $app = new App;
+        $app->configure('bar', function() { return function() { return 'baz'; }; });
+        $app->configure('factory', new Plugin('bar'));
 
-        $resolver->configure('bar', function() { return function() { return 'baz'; }; });
-
-        $resolver->configure('factory', new Plugin('bar'));
-
-        $this->assertEquals('baz', $resolver->gem(new Factory('foo')));
+        $this->assertEquals('baz', $app->plugin(new Factory('foo')));
     }
 }

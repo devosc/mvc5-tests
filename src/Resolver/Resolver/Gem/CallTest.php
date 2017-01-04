@@ -5,8 +5,8 @@
 
 namespace Mvc5\Test\Resolver\Resolver\Gem;
 
+use Mvc5\App;
 use Mvc5\Plugin\Call;
-use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Resolver\Resolver\Model\CallObject;
 use Mvc5\Test\Test\TestCase;
 
@@ -16,24 +16,20 @@ class CallTest
     /**
      *
      */
-    function test_gem_call_named()
+    function test_named()
     {
-        $resolver = new Resolver;
-
         $call = new Call(CallObject::class, ['foo' => 'foo']);
 
-        $this->assertEquals('foo', $resolver->gem($call, ['bar' => 'bar']));
+        $this->assertEquals('foo', (new App)->plugin($call, ['bar' => 'bar']));
     }
 
     /**
      *
      */
-    function test_gem_call_not_named()
+    function test_not_named()
     {
-        $resolver = new Resolver;
-
         $call = new Call(CallObject::class, ['bar']);
 
-        $this->assertEquals('foo', $resolver->gem($call, ['foo']));
+        $this->assertEquals('foo', (new App)->plugin($call, ['foo']));
     }
 }

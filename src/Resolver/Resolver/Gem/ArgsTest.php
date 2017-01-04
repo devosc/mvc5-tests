@@ -5,10 +5,10 @@
 
 namespace Mvc5\Test\Resolver\Resolver\Gem;
 
+use Mvc5\App;
 use Mvc5\Config;
 use Mvc5\Plugin\Args;
 use Mvc5\Plugin\Plugin;
-use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
 
 class ArgsTest
@@ -17,10 +17,8 @@ class ArgsTest
     /**
      *
      */
-    function test_gem_args()
+    function test()
     {
-        $resolver = new Resolver;
-
-        $this->assertEquals(['foo' => new Config], $resolver->gem(new Args(['foo' => new Plugin(Config::class)])));
+        $this->assertEquals(['foo' => new Config], (new App)->plugin(new Args(['foo' => new Plugin(Config::class)])));
     }
 }

@@ -6,8 +6,8 @@
 namespace Mvc5\Test\Resolver\Resolver\Gem;
 
 use Mvc5\App;
+use Mvc5\Config;
 use Mvc5\Plugin\Scoped;
-use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
 
 class ScopedTest
@@ -16,30 +16,28 @@ class ScopedTest
     /**
      *
      */
-    function test_gem_scoped()
+    function test_scoped()
     {
-        $resolver = new Resolver;
+        $app = new App(null, null, true);
 
-        $resolver->setScope(true);
-
-        $scoped = $resolver->gem(new Scoped([$this, 'foo']));
+        $scoped = $app->plugin(new Scoped([$this, 'foo']));
 
         $this->assertInstanceOf(\Closure::class, $scoped);
-        $this->assertEquals(Resolver::class, $scoped());
+        $this->assertEquals($app, $scoped());
     }
+
     /**
      *
      */
-    function test_gem_scoped_class()
+    function test_scoped_class()
     {
-        $resolver = new Resolver;
+        $config = new Config;
+        $app = new App(null, null, $config);
 
-        $resolver->setScope(new App);
-
-        $scoped = $resolver->gem(new Scoped([$this, 'foo']));
+        $scoped = $app->plugin(new Scoped([$this, 'foo']));
 
         $this->assertInstanceOf(\Closure::class, $scoped);
-        $this->assertEquals(App::class, $scoped());
+        $this->assertEquals($config, $scoped());
     }
 
     /**
@@ -48,7 +46,7 @@ class ScopedTest
     function foo()
     {
         return function() {
-            return get_class($this);
+            return $this;
         };
     }
 }

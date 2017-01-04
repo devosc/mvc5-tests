@@ -5,8 +5,8 @@
 
 namespace Mvc5\Test\Resolver\Resolver\Gem;
 
+use Mvc5\App;
 use Mvc5\Plugin\Filter;
-use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
 
 class FilterTest
@@ -15,10 +15,8 @@ class FilterTest
     /**
      *
      */
-    function test_gem_filter()
+    function test()
     {
-        $resolver = new Resolver;
-
-        $this->assertEquals('foo', $resolver->gem(new Filter('foo', [function($foo) { return $foo; }])));
+        $this->assertEquals('foo', (new App)->plugin(new Filter('foo', [function($foo) { return $foo; }])));
     }
 }

@@ -5,8 +5,8 @@
 
 namespace Mvc5\Test\Resolver\Resolver\Gem;
 
+use Mvc5\App;
 use Mvc5\Plugin\Link;
-use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
 
 class LinkTest
@@ -15,10 +15,10 @@ class LinkTest
     /**
      *
      */
-    function test_gem_link()
+    function test()
     {
-        $resolver = new Resolver;
+        $app = new App;
 
-        $this->assertEquals($resolver, $resolver->gem(new Link()));
+        $this->assertEquals($app, $app->plugin(new Link));
     }
 }

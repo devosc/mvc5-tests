@@ -5,8 +5,8 @@
 
 namespace Mvc5\Test\Resolver\Resolver\Gem;
 
+use Mvc5\App;
 use Mvc5\Plugin\Provide;
-use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
 
 class ProvideTest
@@ -15,24 +15,22 @@ class ProvideTest
     /**
      *
      */
-    function test_gem_provide()
+    function test_no_provider()
     {
-        $resolver = new Resolver;
+        $app = new App;
 
-        $resolver->setProvider(function($foo) { return $foo; });
+        $this->setExpectedException(\RuntimeException::class, 'Unresolvable plugin: bar');
 
-        $this->assertEquals('bar', $resolver->gem(new Provide('bar')));
+        $app->plugin(new Provide('bar'));
     }
 
     /**
      *
      */
-    function test_gem_provide_no_provider()
+    function test_provide()
     {
-        $resolver = new Resolver;
+        $app = new App(null, function($foo) { return $foo; });
 
-        $this->setExpectedException(\RuntimeException::class, 'Unresolvable plugin: bar');
-
-        $resolver->gem(new Provide('bar'));
+        $this->assertEquals('bar', $app->plugin(new Provide('bar')));
     }
 }

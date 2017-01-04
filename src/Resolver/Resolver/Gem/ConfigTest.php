@@ -5,8 +5,8 @@
 
 namespace Mvc5\Test\Resolver\Resolver\Gem;
 
+use Mvc5\App;
 use Mvc5\Plugin\Config;
-use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
 
 class ConfigTest
@@ -15,12 +15,11 @@ class ConfigTest
     /**
      *
      */
-    function test_gem_config()
+    function test()
     {
-        $resolver = new Resolver;
+        $app = new App;
+        $app->config(['foo' => 'bar']);
 
-        $resolver->config(['foo' => 'bar']);
-
-        $this->assertEquals(['foo' => 'bar'], $resolver->gem(new Config));
+        $this->assertEquals(['foo' => 'bar'], $app->plugin(new Config));
     }
 }

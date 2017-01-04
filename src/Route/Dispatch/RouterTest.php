@@ -45,7 +45,7 @@ class RouterTest
                     'name'     => 'home',
                     'route'    => '/',
                     'options'  => ['prefix' => __NAMESPACE__ . '\\'],
-                    'children' => [
+                    'children' => new Config([
                         'foo' => [
                             'route' => 'foo',
                             'children' => [
@@ -53,10 +53,14 @@ class RouterTest
                                     'defaults' => ['controller' => 'foo/bar'],
                                     'route'    => '/bar',
                                     'regex'    => '/bar'
-                                ])
+                                ]),
+                                'bat' => [
+                                    'defaults' => ['controller' => 'foo/bat'],
+                                    'regex' => '/bat'
+                                ]
                             ]
                         ]
-                    ]
+                    ])
                 ],
                 'events' => [
                     'route\match' => [
@@ -104,26 +108,9 @@ class RouterTest
         $dispatch = new Dispatch(new Route($this->routes()));
         $dispatch->service($this->app());
 
-        $request = $dispatch(new Mvc5Request([Arg::URI => [Arg::PATH => '/foo/bar']]));
+        $request = $dispatch(new Mvc5Request([Arg::URI => [Arg::PATH => '/foo/bat']]));
 
-        $this->assertEquals('foo/bar', $request->name());
-    }
-
-    /**
-     *
-     */
-    function test_child_route_iterator()
-    {
-        $routes = $this->routes();
-        $routes['children'] = new Config($routes['children']);
-
-        $dispatch = new Dispatch(new Route($routes));
-
-        $dispatch->service($this->app());
-
-        $request = $dispatch(new Mvc5Request([Arg::URI => [Arg::PATH => '/foo/bar']]));
-
-        $this->assertEquals('foo/bar', $request->name());
+        $this->assertEquals('foo/bat', $request->name());
     }
 
     /**

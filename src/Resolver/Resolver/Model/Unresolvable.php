@@ -5,9 +5,9 @@
 
 namespace Mvc5\Test\Resolver\Resolver\Model;
 
-use Mvc5\Resolvable;
+use Mvc5\Plugin\Gem\Gem;
 
 class Unresolvable
-    implements Resolvable
+    implements Gem
 {
 }

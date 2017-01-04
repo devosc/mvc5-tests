@@ -12,6 +12,9 @@ use Mvc5\Session\Container;
 use Mvc5\Session\Model;
 use Mvc5\Test\Test\TestCase;
 
+/**
+ * @runTestsInSeparateProcesses 
+ */
 class ContainerTest
     extends TestCase
 {
@@ -22,7 +25,7 @@ class ContainerTest
     {
         $container = new Container(new Session);
 
-        @$container->start();
+        $container->start();
 
         $container['foo'] = 'bar';
 
@@ -42,7 +45,7 @@ class ContainerTest
     {
         $container = new Container(new Session);
 
-        @$container->start();
+        $container->start();
 
         $this->assertEquals(PHP_SESSION_ACTIVE, $container->status());
 
@@ -58,7 +61,7 @@ class ContainerTest
     {
         $container = new Container(new Session);
 
-        @$container->start();
+        $container->start();
 
         $this->assertNotEmpty($container->id());
 
@@ -74,7 +77,7 @@ class ContainerTest
     {
         $container = new Container(new Session(new Cookies(new CookieContainer)));
 
-        @$container->start();
+        $container->start();
 
         $this->assertNotEmpty($container->id());
 
@@ -90,11 +93,11 @@ class ContainerTest
     {
         $container = new Container(new Session);
 
-        @$container->start();
+        $container->start();
 
         $this->assertNotEmpty($container->id());
 
-        @$container->destroy();
+        $container->destroy();
 
         $this->assertEmpty($container->id());
     }
@@ -108,7 +111,7 @@ class ContainerTest
 
         $this->assertEmpty($container->id());
 
-        @$container->start();
+        $container->start();
 
         $this->assertEquals(session_id(), $container->id());
 
@@ -124,7 +127,7 @@ class ContainerTest
 
         $this->assertEquals($container->id(), $container->id('foo'));
 
-        @$container->start();
+        $container->start();
 
         $this->assertEquals(session_id(), $container->id());
         $this->assertEquals('foo', $container->id());
@@ -173,11 +176,11 @@ class ContainerTest
     {
         $container = new Container(new Session);
 
-        @$container->start();
+        $container->start();
 
         //$id = $container->id();
 
-        @$container->regenerate();
+        $container->regenerate();
 
         $this->assertEquals(session_id(), $container->id());
         //$this->assertNotEquals($id, $container->id()); //stderr=true
@@ -194,7 +197,7 @@ class ContainerTest
 
         $this->assertEquals(PHP_SESSION_NONE, $container->status());
 
-        @$container->start();
+        $container->start();
 
         $this->assertEquals(PHP_SESSION_ACTIVE, $container->status());
 
@@ -218,7 +221,7 @@ class ContainerTest
     {
         $container = new Container(new Session);
 
-        @$container->start();
+        $container->start();
 
         $this->assertInstanceOf(Model::class, $_SESSION[$container->label()]);
 
@@ -232,7 +235,7 @@ class ContainerTest
     {
         $container = new Container(new Session);
 
-        @session_start();
+        session_start();
 
         $model = new Model;
 
@@ -251,7 +254,7 @@ class ContainerTest
 
         $this->assertEquals(PHP_SESSION_NONE, $app->status());
 
-        @$app->start();
+        $app->start();
 
         $this->assertEquals(PHP_SESSION_ACTIVE, $app->status());
         $this->assertEquals('app', $app->label());
@@ -276,7 +279,7 @@ class ContainerTest
         $app = new Container(new Session, 'app');
         $mod = new Container($app, 'mod');
 
-        @$mod->start();
+        $mod->start();
 
         $this->assertEquals(PHP_SESSION_ACTIVE, $app->status());
         $this->assertEquals('mod', $mod->label());
@@ -296,7 +299,7 @@ class ContainerTest
     {
         $container = new Container(new Session);
 
-        @$container->start();
+        $container->start();
 
         $this->assertEquals(PHP_SESSION_ACTIVE, $container->status());
 
@@ -310,7 +313,7 @@ class ContainerTest
     {
         $container = new Container(new Session);
 
-        @$container->start();
+        $container->start();
 
         $this->assertTrue($container === $container->with('foo', 'bar'));
         $this->assertEquals('bar', $container->get('foo'));
@@ -325,7 +328,7 @@ class ContainerTest
     {
         $container = new Container(new Session);
 
-        @$container->start();
+        $container->start();
 
         $container->set('foo', 'bar');
 

@@ -10,6 +10,9 @@ use Mvc5\Cookie\Container;
 use Mvc5\Session\Config as Session;
 use Mvc5\Test\Test\TestCase;
 
+/**
+ * @runTestsInSeparateProcesses 
+ */
 class SessionTest
     extends TestCase
 {
@@ -20,7 +23,7 @@ class SessionTest
     {
         $session = new Session;
 
-        @$session->start();
+        $session->start();
 
         $session['foo'] = 'bar';
 
@@ -40,7 +43,7 @@ class SessionTest
     {
         $session = new Session;
 
-        @$session->start();
+        $session->start();
 
         $this->assertEquals(PHP_SESSION_ACTIVE, $session->status());
 
@@ -56,7 +59,7 @@ class SessionTest
     {
         $session = new Session;
 
-        @$session->start();
+        $session->start();
 
         $this->assertEquals(0, $session->count());
 
@@ -74,7 +77,7 @@ class SessionTest
     {
         $session = new Session;
 
-        @$session->start();
+        $session->start();
 
         $this->assertEquals(null, $session->current());
 
@@ -92,7 +95,7 @@ class SessionTest
     {
         $session = new Session;
 
-        @$session->start();
+        $session->start();
 
         $this->assertNotEmpty($session->id());
 
@@ -108,7 +111,7 @@ class SessionTest
     {
         $session = new Session(new Cookies(new Container));
 
-        @$session->start();
+        $session->start();
 
         $this->assertNotEmpty($session->id());
 
@@ -124,11 +127,11 @@ class SessionTest
     {
         $session = new Session;
 
-        @$session->start();
+        $session->start();
 
         $this->assertNotEmpty($session->id());
 
-        @$session->destroy();
+        $session->destroy();
 
         $this->assertEmpty($session->id());
     }
@@ -140,7 +143,7 @@ class SessionTest
     {
         $session = new Session;
 
-        @$session->start();
+        $session->start();
 
         $session['foo'] = 'bar';
 
@@ -156,7 +159,7 @@ class SessionTest
     {
         $session = new Session;
 
-        @$session->start();
+        $session->start();
 
         $session['foo'] = 'bar';
 
@@ -172,7 +175,7 @@ class SessionTest
     {
         $session = new Session;
 
-        @$session->start();
+        $session->start();
 
         $this->assertEquals(session_id(), $session->id());
 
@@ -190,7 +193,7 @@ class SessionTest
 
         $session->id('foo');
 
-        @$session->start();
+        $session->start();
 
         $this->assertEquals(session_id(), $session->id());
         $this->assertEquals('foo', $session->id());
@@ -205,7 +208,7 @@ class SessionTest
     {
         $session = new Session;
 
-        @$session->start();
+        $session->start();
 
         $session['foo'] = 'bar';
 
@@ -221,7 +224,7 @@ class SessionTest
     {
         $session = new Session;
 
-        @$session->start();
+        $session->start();
 
         $this->assertEquals(session_name(), $session->name());
 
@@ -249,7 +252,7 @@ class SessionTest
     {
         $session = new Session;
 
-        @$session->start();
+        $session->start();
 
         $session['foo'] = 'bar';
         $session['baz'] = 'bat';
@@ -268,7 +271,7 @@ class SessionTest
     {
         $session = new Session;
 
-        @$session->start();
+        $session->start();
 
         $session['foo'] = 'bar';
 
@@ -284,11 +287,11 @@ class SessionTest
     {
         $session = new Session;
 
-        @$session->start();
+        $session->start();
 
         //$id = $session->id();
 
-        @$session->regenerate();
+        $session->regenerate();
 
         $this->assertEquals(session_id(), $session->id());
         //$this->assertNotEquals($id, $session->id()); //stderr=true
@@ -303,7 +306,7 @@ class SessionTest
     {
         $session = new Session;
 
-        @$session->start();
+        $session->start();
 
         $session['foo'] = 'bar';
 
@@ -323,7 +326,7 @@ class SessionTest
     {
         $session = new Session;
 
-        @$session->start();
+        $session->start();
 
         $session['foo'] = 'bar';
         $session['baz'] = 'bat';
@@ -346,7 +349,7 @@ class SessionTest
     {
         $session = new Session;
 
-        @$session->start();
+        $session->start();
 
         $session->set('foo', 'bar');
 
@@ -364,7 +367,7 @@ class SessionTest
 
         $this->assertEquals(PHP_SESSION_NONE, $session->status());
 
-        @$session->start();
+        $session->start();
 
         $this->assertEquals(PHP_SESSION_ACTIVE, $session->status());
 
@@ -380,7 +383,7 @@ class SessionTest
 
         $this->assertEquals(PHP_SESSION_NONE, $session->status());
 
-        @session_start();
+        session_start();
 
         $this->assertEquals(PHP_SESSION_ACTIVE, $session->status());
         $this->assertTrue($session->start());
@@ -398,7 +401,7 @@ class SessionTest
         $this->assertEquals(PHP_SESSION_NONE, $session->status());
         $this->assertEquals('PHPSESSID', ini_get('session.name'));
 
-        @$session->start(['name' => 'app']);
+        $session->start(['name' => 'app']);
 
         $this->assertEquals(PHP_SESSION_ACTIVE, $session->status());
         $this->assertEquals('app', ini_get('session.name'));
@@ -415,7 +418,7 @@ class SessionTest
     {
         $session = new Session;
 
-        @$session->start();
+        $session->start();
 
         $this->assertEquals(PHP_SESSION_ACTIVE, $session->status());
 
@@ -429,7 +432,7 @@ class SessionTest
     {
         $session = new Session;
 
-        @$session->start();
+        $session->start();
 
         $session->set('foo', 'bar');
 
@@ -445,7 +448,7 @@ class SessionTest
     {
         $session = new Session;
 
-        @$session->start();
+        $session->start();
 
         $this->assertTrue($session === $session->with('foo', 'bar'));
         $this->assertEquals('bar', $session->get('foo'));
@@ -460,7 +463,7 @@ class SessionTest
     {
         $session = new Session;
 
-        @$session->start();
+        $session->start();
 
         $session->set('foo', 'bar');
 
@@ -478,7 +481,7 @@ class SessionTest
     {
         $session = new Session;
 
-        @$session->start();
+        $session->start();
 
         $session['foo'] = 'bar';
 
