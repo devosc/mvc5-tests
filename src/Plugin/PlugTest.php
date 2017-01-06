@@ -3,7 +3,7 @@
  *
  */
 
-namespace Mvc5\Test\Resolver\Resolver\Gem;
+namespace Mvc5\Test\Plugin;
 
 use Mvc5\App;
 use Mvc5\Plugin\Plug;
@@ -16,6 +16,16 @@ class PlugTest
      *
      */
     function test()
+    {
+        $plug = new Plug('foo');
+
+        $this->assertEquals('foo', $plug->name());
+    }
+
+    /**
+     *
+     */
+    function test_plugin()
     {
         $app = new App;
         $app->configure('foo', 'bar');

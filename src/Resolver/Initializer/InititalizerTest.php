@@ -3,7 +3,7 @@
  *
  */
 
-namespace Mvc5\Test\Resolver;
+namespace Mvc5\Test\Resolver\Initializer;
 
 use Mvc5\App;
 use Mvc5\Config;

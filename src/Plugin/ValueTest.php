@@ -17,6 +17,16 @@ class ValueTest
      */
     function test()
     {
+        $value = new Value('foo');
+
+        $this->assertEquals('foo', $value->config());
+    }
+
+    /**
+     *
+     */
+    function test_plugin()
+    {
         $this->assertEquals('foo', (new App)->plugin(new Value('foo')));
     }
 }

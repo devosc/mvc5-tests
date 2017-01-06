@@ -33,7 +33,7 @@ class SessionTest
 
         $this->assertEquals(0, $session->count());
 
-        $session->destroy(false);
+        $session->destroy();
     }
 
     /**
@@ -67,7 +67,7 @@ class SessionTest
 
         $this->assertEquals(1, $session->count());
 
-        $session->destroy(false);
+        $session->destroy();
     }
 
     /**
@@ -85,7 +85,7 @@ class SessionTest
 
         $this->assertEquals('bar', $session->current());
 
-        $session->destroy(false);
+        $session->destroy();
     }
 
     /**
@@ -149,7 +149,7 @@ class SessionTest
 
         $this->assertEquals('bar', $session->get('foo'));
 
-        $session->destroy(false);
+        $session->destroy();
     }
 
     /**
@@ -165,7 +165,7 @@ class SessionTest
 
         $this->assertTrue($session->has('foo'));
 
-        $session->destroy(false);
+        $session->destroy();
     }
 
     /**
@@ -198,7 +198,7 @@ class SessionTest
         $this->assertEquals(session_id(), $session->id());
         $this->assertEquals('foo', $session->id());
 
-        $session->destroy(false);
+        $session->destroy();
     }
 
     /**
@@ -214,7 +214,7 @@ class SessionTest
 
         $this->assertEquals('foo', $session->key());
 
-        $session->destroy(false);
+        $session->destroy();
     }
 
     /**
@@ -228,7 +228,7 @@ class SessionTest
 
         $this->assertEquals(session_name(), $session->name());
 
-        $session->destroy(false);
+        $session->destroy();
     }
 
     /**
@@ -261,7 +261,7 @@ class SessionTest
 
         $this->assertEquals('bat', $session->current());
 
-        $session->destroy(false);
+        $session->destroy();
     }
 
     /**
@@ -277,7 +277,7 @@ class SessionTest
 
         $this->assertEquals('bar', $session['foo']);
 
-        $session->destroy(false);
+        $session->destroy();
     }
 
     /**
@@ -296,7 +296,7 @@ class SessionTest
         $this->assertEquals(session_id(), $session->id());
         //$this->assertNotEquals($id, $session->id()); //stderr=true
 
-        $session->destroy(false);
+        $session->destroy();
     }
 
     /**
@@ -316,7 +316,7 @@ class SessionTest
 
         $this->assertEmpty($session['foo']);
 
-        $session->destroy(false);
+        $session->destroy();
     }
 
     /**
@@ -339,7 +339,7 @@ class SessionTest
 
         $this->assertEquals('bar', $session->current());
 
-        $session->destroy(false);
+        $session->destroy();
     }
 
     /**
@@ -355,7 +355,7 @@ class SessionTest
 
         $this->assertEquals('bar', $session->get('foo'));
 
-        $session->destroy(false);
+        $session->destroy();
     }
 
     /**
@@ -371,7 +371,7 @@ class SessionTest
 
         $this->assertEquals(PHP_SESSION_ACTIVE, $session->status());
 
-        $session->destroy(false);
+        $session->destroy();
     }
 
     /**
@@ -388,7 +388,7 @@ class SessionTest
         $this->assertEquals(PHP_SESSION_ACTIVE, $session->status());
         $this->assertTrue($session->start());
 
-        $session->destroy(false);
+        $session->destroy();
     }
 
     /**
@@ -406,7 +406,7 @@ class SessionTest
         $this->assertEquals(PHP_SESSION_ACTIVE, $session->status());
         $this->assertEquals('app', ini_get('session.name'));
 
-        $session->destroy(false);
+        $session->destroy();
 
         $this->assertEquals('app', ini_get('session.name'));
     }
@@ -422,7 +422,7 @@ class SessionTest
 
         $this->assertEquals(PHP_SESSION_ACTIVE, $session->status());
 
-        $session->destroy(false);
+        $session->destroy();
     }
 
     /**
@@ -438,7 +438,7 @@ class SessionTest
 
         $this->assertTrue($session->valid());
 
-        $session->destroy(false);
+        $session->destroy();
     }
 
     /**
@@ -453,7 +453,7 @@ class SessionTest
         $this->assertTrue($session === $session->with('foo', 'bar'));
         $this->assertEquals('bar', $session->get('foo'));
 
-        $session->destroy(false);
+        $session->destroy();
     }
 
     /**
@@ -471,7 +471,7 @@ class SessionTest
         $this->assertEquals($session, $session->without('foo'));
         $this->assertEmpty($session->get('foo'));
 
-        $session->destroy(false);
+        $session->destroy();
     }
 
     /**
@@ -487,6 +487,6 @@ class SessionTest
 
         $this->assertEquals('bar', $session->foo);
 
-        $session->destroy(false);
+        $session->destroy();
     }
 }
