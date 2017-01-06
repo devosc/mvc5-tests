@@ -6,6 +6,7 @@
 namespace Mvc5\Test;
 
 use Mvc5\App;
+use Mvc5\Model;
 use Mvc5\Test\Test\TestCase;
 
 class PluginTest
@@ -16,9 +17,9 @@ class PluginTest
      */
     function test_service_empty()
     {
-        $plugin = new Plugin;
+        $model = new Model;
 
-        $this->assertNull($plugin->service());
+        $this->assertNull($model->service());
     }
 
     /**
@@ -27,8 +28,8 @@ class PluginTest
     function test_service_not_empty()
     {
         $app = new App;
-        $plugin = new Plugin;
+        $model = new Model;
 
-        $this->assertEquals($app, $plugin->service($app));
+        $this->assertEquals($app, $model->service($app));
     }
 }
