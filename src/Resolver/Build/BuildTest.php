@@ -5,8 +5,8 @@
 
 namespace Mvc5\Test\Resolver\Build;
 
+use Mvc5\App;
 use Mvc5\Config;
-use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
 
 class BuildTest
@@ -17,10 +17,10 @@ class BuildTest
      */
     function test_build()
     {
-        $resolver = new Resolver;
+        $app = new App;
 
-        $resolver->configure('foo', Config::class);
+        $app->configure('foo', Config::class);
 
-        $this->assertInstanceOf(Config::class, $resolver->build(['foo']));
+        $this->assertInstanceOf(Config::class, $app->plugin('foo'));
     }
 }

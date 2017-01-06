@@ -35,7 +35,7 @@ class ContainerTest
 
         $this->assertEquals(0, $container->count());
 
-        $container->destroy(false);
+        $container->destroy();
     }
 
     /**
@@ -115,7 +115,7 @@ class ContainerTest
 
         $this->assertEquals(session_id(), $container->id());
 
-        $container->destroy(false);
+        $container->destroy();
     }
 
     /**
@@ -132,7 +132,7 @@ class ContainerTest
         $this->assertEquals(session_id(), $container->id());
         $this->assertEquals('foo', $container->id());
 
-        $container->destroy(false);
+        $container->destroy();
     }
 
     /**
@@ -185,7 +185,7 @@ class ContainerTest
         $this->assertEquals(session_id(), $container->id());
         //$this->assertNotEquals($id, $container->id()); //stderr=true
 
-        $container->destroy(false);
+        $container->destroy();
     }
 
     /**
@@ -201,7 +201,7 @@ class ContainerTest
 
         $this->assertEquals(PHP_SESSION_ACTIVE, $container->status());
 
-        $container->destroy(false);
+        $container->destroy();
     }
 
     /**
@@ -225,7 +225,7 @@ class ContainerTest
 
         $this->assertInstanceOf(Model::class, $_SESSION[$container->label()]);
 
-        $container->destroy(false);
+        $container->destroy();
     }
 
     /**
@@ -243,7 +243,7 @@ class ContainerTest
 
         $this->assertTrue($container->start());
 
-        $container->destroy(false);
+        $container->destroy();
     }
     /**
      *
@@ -268,7 +268,7 @@ class ContainerTest
         $this->assertTrue(isset($_SESSION['mod']));
         $this->assertTrue($_SESSION['app'] !== $_SESSION['mod']);
 
-        $mod->destroy(false);
+        $mod->destroy();
     }
 
     /**
@@ -289,7 +289,7 @@ class ContainerTest
 
         $this->assertEquals('bar', $_SESSION['app']['mod']['foo']);
 
-        $mod->destroy(false);
+        $mod->destroy();
     }
 
     /**
@@ -303,7 +303,7 @@ class ContainerTest
 
         $this->assertEquals(PHP_SESSION_ACTIVE, $container->status());
 
-        $container->destroy(false);
+        $container->destroy();
     }
 
     /**
@@ -318,7 +318,7 @@ class ContainerTest
         $this->assertTrue($container === $container->with('foo', 'bar'));
         $this->assertEquals('bar', $container->get('foo'));
 
-        $container->destroy(false);
+        $container->destroy();
     }
 
     /**
@@ -336,6 +336,6 @@ class ContainerTest
         $this->assertEquals($container, $container->without('foo'));
         $this->assertEmpty($container->get('foo'));
 
-        $container->destroy(false);
+        $container->destroy();
     }
 }

@@ -5,6 +5,7 @@
 
 namespace Mvc5\Test\Plugin;
 
+use Mvc5\App;
 use Mvc5\Plugin\Config;
 use Mvc5\Test\Test\TestCase;
 
@@ -16,6 +17,9 @@ class ConfigTest
      */
     function test()
     {
-        $this->assertInstanceOf(Config::class, new Config);
+        $app = new App;
+        $app->config(['foo' => 'bar']);
+
+        $this->assertEquals(['foo' => 'bar'], $app->plugin(new Config));
     }
 }

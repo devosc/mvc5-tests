@@ -5,6 +5,8 @@
 
 namespace Mvc5\Test\Plugin;
 
+use Mvc5\App;
+use Mvc5\Config;
 use Mvc5\Plugin\Plugin;
 use Mvc5\Test\Test\TestCase;
 
@@ -33,5 +35,15 @@ class PluginTest
         $plugin = new Plugin('foo', [], [], null);
 
         $this->assertEquals('item', $plugin->param());
+    }
+
+    /**
+     *
+     */
+    function test_plugin()
+    {
+        $plugin = new Plugin(Config::class, [['foo' => 'bar']]);
+
+        $this->assertEquals(new Config(['foo' => 'bar']), (new App)->plugin($plugin));
     }
 }

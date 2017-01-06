@@ -3,7 +3,7 @@
  *
  */
 
-namespace Mvc5\Test\Resolver;
+namespace Mvc5\Test\Resolver\Dispatch;
 
 use Mvc5\Plugin\Config;
 use Mvc5\Resolver\Dispatch;

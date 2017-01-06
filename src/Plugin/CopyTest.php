@@ -3,7 +3,7 @@
  *
  */
 
-namespace Mvc5\Test\Resolver\Resolver\Gem;
+namespace Mvc5\Test\Plugin;
 
 use Mvc5\App;
 use Mvc5\Plugin\Copy;
@@ -16,6 +16,16 @@ class CopyTest
      *
      */
     function test()
+    {
+        $copy = new Copy('foo');
+
+        $this->assertEquals('foo', $copy->config());
+    }
+
+    /**
+     *
+     */
+    function test_plugin()
     {
         $object = new \stdClass;
 

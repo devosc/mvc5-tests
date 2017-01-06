@@ -3,11 +3,12 @@
  *
  */
 
-namespace Mvc5\Test\Resolver;
+namespace Mvc5\Test\Resolver\Builder;
 
 use Mvc5\Arg;
 use Mvc5\Config;
 use Mvc5\Resolver\Builder;
+use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Resolver\Resolver\Model\Autowire;
 use Mvc5\Test\Resolver\Resolver\Model\AutowireMissingParam;
 use Mvc5\Test\Resolver\Resolver\Model\AutowireNoConstructor;

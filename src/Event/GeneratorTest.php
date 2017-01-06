@@ -46,7 +46,6 @@ class GeneratorTest
                 ]
             ],
             'services' => [
-                'event\model' => Event::class,
                 'test_event_array' => function() {
                     return [
                         '@Mvc5\Test\Event\GeneratorTest::foo',
@@ -144,14 +143,11 @@ class GeneratorTest
                     '@Mvc5\Test\Event\GeneratorTest::bar',
                     '@Mvc5\Test\Event\GeneratorTest::baz'
                 ]
-            ],
-            'services' => [
-                'event\model' => Event::class
             ]
         ]);
 
-        $this->assertEquals('baz', $app->call('test_event_repeat'));
-        $this->assertEquals('baz', $app->call('test_event_repeat'));
+        $this->assertEquals('baz', $app->trigger('test_event_repeat'));
+        $this->assertEquals('baz', $app->trigger('test_event_repeat'));
     }
 
     /**
@@ -166,14 +162,11 @@ class GeneratorTest
                     '@Mvc5\Test\Event\GeneratorTest::bar',
                     '@Mvc5\Test\Event\GeneratorTest::baz'
                 ])
-            ],
-            'services' => [
-                'event\model' => Event::class
             ]
         ]);
 
-        $this->assertEquals('baz', $app->call('test_event_repeat'));
-        $this->assertEquals('baz', $app->call('test_event_repeat'));
+        $this->assertEquals('baz', $app->trigger('test_event_repeat'));
+        $this->assertEquals('baz', $app->trigger('test_event_repeat'));
     }
 
     /**
@@ -188,19 +181,16 @@ class GeneratorTest
                     '@Mvc5\Test\Event\GeneratorTest::bar',
                     '@Mvc5\Test\Event\GeneratorTest::baz',
                 ]
-            ],
-            'services' => [
-                'event\model' => Event::class
             ]
         ]);
 
-        $this->assertEquals('baz', $app->call('test_event_repeat'));
-        $this->assertEquals('baz', $app->call('test_event_repeat'));
+        $this->assertEquals('baz', $app->trigger('test_event_repeat'));
+        $this->assertEquals('baz', $app->trigger('test_event_repeat'));
 
         $app = unserialize(serialize($app));
 
-        $this->assertEquals('baz', $app->call('test_event_repeat'));
-        $this->assertEquals('baz', $app->call('test_event_repeat'));
+        $this->assertEquals('baz', $app->trigger('test_event_repeat'));
+        $this->assertEquals('baz', $app->trigger('test_event_repeat'));
     }
 
     /**
@@ -215,18 +205,72 @@ class GeneratorTest
                     '@Mvc5\Test\Event\GeneratorTest::bar',
                     '@Mvc5\Test\Event\GeneratorTest::baz'
                 ])
+            ]
+        ]);
+
+        $this->assertEquals('baz', $app->trigger('test_event_repeat'));
+        $this->assertEquals('baz', $app->trigger('test_event_repeat'));
+
+        $app = unserialize(serialize($app));
+
+        $this->assertEquals('baz', $app->trigger('test_event_repeat'));
+        $this->assertEquals('baz', $app->trigger('test_event_repeat'));
+    }
+
+    /**
+     *
+     */
+    function test_call_event()
+    {
+        $app = new App([
+            'events' => [
+                'test_event' => [
+                    '@Mvc5\Test\Event\GeneratorTest::foo'
+                ],
             ],
             'services' => [
                 'event\model' => Event::class
             ]
         ]);
 
-        $this->assertEquals('baz', $app->call('test_event_repeat'));
-        $this->assertEquals('baz', $app->call('test_event_repeat'));
+        $this->assertEquals('foo', $app->call('test_event'));
+        $this->assertEquals('foo', $app->call(new Event('test_event')));
+    }
 
-        $app = unserialize(serialize($app));
+    /**
+     *
+     */
+    function test_object_event()
+    {
+        $app = new App([
+            'events' => [
+                \stdClass::class => [
+                    '@Mvc5\Test\Event\GeneratorTest::foo'
+                ]
+            ]
+        ]);
 
-        $this->assertEquals('baz', $app->call('test_event_repeat'));
-        $this->assertEquals('baz', $app->call('test_event_repeat'));
+        $this->assertEquals('foo', $app->trigger(new \stdClass));
+    }
+
+    /**
+     *
+     */
+    function test_events()
+    {
+        $this->assertEquals([], (new App)->events());
+        $this->assertEquals(['foo' => []], (new App(['events' => ['foo' => []]]))->events());
+        $this->assertEquals(['foo' => []], (new App)->events(['foo' => []]));
+    }
+
+
+    /**
+     *
+     */
+    function test_event_not_found_exception()
+    {
+        $this->setExpectedException('RuntimeException', 'Unresolvable plugin: foo');
+
+        (new App)->trigger('foo');
     }
 }
