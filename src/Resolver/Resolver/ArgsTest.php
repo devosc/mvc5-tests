@@ -20,7 +20,7 @@ class ArgsTest
     {
         $resolver = new Resolver;
 
-        $this->assertEquals(false, $resolver->args(false));
+        $this->assertFalse($resolver->args(false));
     }
 
     /**

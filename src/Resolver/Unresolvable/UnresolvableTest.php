@@ -19,7 +19,7 @@ class UnresolvableTest
      */
     function test_invoke()
     {
-        $this->setExpectedException(\RuntimeException::class);
+        $this->setExpectedException(\RuntimeException::class, 'Unresolvable plugin: foo');
 
         (new Unresolvable)->__invoke('foo');
     }

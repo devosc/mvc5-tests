@@ -20,11 +20,11 @@ class PluginTest
     {
         $plugin = new Plugin('foo');
 
-        $this->assertEquals('foo',  $plugin->name());
-        $this->assertEquals([],     $plugin->args());
-        $this->assertEquals([],     $plugin->calls());
+        $this->assertEquals('foo', $plugin->name());
+        $this->assertEquals([], $plugin->args());
+        $this->assertEquals([], $plugin->calls());
         $this->assertEquals('item', $plugin->param());
-        $this->assertEquals(false,  $plugin->merge());
+        $this->assertFalse($plugin->merge());
     }
 
     /**

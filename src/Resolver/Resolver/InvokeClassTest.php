@@ -41,6 +41,6 @@ class InvokeClassTest
     {
         $resolver = new Resolver;
 
-        $this->assertEquals(null, $resolver('foo'));
+        $this->assertNull($resolver('foo'));
     }
 }

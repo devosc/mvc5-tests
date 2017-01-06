@@ -71,7 +71,7 @@ class CallbackTest
 
         $this->assertTrue($resolver->strict());
 
-        $this->assertEquals(null, $resolver->callback(Config::class));
+        $this->assertNull($resolver->callback(Config::class));
     }
 
     /**

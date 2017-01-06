@@ -120,7 +120,7 @@ class AppTest
             ]
         ]);
 
-        $this->assertEquals(null, $app['bat']);
+        $this->assertNull($app['bat']);
         $this->assertEquals(new Config(['foo' => 'baz']), $app['foo']);
     }
 
@@ -136,7 +136,7 @@ class AppTest
             ]
         ]);
 
-        $this->assertEquals(null, $app['bat']);
+        $this->assertNull($app['bat']);
         $this->assertEquals(new Config(['foo' => 'baz']), $app['foo']);
     }
 
@@ -157,7 +157,7 @@ class AppTest
     {
         $app = new App([], null, null, true);
 
-        $this->assertEquals(null, $app['ArrayObject']);
+        $this->assertNull($app['ArrayObject']);
     }
 
     /**

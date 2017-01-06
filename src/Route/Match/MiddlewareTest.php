@@ -37,13 +37,13 @@ class MiddlewareTest
         $route   = new Route;
         $request = new Request;
 
-        $this->assertEquals(null, $request->controller());
+        $this->assertNull($request->controller());
 
         /** @var Request $result */
         $result = $method($request, $route);
 
         $this->assertEquals($result, $method($request, $route));
-        $this->assertEquals(null, $result->controller());
+        $this->assertNull($result->controller());
     }
 
     /**

@@ -90,7 +90,9 @@ class BuilderTest
      */
     function test_create_with_missing_param()
     {
-        $this->setExpectedException('RuntimeException');
+        $this->setExpectedException(
+            'RuntimeException', 'Missing required parameter $foo for ' . AutowireMissingParam::class
+        );
 
         $this->assertInstanceOf(
             AutowireMissingParam::class, Builder::create(AutowireMissingParam::class, [], new Resolver)

@@ -59,7 +59,7 @@ class ResponseTest
     {
         $response = new Response;
 
-        $this->assertEquals(null, $response->version());
+        $this->assertNull($response->version());
     }
 
     /**
@@ -79,6 +79,6 @@ class ResponseTest
     {
         $response = new Response;
 
-        $this->assertEquals(null, $response->status());
+        $this->assertNull($response->status());
     }
 }

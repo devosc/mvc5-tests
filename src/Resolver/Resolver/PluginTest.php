@@ -21,7 +21,7 @@ class PluginTest
     {
         $resolver = new Resolver;
 
-        $this->assertEquals(false, $resolver->plugin(false));
+        $this->assertFalse($resolver->plugin(false));
     }
 
     /**

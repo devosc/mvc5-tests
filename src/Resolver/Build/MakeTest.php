@@ -97,7 +97,9 @@ class MakeTest
     {
         $resolver = new Resolver;
 
-        $this->setExpectedException('RuntimeException');
+        $this->setExpectedException(
+            'RuntimeException', 'Missing required parameter $foo for ' . AutowireMissingParam::class
+        );
 
         $this->assertInstanceOf(AutowireMissingParam::class, $resolver->make(AutowireMissingParam::class));
     }

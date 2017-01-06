@@ -61,7 +61,7 @@ class ModelTest
     {
         $model = new Model;
 
-        $this->assertEquals(null, $model->template());
+        $this->assertNull($model->template());
     }
 
     /**

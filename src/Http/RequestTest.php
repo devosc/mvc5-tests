@@ -69,6 +69,6 @@ class RequestTest
     {
         $request = new Request;
 
-        $this->assertEquals(null, $request->version());
+        $this->assertNull($request->version());
     }
 }

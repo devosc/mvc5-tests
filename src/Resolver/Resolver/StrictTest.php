@@ -18,6 +18,6 @@ class StrictTest
     {
         $resolver = new Resolver;
 
-        $this->assertEquals(false, $resolver->strict());
+        $this->assertFalse($resolver->strict());
     }
 }

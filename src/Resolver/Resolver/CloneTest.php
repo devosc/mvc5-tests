@@ -22,22 +22,22 @@ class CloneTest
 
         $clone = clone $resolver;
 
-        $this->assertEquals(true, $clone == $resolver);
+        $this->assertTrue($clone == $resolver);
 
         $clone->config(['foo' => 'bar']);
         $clone->set('a', 'a');
         $clone->events(['b' => 'b']);
         $clone->configure('baz', 'bat');
 
-        $this->assertEquals(false, $clone == $resolver);
+        $this->assertFalse($clone == $resolver);
 
-        $this->assertEquals([],               $resolver->config());
-        $this->assertEquals([],               $resolver->events());
-        $this->assertEquals([],               $resolver->container());
-        $this->assertEquals([],               $resolver->services());
+        $this->assertEquals([], $resolver->config());
+        $this->assertEquals([], $resolver->events());
+        $this->assertEquals([], $resolver->container());
+        $this->assertEquals([], $resolver->services());
         $this->assertEquals(['foo' => 'bar'], $clone->config());
-        $this->assertEquals(['a' => 'a'],     $clone->container());
-        $this->assertEquals(['b' => 'b'],     $clone->events());
+        $this->assertEquals(['a' => 'a'], $clone->container());
+        $this->assertEquals(['b' => 'b'], $clone->events());
         $this->assertEquals(['baz' => 'bat'], $clone->services());
     }
 
@@ -55,7 +55,7 @@ class CloneTest
 
         $clone = clone $resolver;
 
-        $this->assertEquals(true, $clone == $resolver);
+        $this->assertTrue($clone == $resolver);
         $this->assertInstanceOf(\stdClass::class, $clone->get('a'));
         $this->assertEquals($a, $clone->get('a'));
         $this->assertTrue($a === $clone->get('a'));
@@ -75,7 +75,7 @@ class CloneTest
 
         $clone = clone $resolver;
 
-        $this->assertEquals(true, $clone == $resolver);
+        $this->assertTrue($clone == $resolver);
 
         $config    = $clone->config();
         $container = $clone->container();
@@ -87,15 +87,15 @@ class CloneTest
         $events['b']     = 'b';
         $services['baz'] = 'bat';
 
-        $this->assertEquals(false, $clone == $resolver);
+        $this->assertFalse($clone == $resolver);
 
-        $this->assertEquals(new Config,                   $resolver->config());
-        $this->assertEquals(new Config,                   $resolver->container());
-        $this->assertEquals(new Config,                   $resolver->events());
-        $this->assertEquals(new Config,                   $resolver->services());
+        $this->assertEquals(new Config, $resolver->config());
+        $this->assertEquals(new Config, $resolver->container());
+        $this->assertEquals(new Config, $resolver->events());
+        $this->assertEquals(new Config, $resolver->services());
         $this->assertEquals(new Config(['foo' => 'bar']), $clone->config());
-        $this->assertEquals(new Config(['a' => 'a']),     $clone->container());
-        $this->assertEquals(new Config(['b' => 'b']),     $clone->events());
+        $this->assertEquals(new Config(['a' => 'a']), $clone->container());
+        $this->assertEquals(new Config(['b' => 'b']), $clone->events());
         $this->assertEquals(new Config(['baz' => 'bat']), $clone->services());
     }
 
@@ -109,13 +109,13 @@ class CloneTest
 
         $clone = clone $resolver;
 
-        $this->assertEquals(true, $clone == $resolver);
+        $this->assertTrue($clone == $resolver);
 
         $config = $clone->config();
         $config['foo'] = 'bar';
 
-        $this->assertEquals(false,                        $clone == $resolver);
-        $this->assertEquals(new Config,                   $resolver->config());
+        $this->assertFalse($clone == $resolver);
+        $this->assertEquals(new Config, $resolver->config());
         $this->assertEquals(new Config(['foo' => 'bar']), $clone->config());
     }
 
@@ -128,16 +128,16 @@ class CloneTest
 
         $clone = clone $resolver;
 
-        $this->assertEquals(true, $clone == $resolver);
+        $this->assertTrue($clone == $resolver);
 
         $container = $clone->container();
         $container['a'] = 'a';
 
-        $this->assertEquals(false,                    $clone == $resolver);
-        $this->assertEquals(new Config,               $resolver->container());
+        $this->assertFalse($clone == $resolver);
+        $this->assertEquals(new Config, $resolver->container());
         $this->assertEquals(new Config(['a' => 'a']), $clone->container());
 
-        $this->assertEquals(null, $clone['b']);
+        $this->assertNull($clone['b']);
 
         $clone->config()[Arg::CONTAINER]['b'] = 'b';
 
@@ -154,16 +154,16 @@ class CloneTest
 
         $clone = clone $resolver;
 
-        $this->assertEquals(true, $clone == $resolver);
+        $this->assertTrue($clone == $resolver);
 
         $events = $clone->events();
         $events['a'] = 'a';
 
-        $this->assertEquals(false,                    $clone == $resolver);
-        $this->assertEquals(new Config,               $resolver->events());
+        $this->assertFalse($clone == $resolver);
+        $this->assertEquals(new Config, $resolver->events());
         $this->assertEquals(new Config(['a' => 'a']), $clone->events());
 
-        $this->assertEquals(null, $clone->events()['b']);
+        $this->assertNull($clone->events()['b']);
 
         $clone->config()[Arg::EVENTS]['b'] = 'b';
 
@@ -180,16 +180,16 @@ class CloneTest
 
         $clone = clone $resolver;
 
-        $this->assertEquals(true, $clone == $resolver);
+        $this->assertTrue($clone == $resolver);
 
         $services = $clone->services();
         $services['baz'] = 'bat';
 
-        $this->assertEquals(false,                        $clone == $resolver);
-        $this->assertEquals(new Config,                   $resolver->services());
+        $this->assertFalse($clone == $resolver);
+        $this->assertEquals(new Config, $resolver->services());
         $this->assertEquals(new Config(['baz' => 'bat']), $clone->services());
 
-        $this->assertEquals(null, $clone->services()['b']);
+        $this->assertNull($clone->services()['b']);
 
         $clone->config()[Arg::SERVICES]['b'] = 'b';
 
@@ -225,6 +225,6 @@ class CloneTest
 
         $clone = clone $resolver;
 
-        $this->assertEquals(true, $clone->provider() === $resolver->provider());
+        $this->assertTrue($clone->provider() === $resolver->provider());
     }
 }

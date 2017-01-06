@@ -18,6 +18,6 @@ class SenderTest
     {
         $cookies = new Sender;
 
-        $this->assertEquals('bar', $cookies->set('foo', 'bar', null, null, null, null, null));
+        $this->assertEquals('bar', $cookies->set('foo', 'bar'));
     }
 }

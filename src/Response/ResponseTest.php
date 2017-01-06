@@ -20,10 +20,10 @@ class ResponseTest
     {
         $response = new Response;
 
-        $this->assertEquals(null,            $response->body());
-        $this->assertEquals(new CookieJar,   $response->cookies());
+        $this->assertNull($response->body());
+        $this->assertEquals(new CookieJar, $response->cookies());
         $this->assertEquals(new HttpHeaders, $response->headers());
-        $this->assertEquals(null,            $response->status());
+        $this->assertNull($response->status());
     }
 
     /**

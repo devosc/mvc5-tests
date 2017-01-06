@@ -61,7 +61,7 @@ class ResolvableTest
 
         $resolver->events(['service\resolver' => [function() { throw new \RuntimeException; }]]);
 
-        $this->setExpectedException('RuntimeException');
+        $this->setExpectedException('RuntimeException', 'Unresolvable plugin: ' . Unresolvable::class);
 
         $resolver->resolvable(new Unresolvable);
     }

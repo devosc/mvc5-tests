@@ -49,6 +49,6 @@ class HostTest
         $host    = new Host;
         $request = new Request(new Mvc5Request([Arg::URI => [Arg::HOST => 'bar']]));
 
-        $this->assertEquals(null, $host($request, $route));
+        $this->assertNull($host($request, $route));
     }
 }

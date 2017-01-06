@@ -187,7 +187,7 @@ class FilterTest
 
         $plugin = new Filter('foo', $filters, ['bar']);
 
-        $this->assertEquals(null, $app->plugin($plugin, ['s']));
+        $this->assertNull($app->plugin($plugin, ['s']));
     }
 
     /**

@@ -3,7 +3,7 @@
  *
  */
 
-namespace Mvc5\Test\Url\Route;
+namespace Mvc5\Test\Url;
 
 use Mvc5\Arg;
 use Mvc5\Route\Config as Route;

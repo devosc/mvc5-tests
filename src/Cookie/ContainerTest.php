@@ -40,6 +40,18 @@ class ContainerTest
     {
         $container = new Container;
 
-        $this->assertEquals('bar', $container->set('foo', 'bar', null, null, null, null, null));
+        $this->assertEquals('bar', $container->set('foo', 'bar'));
+
+        $cookie =  [
+            'name'     => 'foo',
+            'value'    => 'bar',
+            'expire'   => 0,
+            'path'     => '/',
+            'domain'   => '',
+            'secure'   => false,
+            'httponly' => true
+        ];
+
+        $this->assertEquals($cookie, $container['foo']);
     }
 }

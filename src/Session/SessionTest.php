@@ -79,7 +79,7 @@ class SessionTest
 
         $session->start();
 
-        $this->assertEquals(null, $session->current());
+        $this->assertFalse($session->current());
 
         $session['foo'] = 'bar';
 

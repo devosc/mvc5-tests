@@ -32,7 +32,7 @@ class ConfigTest
     {
         $config = new Config;
 
-        $this->assertEquals(null, $config->get('foo'));
+        $this->assertNull($config->get('foo'));
     }
 
     /**
@@ -52,7 +52,7 @@ class ConfigTest
     {
         $config = new Config(new Config);
 
-        $this->assertEquals(null, $config->get('foo'));
+        $this->assertNull($config->get('foo'));
     }
 
     /**
@@ -82,7 +82,7 @@ class ConfigTest
     {
         $config = new Config(new App);
 
-        $this->assertEquals(null, $config->get('foo'));
+        $this->assertNull($config->get('foo'));
     }
 
     /**
@@ -92,7 +92,7 @@ class ConfigTest
     {
         $config = new Config(['foo' => 'bar']);
 
-        $this->assertEquals(true, $config->has('foo'));
+        $this->assertTrue($config->has('foo'));
     }
 
     /**
@@ -102,7 +102,7 @@ class ConfigTest
     {
         $config = new Config;
 
-        $this->assertEquals(false, $config->has('foo'));
+        $this->assertFalse($config->has('foo'));
     }
 
     /**
@@ -112,11 +112,11 @@ class ConfigTest
     {
         $config = new Config(['foo' => 'bar']);
 
-        $this->assertEquals(true, $config->has('foo'));
+        $this->assertTrue($config->has('foo'));
 
         $config->remove('foo');
 
-        $this->assertEquals(false, $config->has('foo'));
+        $this->assertFalse($config->has('foo'));
     }
 
     /**
@@ -139,9 +139,9 @@ class ConfigTest
         $new = $config->with('foo', 'bar');
 
         $this->assertNotEquals($new, $config);
-        $this->assertEquals(null,    $config->get('foo'));
-        $this->assertEquals('bar',   $new->get('foo'));
-        $this->assertEquals('bat',   $new->get('baz'));
+        $this->assertNull($config->get('foo'));
+        $this->assertEquals('bar', $new->get('foo'));
+        $this->assertEquals('bat', $new->get('baz'));
     }
 
     /**
@@ -154,9 +154,9 @@ class ConfigTest
         $new = $config->with('foo', 'bar');
 
         $this->assertNotEquals($new, $config);
-        $this->assertEquals(null,    $config->get('foo'));
-        $this->assertEquals('bar',   $new->get('foo'));
-        $this->assertEquals('bat',   $new->get('baz'));
+        $this->assertNull($config->get('foo'));
+        $this->assertEquals('bar', $new->get('foo'));
+        $this->assertEquals('bat', $new->get('baz'));
     }
 
     /**
@@ -169,9 +169,9 @@ class ConfigTest
         $new = $config->with('foo', 'bar');
 
         $this->assertNotEquals($new, $config);
-        $this->assertEquals(null,    $config->get('foo'));
-        $this->assertEquals('bar',   $new->get('foo'));
-        $this->assertEquals('bat',   $new->get('baz'));
+        $this->assertNull($config->get('foo'));
+        $this->assertEquals('bar', $new->get('foo'));
+        $this->assertEquals('bat', $new->get('baz'));
     }
 
     /**
@@ -184,9 +184,9 @@ class ConfigTest
         $new = $config->without('foo');
 
         $this->assertNotEquals($new, $config);
-        $this->assertEquals('bar',   $config->get('foo'));
-        $this->assertEquals(null,    $new->get('foo'));
-        $this->assertEquals('bat',   $new->get('baz'));
+        $this->assertEquals('bar', $config->get('foo'));
+        $this->assertNull($new->get('foo'));
+        $this->assertEquals('bat', $new->get('baz'));
     }
 
     /**
@@ -199,9 +199,9 @@ class ConfigTest
         $new = $config->without('foo');
 
         $this->assertNotEquals($new, $config);
-        $this->assertEquals('bar',   $config->get('foo'));
-        $this->assertEquals(null,    $new->get('foo'));
-        $this->assertEquals('bat',   $new->get('baz'));
+        $this->assertEquals('bar', $config->get('foo'));
+        $this->assertNull($new->get('foo'));
+        $this->assertEquals('bat', $new->get('baz'));
     }
 
     /**
@@ -214,9 +214,9 @@ class ConfigTest
         $new = $config->without('foo');
 
         $this->assertNotEquals($new, $config);
-        $this->assertEquals('bar',   $config->get('foo'));
-        $this->assertEquals(null,    $new->get('foo'));
-        $this->assertEquals('bat',   $new->get('baz'));
+        $this->assertEquals('bar', $config->get('foo'));
+        $this->assertNull($new->get('foo'));
+        $this->assertEquals('bat', $new->get('baz'));
     }
 
     /**
@@ -228,17 +228,17 @@ class ConfigTest
 
         $clone = clone $config;
 
-        $this->assertEquals(true, $clone == $config);
+        $this->assertTrue($clone == $config);
 
         $clone['a'] = 'a1';
         $clone['b'] = 'b';
 
-        $this->assertEquals(false, $clone == $config);
+        $this->assertFalse($clone == $config);
         $this->assertEquals('a',   $config['a']);
         $this->assertEquals('a1',  $clone['a']);
-        $this->assertEquals(false, isset($config['b']));
-        $this->assertEquals(true,  isset($clone['b']));
-        $this->assertEquals(false, $clone === $config);
+        $this->assertFalse(isset($config['b']));
+        $this->assertTrue(isset($clone['b']));
+        $this->assertFalse($clone === $config);
     }
 
     /**
@@ -250,16 +250,16 @@ class ConfigTest
 
         $clone = clone $config;
 
-        $this->assertEquals(true, $clone == $config);
+        $this->assertTrue($clone == $config);
 
         $clone['a'] = 'a1';
         $clone['b'] = 'b';
 
-        $this->assertEquals(false, $clone == $config);
-        $this->assertEquals('a',   $config['a']);
-        $this->assertEquals('a1',  $clone['a']);
-        $this->assertEquals(false, isset($config['b']));
-        $this->assertEquals(true,  isset($clone['b']));
+        $this->assertFalse($clone == $config);
+        $this->assertEquals('a', $config['a']);
+        $this->assertEquals('a1', $clone['a']);
+        $this->assertFalse(isset($config['b']));
+        $this->assertTrue(isset($clone['b']));
     }
 
     /**

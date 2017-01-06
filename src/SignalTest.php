@@ -79,9 +79,9 @@ class SignalTest
     {
         $signal = new Signal;
 
-        $name = 'Mvc5\Test\Signal::staticRequiredTest';
+        $method = 'Mvc5\Test\Signal::staticRequiredTest';
 
-        $this->assertEquals('bar baz', $signal->signal($name, ['foo' => 'bar'], function($name) {
+        $this->assertEquals('bar baz', $signal->signal($method, ['foo' => 'bar'], function($name) {
             if (ConfigPlugin::class == $name) {
                 return new Config;
             }
@@ -113,13 +113,11 @@ class SignalTest
     {
         $signal = new Signal;
 
-        $name = 'Mvc5\Test\Signal::requiredExceptionTest';
+        $method = 'Mvc5\Test\Signal::requiredExceptionTest';
 
-        $this->setExpectedException(
-            'RuntimeException', 'Missing required parameter $baz for Mvc5\Test\Signal::requiredExceptionTest'
-        );
+        $this->setExpectedException('RuntimeException', 'Missing required parameter $baz for ' . $method);
 
-        $signal->signal($name, ['foo' => 'bar']);
+        $signal->signal($method, ['foo' => 'bar']);
     }
 
     /**
@@ -157,6 +155,6 @@ class SignalTest
     {
         $signal = new Signal;
 
-        $this->assertEquals(null, $signal->signal('session_id'));
+        $this->assertEmpty($signal->signal('session_id'));
     }
 }

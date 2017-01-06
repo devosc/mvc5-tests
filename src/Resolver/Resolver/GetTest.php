@@ -31,7 +31,7 @@ class GetTest
     {
         $resolver = new Resolver;
 
-        $this->assertEquals(null, $resolver->get('foo'));
+        $this->assertNull($resolver->get('foo'));
     }
 
     /**

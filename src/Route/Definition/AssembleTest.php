@@ -29,7 +29,7 @@ class AssembleTest
     {
         $assemble = new Assemble;
 
-        $this->assertEquals(null, $assemble->assemble(null, null, null, null, $this->options()));
+        $this->assertEmpty($assemble->assemble(null, null, null, null, $this->options()));
     }
 
     /**

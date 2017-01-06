@@ -41,7 +41,7 @@ class RouteTest
     {
         $route = new Route;
 
-        $this->assertEquals(null, $route->child('bar'));
+        $this->assertNull($route->child('bar'));
     }
 
     /**
@@ -141,7 +141,7 @@ class RouteTest
     {
         $route = new Route;
 
-        $this->assertEquals(null, $route->host());
+        $this->assertNull($route->host());
     }
 
     /**
@@ -161,7 +161,7 @@ class RouteTest
     {
         $route = new Route;
 
-        $this->assertEquals(null, $route->method());
+        $this->assertNull($route->method());
     }
 
     /**
@@ -211,7 +211,7 @@ class RouteTest
     {
         $route = new Route;
 
-        $this->assertEquals(null, $route->port());
+        $this->assertNull($route->port());
     }
 
     /**
@@ -301,6 +301,6 @@ class RouteTest
     {
         $route = new Route;
 
-        $this->assertEquals(false, $route->wildcard());
+        $this->assertFalse($route->wildcard());
     }
 }

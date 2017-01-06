@@ -13,10 +13,6 @@ class Build
      *
      */
     use _Build {
-        build         as public;
-        definition    as public;
-        children      as public;
-        create        as public;
-        createDefault as public;
+        build as public;
     }
 }

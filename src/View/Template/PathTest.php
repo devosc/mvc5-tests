@@ -29,7 +29,7 @@ class PathTest
     {
         $paths = new Path;
 
-        $this->assertEquals(null, $paths->path('foo'));
+        $this->assertNull($paths->path('foo'));
     }
 
     /**

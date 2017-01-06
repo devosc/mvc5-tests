@@ -19,7 +19,7 @@ class ScopeTest
     {
         $resolver = new Resolver;
 
-        $this->assertEquals(null, $resolver->scope());
+        $this->assertNull($resolver->scope());
     }
 
     /**
