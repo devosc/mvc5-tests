@@ -6,11 +6,10 @@
 namespace Mvc5\Test\Resolver\Build;
 
 use Mvc5\App;
-use Mvc5\Arg;
 use Mvc5\Config;
 use Mvc5\Container;
 use Mvc5\Plugin\Plugin;
-use Mvc5\Test\Resolver\Resolver;
+use Mvc5\Plugin\Value;
 use Mvc5\Test\Test\TestCase;
 
 class CompositeTest
@@ -19,36 +18,70 @@ class CompositeTest
     /**
      *
      */
-    function test_composite_service_manager()
+    function test_composite_app()
     {
-        $plugin   = new App([Arg::SERVICES => ['foo' => Config::class]]);
+        $app = new App([
+            'services' => [
+                'foo' => new App([
+                    'services' => [
+                        'bar' => new Plugin('bat'),
+                        'bat' => Config::class
+                    ]
+                ])
+            ]
+        ]);
 
-        $resolver = new Resolver;
-
-        $this->assertInstanceOf(Config::class, $resolver->composite($plugin, 'foo'));
+        $this->assertInstanceOf(Config::class, $app->plugin('foo->bar'));
     }
 
     /**
      *
      */
-    function test_composite_service_container()
+    function test_composite_array()
     {
-        $plugin   = new Container(['foo' => 'bar']);
-        $resolver = new Resolver;
+        $app = new App([
+            'services' => [
+                'foo' => function() {
+                    return ['bar' => new Value('baz')];
+                }
+            ]
+        ]);
 
-        $resolver->configure('bar', Config::class);
-
-        $this->assertInstanceOf(Config::class, $resolver->composite($plugin, 'foo'));
+        $this->assertEquals('baz', $app->plugin('foo->bar'));
     }
 
     /**
      *
      */
-    function test_composite_array_access()
+    function test_composite_container()
     {
-        $plugin   = ['foo' => new Plugin(Config::class)];
-        $resolver = new Resolver;
+        $app = new App([
+            'services' => [
+                'foo' => new Container([
+                    'bar' => new Value('baz')
+                ])
+            ]
+        ]);
 
-        $this->assertInstanceOf(Config::class, $resolver->composite($plugin, 'foo'));
+        $this->assertEquals('baz', $app->plugin('foo->bar'));
+    }
+
+    /**
+     *
+     */
+    function test_composite_plugin()
+    {
+        $app = new App([
+            'services' => [
+                'foo' => new App([
+                    'services' => [
+                        'bar' => new Plugin('bat'),
+                        'bat' => Config::class
+                    ]
+                ])
+            ]
+        ]);
+
+        $this->assertInstanceOf(Config::class, $app->plugin(new Plugin('foo->bar')));
     }
 }

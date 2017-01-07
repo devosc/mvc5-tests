@@ -22,7 +22,7 @@ class BuilderTest
     /**
      *
      */
-    function test_create()
+    function test_auto_wire()
     {
         $this->assertInstanceOf(
             Autowire::class, Builder::create(Autowire::class, ['foo' => 'bar'], new Resolver)
@@ -32,7 +32,7 @@ class BuilderTest
     /**
      *
      */
-    function test_create_without_constructor()
+    function test_without_constructor()
     {
         $this->assertInstanceOf(
             AutowireNoConstructor::class, Builder::create(AutowireNoConstructor::class, [], new Resolver)
@@ -42,7 +42,7 @@ class BuilderTest
     /**
      *
      */
-    function test_create_no_named_args()
+    function test_not_named_args()
     {
         $this->assertInstanceOf(
             Autowire::class, Builder::create(Autowire::class, [new CallEvent, 'foo'], new Resolver)
@@ -52,7 +52,7 @@ class BuilderTest
     /**
      *
      */
-    function test_create_with_named_args()
+    function test_named_args()
     {
         $this->assertInstanceOf(
             Autowire::class, Builder::create(Autowire::class, ['event' => new CallEvent, 'foo' => 'bar'], new Resolver)
@@ -62,7 +62,7 @@ class BuilderTest
     /**
      *
      */
-    function test_create_with_named_args_but_no_constructor_args()
+    function test_named_args_no_constructor()
     {
         $class = AutowireNoConstructorArgs::class;
 
@@ -74,7 +74,7 @@ class BuilderTest
     /**
      *
      */
-    function test_create_with_callback_param()
+    function test_callback_param()
     {
         $resolver = new Resolver;
 
@@ -88,7 +88,7 @@ class BuilderTest
     /**
      *
      */
-    function test_create_with_missing_param()
+    function test_missing_param()
     {
         $this->setExpectedException(
             'RuntimeException', 'Missing required parameter $foo for ' . AutowireMissingParam::class
