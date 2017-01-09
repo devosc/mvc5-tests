@@ -7,7 +7,6 @@ namespace Mvc5\Test\Plugin;
 
 use Mvc5\App;
 use Mvc5\Plugin\Call;
-use Mvc5\Test\Resolver\Resolver\Model\CallObject;
 use Mvc5\Test\Test\TestCase;
 
 class CallTest
@@ -29,9 +28,39 @@ class CallTest
      */
     function test_named()
     {
-        $call = new Call(CallObject::class, ['foo' => 'foo']);
+        $call = new Call(function($foo, $bar) { return $foo . $bar; });
 
-        $this->assertEquals('foo', (new App)->plugin($call, ['bar' => 'bar']));
+        $this->assertEquals('foobar', (new App)->plugin($call, ['foo' => 'foo', 'bar' => 'bar']));
+    }
+
+    /**
+     *
+     */
+    function test_named_with_parent_args()
+    {
+        $call = new Call(function($foo, $bar) { return $foo . $bar; }, ['bar' => 'bar']);
+
+        $this->assertEquals('foobar', (new App)->plugin($call, ['foo' => 'foo']));
+    }
+
+    /**
+     *
+     */
+    function test_no_args()
+    {
+        $call = new Call(function() { return 'foobar'; });
+
+        $this->assertEquals('foobar', (new App)->plugin($call));
+    }
+
+    /**
+     *
+     */
+    function test_not_named_with_parent_args()
+    {
+        $call = new Call(function($foo, $bar) { return $foo . $bar; }, ['bar']);
+
+        $this->assertEquals('foobar', (new App)->plugin($call, ['foo']));
     }
 
     /**
@@ -39,8 +68,8 @@ class CallTest
      */
     function test_not_named()
     {
-        $call = new Call(CallObject::class, ['bar']);
+        $call = new Call(function($foo, $bar) { return $foo . $bar; });
 
-        $this->assertEquals('foo', (new App)->plugin($call, ['foo']));
+        $this->assertEquals('foobar', (new App)->plugin($call, ['foo', 'bar']));
     }
 }

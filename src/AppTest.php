@@ -38,9 +38,9 @@ class AppTest
     /**
      *
      */
-    function test_app_array_access_with_provider()
+    function test_array_access_with_provider()
     {
-        $app = new App([], function() { return 'bar'; });
+        $app = new App([], function($name) { return 'foo' == $name ? 'bar' : null; });
 
         $this->assertEquals('bar', $app['foo']);
     }
@@ -48,7 +48,7 @@ class AppTest
     /**
      *
      */
-    function test_app_invoke_with_provider()
+    function test_invoke_with_provider()
     {
         $app = new App([], function() { return 'bar'; });
 
@@ -58,7 +58,7 @@ class AppTest
     /**
      *
      */
-    function test_app_provider_and_scope()
+    function test_provider_and_scope()
     {
         $app = new App([
             Arg::SERVICES => [
@@ -111,7 +111,7 @@ class AppTest
     /**
      *
      */
-    function test_app_with_private_values()
+    function test_with_private_values()
     {
         $app = new App([
             'bat' => 'baz',
@@ -127,7 +127,7 @@ class AppTest
     /**
      *
      */
-    function test_app_with_private_plugins()
+    function test_with_private_plugins()
     {
         $app = new App([
             'bat' => new Value('baz'),
@@ -143,7 +143,7 @@ class AppTest
     /**
      *
      */
-    function test_app_not_strict()
+    function test_not_strict()
     {
         $app = new App();
 
@@ -153,7 +153,7 @@ class AppTest
     /**
      *
      */
-    function test_app_strict_with_no_config()
+    function test_strict_with_no_config()
     {
         $app = new App([], null, null, true);
 
@@ -163,7 +163,7 @@ class AppTest
     /**
      *
      */
-    function test_app_strict_with_config()
+    function test_strict_with_config()
     {
         $app = new App([Arg::SERVICES => ['ArrayObject' => 'ArrayObject']], null, null, true);
 

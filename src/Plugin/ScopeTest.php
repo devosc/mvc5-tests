@@ -10,16 +10,15 @@ use Mvc5\App;
 use Mvc5\Plugin\Args;
 use Mvc5\Plugin\Link;
 use Mvc5\Plugin\Scope;
-use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
 
-class ProviderTest
+class ScopeTest
     extends TestCase
 {
     /**
      *
      */
-    function test_construct()
+    function test()
     {
         $scope = new Scope('foo', ['bar', 'baz']);
 
@@ -34,44 +33,24 @@ class ProviderTest
      */
     function test_scope()
     {
-        $app = new App;
+        $app = new App([
+            'services' => [
+                'bar' => function() {
+                    return 'foobar';
+                },
+                'foo' => function() {
+                    /** @var Config $this */
+                    return $this->get('bar');
+                }
+            ]
+        ]);
 
-        $provider = new Scope(Config::class, [$app]);
+        $plugin = new Scope(Config::class, [$app]);
 
-        $resolver = new Resolver;
+        $config = (new App)->plugin($plugin);
 
-        list($name, $service, $args) = $resolver->args($provider->args());
-
-        $scope = $provider->scope($name, $service, $args);
-
-        $this->assertInstanceOf(Config::class, $scope);
-
-        $this->assertEquals($scope, $app->scope());
-    }
-
-    /**
-     *
-     */
-    function test_resolver_gem_with_class_name()
-    {
-        $resolver = new Resolver;
-
-        $scope = $resolver->gem(new Scope(Config::class, [new App]));
-
-        $this->assertInstanceOf(Config::class, $scope);
-    }
-
-    /**
-     *
-     */
-    function test_resolver_gem_with_plugin_name()
-    {
-        $resolver = new Resolver;
-
-        $resolver->configure('foo', Config::class);
-
-        $scope = $resolver->gem(new Scope('foo', [new App]));
-
-        $this->assertInstanceOf(Config::class, $scope);
+        $this->assertInstanceOf(Config::class, $config);
+        $this->assertEquals($config, $app->scope());
+        $this->assertEquals('foobar', $config['foo']);
     }
 }

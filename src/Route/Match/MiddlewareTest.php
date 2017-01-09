@@ -131,6 +131,8 @@ class MiddlewareTest
         /** @var Request $request */
         $request = $dispatch($request);
 
-        $this->assertEquals('a, b, c', ($request->controller())($request, $response));
+        $controller = $request->controller();
+
+        $this->assertEquals('a, b, c', $controller($request, $response));
     }
 }

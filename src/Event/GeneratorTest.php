@@ -207,7 +207,6 @@ class GeneratorTest
         $this->assertEquals(['foo' => []], (new App)->events(['foo' => []]));
     }
 
-
     /**
      *
      */

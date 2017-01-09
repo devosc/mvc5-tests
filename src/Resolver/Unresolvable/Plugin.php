@@ -3,11 +3,11 @@
  *
  */
 
-namespace Mvc5\Test\Resolver\Resolver\Model;
+namespace Mvc5\Test\Resolver\Unresolvable;
 
 use Mvc5\Plugin\Gem\Gem;
 
-class Unresolvable
+class Plugin
     implements Gem
 {
 }
