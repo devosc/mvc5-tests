@@ -3,7 +3,7 @@
  *
  */
 
-namespace Mvc5\Test\Response\Config;
+namespace Mvc5\Test\Response;
 
 use Mvc5\Arg;
 use Mvc5\Http\Headers\Config as Headers;

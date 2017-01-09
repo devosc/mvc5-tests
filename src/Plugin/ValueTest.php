@@ -3,7 +3,7 @@
  *
  */
 
-namespace Mvc5\Test\Resolver\Resolver\Gem;
+namespace Mvc5\Test\Plugin;
 
 use Mvc5\App;
 use Mvc5\Plugin\Value;
