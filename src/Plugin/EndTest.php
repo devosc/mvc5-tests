@@ -5,11 +5,11 @@
 
 namespace Mvc5\Test\Plugin;
 
+use Mvc5\App;
 use Mvc5\Plugin\Args;
 use Mvc5\Plugin\End;
 use Mvc5\Plugin\Call;
 use Mvc5\Plugin\Value;
-use Mvc5\Test\Resolver\Resolver;
 use Mvc5\Test\Test\TestCase;
 
 class EndTest
@@ -20,8 +20,6 @@ class EndTest
      */
     function test()
     {
-        $resolver = new Resolver;
-
         $end = new End(
             new Call('@phpversion'),
             new Value('foo')
@@ -29,6 +27,6 @@ class EndTest
 
         $this->assertEquals('@end', $end->config());
         $this->assertEquals([new Args([new Call('@phpversion'), new Value('foo')])], $end->args());
-        $this->assertEquals('foo', $resolver->gem($end));
+        $this->assertEquals('foo', (new App)->plugin($end));
     }
 }

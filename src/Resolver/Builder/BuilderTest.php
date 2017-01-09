@@ -5,15 +5,12 @@
 
 namespace Mvc5\Test\Resolver\Builder;
 
-use Mvc5\Arg;
+use Mvc5\App;
 use Mvc5\Config;
+use Mvc5\Model;
 use Mvc5\Resolver\Builder;
-use Mvc5\Test\Resolver\Resolver;
-use Mvc5\Test\Resolver\Resolver\Model\Autowire;
-use Mvc5\Test\Resolver\Resolver\Model\AutowireMissingParam;
-use Mvc5\Test\Resolver\Resolver\Model\AutowireNoConstructor;
-use Mvc5\Test\Resolver\Resolver\Model\AutowireNoConstructorArgs;
-use Mvc5\Test\Resolver\Resolver\Model\CallEvent;
+use Mvc5\Route\Dispatch;
+use Mvc5\Route\Match\Path;
 use Mvc5\Test\Test\TestCase;
 
 class BuilderTest
@@ -22,78 +19,70 @@ class BuilderTest
     /**
      *
      */
-    function test_create()
+    function test_auto_wire()
     {
         $this->assertInstanceOf(
-            Autowire::class, Builder::create(Autowire::class, ['foo' => 'bar'], new Resolver)
+            Autowire::class, Builder::create(Autowire::class, ['foo' => 'bar'], new App)
         );
     }
 
     /**
      *
      */
-    function test_create_without_constructor()
+    function test_callback_param()
     {
+        $app = new App([
+            'services' => [
+                'foo' => Config::class
+            ]
+        ]);
+
         $this->assertInstanceOf(
-            AutowireNoConstructor::class, Builder::create(AutowireNoConstructor::class, [], new Resolver)
+            Autowire::class, Builder::create(Autowire::class, ['model' => new Model], $app)
         );
     }
 
     /**
      *
      */
-    function test_create_no_named_args()
+    function test_missing_param()
+    {
+        $this->setExpectedException(
+            'RuntimeException', 'Missing required parameter $route for ' . Dispatch::class
+        );
+
+        Builder::create(Dispatch::class, [], new App);
+    }
+
+    /**
+     *
+     */
+    function test_named_args()
     {
         $this->assertInstanceOf(
-            Autowire::class, Builder::create(Autowire::class, [new CallEvent, 'foo'], new Resolver)
+            Autowire::class, Builder::create(Autowire::class, ['model' => new Model, 'foo' => 'bar'], new App)
         );
     }
 
     /**
      *
      */
-    function test_create_with_named_args()
+    function test_named_args_no_constructor()
     {
+        $class = NoConstructorArgs::class;
+
         $this->assertInstanceOf(
-            Autowire::class, Builder::create(Autowire::class, ['event' => new CallEvent, 'foo' => 'bar'], new Resolver)
+            $class, Builder::create($class, ['model' => new Model, 'foo' => 'bar'], new App)
         );
     }
 
     /**
      *
      */
-    function test_create_with_named_args_but_no_constructor_args()
+    function test_not_named_args()
     {
-        $class = AutowireNoConstructorArgs::class;
-
         $this->assertInstanceOf(
-            $class, Builder::create($class, ['event' => new CallEvent, 'foo' => 'bar'], new Resolver)
-        );
-    }
-
-    /**
-     *
-     */
-    function test_create_with_callback_param()
-    {
-        $resolver = new Resolver;
-
-        $resolver->configure('foo', Config::class);
-
-        $this->assertInstanceOf(
-            Autowire::class, Builder::create(Autowire::class, [Arg::EVENT => new CallEvent], $resolver)
-        );
-    }
-
-    /**
-     *
-     */
-    function test_create_with_missing_param()
-    {
-        $this->setExpectedException('RuntimeException');
-
-        $this->assertInstanceOf(
-            AutowireMissingParam::class, Builder::create(AutowireMissingParam::class, [], new Resolver)
+            Autowire::class, Builder::create(Autowire::class, [new Model, 'foo'], new App)
         );
     }
 
@@ -106,5 +95,15 @@ class BuilderTest
         $reflection2 = Builder::reflectionClass(self::class);
 
         $this->assertTrue($reflection1 === $reflection2);
+    }
+
+    /**
+     *
+     */
+    function test_without_constructor()
+    {
+        $this->assertInstanceOf(
+            Path::class, Builder::create(Path::class, [], new App)
+        );
     }
 }

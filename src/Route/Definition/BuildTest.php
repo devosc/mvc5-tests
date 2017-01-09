@@ -15,13 +15,12 @@ class BuildTest
     extends TestCase
 {
     /**
-     *
+     * @param array $route
+     * @return array
      */
-    function test_definition()
+    protected function route(array $route = [])
     {
-        $build = new Build;
-
-        $route = [
+        return $route + [
             Arg::CHILDREN    => ['foo' => [Arg::ROUTE => 'foo']],
             Arg::CONSTRAINTS => null,
             Arg::NAME        => null,
@@ -30,172 +29,95 @@ class BuildTest
             Arg::ROUTE       => '/',
             Arg::TOKENS      => null
         ];
-
-        $this->assertInternalType('array', $build->definition($route, true, true));
     }
 
     /**
      *
      */
-    function test_definition_regex_only()
+    function test_custom_route()
     {
         $build = new Build;
 
-        $this->assertEquals([Arg::REGEX => '/'], $build->definition([Arg::REGEX => '/']));
+        $route = $build->build($this->route(['class' => Config::class]), true, true);
+
+        $foo = new Config(['route' => 'foo', 'tokens' => [['literal', 'foo']], 'regex' => 'foo']);
+
+        $this->assertInstanceOf(Config::class, $route);
+        $this->assertNull($route->name());
+        $this->assertEquals('/', $route->regex());
+        $this->assertEquals([], $route->constraints());
+        $this->assertEquals([], $route->options());
+        $this->assertEquals([['literal', '/']], $route->tokens());
+        $this->assertEquals(['foo' => $foo], $route->children());
     }
 
     /**
      *
      */
-    function test_definition_no_route_or_regex_exception()
+    function test_no_route_or_regex_exception()
     {
         $build = new Build;
 
-        $this->setExpectedException('Exception');
+        $this->setExpectedException('Exception', 'Route path not specified');
 
-        $build->definition([]);
+        $build->build([]);
     }
 
     /**
      *
      */
-    function test_children()
+    function test_regex_only()
     {
         $build = new Build;
 
-        $routes = [
-            [
-                Arg::CHILDREN    => [],
-                Arg::CONSTRAINTS => [],
-                Arg::NAME        => null,
-                Arg::OPTIONS     => [],
-                Arg::REGEX       => null,
-                Arg::ROUTE       => '/',
-                Arg::TOKENS      => null
-            ]
-        ];
+        $route = $build->build([Arg::REGEX => '/']);
 
-        $this->assertInternalType('array', $build->children($routes));
+        $this->assertNull($route->name());
+        $this->assertEquals('/', $route->regex());
+        $this->assertEquals([], $route->constraints());
+        $this->assertEquals([], $route->options());
+        $this->assertEquals([], $route->tokens());
+        $this->assertEquals([], $route->children());
     }
 
     /**
      *
      */
-    function test_create_route_definition()
+    function test_route()
     {
         $build = new Build;
 
-        $route = new Config([
-            Arg::CHILDREN    => [],
-            Arg::CONSTRAINTS => [],
-            Arg::NAME        => null,
-            Arg::OPTIONS     => [],
-            Arg::REGEX       => null,
-            Arg::ROUTE       => '/',
-            Arg::TOKENS      => null
-        ]);
+        $route = $build->build($this->route(), true, true);
 
-        $this->assertInstanceOf(Config::class, $build->create($route));
+        $foo = new Config(['route' => 'foo', 'tokens' => [['literal', 'foo']], 'regex' => 'foo']);
+
+        $this->assertInstanceOf(Route::class, $route);
+        $this->assertNull($route->name());
+        $this->assertEquals('/', $route->regex());
+        $this->assertEquals([], $route->constraints());
+        $this->assertEquals([], $route->options());
+        $this->assertEquals([['literal', '/']], $route->tokens());
+        $this->assertEquals(['foo' => $foo], $route->children());
     }
 
     /**
      *
      */
-    function test_create_with_class_name()
+    function test_route_object()
     {
         $build = new Build;
+        $route = new Config($this->route());
 
-        $route = [
-            Arg::CHILDREN    => [],
-            Arg::CLASS_NAME  => Config::class,
-            Arg::CONSTRAINTS => [],
-            Arg::NAME        => null,
-            Arg::OPTIONS     => [],
-            Arg::REGEX       => null,
-            Arg::ROUTE       => '/',
-            Arg::TOKENS      => null
-        ];
+        $route = $build->build($route, true, true);
 
-        $this->assertInstanceOf(Config::class, $build->create($route));
-    }
+        $foo = new Config(['route' => 'foo', 'tokens' => [['literal', 'foo']], 'regex' => 'foo']);
 
-    /**
-     *
-     */
-    function test_create()
-    {
-        $build = new Build;
-
-        $route = [
-            Arg::CHILDREN    => [],
-            Arg::CONSTRAINTS => [],
-            Arg::NAME        => null,
-            Arg::OPTIONS     => [],
-            Arg::REGEX       => null,
-            Arg::ROUTE       => '/',
-            Arg::TOKENS      => null
-        ];
-
-        $this->assertInstanceOf(Config::class, $build->create($route));
-    }
-
-    /**
-     *
-     */
-    function test_create_default()
-    {
-        $build = new Build;
-
-        $route = [
-            Arg::CHILDREN    => [],
-            Arg::CONSTRAINTS => [],
-            Arg::NAME        => null,
-            Arg::OPTIONS     => [],
-            Arg::REGEX       => null,
-            Arg::ROUTE       => '/',
-            Arg::TOKENS      => null
-        ];
-
-        $this->assertInstanceOf(Config::class, $build->createDefault($route));
-    }
-
-    /**
-     *
-     */
-    function test_create_default_with_object()
-    {
-        $build = new Build;
-
-        $route = new _Config([
-            Arg::CHILDREN    => [],
-            Arg::CONSTRAINTS => [],
-            Arg::NAME        => null,
-            Arg::OPTIONS     => [],
-            Arg::REGEX       => null,
-            Arg::ROUTE       => '/',
-            Arg::TOKENS      => null
-        ]);
-
-        $this->assertInstanceOf(Config::class, $build->createDefault($route));
-    }
-
-    /**
-     *
-     */
-    function test_build()
-    {
-        $build = new Build;
-
-        $route = [
-            Arg::CHILDREN    => [],
-            Arg::CONSTRAINTS => [],
-            Arg::NAME        => null,
-            Arg::OPTIONS     => [],
-            Arg::REGEX       => null,
-            Arg::ROUTE       => '/',
-            Arg::TOKENS      => null
-        ];
-
-        $this->assertInstanceOf(Route::class, $build->build($route));
+        $this->assertInstanceOf(Route::class, $route);
+        $this->assertNull($route->name());
+        $this->assertEquals('/', $route->regex());
+        $this->assertEquals([], $route->constraints());
+        $this->assertEquals([], $route->options());
+        $this->assertEquals([['literal', '/']], $route->tokens());
+        $this->assertEquals(['foo' => $foo], $route->children());
     }
 }

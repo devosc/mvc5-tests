@@ -128,7 +128,7 @@ class IteratorTest
     {
         $config = new Config(['foo' => 'bar']);
 
-        $this->assertEquals(true, $config->valid());
+        $this->assertTrue($config->valid());
     }
 
     /**
@@ -138,7 +138,7 @@ class IteratorTest
     {
         $config = new Config;
 
-        $this->assertEquals(false, $config->valid());
+        $this->assertFalse($config->valid());
     }
 
     /**
@@ -148,7 +148,7 @@ class IteratorTest
     {
         $config = new Config(new Config(['foo' => 'bar']));
 
-        $this->assertEquals(true, $config->valid());
+        $this->assertTrue($config->valid());
     }
 
     /**
@@ -158,6 +158,6 @@ class IteratorTest
     {
         $config = new Config(new Config);
 
-        $this->assertEquals(false, $config->valid());
+        $this->assertFalse($config->valid());
     }
 }

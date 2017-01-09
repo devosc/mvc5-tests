@@ -14,11 +14,72 @@ class ContainerTest
     /**
      *
      */
-    function test_config_empty()
+    function test_clone_with_arrays()
     {
         $config = new Container;
 
+        $clone = clone $config;
+
+        $this->assertTrue($clone == $config);
+
+        $clone->config(['foo' => 'bar']);
+        $clone->set('a', 'a');
+        $clone->configure('baz', 'bat');
+
+        $this->assertFalse($clone == $config);
         $this->assertEquals([], $config->config());
+        $this->assertEquals([], $config->container());
+        $this->assertEquals([], $config->services());
+        $this->assertEquals(['foo' => 'bar'], $clone->config());
+        $this->assertEquals(['a' => 'a'], $clone->container());
+        $this->assertEquals(['baz' => 'bat'], $clone->services());
+    }
+
+    /**
+     *
+     */
+    function test_clone_container_array()
+    {
+        $resolver = new Container;
+
+        $a = new \stdClass;
+        $a->b = 'b';
+
+        $resolver->container(['a' => $a]);
+
+        $clone = clone $resolver;
+
+        $this->assertTrue($clone == $resolver);
+        $this->assertInstanceOf(\stdClass::class, $clone->get('a'));
+        $this->assertEquals($a, $clone->get('a'));
+        $this->assertTrue($a === $clone->get('a'));
+    }
+
+    /**
+     *
+     */
+    function test_clone_with_objects()
+    {
+        $config = new Container(new Config);
+
+        $config->container(new Config);
+        $config->services(new Config);
+
+        $clone = clone $config;
+
+        $this->assertTrue($clone == $config);
+
+        $clone->config(new Config(['foo' => 'bar']));
+        $clone->set('a', 'a');
+        $clone->configure('baz', 'bat');
+
+        $this->assertFalse($clone == $config);
+        $this->assertEquals(new Config, $config->config());
+        $this->assertEquals(new Config, $config->services());
+        $this->assertEquals(new Config, $config->container());
+        $this->assertEquals(new Config(['foo' => 'bar']), $clone->config());
+        $this->assertEquals(new Config(['a' => 'a']), $clone->container());
+        $this->assertEquals(new Config(['baz' => 'bat']), $clone->services());
     }
 
     /**
@@ -34,21 +95,21 @@ class ContainerTest
     /**
      *
      */
-    function test_configure()
+    function test_config_empty()
     {
         $config = new Container;
 
-        $this->assertEquals('bar', $config->configure('foo', 'bar'));
+        $this->assertEquals([], $config->config());
     }
 
     /**
      *
      */
-    function test_configured_null()
+    function test_configure()
     {
         $config = new Container;
 
-        $this->assertEquals(null, $config->configured('foo'));
+        $this->assertEquals('bar', $config->configure('foo', 'bar'));
     }
 
     /**
@@ -61,6 +122,16 @@ class ContainerTest
         $config->configure('foo', 'bar');
 
         $this->assertEquals('bar', $config->configured('foo'));
+    }
+
+    /**
+     *
+     */
+    function test_configured_null()
+    {
+        $config = new Container;
+
+        $this->assertEquals(null, $config->configured('foo'));
     }
 
     /**
@@ -134,11 +205,21 @@ class ContainerTest
     /**
      *
      */
+    function test_get_returns_null()
+    {
+        $config = new Container;
+
+        $this->assertNull($config->get('foo'));
+    }
+
+    /**
+     *
+     */
     function test_has()
     {
         $config = new Container;
 
-        $this->assertEquals(false, $config->has('foo'));
+        $this->assertFalse($config->has('foo'));
     }
 
     /**
@@ -150,7 +231,7 @@ class ContainerTest
 
         $config->container(['foo' => 'bar']);
 
-        $this->assertEquals(true, $config->has('foo'));
+        $this->assertTrue($config->has('foo'));
     }
 
     /**
@@ -214,11 +295,11 @@ class ContainerTest
 
         $config->container(['foo' => 'bar']);
 
-        $this->assertEquals(true, $config->has('foo'));
+        $this->assertTrue($config->has('foo'));
 
         $config->remove('foo');
 
-        $this->assertEquals(false, $config->has('foo'));
+        $this->assertFalse($config->has('foo'));
     }
 
     /**
@@ -264,28 +345,6 @@ class ContainerTest
     /**
      *
      */
-    function test_stored_null()
-    {
-        $config = new Container;
-
-        $this->assertEquals(null, $config->stored('foo'));
-    }
-
-    /**
-     *
-     */
-    function test_stored_not_null()
-    {
-        $config = new Container;
-
-        $config->set('foo', 'bar');
-
-        $this->assertEquals('bar', $config->stored('foo'));
-    }
-
-    /**
-     *
-     */
     function test_services_empty()
     {
         $config = new Container;
@@ -324,7 +383,7 @@ class ContainerTest
 
         $config->container(['foo' => 'bar']);
 
-        $this->assertEquals(true, $config->valid());
+        $this->assertTrue($config->valid());
     }
 
     /**
@@ -334,7 +393,7 @@ class ContainerTest
     {
         $config = new Container;
 
-        $this->assertEquals(false, $config->valid());
+        $this->assertFalse($config->valid());
     }
 
     /**
@@ -346,7 +405,7 @@ class ContainerTest
 
         $config->container(new Config(['foo' => 'bar']));
 
-        $this->assertEquals(true, $config->valid());
+        $this->assertTrue($config->valid());
     }
 
     /**
@@ -358,77 +417,6 @@ class ContainerTest
 
         $config->container(new Config);
 
-        $this->assertEquals(false, $config->valid());
-    }
-
-    /**
-     *
-     */
-    function test_clone_with_arrays()
-    {
-        $config = new Container;
-
-        $clone = clone $config;
-
-        $this->assertEquals(true, $clone == $config);
-
-        $clone->config(['foo' => 'bar']);
-        $clone->set('a', 'a');
-        $clone->configure('baz', 'bat');
-
-        $this->assertEquals(false,            $clone == $config);
-        $this->assertEquals([],               $config->config());
-        $this->assertEquals([],               $config->container());
-        $this->assertEquals([],               $config->services());
-        $this->assertEquals(['foo' => 'bar'], $clone->config());
-        $this->assertEquals(['a'   => 'a'],   $clone->container());
-        $this->assertEquals(['baz' => 'bat'], $clone->services());
-    }
-
-    /**
-     *
-     */
-    function test_clone_container_array()
-    {
-        $resolver = new Container;
-
-        $a = new \stdClass;
-        $a->b = 'b';
-
-        $resolver->container(['a' => $a]);
-
-        $clone = clone $resolver;
-
-        $this->assertEquals(true, $clone == $resolver);
-        $this->assertInstanceOf(\stdClass::class, $clone->get('a'));
-        $this->assertEquals($a, $clone->get('a'));
-        $this->assertTrue($a === $clone->get('a'));
-    }
-
-    /**
-     *
-     */
-    function test_clone_with_objects()
-    {
-        $config = new Container(new Config);
-
-        $config->container(new Config);
-        $config->services(new Config);
-
-        $clone = clone $config;
-
-        $this->assertEquals(true, $clone == $config);
-
-        $clone->config(new Config(['foo' => 'bar']));
-        $clone->set('a', 'a');
-        $clone->configure('baz', 'bat');
-
-        $this->assertEquals(false,                        $clone == $config);
-        $this->assertEquals(new Config,                   $config->config());
-        $this->assertEquals(new Config,                   $config->services());
-        $this->assertEquals(new Config,                   $config->container());
-        $this->assertEquals(new Config(['foo' => 'bar']), $clone->config());
-        $this->assertEquals(new Config(['a'   => 'a']),   $clone->container());
-        $this->assertEquals(new Config(['baz' => 'bat']), $clone->services());
+        $this->assertFalse($config->valid());
     }
 }

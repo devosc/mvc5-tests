@@ -15,7 +15,7 @@ class LogTest
     /**
      *
      */
-    function test_log()
+    function test()
     {
         $config = ['services' => ['log' => Error::class]];
 

@@ -57,22 +57,6 @@ class ContainerTest
     /**
      *
      */
-    function test_destroy_without_removing_cookie()
-    {
-        $container = new Container(new Session);
-
-        $container->start();
-
-        $this->assertNotEmpty($container->id());
-
-        $container->destroy(false);
-
-        $this->assertEmpty($container->id());
-    }
-
-    /**
-     *
-     */
     function test_destroy_with_cookie_container()
     {
         $container = new Container(new Session(new Cookies(new CookieContainer)));
@@ -98,6 +82,22 @@ class ContainerTest
         $this->assertNotEmpty($container->id());
 
         $container->destroy();
+
+        $this->assertEmpty($container->id());
+    }
+
+    /**
+     *
+     */
+    function test_destroy_without_removing_cookie()
+    {
+        $container = new Container(new Session);
+
+        $container->start();
+
+        $this->assertNotEmpty($container->id());
+
+        $container->destroy(false);
 
         $this->assertEmpty($container->id());
     }
@@ -217,37 +217,6 @@ class ContainerTest
     /**
      *
      */
-    function test_start_with_reset_session_model()
-    {
-        $container = new Container(new Session);
-
-        $container->start();
-
-        $this->assertInstanceOf(Model::class, $_SESSION[$container->label()]);
-
-        $container->destroy();
-    }
-
-    /**
-     *
-     */
-    function test_start_without_resetting_session_model()
-    {
-        $container = new Container(new Session);
-
-        session_start();
-
-        $model = new Model;
-
-        $_SESSION[$container->label()] = $model;
-
-        $this->assertTrue($container->start());
-
-        $container->destroy();
-    }
-    /**
-     *
-     */
     function test_start_multiple_containers()
     {
         $app = new Container(new Session, 'app');
@@ -290,6 +259,38 @@ class ContainerTest
         $this->assertEquals('bar', $_SESSION['app']['mod']['foo']);
 
         $mod->destroy();
+    }
+
+    /**
+     *
+     */
+    function test_start_with_reset_session_model()
+    {
+        $container = new Container(new Session);
+
+        $container->start();
+
+        $this->assertInstanceOf(Model::class, $_SESSION[$container->label()]);
+
+        $container->destroy();
+    }
+
+    /**
+     *
+     */
+    function test_start_without_resetting_session_model()
+    {
+        $container = new Container(new Session);
+
+        session_start();
+
+        $model = new Model;
+
+        $_SESSION[$container->label()] = $model;
+
+        $this->assertTrue($container->start());
+
+        $container->destroy();
     }
 
     /**

@@ -25,16 +25,6 @@ class PluginTest
     /**
      *
      */
-    function test_named()
-    {
-        $url = new Plugin(new Request, new Generator($this->route));
-
-        $this->assertEquals('/foo', $url('app', ['controller' => 'foo']));
-    }
-
-    /**
-     *
-     */
     function test_current()
     {
         $request = new Request([Arg::NAME => 'app', Arg::PARAMS => ['controller' => 'foo']]);
@@ -42,5 +32,15 @@ class PluginTest
         $url = new Plugin($request, new Generator($this->route));
 
         $this->assertEquals('/foo', $url());
+    }
+
+    /**
+     *
+     */
+    function test_named()
+    {
+        $url = new Plugin(new Request, new Generator($this->route));
+
+        $this->assertEquals('/foo', $url('app', ['controller' => 'foo']));
     }
 }

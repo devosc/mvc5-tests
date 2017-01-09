@@ -17,18 +17,6 @@ class InitializerTest
     /**
      *
      */
-    function test_initialized()
-    {
-        $app = new App;
-
-        $this->assertNull($app->get('foo'));
-        $this->assertInstanceOf(Config::class, $app->plugin(new Shared('foo', Config::class)));
-        $this->assertInstanceOf(Config::class, $app->get('foo'));
-    }
-
-    /**
-     *
-     */
     function test_circular_dependency_exception()
     {
         $app = new App(['services' => ['foo' => new Shared('foo', new Plugin('foo'))]]);
@@ -36,5 +24,17 @@ class InitializerTest
         $this->setExpectedException('RuntimeException', 'Circular dependency: foo');
 
         $app->get('foo');
+    }
+
+    /**
+     *
+     */
+    function test_initialized()
+    {
+        $app = new App;
+
+        $this->assertNull($app->get('foo'));
+        $this->assertInstanceOf(Config::class, $app->plugin(new Shared('foo', Config::class)));
+        $this->assertInstanceOf(Config::class, $app->get('foo'));
     }
 }

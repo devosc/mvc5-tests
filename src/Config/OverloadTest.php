@@ -28,7 +28,7 @@ class OverloadTest
     {
         $config = new Config;
 
-        $this->assertEquals(null, $config->get('foo'));
+        $this->assertNull($config->get('foo'));
     }
 
     /**

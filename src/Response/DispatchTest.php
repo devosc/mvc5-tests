@@ -18,21 +18,11 @@ class DispatchTest
     /**
      *
      */
-    function test_request()
+    function test_any_response()
     {
         $dispatch = new Dispatch('foo', new Request, new Response);
 
-        $this->assertInstanceOf(Request::class, $dispatch(function($request) { return $request; }));
-    }
-
-    /**
-     *
-     */
-    function test_response()
-    {
-        $dispatch = new Dispatch('foo', new Request, new Response);
-
-        $this->assertInstanceOf(Response::class, $dispatch(function($response) { return $response; }));
+        $this->assertEquals('foo', $dispatch(function() { return 'foo'; }));
     }
 
     /**
@@ -48,10 +38,20 @@ class DispatchTest
     /**
      *
      */
-    function test_any_response()
+    function test_request()
     {
         $dispatch = new Dispatch('foo', new Request, new Response);
 
-        $this->assertEquals('foo', $dispatch(function() { return 'foo'; }));
+        $this->assertInstanceOf(Request::class, $dispatch(function($request) { return $request; }));
+    }
+
+    /**
+     *
+     */
+    function test_response()
+    {
+        $dispatch = new Dispatch('foo', new Request, new Response);
+
+        $this->assertInstanceOf(Response::class, $dispatch(function($response) { return $response; }));
     }
 }

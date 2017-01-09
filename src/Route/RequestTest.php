@@ -40,7 +40,7 @@ class RequestTest
     {
         $request = new Request([Arg::MATCHED => true]);
 
-        $this->assertEquals(true, $request->matched());
+        $this->assertTrue($request->matched());
     }
 
     /**
@@ -50,7 +50,7 @@ class RequestTest
     {
         $request = new Request;
 
-        $this->assertEquals(false, $request->matched());
+        $this->assertFalse($request->matched());
     }
 
     /**

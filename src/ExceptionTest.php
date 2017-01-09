@@ -34,6 +34,18 @@ class ExceptionTest
     /**
      *
      */
+    function test_invoke()
+    {
+        $exception = new Exception('foo');
+
+        $this->setExpectedException(Exception::class, 'foo');
+
+        $exception();
+    }
+
+    /**
+     *
+     */
     function test_raise()
     {
         $this->setExpectedException(\Exception::class, 'foo');
@@ -47,17 +59,5 @@ class ExceptionTest
     {
         $this->setExpectedException(Runtime::class, 'foo');
         Exception::runtime('foo');
-    }
-
-    /**
-     *
-     */
-    function test_invoke()
-    {
-        $exception = new Exception('foo');
-
-        $this->setExpectedException(Exception::class, 'foo');
-
-        $exception();
     }
 }

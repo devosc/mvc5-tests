@@ -15,7 +15,7 @@ class UserTest
     /**
      *
      */
-    function test_user()
+    function test()
     {
         $config = ['services' => ['user' => Config::class]];
 

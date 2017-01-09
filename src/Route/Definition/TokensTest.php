@@ -13,16 +13,7 @@ class TokensTest
     /**
      *
      */
-    function test_tokens()
-    {
-        $tokens = new Tokens;
-        $this->assertEquals([['literal', '/'], ['param', '__foo__', '[^/]+']], $tokens('/{__foo__}'));
-    }
-
-    /**
-     *
-     */
-    function test_tokens_empty_arg()
+    function test_empty_arg()
     {
         $tokens = new Tokens;
 
@@ -32,11 +23,20 @@ class TokensTest
     /**
      *
      */
-    function test_tokens_no_closing_bracket_exception()
+    function test_named_param()
+    {
+        $tokens = new Tokens;
+        $this->assertEquals([['literal', '/'], ['param', '__foo__', '[^/]+']], $tokens('/{__foo__}'));
+    }
+
+    /**
+     *
+     */
+    function test_no_closing_bracket_exception()
     {
         $tokens = new Tokens;
 
-        $this->setExpectedException('RuntimeException');
+        $this->setExpectedException('RuntimeException', 'Found closing bracket without matching opening bracket');
 
         $tokens('/{foo}]');
     }
@@ -44,11 +44,11 @@ class TokensTest
     /**
      *
      */
-    function test_tokens_unbalanced_exception()
+    function test_unbalanced_exception()
     {
         $tokens = new Tokens;
 
-        $this->setExpectedException('RuntimeException');
+        $this->setExpectedException('RuntimeException', 'Found unbalanced brackets');
 
         $tokens('/[{foo}');
     }
@@ -56,7 +56,7 @@ class TokensTest
     /**
      *
      */
-    function test_tokens_with_expression()
+    function test_with_expression()
     {
         $tokens = new Tokens(['foo' => 'bar']);
 

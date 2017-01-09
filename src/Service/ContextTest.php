@@ -18,18 +18,6 @@ class ContextTest
     /**
      *
      */
-    function test_instantiate_with_service()
-    {
-        $app = new App;
-
-        $context = new Context($app);
-
-        $this->assertEquals($app, $context->service());
-    }
-
-    /**
-     *
-     */
     function test_bind()
     {
         $app = new App;
@@ -56,11 +44,13 @@ class ContextTest
     /**
      *
      */
-    function test_service_does_not_exist()
+    function test_instantiate_with_service()
     {
-        $this->setExpectedException(\RuntimeException::class, 'Service does not exist');
+        $app = new App;
 
-        Context::service();
+        $context = new Context($app);
+
+        $this->assertEquals($app, $context->service());
     }
 
     /**
@@ -75,5 +65,15 @@ class ContextTest
         $context($app);
 
         $this->assertEquals($app, $context->service());
+    }
+
+    /**
+     *
+     */
+    function test_service_does_not_exist()
+    {
+        $this->setExpectedException(\RuntimeException::class, 'Service does not exist');
+
+        Context::service();
     }
 }

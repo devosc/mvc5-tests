@@ -58,7 +58,7 @@ class SharedTest
     {
         $app = new App;
 
-        $this->assertEquals(null, $app->plugin(new Shared('foo', new Args(null))));
+        $this->assertNull($app->plugin(new Shared('foo', new Args(null))));
         $this->assertFalse($app->has('foo'));
         $this->assertNull($app->get('foo'));
     }

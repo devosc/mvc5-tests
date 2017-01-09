@@ -3,7 +3,7 @@
  *
  */
 
-namespace Mvc5\Test\Url\Route;
+namespace Mvc5\Test\Url;
 
 use Mvc5\Arg;
 use Mvc5\Route\Config as Route;
@@ -13,6 +13,27 @@ use Mvc5\Url\Generator;
 class GeneratorTest
     extends TestCase
 {
+    /**
+     *
+     */
+    function test_options()
+    {
+        $route = [
+            Arg::NAME     => 'app',
+            Arg::ROUTE    => '/{controller}',
+        ];
+
+        $options = [
+            Arg::SCHEME    => 'http',
+            Arg::HOST      => 'localhost',
+            Arg::CANONICAL => true
+        ];
+
+        $generator = new Generator($route, $options);
+
+        $this->assertEquals('http://localhost/foo', $generator('app', ['controller' => 'foo']));
+    }
+
     /**
      *
      */
@@ -36,26 +57,5 @@ class GeneratorTest
         $generator = new Generator($route);
 
         $this->assertEquals('http://localhost:8000/foo/bar/baz', $generator('app', ['bar' => 'baz']));
-    }
-
-    /**
-     *
-     */
-    function test_options()
-    {
-        $route = [
-            Arg::NAME     => 'app',
-            Arg::ROUTE    => '/{controller}',
-        ];
-
-        $options = [
-            Arg::SCHEME    => 'http',
-            Arg::HOST      => 'localhost',
-            Arg::CANONICAL => true
-        ];
-
-        $generator = new Generator($route, $options);
-
-        $this->assertEquals('http://localhost/foo', $generator('app', ['controller' => 'foo']));
     }
 }

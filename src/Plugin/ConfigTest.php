@@ -17,8 +17,7 @@ class ConfigTest
      */
     function test()
     {
-        $app = new App;
-        $app->config(['foo' => 'bar']);
+        $app = new App(['foo' => 'bar']);
 
         $this->assertEquals(['foo' => 'bar'], $app->plugin(new Config));
     }

@@ -18,18 +18,6 @@ class ActionTest
     /**
      *
      */
-    function test_no_actions()
-    {
-        $action  = new Action;
-        $route   = new Route;
-        $request = new Request(new Mvc5Request);
-
-        $this->assertEquals($request, $action($request, $route));
-    }
-
-    /**
-     *
-     */
     function test_action()
     {
         $action  = new Action;
@@ -57,5 +45,17 @@ class ActionTest
         $request = $action($request, $route);
 
         $this->assertEquals('foo', $request->controller());
+    }
+
+    /**
+     *
+     */
+    function test_no_actions()
+    {
+        $action  = new Action;
+        $route   = new Route;
+        $request = new Request(new Mvc5Request);
+
+        $this->assertEquals($request, $action($request, $route));
     }
 }

@@ -16,24 +16,34 @@ class ResponseTest
     /**
      *
      */
-    function test_default_values()
-    {
-        $response = new Response;
-
-        $this->assertEquals(null,            $response->body());
-        $this->assertEquals(new CookieJar,   $response->cookies());
-        $this->assertEquals(new HttpHeaders, $response->headers());
-        $this->assertEquals(null,            $response->status());
-    }
-
-    /**
-     *
-     */
     function test_array_headers()
     {
         $response = new Response(null, null, ['foo' => 'bar']);
 
         $this->assertEquals(new HttpHeaders(['foo' => 'bar']), $response->headers());
+    }
+
+    /**
+     *
+     */
+    function test_cookies()
+    {
+        $response = new Response(null, null, [], ['cookies' => ['foo']]);
+
+        $this->assertEquals(['foo'], $response->cookies());
+    }
+
+    /**
+     *
+     */
+    function test_default_values()
+    {
+        $response = new Response;
+
+        $this->assertNull($response->body());
+        $this->assertEquals(new CookieJar, $response->cookies());
+        $this->assertEquals(new HttpHeaders, $response->headers());
+        $this->assertNull($response->status());
     }
 
     /**
@@ -46,16 +56,6 @@ class ResponseTest
         $response->cookie('foo', 'bar');
 
         $this->assertTrue($response->cookies()->has('foo'));
-    }
-
-    /**
-     *
-     */
-    function test_cookies()
-    {
-        $response = new Response(null, null, [], ['cookies' => ['foo']]);
-
-        $this->assertEquals(['foo'], $response->cookies());
     }
 
     /**

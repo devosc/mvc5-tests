@@ -14,7 +14,5 @@ class Container
     /**
      *
      */
-    use _Container {
-        stored as public;
-    }
+    use _Container;
 }

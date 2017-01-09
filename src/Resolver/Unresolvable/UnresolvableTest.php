@@ -7,7 +7,6 @@ namespace Mvc5\Test\Resolver\Unresolvable;
 
 use Mvc5\App;
 use Mvc5\Resolver\Unresolvable;
-use Mvc5\Test\Resolver\Resolver\Model\Unresolvable as Plugin;
 use Mvc5\Test\Test\TestCase;
 use RuntimeException;
 
@@ -19,7 +18,7 @@ class UnresolvableTest
      */
     function test_invoke()
     {
-        $this->setExpectedException(\RuntimeException::class);
+        $this->setExpectedException(\RuntimeException::class, 'Unresolvable plugin: foo');
 
         (new Unresolvable)->__invoke('foo');
     }
@@ -40,7 +39,7 @@ class UnresolvableTest
     function test_unresolvable_plugin()
     {
         $this->setExpectedException(
-            RuntimeException::class, 'Unresolvable plugin: Mvc5\Test\Resolver\Resolver\Model\Unresolvable'
+            RuntimeException::class, 'Unresolvable plugin: ' . Plugin::class
         );
 
         (new App)->plugin(new Plugin);

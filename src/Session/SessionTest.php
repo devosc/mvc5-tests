@@ -79,29 +79,13 @@ class SessionTest
 
         $session->start();
 
-        $this->assertEquals(null, $session->current());
+        $this->assertFalse($session->current());
 
         $session['foo'] = 'bar';
 
         $this->assertEquals('bar', $session->current());
 
         $session->destroy();
-    }
-
-    /**
-     *
-     */
-    function test_destroy_without_removing_cookie()
-    {
-        $session = new Session;
-
-        $session->start();
-
-        $this->assertNotEmpty($session->id());
-
-        $session->destroy(false);
-
-        $this->assertEmpty($session->id());
     }
 
     /**
@@ -132,6 +116,22 @@ class SessionTest
         $this->assertNotEmpty($session->id());
 
         $session->destroy();
+
+        $this->assertEmpty($session->id());
+    }
+
+    /**
+     *
+     */
+    function test_destroy_without_removing_cookie()
+    {
+        $session = new Session;
+
+        $session->start();
+
+        $this->assertNotEmpty($session->id());
+
+        $session->destroy(false);
 
         $this->assertEmpty($session->id());
     }

@@ -40,30 +40,6 @@ class AddTest
     /**
      *
      */
-    function test_start()
-    {
-        $add = new Add;
-
-        $parent = new Route;
-
-        $route = new Route([
-            Arg::CHILDREN    => [],
-            Arg::CONSTRAINTS => [],
-            Arg::NAME        => 'foo',
-            Arg::OPTIONS     => [],
-            Arg::REGEX       => null,
-            Arg::ROUTE       => null,
-            Arg::TOKENS      => null
-        ]);
-
-        $path = ['/'];
-
-        $this->assertInstanceOf(Route::class, $add($parent, $route, $path, true));
-    }
-
-    /**
-     *
-     */
     function test_no_parent()
     {
         $add = new Add;
@@ -85,6 +61,30 @@ class AddTest
         $this->setExpectedException('RuntimeException');
 
         $this->assertInstanceOf(Route::class, $add($parent, $route, $path));
+    }
+
+    /**
+     *
+     */
+    function test_start()
+    {
+        $add = new Add;
+
+        $parent = new Route;
+
+        $route = new Route([
+            Arg::CHILDREN    => [],
+            Arg::CONSTRAINTS => [],
+            Arg::NAME        => 'foo',
+            Arg::OPTIONS     => [],
+            Arg::REGEX       => null,
+            Arg::ROUTE       => null,
+            Arg::TOKENS      => null
+        ]);
+
+        $path = ['/'];
+
+        $this->assertInstanceOf(Route::class, $add($parent, $route, $path, true));
     }
 
     /**

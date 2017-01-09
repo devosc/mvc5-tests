@@ -16,17 +16,7 @@ class ModelTest
     /**
      *
      */
-    function test_model_not_view_model()
-    {
-        $layout = new Layout;
-
-        $this->assertEquals('foo', $layout(new LayoutModel, 'foo'));
-    }
-
-    /**
-     *
-     */
-    function test_model_already_a_layout_model()
+    function test_already_a_layout_model()
     {
         $layout = new Layout;
 
@@ -39,7 +29,7 @@ class ModelTest
     /**
      *
      */
-    function test_model_layout_assign_view_model()
+    function test_layout_assign_view_model()
     {
         $layout = new Layout;
 
@@ -47,5 +37,15 @@ class ModelTest
         $viewModel   = new ViewModel;
 
         $this->assertTrue($layoutModel === $layout($layoutModel, $viewModel));
+    }
+
+    /**
+     *
+     */
+    function test_not_view_model()
+    {
+        $layout = new Layout;
+
+        $this->assertEquals('foo', $layout(new LayoutModel, 'foo'));
     }
 }

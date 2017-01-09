@@ -18,19 +18,6 @@ class StatusTest
     /**
      *
      */
-    function test_ok()
-    {
-        $status = new Status;
-
-        $response = $status(new Request, new Response);
-
-        $this->assertEquals(Arg::HTTP_OK, $response[Arg::STATUS]);
-        $this->assertEquals('OK',         $response[Arg::REASON]);
-    }
-
-    /**
-     *
-     */
     function test_error()
     {
         $status = new Status;
@@ -39,5 +26,18 @@ class StatusTest
 
         $this->assertEquals('500',                   $response[Arg::STATUS]);
         $this->assertEquals('Internal Server Error', $response[Arg::REASON]);
+    }
+
+    /**
+     *
+     */
+    function test_ok()
+    {
+        $status = new Status;
+
+        $response = $status(new Request, new Response);
+
+        $this->assertEquals(Arg::HTTP_OK, $response[Arg::STATUS]);
+        $this->assertEquals('OK',         $response[Arg::REASON]);
     }
 }

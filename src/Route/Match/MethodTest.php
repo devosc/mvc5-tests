@@ -31,18 +31,6 @@ class MethodTest
     /**
      *
      */
-    function test_optional_match()
-    {
-        $route   = new Route([Arg::METHOD => 'GET', Arg::OPTIONAL => [Arg::METHOD]]);
-        $method  = new Method;
-        $request = new Request(new Mvc5Request([Arg::METHOD => 'POST']));
-
-        $this->assertNull($method($request, $route));
-    }
-
-    /**
-     *
-     */
     function test_not_matched()
     {
         $route   = new Route([Arg::METHOD => 'GET']);
@@ -50,5 +38,17 @@ class MethodTest
         $request = new Request(new Mvc5Request([Arg::METHOD => 'POST']));
 
         $this->assertInstanceOf(MethodNotAllowed::class, $method($request, $route));
+    }
+
+    /**
+     *
+     */
+    function test_optional_match()
+    {
+        $route   = new Route([Arg::METHOD => 'GET', Arg::OPTIONAL => [Arg::METHOD]]);
+        $method  = new Method;
+        $request = new Request(new Mvc5Request([Arg::METHOD => 'POST']));
+
+        $this->assertNull($method($request, $route));
     }
 }

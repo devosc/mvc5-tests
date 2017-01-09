@@ -22,6 +22,16 @@ class AppTest
     /**
      *
      */
+    function test_array_access_with_provider()
+    {
+        $app = new App([], function($name) { return 'foo' == $name ? 'bar' : null; });
+
+        $this->assertEquals('bar', $app['foo']);
+    }
+
+    /**
+     *
+     */
     function test_config()
     {
         $config = [
@@ -38,17 +48,7 @@ class AppTest
     /**
      *
      */
-    function test_app_array_access_with_provider()
-    {
-        $app = new App([], function() { return 'bar'; });
-
-        $this->assertEquals('bar', $app['foo']);
-    }
-
-    /**
-     *
-     */
-    function test_app_invoke_with_provider()
+    function test_invoke_with_provider()
     {
         $app = new App([], function() { return 'bar'; });
 
@@ -58,7 +58,17 @@ class AppTest
     /**
      *
      */
-    function test_app_provider_and_scope()
+    function test_not_strict()
+    {
+        $app = new App();
+
+        $this->assertEquals(new \ArrayObject, $app['ArrayObject']);
+    }
+
+    /**
+     *
+     */
+    function test_provider_and_scope()
     {
         $app = new App([
             Arg::SERVICES => [
@@ -111,23 +121,27 @@ class AppTest
     /**
      *
      */
-    function test_app_with_private_values()
+    function test_strict_with_no_config()
     {
-        $app = new App([
-            'bat' => 'baz',
-            'services' => [
-                'foo' => new Plugin(Config::class, [new Args(['foo' => new Param('bat')])])
-            ]
-        ]);
+        $app = new App([], null, null, true);
 
-        $this->assertEquals(null, $app['bat']);
-        $this->assertEquals(new Config(['foo' => 'baz']), $app['foo']);
+        $this->assertNull($app['ArrayObject']);
     }
 
     /**
      *
      */
-    function test_app_with_private_plugins()
+    function test_strict_with_config()
+    {
+        $app = new App([Arg::SERVICES => ['ArrayObject' => 'ArrayObject']], null, null, true);
+
+        $this->assertEquals(new \ArrayObject, $app['ArrayObject']);
+    }
+
+    /**
+     *
+     */
+    function test_with_private_plugins()
     {
         $app = new App([
             'bat' => new Value('baz'),
@@ -136,37 +150,23 @@ class AppTest
             ]
         ]);
 
-        $this->assertEquals(null, $app['bat']);
+        $this->assertNull($app['bat']);
         $this->assertEquals(new Config(['foo' => 'baz']), $app['foo']);
     }
 
     /**
      *
      */
-    function test_app_not_strict()
+    function test_with_private_values()
     {
-        $app = new App();
+        $app = new App([
+            'bat' => 'baz',
+            'services' => [
+                'foo' => new Plugin(Config::class, [new Args(['foo' => new Param('bat')])])
+            ]
+        ]);
 
-        $this->assertEquals(new \ArrayObject, $app['ArrayObject']);
-    }
-
-    /**
-     *
-     */
-    function test_app_strict_with_no_config()
-    {
-        $app = new App([], null, null, true);
-
-        $this->assertEquals(null, $app['ArrayObject']);
-    }
-
-    /**
-     *
-     */
-    function test_app_strict_with_config()
-    {
-        $app = new App([Arg::SERVICES => ['ArrayObject' => 'ArrayObject']], null, null, true);
-
-        $this->assertEquals(new \ArrayObject, $app['ArrayObject']);
+        $this->assertNull($app['bat']);
+        $this->assertEquals(new Config(['foo' => 'baz']), $app['foo']);
     }
 }

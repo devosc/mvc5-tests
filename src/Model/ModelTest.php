@@ -15,16 +15,6 @@ class ModelTest
     /**
      *
      */
-    function test_template_name()
-    {
-        $model = new Model('foo');
-
-        $this->assertEquals('foo', $model->template());
-    }
-
-    /**
-     *
-     */
     function test_array_construct()
     {
         $model = new Model(['__template' => 'foo', 'bar' => 'baz']);
@@ -57,21 +47,43 @@ class ModelTest
     /**
      *
      */
-    function test_empty_template()
+    function test_template_empty()
     {
         $model = new Model;
 
-        $this->assertEquals(null, $model->template());
+        $this->assertNull($model->template());
     }
 
     /**
      *
      */
-    function test_set_template()
+    function test_template_name()
+    {
+        $model = new Model('foo');
+
+        $this->assertEquals('foo', $model->template());
+    }
+
+    /**
+     *
+     */
+    function test_template_set()
     {
         $model = new Model;
 
         $this->assertEquals('foo', $model->template('foo'));
+    }
+
+    /**
+     *
+     */
+    function test_vars_set()
+    {
+        $vars = ['bar' => 'baz'];
+
+        $model = new Model('foo');
+
+        $this->assertEquals([Arg::TEMPLATE_MODEL => 'foo'] + $vars, $model->vars($vars));
     }
 
     /**
@@ -84,17 +96,5 @@ class ModelTest
         $model = new Model(null, $vars);
 
         $this->assertEquals($vars, $model->vars());
-    }
-
-    /**
-     *
-     */
-    function test_set_vars()
-    {
-        $vars = ['bar' => 'baz'];
-
-        $model = new Model('foo');
-
-        $this->assertEquals([Arg::TEMPLATE_MODEL => 'foo'] + $vars, $model->vars($vars));
     }
 }

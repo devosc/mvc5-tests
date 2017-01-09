@@ -40,11 +40,23 @@ class CookiesTest
      */
     function test_set()
     {
-        $cookies = new Cookies(new Container);
+        $container = new Container;
 
-        $cookies->set('foo', 'bar');
+        $cookies = new Cookies($container);
 
         $this->assertEquals('bar', $cookies->set('foo', 'bar'));
+
+        $cookie =  [
+            'name'     => 'foo',
+            'value'    => 'bar',
+            'expire'   => 0,
+            'path'     => '/',
+            'domain'   => '',
+            'secure'   => false,
+            'httponly' => true
+        ];
+
+        $this->assertEquals($cookie, $container['foo']);
     }
 
     /**

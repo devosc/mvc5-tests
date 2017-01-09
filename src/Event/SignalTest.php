@@ -14,6 +14,20 @@ class SignalTest
     /**
      *
      */
+    function test_named_args()
+    {
+        $event = new SignalEvent;
+
+        $callable = function($foo){
+            return 'foo' . $foo;
+        };
+
+        $this->assertEquals('foo/bar', $event($callable, ['foo' => '/bar']));
+    }
+
+    /**
+     *
+     */
     function test_no_args()
     {
         $event = new SignalEvent;
@@ -37,19 +51,5 @@ class SignalTest
         };
 
         $this->assertEquals('foo/bar', $event($callable, ['foo', 'bar']));
-    }
-
-    /**
-     *
-     */
-    function test_named_args()
-    {
-        $event = new SignalEvent;
-
-        $callable = function($foo){
-            return 'foo' . $foo;
-        };
-
-        $this->assertEquals('foo/bar', $event($callable, ['foo' => '/bar']));
     }
 }

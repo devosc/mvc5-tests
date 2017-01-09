@@ -14,25 +14,11 @@ class ExceptionTest
     /**
      *
      */
-    function test_throw_exception()
+    function test_no_exception()
     {
         $handler = new ThrowException;
 
-        $this->setExpectedException(\Exception::class, 'Hello!');
-
-        $handler(new \Exception('Hello!'), 'foobar', true);
-    }
-
-    /**
-     *
-     */
-    function test_throw_exception_message()
-    {
-        $handler = new ThrowException;
-
-        $this->setExpectedException(\Exception::class, 'Hello!');
-
-        $handler(null, new \Exception('Hello!'), true);
+        $this->assertEquals('foo', $handler('foo', null, true));
     }
 
     /**
@@ -68,16 +54,6 @@ class ExceptionTest
     /**
      *
      */
-    function test_no_exception()
-    {
-        $handler = new ThrowException;
-
-        $this->assertEquals('foo', $handler('foo', null, true));
-    }
-
-    /**
-     *
-     */
     function test_no_exception_with_message()
     {
         $handler = new ThrowException;
@@ -93,5 +69,29 @@ class ExceptionTest
         $handler = new ThrowException;
 
         $this->assertEquals('foo', $handler(null, 'foo'));
+    }
+
+    /**
+     *
+     */
+    function test_throw_exception()
+    {
+        $handler = new ThrowException;
+
+        $this->setExpectedException(\Exception::class, 'Hello!');
+
+        $handler(new \Exception('Hello!'), 'foobar', true);
+    }
+
+    /**
+     *
+     */
+    function test_throw_exception_message()
+    {
+        $handler = new ThrowException;
+
+        $this->setExpectedException(\Exception::class, 'Hello!');
+
+        $handler(null, new \Exception('Hello!'), true);
     }
 }

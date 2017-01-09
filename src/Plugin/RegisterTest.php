@@ -31,23 +31,6 @@ class RegisterTest
     /**
      *
      */
-    function test_registered()
-    {
-        $name    = 'foo';
-        $plugin  = new \stdClass;
-        $service = new Config(['foo' => $plugin]);
-
-        $register = new Register($name, $service);
-
-        $result = $register->register(new App, ['name' => $name, 'service' => $service, 'plugin' => null]);
-
-        $this->assertTrue($plugin === $result);
-        $this->assertTrue($plugin === $service[$name]);
-    }
-
-    /**
-     *
-     */
     function test_register()
     {
         $name    = 'foo';
@@ -57,6 +40,23 @@ class RegisterTest
         $register = new Register($name, $service, $plugin);
 
         $result = $register->register(new App, ['name' => $name, 'service' => $service, 'plugin' => $plugin]);
+
+        $this->assertTrue($plugin === $result);
+        $this->assertTrue($plugin === $service[$name]);
+    }
+
+    /**
+     *
+     */
+    function test_registered()
+    {
+        $name    = 'foo';
+        $plugin  = new \stdClass;
+        $service = new Config(['foo' => $plugin]);
+
+        $register = new Register($name, $service);
+
+        $result = $register->register(new App, ['name' => $name, 'service' => $service, 'plugin' => null]);
 
         $this->assertTrue($plugin === $result);
         $this->assertTrue($plugin === $service[$name]);

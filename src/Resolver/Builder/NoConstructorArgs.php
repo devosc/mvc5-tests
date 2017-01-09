@@ -3,9 +3,11 @@
  *
  */
 
-namespace Mvc5\Test\Resolver\Resolver\Model;
+namespace Mvc5\Test\Resolver\Builder;
 
-class AutowireNoConstructorArgs
+use Mvc5\Model;
+
+class NoConstructorArgs
 {
     /**
      *
@@ -15,7 +17,7 @@ class AutowireNoConstructorArgs
     {
         $args = func_get_args();
 
-        if (!$args[0] instanceof CallEvent) {
+        if (!$args[0] instanceof Model) {
             throw new \InvalidArgumentException('Invalid argument: ' . $args[0]);
         }
 

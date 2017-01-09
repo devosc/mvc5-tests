@@ -65,16 +65,6 @@ class UriTest
     /**
      *
      */
-    function test_query()
-    {
-        $uri = new Uri([Arg::QUERY => 'foo']);
-
-        $this->assertEquals('foo', $uri->query());
-    }
-
-    /**
-     *
-     */
     function test_port()
     {
         $uri = new Uri([Arg::PORT => '80']);
@@ -85,21 +75,21 @@ class UriTest
     /**
      *
      */
-    function test_scheme()
+    function test_query()
     {
-        $uri = new Uri([Arg::SCHEME => 'http']);
+        $uri = new Uri([Arg::QUERY => 'foo']);
 
-        $this->assertEquals('http', $uri->scheme());
+        $this->assertEquals('foo', $uri->query());
     }
 
     /**
      *
      */
-    function test_user()
+    function test_scheme()
     {
-        $uri = new Uri([Arg::USER => 'foo:bar']);
+        $uri = new Uri([Arg::SCHEME => 'http']);
 
-        $this->assertEquals('foo:bar', $uri->user());
+        $this->assertEquals('http', $uri->scheme());
     }
 
     /**
@@ -119,5 +109,15 @@ class UriTest
         ]);
 
         $this->assertEquals('http://user:password@localhost/foobar?foo=bar#top', (string) $uri);
+    }
+
+    /**
+     *
+     */
+    function test_user()
+    {
+        $uri = new Uri([Arg::USER => 'foo:bar']);
+
+        $this->assertEquals('foo:bar', $uri->user());
     }
 }

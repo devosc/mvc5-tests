@@ -15,11 +15,16 @@ class WebTest
     /**
      *
      */
-    function test_invoke()
+    function test_exception()
     {
         $config = [
             Arg::SERVICES => [
                 Arg::WEB => function() {
+                    return function() {
+                        throw new \Exception;
+                    };
+                },
+                Arg::EXCEPTION_RESPONSE => function() {
                     return function() {
                         return 'foo';
                     };
@@ -35,16 +40,11 @@ class WebTest
     /**
      *
      */
-    function test_exception()
+    function test_invoke()
     {
         $config = [
             Arg::SERVICES => [
                 Arg::WEB => function() {
-                    return function() {
-                        throw new \Exception;
-                    };
-                },
-                Arg::EXCEPTION_RESPONSE => function() {
                     return function() {
                         return 'foo';
                     };

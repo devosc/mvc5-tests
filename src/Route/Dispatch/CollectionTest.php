@@ -67,20 +67,19 @@ class CollectionTest
     /**
      *
      */
-    function test_match_top()
+    function test_child_not_matched()
     {
-        $request = new Mvc5Request([Arg::URI => [Arg::PATH => '/']]);
+        $request = new Mvc5Request([Arg::URI => [Arg::PATH => '/foo/bar/bat']]);
 
         $dispatch = new Collection($this->config['routes']);
         $dispatch->service($this->app());
 
-        /**
-         * @var Request $request
-         */
+        $this->assertNull($request->error());
+
+        /** @var Request $request */
         $request = $dispatch($request);
 
-        $this->assertEquals('home', $request->name());
-        $this->assertEquals('Home\Controller', $request->controller());
+        $this->assertEquals(new NotFound, $request->error());
     }
 
     /**
@@ -105,18 +104,19 @@ class CollectionTest
     /**
      *
      */
-    function test_child_not_matched()
+    function test_match_top()
     {
-        $request = new Mvc5Request([Arg::URI => [Arg::PATH => '/foo/bar/bat']]);
+        $request = new Mvc5Request([Arg::URI => [Arg::PATH => '/']]);
 
         $dispatch = new Collection($this->config['routes']);
         $dispatch->service($this->app());
 
-        $this->assertNull($request->error());
-
-        /** @var Request $request */
+        /**
+         * @var Request $request
+         */
         $request = $dispatch($request);
 
-        $this->assertEquals(new NotFound, $request->error());
+        $this->assertEquals('home', $request->name());
+        $this->assertEquals('Home\Controller', $request->controller());
     }
 }
