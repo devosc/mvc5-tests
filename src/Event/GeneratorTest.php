@@ -96,16 +96,6 @@ class GeneratorTest
     /**
      *
      */
-    function test_events()
-    {
-        $this->assertEquals([], (new App)->events());
-        $this->assertEquals(['foo' => []], (new App(['events' => ['foo' => []]]))->events());
-        $this->assertEquals(['foo' => []], (new App)->events(['foo' => []]));
-    }
-
-    /**
-     *
-     */
     function test_event_array()
     {
         $app = new App([
@@ -155,6 +145,16 @@ class GeneratorTest
     function test_event_object_stopped()
     {
         $this->assertEquals('bar', $this->app()->trigger(new Mvc5Event('test_event'), ['stop' => true]));
+    }
+
+    /**
+     *
+     */
+    function test_events()
+    {
+        $this->assertEquals([], (new App)->events());
+        $this->assertEquals(['foo' => []], (new App(['events' => ['foo' => []]]))->events());
+        $this->assertEquals(['foo' => []], (new App)->events(['foo' => []]));
     }
 
     /**
