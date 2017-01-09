@@ -15,18 +15,6 @@ class ViewModelTest
     /**
      *
      */
-    function test_model()
-    {
-        $app = new App(['services' => ['view\model' => ViewModel::class]]);
-
-        $plugin = new ViewModelPlugin($app);
-
-        $this->assertInstanceOf(ViewModel::class, $plugin->model());
-    }
-
-    /**
-     *
-     */
     function test_constant_model()
     {
         $controller = new ViewModelController(new App);
@@ -37,13 +25,14 @@ class ViewModelTest
     /**
      *
      */
-    function test_view()
+    function test_constant_template()
     {
-        $plugin = new ViewModelPlugin(new App(['services' => ['view\model' => Mvc5Model::class]]));
+        $controller = new ViewModelController(new App);
 
-        $this->assertInstanceOf(Mvc5Model::class, $plugin->view());
+        $view = $controller->view();
+
+        $this->assertEquals('home', $view->template());
     }
-
 
     /**
      *
@@ -58,12 +47,22 @@ class ViewModelTest
     /**
      *
      */
-    function test_constant_template()
+    function test_model()
     {
-        $controller = new ViewModelController(new App);
+        $app = new App(['services' => ['view\model' => ViewModel::class]]);
 
-        $view = $controller->view();
+        $plugin = new ViewModelPlugin($app);
 
-        $this->assertEquals('home', $view->template());
+        $this->assertInstanceOf(ViewModel::class, $plugin->model());
+    }
+
+    /**
+     *
+     */
+    function test_view()
+    {
+        $plugin = new ViewModelPlugin(new App(['services' => ['view\model' => Mvc5Model::class]]));
+
+        $this->assertInstanceOf(Mvc5Model::class, $plugin->view());
     }
 }

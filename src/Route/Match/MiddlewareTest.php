@@ -30,25 +30,6 @@ class MiddlewareTest
     /**
      *
      */
-    function test_no_middleware()
-    {
-        $app     = new App;
-        $method  = new Middleware($app);
-        $route   = new Route;
-        $request = new Request;
-
-        $this->assertNull($request->controller());
-
-        /** @var Request $result */
-        $result = $method($request, $route);
-
-        $this->assertEquals($result, $method($request, $route));
-        $this->assertNull($result->controller());
-    }
-
-    /**
-     *
-     */
     function test_middleware()
     {
         $app     = new App(['services' => ['middleware' => HttpMiddleware::class]]);
@@ -134,5 +115,24 @@ class MiddlewareTest
         $controller = $request->controller();
 
         $this->assertEquals('a, b, c', $controller($request, $response));
+    }
+
+    /**
+     *
+     */
+    function test_no_middleware()
+    {
+        $app     = new App;
+        $method  = new Middleware($app);
+        $route   = new Route;
+        $request = new Request;
+
+        $this->assertNull($request->controller());
+
+        /** @var Request $result */
+        $result = $method($request, $route);
+
+        $this->assertEquals($result, $method($request, $route));
+        $this->assertNull($result->controller());
     }
 }

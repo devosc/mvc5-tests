@@ -26,21 +26,21 @@ class ModelTest
     /**
      *
      */
-    function test_event_const()
-    {
-        $event = new RouteMatch;
-
-        $this->assertEquals(Arg::ROUTE_MATCH, $event->event());
-    }
-
-    /**
-     *
-     */
     function test_event_class_name()
     {
         $event = new Event;
 
         $this->assertEquals(get_class($event), $event->event());
+    }
+
+    /**
+     *
+     */
+    function test_event_const()
+    {
+        $event = new RouteMatch;
+
+        $this->assertEquals(Arg::ROUTE_MATCH, $event->event());
     }
 
     /**

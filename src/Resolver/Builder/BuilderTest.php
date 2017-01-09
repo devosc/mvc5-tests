@@ -29,48 +29,6 @@ class BuilderTest
     /**
      *
      */
-    function test_without_constructor()
-    {
-        $this->assertInstanceOf(
-            Path::class, Builder::create(Path::class, [], new App)
-        );
-    }
-
-    /**
-     *
-     */
-    function test_not_named_args()
-    {
-        $this->assertInstanceOf(
-            Autowire::class, Builder::create(Autowire::class, [new Model, 'foo'], new App)
-        );
-    }
-
-    /**
-     *
-     */
-    function test_named_args()
-    {
-        $this->assertInstanceOf(
-            Autowire::class, Builder::create(Autowire::class, ['model' => new Model, 'foo' => 'bar'], new App)
-        );
-    }
-
-    /**
-     *
-     */
-    function test_named_args_no_constructor()
-    {
-        $class = NoConstructorArgs::class;
-
-        $this->assertInstanceOf(
-            $class, Builder::create($class, ['model' => new Model, 'foo' => 'bar'], new App)
-        );
-    }
-
-    /**
-     *
-     */
     function test_callback_param()
     {
         $app = new App([
@@ -99,11 +57,53 @@ class BuilderTest
     /**
      *
      */
+    function test_named_args()
+    {
+        $this->assertInstanceOf(
+            Autowire::class, Builder::create(Autowire::class, ['model' => new Model, 'foo' => 'bar'], new App)
+        );
+    }
+
+    /**
+     *
+     */
+    function test_named_args_no_constructor()
+    {
+        $class = NoConstructorArgs::class;
+
+        $this->assertInstanceOf(
+            $class, Builder::create($class, ['model' => new Model, 'foo' => 'bar'], new App)
+        );
+    }
+
+    /**
+     *
+     */
+    function test_not_named_args()
+    {
+        $this->assertInstanceOf(
+            Autowire::class, Builder::create(Autowire::class, [new Model, 'foo'], new App)
+        );
+    }
+
+    /**
+     *
+     */
     function test_reflection_class()
     {
         $reflection1 = Builder::reflectionClass(self::class);
         $reflection2 = Builder::reflectionClass(self::class);
 
         $this->assertTrue($reflection1 === $reflection2);
+    }
+
+    /**
+     *
+     */
+    function test_without_constructor()
+    {
+        $this->assertInstanceOf(
+            Path::class, Builder::create(Path::class, [], new App)
+        );
     }
 }

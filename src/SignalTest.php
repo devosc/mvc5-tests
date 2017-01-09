@@ -18,71 +18,9 @@ class SignalTest
     /**
      *
      */
-    function test_numeric_args()
-    {
-        $this->assertEquals('foo', (new App)->call(function($foo) { return $foo; }, ['foo']));
-    }
-
-    /**
-     *
-     */
-    function test_empty_args()
-    {
-        $this->assertEquals([], (new App)->call(function() { return func_get_args(); }));
-    }
-
-    /**
-     *
-     */
-    function test_optional_arg()
-    {
-        $this->assertNull((new App)->call(function($foo = null) { return $foo; }));
-    }
-
-    /**
-     *
-     */
-    function test_named_arg()
-    {
-        $this->assertEquals('bar', (new App)->call(function($foo) { return $foo; }, ['foo' => 'bar']));
-    }
-
-    /**
-     *
-     */
-    function test_variadic_args()
-    {
-        $function = function(...$args) {
-            return $args[0] instanceof SignalArgs ? $args[0]->args() : null;
-        };
-
-        $this->assertEquals(['foo' => 'bar'], (new App)->call($function, ['foo' => 'bar']));
-    }
-
-    /**
-     *
-     */
     function test_args()
     {
         $this->assertEquals(['foo' => 'bar'], (new App)->call(function($args) { return $args; }, ['foo' => 'bar']));
-    }
-
-    /**
-     *
-     */
-    function test_static_string()
-    {
-        $this->assertInstanceOf(
-            \ReflectionClass::class, (new App)->call('@Mvc5\Resolver\Builder::reflectionClass', ['name' => self::class])
-        );
-    }
-
-    /**
-     *
-     */
-    function test_default_param()
-    {
-        $this->assertNull((new App)->call([new Template, 'template']));
     }
 
     /**
@@ -110,23 +48,35 @@ class SignalTest
     /**
      *
      */
-    function test_no_param_function()
+    function test_default_param()
     {
-        $this->setExpectedException('RuntimeException', 'Missing required parameter $haystack for strpos');
-
-        (new App)->call('@strpos');
+        $this->assertNull((new App)->call([new Template, 'template']));
     }
 
     /**
      *
      */
-    function test_no_param_exception_static_method()
+    function test_empty_args()
     {
-        $method = 'Mvc5\Resolver\Builder::create';
+        $this->assertEquals([], (new App)->call(function() { return func_get_args(); }));
+    }
 
-        $this->setExpectedException('RuntimeException', 'Missing required parameter $name for ' . $method);
+    /**
+     *
+     */
+    function test_named_arg()
+    {
+        $this->assertEquals('bar', (new App)->call(function($foo) { return $foo; }, ['foo' => 'bar']));
+    }
 
-        (new App)->call('@' . $method, ['foo' => 'bar']);
+    /**
+     *
+     */
+    function test_no_param_function()
+    {
+        $this->setExpectedException('RuntimeException', 'Missing required parameter $haystack for strpos');
+
+        (new App)->call('@strpos');
     }
 
     /**
@@ -156,8 +106,58 @@ class SignalTest
     /**
      *
      */
+    function test_no_param_exception_static_method()
+    {
+        $method = 'Mvc5\Resolver\Builder::create';
+
+        $this->setExpectedException('RuntimeException', 'Missing required parameter $name for ' . $method);
+
+        (new App)->call('@' . $method, ['foo' => 'bar']);
+    }
+
+    /**
+     *
+     */
+    function test_numeric_args()
+    {
+        $this->assertEquals('foo', (new App)->call(function($foo) { return $foo; }, ['foo']));
+    }
+
+    /**
+     *
+     */
+    function test_optional_arg()
+    {
+        $this->assertNull((new App)->call(function($foo = null) { return $foo; }));
+    }
+
+    /**
+     *
+     */
     function test_php_function()
     {
         $this->assertEmpty((new App)->call('@session_id'));
+    }
+
+    /**
+     *
+     */
+    function test_static_string()
+    {
+        $this->assertInstanceOf(
+            \ReflectionClass::class, (new App)->call('@Mvc5\Resolver\Builder::reflectionClass', ['name' => self::class])
+        );
+    }
+
+    /**
+     *
+     */
+    function test_variadic_args()
+    {
+        $function = function(...$args) {
+            return $args[0] instanceof SignalArgs ? $args[0]->args() : null;
+        };
+
+        $this->assertEquals(['foo' => 'bar'], (new App)->call($function, ['foo' => 'bar']));
     }
 }

@@ -18,24 +18,6 @@ class ControllerTest
     /**
      *
      */
-    function test_no_controller()
-    {
-        $controller = new Controller(new App);
-
-        $request = new Request;
-
-        $response = new Response;
-
-        $next = function(Request $request, Response $response) {
-            return $response;
-        };
-
-        $this->assertEquals($response, $controller($request, $response, $next));
-    }
-
-    /**
-     *
-     */
     function test_controller_returns_response()
     {
         $app = new App([
@@ -93,5 +75,23 @@ class ControllerTest
         $response = $controller($request, $response, $next);
 
         $this->assertEquals('foo', $response[Arg::BODY]);
+    }
+
+    /**
+     *
+     */
+    function test_no_controller()
+    {
+        $controller = new Controller(new App);
+
+        $request = new Request;
+
+        $response = new Response;
+
+        $next = function(Request $request, Response $response) {
+            return $response;
+        };
+
+        $this->assertEquals($response, $controller($request, $response, $next));
     }
 }

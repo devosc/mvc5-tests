@@ -15,6 +15,18 @@ class ScopeTest
     /**
      *
      */
+    function test_exists()
+    {
+        $config = new Config;
+
+        $app = new App(null, null, $config);
+
+        $this->assertTrue($config === $app->scope());
+    }
+
+    /**
+     *
+     */
     function test_null()
     {
         $this->assertNull((new App)->scope());
@@ -28,17 +40,5 @@ class ScopeTest
         $config = new Config;
 
         $this->assertTrue($config === (new App)->scope($config));
-    }
-
-    /**
-     *
-     */
-    function test_exists()
-    {
-        $config = new Config;
-
-        $app = new App(null, null, $config);
-
-        $this->assertTrue($config === $app->scope());
     }
 }

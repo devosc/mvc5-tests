@@ -45,26 +45,6 @@ class ResponseTest
     /**
      *
      */
-    function test_version()
-    {
-        $response = new Response([Arg::VERSION => '1.1']);
-
-        $this->assertEquals('1.1', $response->version());
-    }
-
-    /**
-     *
-     */
-    function test_version_null()
-    {
-        $response = new Response;
-
-        $this->assertNull($response->version());
-    }
-
-    /**
-     *
-     */
     function test_status()
     {
         $response = new Response([Arg::STATUS => '200']);
@@ -80,5 +60,25 @@ class ResponseTest
         $response = new Response;
 
         $this->assertNull($response->status());
+    }
+
+    /**
+     *
+     */
+    function test_version()
+    {
+        $response = new Response([Arg::VERSION => '1.1']);
+
+        $this->assertEquals('1.1', $response->version());
+    }
+
+    /**
+     *
+     */
+    function test_version_null()
+    {
+        $response = new Response;
+
+        $this->assertNull($response->version());
     }
 }

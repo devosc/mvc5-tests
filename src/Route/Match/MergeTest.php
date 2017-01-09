@@ -16,17 +16,6 @@ class MergeTest
     /**
      *
      */
-    function test_no_parent()
-    {
-        $method = new Merge;
-        $route  = new Route;
-
-        $this->assertEquals($route, $method($route));
-    }
-
-    /**
-     *
-     */
     function test_merge_middleware()
     {
         $method = new Merge;
@@ -48,5 +37,16 @@ class MergeTest
 
         $this->assertEquals($route, $method($route, $parent));
         $this->assertEquals(['prefix' => 'Foo\\'], $route->options());
+    }
+
+    /**
+     *
+     */
+    function test_no_parent()
+    {
+        $method = new Merge;
+        $route  = new Route;
+
+        $this->assertEquals($route, $method($route));
     }
 }

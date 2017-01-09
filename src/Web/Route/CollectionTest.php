@@ -36,6 +36,35 @@ class CollectionTest
     /**
      *
      */
+    function test_mixed_response()
+    {
+        $route = new Collection([[Arg::ROUTE => '/']]);
+
+        $config = $this->config;
+
+        $config['events']['route\match'] = [function() {
+            return 'foo';
+        }];
+
+        $route->service(new App($config));
+
+        $request  = new Request;
+        $response = new Response;
+
+        $next = function(Request $request, Response $response) {
+            return $response;
+        };
+
+        /** @var Response $result */
+        $result = $route($request, $response, $next);
+
+        $this->assertInstanceOf(Response::class, $result);
+        $this->assertEquals('foo', $result->body());
+    }
+
+    /**
+     *
+     */
     function test_request()
     {
         $route = new Collection([[Arg::NAME => 'home', Arg::ROUTE => '/']]);
@@ -66,35 +95,6 @@ class CollectionTest
 
         $config['events']['route\match'] = [function() {
             return new Response(['body' => 'foo']);
-        }];
-
-        $route->service(new App($config));
-
-        $request  = new Request;
-        $response = new Response;
-
-        $next = function(Request $request, Response $response) {
-            return $response;
-        };
-
-        /** @var Response $result */
-        $result = $route($request, $response, $next);
-
-        $this->assertInstanceOf(Response::class, $result);
-        $this->assertEquals('foo', $result->body());
-    }
-
-    /**
-     *
-     */
-    function test_mixed_response()
-    {
-        $route = new Collection([[Arg::ROUTE => '/']]);
-
-        $config = $this->config;
-
-        $config['events']['route\match'] = [function() {
-            return 'foo';
         }];
 
         $route->service(new App($config));

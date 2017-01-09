@@ -35,21 +35,21 @@ class CompileTest
     /**
      *
      */
-    function test_use_default_if_required_parameter()
+    function test_optional_params_provided()
     {
         $compile = new Compile;
 
         $route = (new Generator)->__invoke([
-            'route'      => '/{author}[/{category}][/{optional_missing_param}]',
+            'route'      => '/[{author}[/{category}]]',
             'defaults'   => [
                 'author'   => 'owner',
                 'category' => 'web'
-            ],
+            ]
         ]);
 
-        $params = ['category' => 'bar'];
+        $params = ['author' => 'foo', 'category' => 'bar'];
 
-        $this->assertEquals('/owner/bar', $compile->compile($route['tokens'], $params, $route['defaults']));
+        $this->assertEquals('/foo/bar', $compile->compile($route['tokens'], $params, $route['defaults']));
     }
 
     /**
@@ -67,20 +67,20 @@ class CompileTest
     /**
      *
      */
-    function test_optional_params_provided()
+    function test_use_default_if_required_parameter()
     {
         $compile = new Compile;
 
         $route = (new Generator)->__invoke([
-            'route'      => '/[{author}[/{category}]]',
+            'route'      => '/{author}[/{category}][/{optional_missing_param}]',
             'defaults'   => [
                 'author'   => 'owner',
                 'category' => 'web'
-            ]
+            ],
         ]);
 
-        $params = ['author' => 'foo', 'category' => 'bar'];
+        $params = ['category' => 'bar'];
 
-        $this->assertEquals('/foo/bar', $compile->compile($route['tokens'], $params, $route['defaults']));
+        $this->assertEquals('/owner/bar', $compile->compile($route['tokens'], $params, $route['defaults']));
     }
 }

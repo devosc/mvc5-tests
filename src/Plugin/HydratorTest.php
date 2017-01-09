@@ -33,78 +33,6 @@ class HydratorTest
     }
 
     /**
-     *
-     */
-    function test_call_method_on_current_object_with_single_argument()
-    {
-        $plugin = new Hydrator(Model::class, ['template' => 'foo']);
-
-        $model = (new App)->plugin($plugin);
-
-        $this->assertInstanceOf(Model::class, $model);
-        $this->assertEquals('foo', $model->template());
-    }
-
-    /**
-     *
-     */
-    function test_call_method_on_current_object_with_multiple_args()
-    {
-        $plugin = new Hydrator(Model::class, ['vars' => ['foo' => 'bar'], 'template' => 'baz']);
-
-        $model = (new App)->plugin($plugin);
-
-        $this->assertInstanceOf(Model::class, $model);
-        $this->assertEquals('bar', $model->get('foo'));
-        $this->assertEquals('baz', $model->template());
-    }
-
-    /**
-     *
-     */
-    function test_call_same_method_on_current_object_with_multiple_args()
-    {
-        $plugin = new Hydrator(Model::class, [['set', 'foo', 'bar'], ['set', 'bat', 'baz'], 'template' => 'foobar']);
-
-        $model = (new App)->plugin($plugin);
-
-        $this->assertInstanceOf(Model::class, $model);
-        $this->assertEquals('bar', $model->get('foo'));
-        $this->assertEquals('baz', $model->get('bat'));
-        $this->assertEquals('foobar', $model->template());
-    }
-
-    /**
-     * [$service, $method]
-     */
-    function test_call_service_method_and_pass_current_object_as_named_arg()
-    {
-        $plugin = new Hydrator(
-            Layout::class, [['$layout', [new Plugin(ViewLayout::class), '__invoke'], 'model' => new Plugin(Model::class)]]
-        );
-
-        $layout = (new App)->plugin($plugin);
-
-        $this->assertInstanceOf(Layout::class, $layout);
-        $this->assertInstanceOf(Model::class, $layout->model());
-    }
-
-    /**
-     *
-     */
-    function test_call_plugin_and_pass_current_object_as_named_arg()
-    {
-        $plugin = new Hydrator(
-            Layout::class, [['$layout', new Plugin(ViewLayout::class), 'model' => new Plugin(Model::class)]]
-        );
-
-        $layout = (new App)->plugin($plugin);
-
-        $this->assertInstanceOf(Layout::class, $layout);
-        $this->assertInstanceOf(Model::class, $layout->model());
-    }
-
-    /**
      * $this->resolve($method)
      */
     function test_call_function_with_args()
@@ -145,6 +73,78 @@ class HydratorTest
 
         $this->assertInstanceOf(Model::class, $model);
         $this->assertEquals('bar', $model->template());
+    }
+
+    /**
+     *
+     */
+    function test_call_method_on_current_object_with_multiple_args()
+    {
+        $plugin = new Hydrator(Model::class, ['vars' => ['foo' => 'bar'], 'template' => 'baz']);
+
+        $model = (new App)->plugin($plugin);
+
+        $this->assertInstanceOf(Model::class, $model);
+        $this->assertEquals('bar', $model->get('foo'));
+        $this->assertEquals('baz', $model->template());
+    }
+
+    /**
+     *
+     */
+    function test_call_method_on_current_object_with_single_argument()
+    {
+        $plugin = new Hydrator(Model::class, ['template' => 'foo']);
+
+        $model = (new App)->plugin($plugin);
+
+        $this->assertInstanceOf(Model::class, $model);
+        $this->assertEquals('foo', $model->template());
+    }
+
+    /**
+     *
+     */
+    function test_call_plugin_and_pass_current_object_as_named_arg()
+    {
+        $plugin = new Hydrator(
+            Layout::class, [['$layout', new Plugin(ViewLayout::class), 'model' => new Plugin(Model::class)]]
+        );
+
+        $layout = (new App)->plugin($plugin);
+
+        $this->assertInstanceOf(Layout::class, $layout);
+        $this->assertInstanceOf(Model::class, $layout->model());
+    }
+
+    /**
+     *
+     */
+    function test_call_same_method_on_current_object_with_multiple_args()
+    {
+        $plugin = new Hydrator(Model::class, [['set', 'foo', 'bar'], ['set', 'bat', 'baz'], 'template' => 'foobar']);
+
+        $model = (new App)->plugin($plugin);
+
+        $this->assertInstanceOf(Model::class, $model);
+        $this->assertEquals('bar', $model->get('foo'));
+        $this->assertEquals('baz', $model->get('bat'));
+        $this->assertEquals('foobar', $model->template());
+    }
+
+    /**
+     * [$service, $method]
+     */
+    function test_call_service_method_and_pass_current_object_as_named_arg()
+    {
+        $plugin = new Hydrator(
+            Layout::class, [['$layout', [new Plugin(ViewLayout::class), '__invoke'], 'model' => new Plugin(Model::class)]]
+        );
+
+        $layout = (new App)->plugin($plugin);
+
+        $this->assertInstanceOf(Layout::class, $layout);
+        $this->assertInstanceOf(Model::class, $layout->model());
     }
 
     /**

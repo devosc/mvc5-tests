@@ -15,6 +15,18 @@ class BuildTest
     /**
      *
      */
+    function test_not_unique_array_with_same_service_name()
+    {
+        $app = new App;
+
+        $app->configure(Config::class, [Config::class]);
+
+        $this->assertInstanceOf(Config::class, $app->plugin(Config::class));
+    }
+
+    /**
+     *
+     */
     function test_not_unique_with_config()
     {
         $app = new App;
@@ -22,28 +34,6 @@ class BuildTest
         $app->configure('foo', Config::class);
 
         $this->assertInstanceOf(Config::class, $app->plugin('foo'));
-    }
-
-    /**
-     *
-     */
-    function test_unique_with_config()
-    {
-        $app = new App;
-
-        $app->configure(Config::class, Config::class);
-
-        $this->assertInstanceOf(Config::class, $app->plugin(Config::class));
-    }
-
-    /**
-     *
-     */
-    function test_unique_not_strict_without_config()
-    {
-        $app = new App;
-
-        $this->assertInstanceOf(Config::class, $app->plugin(Config::class));
     }
 
     /**
@@ -62,11 +52,21 @@ class BuildTest
     /**
      *
      */
-    function test_not_unique_array_with_same_service_name()
+    function test_unique_not_strict_without_config()
     {
         $app = new App;
 
-        $app->configure(Config::class, [Config::class]);
+        $this->assertInstanceOf(Config::class, $app->plugin(Config::class));
+    }
+
+    /**
+     *
+     */
+    function test_unique_with_config()
+    {
+        $app = new App;
+
+        $app->configure(Config::class, Config::class);
 
         $this->assertInstanceOf(Config::class, $app->plugin(Config::class));
     }

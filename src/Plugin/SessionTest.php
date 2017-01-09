@@ -16,23 +16,6 @@ class SessionTest
     /**
      *
      */
-    function test_session_variable_not_exists()
-    {
-        $name    = 'foo';
-        $service = 'session';
-
-        $app = new App(['services' => ['session' => new Config]]);
-
-        $session = new Session($name);
-
-        $result = $session->register($app, ['name' => $name, 'service' => $service, 'plugin' => null]);
-
-        $this->assertNull($result);
-    }
-
-    /**
-     *
-     */
     function test_existing_session_variable()
     {
         $name    = 'foo';
@@ -66,5 +49,22 @@ class SessionTest
 
         $this->assertTrue($plugin === $result);
         $this->assertTrue($plugin === $app['session'][$name]);
+    }
+
+    /**
+     *
+     */
+    function test_session_variable_not_exists()
+    {
+        $name    = 'foo';
+        $service = 'session';
+
+        $app = new App(['services' => ['session' => new Config]]);
+
+        $session = new Session($name);
+
+        $result = $session->register($app, ['name' => $name, 'service' => $service, 'plugin' => null]);
+
+        $this->assertNull($result);
     }
 }

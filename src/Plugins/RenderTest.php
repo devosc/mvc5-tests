@@ -14,7 +14,7 @@ class RenderTest
     /**
      *
      */
-    function test_render()
+    function test()
     {
         $config = ['services' => ['render' => function() { return function($template) { return $template; }; }]];
 

@@ -14,7 +14,7 @@ class ErrorTest
     /**
      *
      */
-    function test_error_log()
+    function test()
     {
         $log = new Error;
 

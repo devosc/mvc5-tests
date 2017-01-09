@@ -104,6 +104,28 @@ class PluginTest
     /**
      *
      */
+    function test_recursive()
+    {
+        $app = new App([
+            'services' => [
+                'foo' => new Plugin(Config::class)
+            ]
+        ]);
+
+        $this->assertInstanceOf(Config::class, $app->plugin(new Plug('foo')));
+    }
+
+    /**
+     *
+     */
+    function test_resolvable()
+    {
+        $this->assertEquals(new Config, (new App)->plugin(new Plugin(Config::class)));
+    }
+
+    /**
+     *
+     */
     function test_service_array_recursive()
     {
         $app = new App([
@@ -147,27 +169,5 @@ class PluginTest
         $model = $app->plugin('exception\model');
 
         $this->assertEquals('exception', $model->template());
-    }
-
-    /**
-     *
-     */
-    function test_recursive()
-    {
-        $app = new App([
-            'services' => [
-                'foo' => new Plugin(Config::class)
-            ]
-        ]);
-
-        $this->assertInstanceOf(Config::class, $app->plugin(new Plug('foo')));
-    }
-
-    /**
-     *
-     */
-    function test_resolvable()
-    {
-        $this->assertEquals(new Config, (new App)->plugin(new Plugin(Config::class)));
     }
 }

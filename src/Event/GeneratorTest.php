@@ -71,6 +71,23 @@ class GeneratorTest
     /**
      *
      */
+    function test_call_event()
+    {
+        $app = $this->app([
+            'services' => [
+                'event\model' => Mvc5Event::class,
+                'test\event'  => [Mvc5Event::class, 'test_event']
+            ]
+        ]);
+
+        $this->assertEquals('baz', $app->call('test_event'));
+        $this->assertEquals('baz', $app->call(new Mvc5Event('test_event')));
+        $this->assertEquals('baz', $app->call('test\event'));
+    }
+
+    /**
+     *
+     */
     function test_event()
     {
         $this->assertEquals('baz', $this->app()->trigger('test_event'));
@@ -79,17 +96,11 @@ class GeneratorTest
     /**
      *
      */
-    function test_event_object()
+    function test_events()
     {
-        $this->assertEquals('baz', $this->app()->trigger(new Mvc5Event('test_event')));
-    }
-
-    /**
-     *
-     */
-    function test_event_object_stopped()
-    {
-        $this->assertEquals('bar', $this->app()->trigger(new Mvc5Event('test_event'), ['stop' => true]));
+        $this->assertEquals([], (new App)->events());
+        $this->assertEquals(['foo' => []], (new App(['events' => ['foo' => []]]))->events());
+        $this->assertEquals(['foo' => []], (new App)->events(['foo' => []]));
     }
 
     /**
@@ -118,6 +129,40 @@ class GeneratorTest
     function test_event_iterator()
     {
         $this->assertEquals('baz', $this->app()->trigger(new Mvc5Event('test_event_iterator')));
+    }
+
+    /**
+     *
+     */
+    function test_event_not_found_exception()
+    {
+        $this->setExpectedException('RuntimeException', 'Unresolvable plugin: foo');
+
+        (new App)->trigger('foo');
+    }
+
+    /**
+     *
+     */
+    function test_event_object()
+    {
+        $this->assertEquals('baz', $this->app()->trigger(new Mvc5Event('test_event')));
+    }
+
+    /**
+     *
+     */
+    function test_event_object_stopped()
+    {
+        $this->assertEquals('bar', $this->app()->trigger(new Mvc5Event('test_event'), ['stop' => true]));
+    }
+
+    /**
+     *
+     */
+    function test_object_event()
+    {
+        $this->assertEquals('foo', $this->app()->trigger(new \stdClass));
     }
 
     /**
@@ -170,50 +215,5 @@ class GeneratorTest
 
         $this->assertEquals('baz', $app->trigger('test_event_iterator'));
         $this->assertEquals('baz', $app->trigger('test_event_iterator'));
-    }
-
-    /**
-     *
-     */
-    function test_call_event()
-    {
-        $app = $this->app([
-            'services' => [
-                'event\model' => Mvc5Event::class,
-                'test\event'  => [Mvc5Event::class, 'test_event']
-            ]
-        ]);
-
-        $this->assertEquals('baz', $app->call('test_event'));
-        $this->assertEquals('baz', $app->call(new Mvc5Event('test_event')));
-        $this->assertEquals('baz', $app->call('test\event'));
-    }
-
-    /**
-     *
-     */
-    function test_object_event()
-    {
-        $this->assertEquals('foo', $this->app()->trigger(new \stdClass));
-    }
-
-    /**
-     *
-     */
-    function test_events()
-    {
-        $this->assertEquals([], (new App)->events());
-        $this->assertEquals(['foo' => []], (new App(['events' => ['foo' => []]]))->events());
-        $this->assertEquals(['foo' => []], (new App)->events(['foo' => []]));
-    }
-
-    /**
-     *
-     */
-    function test_event_not_found_exception()
-    {
-        $this->setExpectedException('RuntimeException', 'Unresolvable plugin: foo');
-
-        (new App)->trigger('foo');
     }
 }

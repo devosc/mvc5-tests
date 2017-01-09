@@ -15,6 +15,26 @@ class RouteTest
     /**
      *
      */
+    function test_action()
+    {
+        $route = new Route([Arg::ACTION => ['GET' => 'foo']]);
+
+        $this->assertEquals('foo', $route->action('GET'));
+    }
+
+    /**
+     *
+     */
+    function test_actions()
+    {
+        $route = new Route([Arg::ACTION => ['GET' => 'foo']]);
+
+        $this->assertEquals(['GET' => 'foo'], $route->actions());
+    }
+
+    /**
+     *
+     */
     function test_add()
     {
         $route = new Route;
@@ -37,21 +57,21 @@ class RouteTest
     /**
      *
      */
-    function test_child_not_exists()
-    {
-        $route = new Route;
-
-        $this->assertNull($route->child('bar'));
-    }
-
-    /**
-     *
-     */
     function test_children_isset()
     {
         $route = new Route([Arg::CHILDREN => ['foo' => 'bar']]);
 
         $this->assertEquals(['foo' => 'bar'], $route->children());
+    }
+
+    /**
+     *
+     */
+    function test_child_not_exists()
+    {
+        $route = new Route;
+
+        $this->assertNull($route->child('bar'));
     }
 
     /**
@@ -67,7 +87,7 @@ class RouteTest
     /**
      *
      */
-    function test_className()
+    function test_class_name()
     {
         $route = new Route([Arg::CLASS_NAME => 'foo']);
 
@@ -222,26 +242,6 @@ class RouteTest
         $route = new Route([Arg::REGEX => 'foo']);
 
         $this->assertEquals('foo', $route->regex());
-    }
-
-    /**
-     *
-     */
-    function test_action()
-    {
-        $route = new Route([Arg::ACTION => ['GET' => 'foo']]);
-
-        $this->assertEquals('foo', $route->action('GET'));
-    }
-
-    /**
-     *
-     */
-    function test_actions()
-    {
-        $route = new Route([Arg::ACTION => ['GET' => 'foo']]);
-
-        $this->assertEquals(['GET' => 'foo'], $route->actions());
     }
 
     /**

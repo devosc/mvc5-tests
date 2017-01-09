@@ -16,18 +16,6 @@ class SendTest
     /**
      * @runInSeparateProcess
      */
-    function test_emitter()
-    {
-        $send = new Send;
-
-        $send(new Response(new Callback(function () { echo 'Hello!'; })));
-
-        $this->assertEquals('Hello!', $this->getActualOutput());
-    }
-
-    /**
-     * @runInSeparateProcess
-     */
     function test_closure()
     {
         $send = new Send;
@@ -40,11 +28,11 @@ class SendTest
     /**
      * @runInSeparateProcess
      */
-    function test_string()
+    function test_emitter()
     {
         $send = new Send;
 
-        $send(new Response('Hello!'));
+        $send(new Response(new Callback(function () { echo 'Hello!'; })));
 
         $this->assertEquals('Hello!', $this->getActualOutput());
     }
@@ -59,6 +47,18 @@ class SendTest
         $send(new Response);
 
         $this->assertEmpty($this->getActualOutput());
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    function test_string()
+    {
+        $send = new Send;
+
+        $send(new Response('Hello!'));
+
+        $this->assertEquals('Hello!', $this->getActualOutput());
     }
 
     /**

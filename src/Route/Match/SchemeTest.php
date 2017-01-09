@@ -19,10 +19,10 @@ class SchemeTest
     /**
      *
      */
-    function test_no_scheme()
+    function test_matched()
     {
-        $route   = new Route;
-        $request = new Request(new Mvc5Request);
+        $route   = new Route([Arg::SCHEME => 'http']);
+        $request = new Request(new Mvc5Request([Arg::URI => [Arg::SCHEME => 'http']]));
         $scheme  = new Scheme;
 
         $this->assertEquals($request, $scheme($request, $route));
@@ -31,10 +31,10 @@ class SchemeTest
     /**
      *
      */
-    function test_matched()
+    function test_no_scheme()
     {
-        $route   = new Route([Arg::SCHEME => 'http']);
-        $request = new Request(new Mvc5Request([Arg::URI => [Arg::SCHEME => 'http']]));
+        $route   = new Route;
+        $request = new Request(new Mvc5Request);
         $scheme  = new Scheme;
 
         $this->assertEquals($request, $scheme($request, $route));

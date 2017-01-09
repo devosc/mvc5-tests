@@ -15,7 +15,7 @@ class ConfigTest
     /**
      *
      */
-    function test_config()
+    function test()
     {
         $config = ['services' => ['config' => new Config]];
 

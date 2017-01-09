@@ -37,20 +37,20 @@ class ArgsTest
     /**
      *
      */
-    function test_not_array()
-    {
-        $args = new Args(new Plugin(Config::class));
-
-        $this->assertInstanceOf(Config::class, (new App)->plugin($args));
-    }
-
-    /**
-     *
-     */
     function test_empty()
     {
         $args = new Args(null);
 
         $this->assertNull((new App)->plugin($args));
+    }
+
+    /**
+     *
+     */
+    function test_not_array()
+    {
+        $args = new Args(new Plugin(Config::class));
+
+        $this->assertInstanceOf(Config::class, (new App)->plugin($args));
     }
 }

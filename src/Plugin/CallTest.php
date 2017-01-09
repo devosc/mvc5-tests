@@ -56,20 +56,20 @@ class CallTest
     /**
      *
      */
-    function test_not_named_with_parent_args()
-    {
-        $call = new Call(function($foo, $bar) { return $foo . $bar; }, ['bar']);
-
-        $this->assertEquals('foobar', (new App)->plugin($call, ['foo']));
-    }
-
-    /**
-     *
-     */
     function test_not_named()
     {
         $call = new Call(function($foo, $bar) { return $foo . $bar; });
 
         $this->assertEquals('foobar', (new App)->plugin($call, ['foo', 'bar']));
+    }
+
+    /**
+     *
+     */
+    function test_not_named_with_parent_args()
+    {
+        $call = new Call(function($foo, $bar) { return $foo . $bar; }, ['bar']);
+
+        $this->assertEquals('foobar', (new App)->plugin($call, ['foo']));
     }
 }

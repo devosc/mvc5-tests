@@ -14,7 +14,7 @@ class UrlTest
     /**
      *
      */
-    function test_url()
+    function test()
     {
         $config = ['services' => ['url' => function() { return function($url) { return $url; }; }]];
 

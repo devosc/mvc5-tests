@@ -54,6 +54,35 @@ class BuildTest
     /**
      *
      */
+    function test_no_route_or_regex_exception()
+    {
+        $build = new Build;
+
+        $this->setExpectedException('Exception', 'Route path not specified');
+
+        $build->build([]);
+    }
+
+    /**
+     *
+     */
+    function test_regex_only()
+    {
+        $build = new Build;
+
+        $route = $build->build([Arg::REGEX => '/']);
+
+        $this->assertNull($route->name());
+        $this->assertEquals('/', $route->regex());
+        $this->assertEquals([], $route->constraints());
+        $this->assertEquals([], $route->options());
+        $this->assertEquals([], $route->tokens());
+        $this->assertEquals([], $route->children());
+    }
+
+    /**
+     *
+     */
     function test_route()
     {
         $build = new Build;
@@ -90,34 +119,5 @@ class BuildTest
         $this->assertEquals([], $route->options());
         $this->assertEquals([['literal', '/']], $route->tokens());
         $this->assertEquals(['foo' => $foo], $route->children());
-    }
-
-    /**
-     *
-     */
-    function test_regex_only()
-    {
-        $build = new Build;
-
-        $route = $build->build([Arg::REGEX => '/']);
-
-        $this->assertNull($route->name());
-        $this->assertEquals('/', $route->regex());
-        $this->assertEquals([], $route->constraints());
-        $this->assertEquals([], $route->options());
-        $this->assertEquals([], $route->tokens());
-        $this->assertEquals([], $route->children());
-    }
-
-    /**
-     *
-     */
-    function test_no_route_or_regex_exception()
-    {
-        $build = new Build;
-
-        $this->setExpectedException('Exception', 'Route path not specified');
-
-        $build->build([]);
     }
 }

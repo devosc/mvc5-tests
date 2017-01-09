@@ -15,6 +15,16 @@ class RequestTest
     /**
      *
      */
+    function test_arg_default()
+    {
+        $request = new Request;
+
+        $this->assertEquals('bar', $request->arg('foo', 'bar'));
+    }
+
+    /**
+     *
+     */
     function test_arg_not_null()
     {
         $request = new Request([Arg::ARGS => ['foo' => 'bar']]);
@@ -30,16 +40,6 @@ class RequestTest
         $request = new Request;
 
         $this->assertNull($request->arg('foo'));
-    }
-
-    /**
-     *
-     */
-    function test_arg_default()
-    {
-        $request = new Request;
-
-        $this->assertEquals('bar', $request->arg('foo', 'bar'));
     }
 
     /**
@@ -125,21 +125,21 @@ class RequestTest
     /**
      *
      */
-    function test_data_null()
-    {
-        $request = new Request;
-
-        $this->assertNull($request->data('foo'));
-    }
-
-    /**
-     *
-     */
     function test_data_default()
     {
         $request = new Request;
 
         $this->assertEquals('bar', $request->data('foo', 'bar'));
+    }
+
+    /**
+     *
+     */
+    function test_data_null()
+    {
+        $request = new Request;
+
+        $this->assertNull($request->data('foo'));
     }
 
     /**
@@ -245,21 +245,21 @@ class RequestTest
     /**
      *
      */
-    function test_param_null()
-    {
-        $request = new Request;
-
-        $this->assertNull($request->param('foo'));
-    }
-
-    /**
-     *
-     */
     function test_param_default()
     {
         $request = new Request;
 
         $this->assertEquals('bar', $request->param('foo', 'bar'));
+    }
+
+    /**
+     *
+     */
+    function test_param_null()
+    {
+        $request = new Request;
+
+        $this->assertNull($request->param('foo'));
     }
 
     /**
@@ -297,21 +297,21 @@ class RequestTest
     /**
      *
      */
-    function test_post_null()
-    {
-        $request = new Request;
-
-        $this->assertNull($request->post('foo'));
-    }
-
-    /**
-     *
-     */
     function test_post_default()
     {
         $request = new Request;
 
         $this->assertEquals('bar', $request->post('foo', 'bar'));
+    }
+
+    /**
+     *
+     */
+    function test_post_null()
+    {
+        $request = new Request;
+
+        $this->assertNull($request->post('foo'));
     }
 
     /**
@@ -377,21 +377,21 @@ class RequestTest
     /**
      *
      */
-    function test_server_param_null()
-    {
-        $request = new Request;
-
-        $this->assertNull($request->server('foo'));
-    }
-
-    /**
-     *
-     */
     function test_server_param_default()
     {
         $request = new Request;
 
         $this->assertEquals('bar', $request->server('foo', 'bar'));
+    }
+
+    /**
+     *
+     */
+    function test_server_param_null()
+    {
+        $request = new Request;
+
+        $this->assertNull($request->server('foo'));
     }
 
     /**
@@ -417,21 +417,21 @@ class RequestTest
     /**
      *
      */
-    function test_session_var_null()
-    {
-        $request = new Request;
-
-        $this->assertNull($request->session('foo'));
-    }
-
-    /**
-     *
-     */
     function test_session_var_default()
     {
         $request = new Request;
 
         $this->assertEquals('bar', $request->session('foo', 'bar'));
+    }
+
+    /**
+     *
+     */
+    function test_session_var_null()
+    {
+        $request = new Request;
+
+        $this->assertNull($request->session('foo'));
     }
 
     /**
@@ -483,17 +483,11 @@ class RequestTest
     /**
      *
      */
-    function test_variable_order()
+    function test_variable_default()
     {
-        $request = new Request([
-            Arg::PARAMS => ['foo' => 'bar'],
-            Arg::ARGS   => ['foo' => 'baz', 'bat' => 'bar'],
-            Arg::DATA   => ['foo' => 'bat', 'bat' => 'baz', 'foobar' => 'bar'],
-        ]);
+        $request = new Request;
 
-        $this->assertEquals('bar', $request->variable('foo'));
-        $this->assertEquals('bar', $request->variable('bat'));
-        $this->assertEquals('bar', $request->variable('foobar'));
+        $this->assertEquals('bar', $request->variable('foo', 'bar'));
     }
 
     /**
@@ -509,11 +503,17 @@ class RequestTest
     /**
      *
      */
-    function test_variable_default()
+    function test_variable_order()
     {
-        $request = new Request;
+        $request = new Request([
+            Arg::PARAMS => ['foo' => 'bar'],
+            Arg::ARGS   => ['foo' => 'baz', 'bat' => 'bar'],
+            Arg::DATA   => ['foo' => 'bat', 'bat' => 'baz', 'foobar' => 'bar'],
+        ]);
 
-        $this->assertEquals('bar', $request->variable('foo', 'bar'));
+        $this->assertEquals('bar', $request->variable('foo'));
+        $this->assertEquals('bar', $request->variable('bat'));
+        $this->assertEquals('bar', $request->variable('foobar'));
     }
 
     /**

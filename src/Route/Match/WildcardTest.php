@@ -17,25 +17,17 @@ class WildcardTest
     /**
      *
      */
-    function test_matched()
+    function test_custom_name()
     {
-        $route    = new Route([Arg::MATCHED => true]);
-        $request  = new Request;
+        $route    = new Route([Arg::WILDCARD => true, Arg::OPTIONS => [Arg::WILDCARD => 'foobar']]);
+        $request  = new Request([Arg::PARAMS => ['foobar'=> 'foo/bar/baz/bat']]);
         $wildcard = new Wildcard;
 
         $this->assertEquals($request, $wildcard($request, $route));
-    }
 
-    /**
-     *
-     */
-    function test_no_wildcard()
-    {
-        $route    = new Route([Arg::WILDCARD => false]);
-        $request  = new Request;
-        $wildcard = new Wildcard;
+        $request = $wildcard($request, $route);
 
-        $this->assertEquals($request, $wildcard($request, $route));
+        $this->assertEquals(['foo' => 'bar', 'baz' => 'bat'], $request[Arg::PARAMS]);
     }
 
     /**
@@ -65,17 +57,25 @@ class WildcardTest
     /**
      *
      */
-    function test_valid_path()
+    function test_matched()
     {
-        $route    = new Route([Arg::WILDCARD => true]);
-        $request  = new Request([Arg::PARAMS => [Arg::WILDCARD => 'foo/bar/baz/bat']]);
+        $route    = new Route([Arg::MATCHED => true]);
+        $request  = new Request;
         $wildcard = new Wildcard;
 
         $this->assertEquals($request, $wildcard($request, $route));
+    }
 
-        $request = $wildcard($request, $route);
+    /**
+     *
+     */
+    function test_no_wildcard()
+    {
+        $route    = new Route([Arg::WILDCARD => false]);
+        $request  = new Request;
+        $wildcard = new Wildcard;
 
-        $this->assertEquals(['foo' => 'bar', 'baz' => 'bat'], $request[Arg::PARAMS]);
+        $this->assertEquals($request, $wildcard($request, $route));
     }
 
     /**
@@ -97,10 +97,10 @@ class WildcardTest
     /**
      *
      */
-    function test_custom_name()
+    function test_valid_path()
     {
-        $route    = new Route([Arg::WILDCARD => true, Arg::OPTIONS => [Arg::WILDCARD => 'foobar']]);
-        $request  = new Request([Arg::PARAMS => ['foobar'=> 'foo/bar/baz/bat']]);
+        $route    = new Route([Arg::WILDCARD => true]);
+        $request  = new Request([Arg::PARAMS => [Arg::WILDCARD => 'foo/bar/baz/bat']]);
         $wildcard = new Wildcard;
 
         $this->assertEquals($request, $wildcard($request, $route));

@@ -45,6 +45,22 @@ class MiddlewareTest
     /**
      *
      */
+    function test_no_pipe_returns_response()
+    {
+        $middleware = new Middleware([
+            function(Request $request, Response $response, callable $next) {
+                return $next($request, $response);
+            }
+        ]);
+
+        $middleware->service(new App);
+
+        $this->assertInstanceOf(Response::class, $middleware(new Request, new Response));
+    }
+
+    /**
+     *
+     */
     function test_pipe()
     {
         $next = function($request, $response) {
@@ -61,23 +77,6 @@ class MiddlewareTest
 
         $this->assertEquals('foo', $middleware(new Request, new Response, $next));
     }
-
-    /**
-     *
-     */
-    function test_no_pipe_returns_response()
-    {
-        $middleware = new Middleware([
-            function(Request $request, Response $response, callable $next) {
-                return $next($request, $response);
-            }
-        ]);
-
-        $middleware->service(new App);
-
-        $this->assertInstanceOf(Response::class, $middleware(new Request, new Response));
-    }
-
 
     /**
      *

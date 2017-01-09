@@ -15,19 +15,19 @@ class ActionTest
     /**
      *
      */
-    function test_no_controller()
-    {
-        $action = new Action(new App);
-        $this->assertNull($action());
-    }
-
-    /**
-     *
-     */
     function test_call_controller()
     {
         $action = new Action(new App);
 
         $this->assertEquals('foo', $action(function() { return 'foo'; }));
+    }
+
+    /**
+     *
+     */
+    function test_no_controller()
+    {
+        $action = new Action(new App);
+        $this->assertNull($action());
     }
 }

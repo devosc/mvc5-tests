@@ -32,19 +32,6 @@ class PathTest
     /**
      *
      */
-    function test_not_matched()
-    {
-        $event   = new Event;
-        $route   = new Route([Arg::REGEX => 'bar']);
-        $path    = new Path;
-        $request = new Request(new Mvc5Request([Arg::URI => [Arg::PATH => 'foo']]));
-
-        $this->assertNull($path($event, $request, $route));
-    }
-
-    /**
-     *
-     */
     function test_matched()
     {
         $event   = new Event;
@@ -53,6 +40,36 @@ class PathTest
         $request = new Request(new Mvc5Request([Arg::URI => [Arg::PATH => 'foo']]));
 
         $this->assertEquals($request, $path($event, $request, $route));
+    }
+
+    /**
+     *
+     */
+    function test_match_named_params()
+    {
+        $config = [Arg::REGEX => '/(?P<controller>[a-zA-Z0-9]+)(?:/(?P<action>[a-zA-Z0-9]+$))?'];
+
+        $event   = new Event;
+        $route   = new Route($config);
+        $path    = new Path;
+        $request = new Request(new Mvc5Request([Arg::URI => [Arg::PATH => '/home/foo']]));
+
+        $request = $path($event, $request, $route);
+
+        $this->assertEquals(['controller' => 'home', 'action' => 'foo'], $request[Arg::PARAMS]);
+    }
+
+    /**
+     *
+     */
+    function test_not_matched()
+    {
+        $event   = new Event;
+        $route   = new Route([Arg::REGEX => 'bar']);
+        $path    = new Path;
+        $request = new Request(new Mvc5Request([Arg::URI => [Arg::PATH => 'foo']]));
+
+        $this->assertNull($path($event, $request, $route));
     }
 
     /**
@@ -82,22 +99,5 @@ class PathTest
         $request = new Request(new Mvc5Request([Arg::URI => [Arg::PATH => 'foobar']]));
 
         $this->assertNull($path($event, $request, $route));
-    }
-
-    /**
-     *
-     */
-    function test_match_named_params()
-    {
-        $config = [Arg::REGEX => '/(?P<controller>[a-zA-Z0-9]+)(?:/(?P<action>[a-zA-Z0-9]+$))?'];
-
-        $event   = new Event;
-        $route   = new Route($config);
-        $path    = new Path;
-        $request = new Request(new Mvc5Request([Arg::URI => [Arg::PATH => '/home/foo']]));
-
-        $request = $path($event, $request, $route);
-
-        $this->assertEquals(['controller' => 'home', 'action' => 'foo'], $request[Arg::PARAMS]);
     }
 }

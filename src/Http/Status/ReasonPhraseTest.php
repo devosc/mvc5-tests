@@ -13,7 +13,7 @@ class StatusCodeTest
     /**
      *
      */
-    function test_status_reason_phrase()
+    function test()
     {
         $reasonPhrase = new ReasonPhrase;
 

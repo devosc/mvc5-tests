@@ -16,6 +16,26 @@ class ResponseTest
     /**
      *
      */
+    function test_array_headers()
+    {
+        $response = new Response(null, null, ['foo' => 'bar']);
+
+        $this->assertEquals(new HttpHeaders(['foo' => 'bar']), $response->headers());
+    }
+
+    /**
+     *
+     */
+    function test_cookies()
+    {
+        $response = new Response(null, null, [], ['cookies' => ['foo']]);
+
+        $this->assertEquals(['foo'], $response->cookies());
+    }
+
+    /**
+     *
+     */
     function test_default_values()
     {
         $response = new Response;
@@ -29,16 +49,6 @@ class ResponseTest
     /**
      *
      */
-    function test_array_headers()
-    {
-        $response = new Response(null, null, ['foo' => 'bar']);
-
-        $this->assertEquals(new HttpHeaders(['foo' => 'bar']), $response->headers());
-    }
-
-    /**
-     *
-     */
     function test_set_cookie()
     {
         $response = new Response;
@@ -46,16 +56,6 @@ class ResponseTest
         $response->cookie('foo', 'bar');
 
         $this->assertTrue($response->cookies()->has('foo'));
-    }
-
-    /**
-     *
-     */
-    function test_cookies()
-    {
-        $response = new Response(null, null, [], ['cookies' => ['foo']]);
-
-        $this->assertEquals(['foo'], $response->cookies());
     }
 
     /**

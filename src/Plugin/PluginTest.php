@@ -31,6 +31,22 @@ class PluginTest
     /**
      *
      */
+    function test_not_parent_type_plugin()
+    {
+        $plugin = new Plugin(Config::class, ['config' => ['foo' => 'bar']]);
+
+        $app = new App([
+            'services' => [
+                Config::class => Config::class
+            ]
+        ]);
+
+        $this->assertEquals(new Config(['foo' => 'baz']), $app->plugin($plugin, ['config' => ['foo' => 'baz']]));
+    }
+
+    /**
+     *
+     */
     function test_param_false()
     {
         $plugin = new Plugin('foo', [], [], null);
@@ -46,42 +62,6 @@ class PluginTest
         $plugin = new Plugin(Config::class);
 
         $this->assertEquals(new Config, (new App)->plugin($plugin));
-    }
-
-    /**
-     *
-     */
-    function test_with_args()
-    {
-        $plugin = new Plugin(Config::class, [['foo', 'bar']]);
-
-        $this->assertEquals(new Config(['foo', 'baz']), (new App)->plugin($plugin, [['foo', 'baz']]));
-    }
-
-    /**
-     *
-     */
-    function test_with_named_args()
-    {
-        $plugin = new Plugin(Config::class, ['config' => ['foo' => 'bar']]);
-
-        $this->assertEquals(new Config(['foo' => 'baz']), (new App)->plugin($plugin, ['config' => ['foo' => 'baz']]));
-    }
-
-    /**
-     *
-     */
-    function test_not_parent_type_plugin()
-    {
-        $plugin = new Plugin(Config::class, ['config' => ['foo' => 'bar']]);
-
-        $app = new App([
-            'services' => [
-                Config::class => Config::class
-            ]
-        ]);
-
-        $this->assertEquals(new Config(['foo' => 'baz']), $app->plugin($plugin, ['config' => ['foo' => 'baz']]));
     }
 
     /**
@@ -116,5 +96,25 @@ class PluginTest
         ]);
 
         $this->assertEquals(new Error('foo', 'bar', 'baz'), $app->plugin($plugin, ['extra_headers' => 'baz']));
+    }
+
+    /**
+     *
+     */
+    function test_with_args()
+    {
+        $plugin = new Plugin(Config::class, [['foo', 'bar']]);
+
+        $this->assertEquals(new Config(['foo', 'baz']), (new App)->plugin($plugin, [['foo', 'baz']]));
+    }
+
+    /**
+     *
+     */
+    function test_with_named_args()
+    {
+        $plugin = new Plugin(Config::class, ['config' => ['foo' => 'bar']]);
+
+        $this->assertEquals(new Config(['foo' => 'baz']), (new App)->plugin($plugin, ['config' => ['foo' => 'baz']]));
     }
 }

@@ -14,6 +14,18 @@ class MessagesTest
     /**
      *
      */
+    function test_custom_type()
+    {
+        $messages = new Messages(['danger' => 'alert']);
+
+        $messages->danger('Danger!');
+
+        $this->assertEquals(['message' => 'Danger!', 'type' => 'alert'], $messages->message());
+    }
+
+    /**
+     *
+     */
     function test_danger()
     {
         $messages = new Messages;
@@ -101,17 +113,5 @@ class MessagesTest
         $messages->warning('Warning!');
 
         $this->assertEquals(['message' => 'Warning!', 'type' => 'warning'], $messages->message());
-    }
-
-    /**
-     *
-     */
-    function test_custom_type()
-    {
-        $messages = new Messages(['danger' => 'alert']);
-
-        $messages->danger('Danger!');
-
-        $this->assertEquals(['message' => 'Danger!', 'type' => 'alert'], $messages->message());
     }
 }

@@ -19,9 +19,65 @@ class CallTest
     /**
      *
      */
-    function test_string_prefix()
+    function test_callable()
     {
-        $this->assertEquals(phpversion(), (new App)->call('@phpversion'));
+        $this->assertEquals('foo', (new App)->call(function() { return 'foo'; }));
+    }
+
+    /**
+     *
+     */
+    function test_event()
+    {
+        $app = new App([
+            'events' => [
+                'foo' => [
+                    function() { return 'foobar'; }
+                ]
+            ]
+        ]);
+
+        $this->assertEquals('foobar', $app->call(new Event('foo')));
+    }
+
+    /**
+     *
+     */
+    function test_param_callback()
+    {
+        $model = new Model(['foo' => 'foobar']);
+
+        $this->assertEquals('foobar', (new App)->call([$model, 'get'], [], function() { return 'foo'; }));
+    }
+
+    /**
+     *
+     */
+    function test_plugin()
+    {
+        $this->assertEquals('foo', (new App)->call(new Invoke(function() { return 'foo'; })));
+    }
+
+    /**
+     *
+     */
+    function test_relay()
+    {
+        $app = new App([
+            'services' => [
+                'view\model' => Model::class
+            ]
+        ]);
+
+        $service = new App([
+            'services' => [
+                'test' => new Value('foobar')
+            ]
+        ]);
+
+        $this->assertEquals(
+            'foobar', $app->call('view\model.service.plugin', ['service' => $service, 'config' => 'test'])
+        );
     }
 
     /**
@@ -41,22 +97,6 @@ class CallTest
         ]);
 
         $this->assertEquals('foo', $app->call('test\event'));
-    }
-
-    /**
-     *
-     */
-    function test_string_service()
-    {
-        $app = new App([
-            'services' => [
-                'foo' => function() {
-                    return function() { return 'foobar'; };
-                }
-            ]
-        ]);
-
-        $this->assertEquals('foobar', $app->call('foo'));
     }
 
     /**
@@ -91,64 +131,24 @@ class CallTest
     /**
      *
      */
-    function test_relay()
+    function test_string_prefix()
+    {
+        $this->assertEquals(phpversion(), (new App)->call('@phpversion'));
+    }
+
+    /**
+     *
+     */
+    function test_string_service()
     {
         $app = new App([
             'services' => [
-                'view\model' => Model::class
+                'foo' => function() {
+                    return function() { return 'foobar'; };
+                }
             ]
         ]);
 
-        $service = new App([
-            'services' => [
-                'test' => new Value('foobar')
-            ]
-        ]);
-
-        $this->assertEquals(
-            'foobar', $app->call('view\model.service.plugin', ['service' => $service, 'config' => 'test'])
-        );
-    }
-
-    /**
-     *
-     */
-    function test_param_callback()
-    {
-        $model = new Model(['foo' => 'foobar']);
-
-        $this->assertEquals('foobar', (new App)->call([$model, 'get'], [], function() { return 'foo'; }));
-    }
-
-    /**
-     *
-     */
-    function test_event()
-    {
-        $app = new App([
-            'events' => [
-                'foo' => [
-                    function() { return 'foobar'; }
-                ]
-            ]
-        ]);
-
-        $this->assertEquals('foobar', $app->call(new Event('foo')));
-    }
-
-    /**
-     *
-     */
-    function test_plugin()
-    {
-        $this->assertEquals('foo', (new App)->call(new Invoke(function() { return 'foo'; })));
-    }
-
-    /**
-     *
-     */
-    function test_callable()
-    {
-        $this->assertEquals('foo', (new App)->call(function() { return 'foo'; }));
+        $this->assertEquals('foobar', $app->call('foo'));
     }
 }
