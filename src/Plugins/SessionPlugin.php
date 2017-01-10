@@ -14,14 +14,7 @@ class SessionPlugin
      *
      */
     use Plugin;
-    use Session;
-
-    /**
-     * @param $name
-     * @return mixed
-     */
-    function __invoke($name = null)
-    {
-        return $this->session($name);
+    use Session {
+        session as public;
     }
 }

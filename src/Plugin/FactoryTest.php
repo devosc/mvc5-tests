@@ -29,9 +29,14 @@ class FactoryTest
      */
     function test_plugin()
     {
-        $app = new App;
-        $app->configure('bar', function() { return function() { return 'baz'; }; });
-        $app->configure('factory', new Plugin('bar'));
+        $app = new App([
+            'services' => [
+                'bar' => function() {
+                    return function() { return 'baz'; };
+                },
+                'factory' => new Plugin('bar')
+            ]
+        ]);
 
         $factory = new Factory('foo');
 

@@ -13,14 +13,8 @@ class LogPlugin
     /**
      *
      */
-    use Log;
-    use Plugin;
-
-    /**
-     * @return mixed
-     */
-    function __invoke()
-    {
-        return $this->log('Hello!');
+    use Log {
+        log as public;
     }
+    use Plugin;
 }

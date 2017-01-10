@@ -30,6 +30,9 @@ class LayoutTest
     {
         $layout = new Layout;
 
-        $this->assertInstanceOf(ViewLayout::class, $layout(new ViewLayout, 'foo'));
+        $viewLayout = $layout(new ViewLayout, 'foo');
+
+        $this->assertInstanceOf(ViewLayout::class, $viewLayout);
+        $this->assertEquals('foo', $viewLayout->model());
     }
 }

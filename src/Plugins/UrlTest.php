@@ -20,6 +20,6 @@ class UrlTest
 
         $plugin = new UrlPlugin(new App($config));
 
-        $this->assertEquals('foo', $plugin('foo'));
+        $this->assertEquals('foo', $plugin->url('foo'));
     }
 }

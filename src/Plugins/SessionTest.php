@@ -23,7 +23,7 @@ class SessionTest
         $plugin = new SessionPlugin;
         $plugin->service(new App($config));
 
-        $this->assertInstanceOf(Session::class, $plugin());
+        $this->assertInstanceOf(Session::class, $plugin->session());
     }
     /**
      *
@@ -35,6 +35,6 @@ class SessionTest
         $plugin = new SessionPlugin;
         $plugin->service(new App($config));
 
-        $this->assertEquals('bar', $plugin('foo'));
+        $this->assertEquals('bar', $plugin->session('foo'));
     }
 }

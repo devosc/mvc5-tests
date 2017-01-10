@@ -3,7 +3,7 @@
  *
  */
 
-namespace Mvc5\Test;
+namespace Mvc5\Test\Event;
 
 use Mvc5\Event;
 use Mvc5\Test\Test\TestCase;
@@ -24,7 +24,7 @@ class EventTest
     /**
      *
      */
-    function test_named()
+    function test_named_args()
     {
         $event = new Event;
 
@@ -34,7 +34,7 @@ class EventTest
     /**
      *
      */
-    function test_numeric()
+    function test_numeric_args()
     {
         $event = new Event;
 

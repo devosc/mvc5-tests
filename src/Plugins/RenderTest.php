@@ -20,6 +20,6 @@ class RenderTest
 
         $plugin = new RenderPlugin(new App($config));
 
-        $this->assertEquals('home', $plugin('home'));
+        $this->assertEquals('home', $plugin->render('home'));
     }
 }

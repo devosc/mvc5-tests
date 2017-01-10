@@ -14,13 +14,7 @@ class UserPlugin
      *
      */
     use Plugin;
-    use User;
-
-    /**
-     * @return mixed
-     */
-    function __invoke()
-    {
-        return $this->user();
+    use User {
+        user as public;
     }
 }

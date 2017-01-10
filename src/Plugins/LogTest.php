@@ -22,6 +22,6 @@ class LogTest
         $plugin = new LogPlugin;
         $plugin->service(new App($config));
 
-        $this->assertTrue($plugin());
+        $this->assertTrue($plugin->log('Hello!'));
     }
 }
