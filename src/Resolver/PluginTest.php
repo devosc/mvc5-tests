@@ -8,6 +8,7 @@ namespace Mvc5\Test\Resolver;
 use Mvc5\App;
 use Mvc5\Config;
 use Mvc5\Container;
+use Mvc5\Layout;
 use Mvc5\Plugin\Plug;
 use Mvc5\Plugin\Plugin;
 use Mvc5\Test\Test\TestCase;
@@ -145,7 +146,7 @@ class PluginTest
         $app = new App([
             'services' => [
                 'exception\model' => ['layout', 'template' => 'exception'],
-                'layout' => ['Mvc5\Layout', 'template' => 'layout']
+                'layout' => [Layout::class, 'template' => 'layout']
             ]
         ]);
 
@@ -162,7 +163,7 @@ class PluginTest
         $app = new App([
             'services' => [
                 'exception\model' => ['layout', 'exception'],
-                'layout' => ['Mvc5\Layout', 'layout']
+                'layout' => [Layout::class, 'layout']
             ]
         ]);
 

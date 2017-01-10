@@ -14,14 +14,7 @@ class UrlPlugin
      *
      */
     use Service;
-    use Url;
-
-    /**
-     * @param $url
-     * @return mixed
-     */
-    function __invoke($url)
-    {
-        return $this->url($url);
+    use Url {
+        url as public;
     }
 }

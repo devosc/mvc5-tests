@@ -37,11 +37,12 @@ class RouteTest
      */
     function test_add()
     {
+        $child = new Route([Arg::ROUTE => 'foo']);
         $route = new Route;
 
-        $route->add('bar', 'baz');
+        $route->add('bar', $child);
 
-        $this->assertEquals('baz', $route->child('bar'));
+        $this->assertEquals($child, $route->child('bar'));
     }
 
     /**

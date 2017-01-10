@@ -13,14 +13,8 @@ class ConfigPlugin
     /**
      *
      */
-    use Config;
-    use Plugin;
-
-    /**
-     * @return mixed
-     */
-    function __invoke()
-    {
-        return $this->config();
+    use Config {
+        config as public;
     }
+    use Plugin;
 }

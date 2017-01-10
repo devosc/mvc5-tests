@@ -13,15 +13,8 @@ class RenderPlugin
     /**
      *
      */
-    use Render;
-    use Service;
-
-    /**
-     * @param $template
-     * @return mixed
-     */
-    function __invoke($template)
-    {
-        return $this->render($template);
+    use Render {
+        render as public;
     }
+    use Service;
 }

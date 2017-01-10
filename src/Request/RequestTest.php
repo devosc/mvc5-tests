@@ -267,9 +267,7 @@ class RequestTest
      */
     function test_params()
     {
-        $request = new Request([
-            Arg::PARAMS => ['foo' => 'bar']
-        ]);
+        $request = new Request([Arg::PARAMS => ['foo' => 'bar']]);
 
         $this->assertEquals(['foo' => 'bar'], $request->params());
     }

@@ -26,6 +26,9 @@ class ControllerTest
      */
     const CONTROLLER = 'controller';
 
+    /**
+     * @var array
+     */
     protected $options = [
         Arg::PREFIX     => __NAMESPACE__ . '\\',
         Arg::SEPARATORS => ['_' => '_', '-' => '\\'],
