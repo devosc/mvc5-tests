@@ -7,6 +7,7 @@ namespace Mvc5\Test\Route\Match;
 
 use Mvc5\App;
 use Mvc5\Arg;
+use Mvc5\Controller\Action;
 use Mvc5\Middleware as HttpMiddleware;
 use Mvc5\Plugin\Link;
 use Mvc5\Plugin\Service;
@@ -71,10 +72,16 @@ class MiddlewareTest
                             [
                                 'name'  => 'bat',
                                 'route' => '/bar',
-                                'middleware' => [function($request, $response, $next) {
-                                    $response['test'] = $response['test'] . ', c';
-                                    return $next($request, $response);
-                                }],
+                                'middleware' => [
+                                    function($request, $response, $next) {
+                                        $response['test'] = $response['test'] . ', c';
+                                        return $next($request, $response);
+                                    },
+                                    'controller\action',
+                                    function($response) {
+                                        return $response;
+                                    }
+                                ],
                                 'controller' => function($request, $response, $next) {
                                     return $response['test'];
                                 },
@@ -92,6 +99,7 @@ class MiddlewareTest
                 ]
             ],
             'services' => [
+                'controller\action'      => [Action::class, new Link],
                 'middleware'             => new Service(HttpMiddleware::class),
                 'route\generator'        => Generator::class,
                 'route\match'            => Match::class,
