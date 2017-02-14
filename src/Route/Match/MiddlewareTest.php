@@ -8,6 +8,7 @@ namespace Mvc5\Test\Route\Match;
 use Mvc5\App;
 use Mvc5\Arg;
 use Mvc5\Controller\Action;
+use Mvc5\Controller\Middleware as ControllerMiddleware;
 use Mvc5\Middleware as HttpMiddleware;
 use Mvc5\Plugin\Link;
 use Mvc5\Plugin\Service;
@@ -33,7 +34,7 @@ class MiddlewareTest
      */
     function test_middleware()
     {
-        $app     = new App(['services' => ['middleware' => HttpMiddleware::class]]);
+        $app     = new App(['services' => ['controller\middleware' => ControllerMiddleware::class]]);
         $method  = new Middleware($app);
         $route   = new Route(['middleware' => ['b']]);
         $request = new Request(['controller' => 'c']);
@@ -44,7 +45,7 @@ class MiddlewareTest
         $result = $method($request, $route);
 
         $this->assertEquals($request, $result);
-        $this->assertInstanceOf(HttpMiddleware::class, $result->controller());
+        $this->assertEquals(new ControllerMiddleware('c', ['b', 'controller\action']), $result->controller());
     }
 
     /**
@@ -100,6 +101,7 @@ class MiddlewareTest
             ],
             'services' => [
                 'controller\action'      => [Action::class, new Link],
+                'controller\middleware'  => new Service(ControllerMiddleware::class),
                 'middleware'             => new Service(HttpMiddleware::class),
                 'route\generator'        => Generator::class,
                 'route\match'            => Match::class,
