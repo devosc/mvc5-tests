@@ -17,7 +17,7 @@ class Autowire
     /**
      * @var
      */
-    protected $foo;
+    public $foo;
 
     /**
      * @param Model $model
