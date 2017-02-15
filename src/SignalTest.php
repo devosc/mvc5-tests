@@ -26,6 +26,14 @@ class SignalTest
     /**
      *
      */
+    function test_null_param()
+    {
+        $this->assertEquals('bar', (new App)->call(function($foo) { return !$foo ? 'bar' : $foo; }, ['foo' => null]));
+    }
+
+    /**
+     *
+     */
     function test_callback_missing_param()
     {
         $this->assertEquals('bar', (new App)->call(function($foo) { return $foo; }, [], function($name) {
