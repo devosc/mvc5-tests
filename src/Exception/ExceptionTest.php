@@ -29,18 +29,6 @@ class ExceptionTest
     }
 
     /**
-     * @deprecated
-     */
-    function test_invoke()
-    {
-        $exception = new Exception('foo');
-
-        $this->setExpectedException(Exception::class, 'foo');
-
-        $exception();
-    }
-
-    /**
      *
      */
     function test_php_exception()
@@ -53,7 +41,7 @@ class ExceptionTest
 
         $this->assertEquals('foo', $exception->getMessage());
         $this->assertEquals(__FILE__, $exception->getFile());
-        $this->assertEquals(50, $exception->getLine());
+        $this->assertEquals(38, $exception->getLine());
         $this->assertInstanceOf(\Exception::class, $exception);
     }
 }
