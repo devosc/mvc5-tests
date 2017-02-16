@@ -17,6 +17,17 @@ class CallbackTest
      */
     function test()
     {
+        $scoped = new Callback(function(){});
+
+        $this->assertInstanceOf(\Closure::class, $scoped->closure());
+        $this->assertFalse($scoped->scoped());
+    }
+
+    /**
+     *
+     */
+    function test_app_scope()
+    {
         $app = new App(null, null, true);
 
         $result = $app->call(new Callback(function() {
@@ -29,7 +40,7 @@ class CallbackTest
     /**
      *
      */
-    function test_no_app_scope()
+    function test_current_scope()
     {
         $app = new App;
 
