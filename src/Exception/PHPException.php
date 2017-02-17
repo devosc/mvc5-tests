@@ -18,6 +18,11 @@ class PHPException
     /**
      *
      */
+    const DOMAIN = \DomainException::class;
+
+    /**
+     *
+     */
     const ERROR_EXCEPTION = \ErrorException::class;
 
     /**

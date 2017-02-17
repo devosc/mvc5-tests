@@ -21,6 +21,7 @@ class ScopedTest
         $scoped = new Scoped([$this, 'foo']);
 
         $this->assertInstanceOf(\Closure::class, $scoped->closure());
+        $this->assertTrue($scoped->scoped());
     }
 
     /**

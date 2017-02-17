@@ -67,6 +67,17 @@ class BuilderTest
     /**
      *
      */
+    function test_null_arg()
+    {
+        $class = Builder::create(Autowire::class, ['model' => new Model, 'foo' => null], new App);
+        
+        $this->assertInstanceOf(Autowire::class, $class);
+        $this->assertNull($class->foo);
+    }
+
+    /**
+     *
+     */
     function test_named_args_no_constructor()
     {
         $class = NoConstructorArgs::class;

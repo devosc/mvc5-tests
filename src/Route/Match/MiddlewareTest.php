@@ -33,7 +33,7 @@ class MiddlewareTest
     function test_middleware()
     {
         $app     = new App(['services' => ['middleware' => HttpMiddleware::class]]);
-        $method  = new Middleware($app);
+        $method  = new Middleware($app, 'controller');
         $route   = new Route(['middleware' => ['b']]);
         $request = new Request(['controller' => 'c']);
 
@@ -43,7 +43,7 @@ class MiddlewareTest
         $result = $method($request, $route);
 
         $this->assertEquals($request, $result);
-        $this->assertInstanceOf(HttpMiddleware::class, $result->controller());
+        $this->assertEquals(new HttpMiddleware(['b', 'c']), $result->controller());
     }
 
     /**
@@ -71,10 +71,16 @@ class MiddlewareTest
                             [
                                 'name'  => 'bat',
                                 'route' => '/bar',
-                                'middleware' => [function($request, $response, $next) {
-                                    $response['test'] = $response['test'] . ', c';
-                                    return $next($request, $response);
-                                }],
+                                'middleware' => [
+                                    function($request, $response, $next) {
+                                        $response['test'] = $response['test'] . ', c';
+                                        return $next($request, $response);
+                                    },
+                                    'controller',
+                                    function($response) {
+                                        return $response;
+                                    }
+                                ],
                                 'controller' => function($request, $response, $next) {
                                     return $response['test'];
                                 },

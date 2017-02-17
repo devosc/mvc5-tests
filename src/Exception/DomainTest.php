@@ -6,42 +6,43 @@
 namespace Mvc5\Test\Exception;
 
 use Mvc5\Exception;
+use Mvc5\Exception\Domain;
 use Mvc5\Test\Test\TestCase;
 
-class ExceptionTest
+class DomainTest
     extends TestCase
 {
     /**
      *
      */
-    function test_exception()
+    function test_domain_exception()
     {
         try {
 
-            Exception::exception('foo');
+            Exception::domain('foo');
 
         } catch(\Exception $exception) {}
 
         $this->assertEquals('foo', $exception->getMessage());
         $this->assertEquals(__FILE__, $exception->getFile());
-        $this->assertEquals(21, $exception->getLine());
-        $this->assertInstanceOf(Exception::class, $exception);
+        $this->assertEquals(22, $exception->getLine());
+        $this->assertInstanceOf(Domain::class, $exception);
     }
 
     /**
      *
      */
-    function test_php_exception()
+    function test_php_domain_exception()
     {
         try {
 
-            PHPException::exception('foo');
+            PHPException::domain('foo');
 
         } catch(\Exception $exception) {}
 
         $this->assertEquals('foo', $exception->getMessage());
         $this->assertEquals(__FILE__, $exception->getFile());
-        $this->assertEquals(38, $exception->getLine());
-        $this->assertInstanceOf(\Exception::class, $exception);
+        $this->assertEquals(39, $exception->getLine());
+        $this->assertInstanceOf(\DomainException::class, $exception);
     }
 }
