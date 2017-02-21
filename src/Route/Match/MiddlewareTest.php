@@ -126,6 +126,25 @@ class MiddlewareTest
     /**
      *
      */
+    function test_middleware_without_controller()
+    {
+        $app     = new App(['services' => ['middleware' => HttpMiddleware::class]]);
+        $method  = new Middleware($app);
+        $route   = new Route(['middleware' => ['b', 'c']]);
+        $request = new Request;
+
+        $this->assertNull($request->controller());
+
+        /** @var Request $result */
+        $result = $method($request, $route);
+
+        $this->assertEquals($request, $result);
+        $this->assertEquals(new HttpMiddleware(['b', 'c']), $result->controller());
+    }
+
+    /**
+     *
+     */
     function test_no_middleware()
     {
         $app     = new App;
