@@ -204,6 +204,30 @@ class ControllerTest
     /**
      *
      */
+    function test_middleware()
+    {
+        $controller = new Controller(null, ['middleware' => true]);
+        $route      = new Route([Arg::OPTIONS => $this->options, Arg::MIDDLEWARE => ['a']]);
+        $request    = new Request([Arg::PARAMS => [self::CONTROLLER => 'home', self::ACTION => '-_-']]);
+
+        $this->assertEquals($request, $controller($route, $request, $this->next()));
+    }
+
+    /**
+     *
+     */
+    function test_middleware_not_provided()
+    {
+        $controller = new Controller(null, ['middleware' => true]);
+        $route      = new Route([Arg::OPTIONS => $this->options]);
+        $request    = new Request([Arg::PARAMS => [self::CONTROLLER => 'home', self::ACTION => '-_-']]);
+
+        $this->assertNull($controller($route, $request, $this->next()));
+    }
+
+    /**
+     *
+     */
     function test_no_controller_param()
     {
         $controller = new Controller;
