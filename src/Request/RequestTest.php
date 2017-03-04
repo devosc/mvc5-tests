@@ -345,6 +345,26 @@ class RequestTest
     /**
      *
      */
+    function test_route()
+    {
+        $request = new Request([Arg::ROUTE => 'foo']);
+
+        $this->assertEquals('foo', $request->route());
+    }
+
+    /**
+     *
+     */
+    function test_route_not_exists()
+    {
+        $request = new Request;
+
+        $this->assertNull($request->route());
+    }
+
+    /**
+     *
+     */
     function test_scheme()
     {
         $request = new Request([Arg::URI => [Arg::SCHEME => 'http']]);

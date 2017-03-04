@@ -10,8 +10,10 @@ use Mvc5\App;
 use Mvc5\Config;
 use Mvc5\Http\Error\NotFound;
 use Mvc5\Http\Error\MethodNotAllowed;
-use Mvc5\Request\Config as Mvc5Request;
-use Mvc5\Route\Request\Config as Request;
+use Mvc5\Plugin\Param;
+use Mvc5\Plugin\Plugin;
+use Mvc5\Plugin\Service;
+use Mvc5\Request\Config as Request;
 use Mvc5\Route\Config as Route;
 use Mvc5\Route\Dispatch;
 use Mvc5\Route\Generator;
@@ -27,11 +29,12 @@ class RouterTest
     extends TestCase
 {
     /**
+     * @param array $config
      * @return App
      */
-    protected function app()
+    protected function app(array $config = [])
     {
-        return new App($this->config());
+        return new App($this->config($config));
     }
 
     /**
@@ -41,6 +44,12 @@ class RouterTest
     protected function config(array $config = [])
     {
         return $config + [
+                'middleware' => [
+                    'route\match' => [
+                        'route\match\method',
+                        'route\match\path',
+                    ]
+                ],
                 'routes' => [
                     'name'     => 'home',
                     'route'    => '/',
@@ -62,19 +71,16 @@ class RouterTest
                         ]
                     ])
                 ],
-                'events' => [
-                    'route\match' => [
-                        'route\match\method',
-                        'route\match\path',
-                    ]
-                ],
                 'services' => [
-                    'route\generator'        => Generator::class,
-                    'route\match'            => Match::class,
+                    'route\dispatch'  => [
+                        Dispatch::class, new Plugin('route\match'), new Plugin('route\generator'), new Param('routes')
+                    ],
+                    'route\generator' => Generator::class,
+                    'route\match' => new Service(Match::class, [new Param('middleware.route\match')]),
                     'route\match\controller' => Controller::class,
-                    'route\match\merge'      => Merge::class,
-                    'route\match\method'     => Method::class,
-                    'route\match\path'       => Path::class
+                    'route\match\merge' => Merge::class,
+                    'route\match\method' => Method::class,
+                    'route\match\path' => Path::class
                 ]
             ];
     }
@@ -92,10 +98,7 @@ class RouterTest
      */
     function test_child_not_found()
     {
-        $dispatch = new Dispatch(new Route($this->routes()));
-        $dispatch->service($this->app());
-
-        $request = $dispatch(new Mvc5Request([Arg::URI => [Arg::PATH => '/foo/baz']]));
+        $request = $this->app()->call('route\dispatch', [new Request([Arg::URI => [Arg::PATH => '/foo/baz']])]);
 
         $this->assertInstanceOf(NotFound::class, $request->error());
     }
@@ -105,10 +108,7 @@ class RouterTest
      */
     function test_child_route()
     {
-        $dispatch = new Dispatch(new Route($this->routes()));
-        $dispatch->service($this->app());
-
-        $request = $dispatch(new Mvc5Request([Arg::URI => [Arg::PATH => '/foo/bat']]));
+        $request = $this->app()->call('route\dispatch', [new Request([Arg::URI => [Arg::PATH => '/foo/bat']])]);
 
         $this->assertEquals('foo/bat', $request->name());
     }
@@ -118,10 +118,14 @@ class RouterTest
      */
     function test_error()
     {
-        $dispatch = new Dispatch(new Route([Arg::ROUTE => '/', Arg::METHOD => 'GET']));
-        $dispatch->service($this->app());
+        $config = $this->config([
+            'routes' => new Route([
+                Arg::ROUTE => '/',
+                Arg::METHOD => 'GET'
+            ])
+        ]);
 
-        $request = $dispatch(new Mvc5Request([Arg::METHOD => 'POST']));
+        $request = $this->app($config)->call('route\dispatch', [new Request([Arg::METHOD => 'POST'])]);
 
         $this->assertInstanceOf(MethodNotAllowed::class, $request->error());
     }
@@ -131,10 +135,12 @@ class RouterTest
      */
     function test_not_found()
     {
-        $dispatch = new Dispatch(new Route([Arg::ROUTE => '/']));
-        $dispatch->service($this->app());
-
-        $request = $dispatch(new Mvc5Request([Arg::URI => [Arg::PATH => '/foo']]));
+        $config = $this->config([
+            'routes' => new Route([
+                Arg::ROUTE => '/'
+            ])
+        ]);
+        $request = $this->app($config)->call('route\dispatch', [new Request([Arg::URI => [Arg::PATH => '/foo']])]);
 
         $this->assertInstanceOf(NotFound::class, $request->error());
     }
@@ -145,7 +151,7 @@ class RouterTest
     function test_parent_controller_options()
     {
         $config = $this->config([
-            'events' => [
+            'middleware' => [
                 'route\match' => [
                     'route\match\merge',
                     'route\match\method',
@@ -155,10 +161,7 @@ class RouterTest
             ]
         ]);
 
-        $dispatch = new Dispatch(new Route($config['routes']));
-        $dispatch->service(new App($config));
-
-        $request = $dispatch(new Mvc5Request([Arg::URI => [Arg::PATH => '/foo/bar']]));
+        $request = $this->app($config)->call('route\dispatch', [new Request([Arg::URI => [Arg::PATH => '/foo/bar']])]);
 
         $this->assertEquals('foo/bar', $request->name());
         $this->assertEquals(Foo\Bar\Controller::class, $request->controller());
@@ -169,19 +172,18 @@ class RouterTest
      */
     function test_parent_params()
     {
-        $config = [
-            Arg::REGEX => '/(?P<controller>[a-zA-Z0-9]+)',
-            Arg::DEFAULTS => ['limit' => '10'],
-            Arg::CHILDREN => [
-                [Arg::REGEX => '/(?P<foobar>bar)', Arg::DEFAULTS => ['limit' => '5']],
-                [Arg::REGEX => '/(?P<action>bars)', Arg::DEFAULTS => ['limit' => '15']]
-            ]
-        ];
+        $config = $this->config([
+            'routes' => new Route([
+                Arg::REGEX => '/(?P<controller>[a-zA-Z0-9]+)',
+                Arg::DEFAULTS => ['limit' => '10'],
+                Arg::CHILDREN => [
+                    [Arg::REGEX => '/(?P<foobar>bar)', Arg::DEFAULTS => ['limit' => '5']],
+                    [Arg::REGEX => '/(?P<action>bars)', Arg::DEFAULTS => ['limit' => '15']]
+                ]
+            ])
+        ]);
 
-        $dispatch = new Dispatch(new Route($config));
-        $dispatch->service($this->app());
-
-        $request = $dispatch(new Mvc5Request([Arg::URI => [Arg::PATH => '/foo/bars']]));
+        $request = $this->app($config)->call('route\dispatch', [new Request([Arg::URI => [Arg::PATH => '/foo/bars']])]);
 
         $this->assertEquals(['controller' => 'foo', 'action' => 'bars', 'limit' => '15'], $request->params());
     }
@@ -191,25 +193,18 @@ class RouterTest
      */
     function test_request()
     {
-        $dispatch = new Dispatch(new Route([Arg::NAME => 'app', Arg::ROUTE => '/']));
-        $dispatch->service($this->app());
+        $config = $this->config([
+            'routes' => new Route([
+                Arg::NAME => 'app',
+                Arg::ROUTE => '/'
+            ])
+        ]);
 
-        $request = $dispatch(new Mvc5Request);
+        $request = $this->app($config)->call('route\dispatch', [new Request]);
 
         $this->assertEquals('app', $request->name());
         $this->assertEquals('/', $request->path());
-        $this->assertInstanceOf(Mvc5Request::class, $request);
-    }
-
-    /**
-     *
-     */
-    function test_request_with_route_request_class()
-    {
-        $dispatch = new Dispatch(new Route([Arg::ROUTE => '/']), Request::class);
-        $dispatch->service($this->app());
-
-        $this->assertInstanceOf(Mvc5Request::class, $dispatch(new Mvc5Request));
+        $this->assertInstanceOf(Request::class, $request);
     }
 
     /**
@@ -217,18 +212,19 @@ class RouterTest
      */
     function test_return_response()
     {
-        $dispatch = new Dispatch(new Route([Arg::ROUTE => '/']));
-
         $config = $this->config([
-            'events' => [
+            'middleware' => [
                 'route\match' => [function() {
                     return new Response('foo');
                 }]
+            ],
+            'routes' => [
+                Arg::ROUTE => '/'
             ]
         ]);
 
-        $dispatch->service(new App($config));
+        $response = $this->app($config)->call('route\dispatch', [new Request]);
 
-        $this->assertInstanceOf(Response::class, $dispatch(new Mvc5Request));
+        $this->assertInstanceOf(Response::class, $response);
     }
 }
