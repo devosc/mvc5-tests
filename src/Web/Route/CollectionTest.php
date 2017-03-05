@@ -9,6 +9,10 @@ use Mvc5\App;
 use Mvc5\Arg;
 use Mvc5\Http\Request\Config as Request;
 use Mvc5\Http\Response\Config as Response;
+use Mvc5\Plugin\Param;
+use Mvc5\Plugin\Plugin;
+use Mvc5\Plugin\Service;
+use Mvc5\Request\Config as Mvc5Request;
 use Mvc5\Route\Generator;
 use Mvc5\Route\Match;
 use Mvc5\Route\Match\Path;
@@ -19,47 +23,79 @@ class CollectionTest
     extends TestCase
 {
     /**
-     * @var array
+     * @param array $config
+     * @return App
      */
-    protected $config = [
-        'events' => [
-            'route\match' => [
-                Path::class
+    protected function app(array $config = [])
+    {
+        return new App($this->config($config));
+    }
+
+    /**
+     * @param array $config
+     * @return array
+     */
+    protected function config(array $config = [])
+    {
+        return $config + [
+            'middleware' => [
+                'route\match' => [Path::class]
+            ],
+            'routes' => [],
+            'services' => [
+                'route\generator' => Generator::class,
+                'route\match' => new Service(Match::class, [new Param('middleware.route\match')]),
+                'web\route' => [
+                    Collection::class, new Plugin('route\match'), new Plugin('route\generator'), new Param('routes')
+                ]
             ]
-        ],
-        'services' => [
-            'route\generator' => Generator::class,
-            'route\match'     => Match::class
-        ]
-    ];
+        ];
+    }
+
+    /**
+     * @param $return
+     * @return \Closure
+     */
+    protected function next($return = null)
+    {
+        return function($request, $response) use($return) {
+            return 'request' === $return ? $request : $response;
+        };
+    }
+
+    /**
+     * @param $config
+     * @param $request
+     * @param $response
+     * @param string $return
+     * @return mixed|Request|Response
+     */
+    protected function route($config, $request, $response, $return = 'response')
+    {
+        return $this->app($config)->call('web\route', [$request, $response, $this->next($return)]);
+    }
 
     /**
      *
      */
     function test_mixed_response()
     {
-        $route = new Collection([[Arg::ROUTE => '/']]);
+        $config = [
+            'middleware' => [
+                'route\match' => [function(/*$route, $request, $next*/) {
+                    return 'foo';
+                }]
+            ],
+            'routes' => [['route' => '/']],
+        ];
 
-        $config = $this->config;
-
-        $config['events']['route\match'] = [function() {
-            return 'foo';
-        }];
-
-        $route->service(new App($config));
-
-        $request  = new Request;
+        $request  = new Request([Arg::URI => [Arg::PATH => '/']]);
         $response = new Response;
 
-        $next = function(Request $request, Response $response) {
-            return $response;
-        };
+        $response = $this->route($config, $request, $response);
 
-        /** @var Response $result */
-        $result = $route($request, $response, $next);
-
-        $this->assertInstanceOf(Response::class, $result);
-        $this->assertEquals('foo', $result->body());
+        $this->assertInstanceOf(Response::class, $response);
+        $this->assertEquals('foo', $response->body());
     }
 
     /**
@@ -67,21 +103,25 @@ class CollectionTest
      */
     function test_request()
     {
-        $route = new Collection([[Arg::NAME => 'home', Arg::ROUTE => '/']]);
+        $config = [
+            'routes' => [
+                [
+                    'name' => 'baz',
+                    'route' => '/foo',
+                    'children' => [
+                        'bat' => ['route' => '/bar']
+                    ]
+                ]
+            ],
+        ];
 
-        $route->service(new App($this->config));
-
-        $request  = new Request;
+        $request  = new Mvc5Request(['uri' => ['path' => '/foo/bar']]);
         $response = new Response;
 
-        $next = function(Request $request, Response $response) {
-            return $request;
-        };
+        $request = $this->route($config, $request, $response, 'request');
 
-        $result = $route($request, $response, $next);
-
-        $this->assertInstanceOf(Request::class, $result);
-        $this->assertEquals('home', $result[Arg::NAME]);
+        $this->assertInstanceOf(Mvc5Request::class, $request);
+        $this->assertEquals('baz/bat', $request[Arg::NAME]);
     }
 
     /**
@@ -89,27 +129,21 @@ class CollectionTest
      */
     function test_response()
     {
-        $route = new Collection([[Arg::ROUTE => '/']]);
-
-        $config = $this->config;
-
-        $config['events']['route\match'] = [function() {
-            return new Response(['body' => 'foo']);
-        }];
-
-        $route->service(new App($config));
+        $config = [
+            'middleware' => [
+                'route\match' => [function(/*$route, $request, $next*/) {
+                    return new Response(['body' => 'foo']);
+                }]
+            ],
+            'routes' => [['route' => '/']],
+        ];
 
         $request  = new Request;
         $response = new Response;
 
-        $next = function(Request $request, Response $response) {
-            return $response;
-        };
+        $response = $this->route($config, $request, $response);
 
-        /** @var Response $result */
-        $result = $route($request, $response, $next);
-
-        $this->assertInstanceOf(Response::class, $result);
-        $this->assertEquals('foo', $result->body());
+        $this->assertInstanceOf(Response::class, $response);
+        $this->assertEquals('foo', $response->body());
     }
 }

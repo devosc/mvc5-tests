@@ -5,11 +5,10 @@
 
 namespace Mvc5\Test\Route;
 
-use Mvc5\Arg;
-use Mvc5\Request\Config as Mvc5Request;
+use Mvc5\App;
+use Mvc5\Request\Config as Request;
 use Mvc5\Route\Config as Route;
 use Mvc5\Route\Match;
-use Mvc5\Route\Request\Config as Request;
 use Mvc5\Test\Test\TestCase;
 
 class MatchTest
@@ -18,33 +17,32 @@ class MatchTest
     /**
      *
      */
-    function test_route()
+    function test_empty_stack_returns_request()
     {
-        $route = new Route;
-        $match = new Match;
+        $middleware = new Match;
+        $request    = new Request;
+        $route      = new Route;
 
-        $this->assertEquals($route, $match(function($route){ return $route; }, [Arg::ROUTE => $route]));
+        $this->assertEquals($request, $middleware($route, $request));
     }
 
     /**
      *
      */
-    function test_request()
+    function test_reset()
     {
-        $match   = new Match;
-        $request = new Request;
+        $middleware = new Match([
+            function(Route $route, Request $request, callable $next) {
+                return $next($route, $request);
+            },
+            function(Route $route, Request $request, callable $next) {
+                return $next($route, $request);
+            }
+        ]);
 
-        $this->assertEquals($request, $match(function($request){ return $request; }, [Arg::REQUEST => $request]));
-    }
+        $middleware->service(new App);
 
-    /**
-     *
-     */
-    function test_stopped()
-    {
-        $match = new Match;
-
-        $this->assertEquals('foo', $match(function(){ return 'foo'; }));
-        $this->assertTrue($match->stopped());
+        $this->assertInstanceOf(Request::class, $middleware(new Route, new Request));
+        $this->assertInstanceOf(Request::class, $middleware(new Route, new Request));
     }
 }

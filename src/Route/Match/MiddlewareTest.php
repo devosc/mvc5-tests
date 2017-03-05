@@ -9,8 +9,10 @@ use Mvc5\App;
 use Mvc5\Arg;
 use Mvc5\Middleware as HttpMiddleware;
 use Mvc5\Plugin\Link;
+use Mvc5\Plugin\Param;
+use Mvc5\Plugin\Plugin;
 use Mvc5\Plugin\Service;
-use Mvc5\Request\Config as Mvc5Request;
+use Mvc5\Request\Config as Request;
 use Mvc5\Response\Config as Response;
 use Mvc5\Route\Config as Route;
 use Mvc5\Route\Dispatch;
@@ -21,26 +23,35 @@ use Mvc5\Route\Match\Path;
 use Mvc5\Route\Match\Merge;
 use Mvc5\Route\Match\Method;
 use Mvc5\Route\Match\Middleware;
-use Mvc5\Route\Request\Config as Request;
 use Mvc5\Test\Test\TestCase;
 
 class MiddlewareTest
     extends TestCase
 {
     /**
+     * @return \Closure
+     */
+    protected function next()
+    {
+        return function($route, $request) {
+            return $request;
+        };
+    }
+
+    /**
      *
      */
     function test_middleware()
     {
-        $app     = new App(['services' => ['middleware' => HttpMiddleware::class]]);
-        $method  = new Middleware($app, 'controller');
-        $route   = new Route(['middleware' => ['b']]);
-        $request = new Request(['controller' => 'c']);
+        $app         = new App(['services' => ['middleware' => HttpMiddleware::class]]);
+        $middleware  = new Middleware($app, 'controller');
+        $route       = new Route(['middleware' => ['b']]);
+        $request     = new Request(['controller' => 'c']);
 
         $this->assertEquals('c', $request->controller());
 
         /** @var Request $result */
-        $result = $method($request, $route);
+        $result = $middleware($route, $request, $this->next());
 
         $this->assertEquals($request, $result);
         $this->assertEquals(new HttpMiddleware(['b', 'c']), $result->controller());
@@ -52,6 +63,15 @@ class MiddlewareTest
     function test_middleware_path()
     {
         $config = [
+            'middleware' => [
+                'route\match' => [
+                    'route\match\merge',
+                    'route\match\method',
+                    'route\match\path',
+                    'route\match\controller',
+                    'route\match\middleware',
+                ]
+            ],
             'routes' => [
                 'name'       => 'home',
                 'route'      => '/',
@@ -76,32 +96,23 @@ class MiddlewareTest
                                         $response['test'] = $response['test'] . ', c';
                                         return $next($request, $response);
                                     },
-                                    'controller',
-                                    function($response) {
-                                        return $response;
+                                    function($request, $response, $next) {
+                                        return $response['test'];
                                     }
                                 ],
-                                'controller' => function($request, $response, $next) {
-                                    return $response['test'];
-                                },
                             ]
                         ]
                     ]
                 ]
             ],
-            'events' => [
-                'route\match' => [
-                    'route\match\merge',
-                    'route\match\method',
-                    'route\match\path',
-                    'route\match\middleware',
-                ]
-            ],
             'services' => [
-                'middleware'             => new Service(HttpMiddleware::class),
+                'middleware' => new Service(HttpMiddleware::class),
+                'route\dispatch' => [
+                    Dispatch::class, new Plugin('route\match'), new Plugin('route\generator'), new Param('routes')
+                ],
                 'route\generator'        => Generator::class,
-                'route\match'            => Match::class,
-                'route\match\controller' => Controller::class,
+                'route\match'            => new Service(Match::class, [new Param('middleware.route\match')]),
+                'route\match\controller' => [Controller::class, null, ['middleware' => true]],
                 'route\match\merge'      => Merge::class,
                 'route\match\method'     => Method::class,
                 'route\match\middleware' => [Middleware::class, new Link],
@@ -109,18 +120,14 @@ class MiddlewareTest
             ]
         ];
 
-        $dispatch = new Dispatch(new Route($config['routes']));
-        $request  = new Mvc5Request([Arg::URI => [Arg::PATH => '/foo/bar']]);
+        $app      = new App($config);
+        $request  = new Request([Arg::URI => [Arg::PATH => '/foo/bar']]);
         $response = new Response;
 
-        $dispatch->service(new App($config));
+        $request = $app->call('route\dispatch', [$request]);
+        $middleware = $request->controller();
 
-        /** @var Request $request */
-        $request = $dispatch($request);
-
-        $controller = $request->controller();
-
-        $this->assertEquals('a, b, c', $controller($request, $response));
+        $this->assertEquals('a, b, c', $middleware($request, $response));
     }
 
     /**
@@ -128,15 +135,15 @@ class MiddlewareTest
      */
     function test_middleware_without_controller()
     {
-        $app     = new App(['services' => ['middleware' => HttpMiddleware::class]]);
-        $method  = new Middleware($app);
-        $route   = new Route(['middleware' => ['b', 'c']]);
-        $request = new Request;
+        $app         = new App(['services' => ['middleware' => HttpMiddleware::class]]);
+        $middleware  = new Middleware($app);
+        $route       = new Route(['middleware' => ['b', 'c']]);
+        $request     = new Request;
 
         $this->assertNull($request->controller());
 
         /** @var Request $result */
-        $result = $method($request, $route);
+        $result = $middleware($route, $request, $this->next());
 
         $this->assertEquals($request, $result);
         $this->assertEquals(new HttpMiddleware(['b', 'c']), $result->controller());
@@ -147,17 +154,17 @@ class MiddlewareTest
      */
     function test_no_middleware()
     {
-        $app     = new App;
-        $method  = new Middleware($app);
-        $route   = new Route;
-        $request = new Request;
+        $app        = new App;
+        $middleware = new Middleware($app);
+        $route      = new Route;
+        $request    = new Request;
 
         $this->assertNull($request->controller());
 
         /** @var Request $result */
-        $result = $method($request, $route);
+        $result = $middleware($route, $request, $this->next());
 
-        $this->assertEquals($result, $method($request, $route));
+        $this->assertEquals($result, $middleware($route, $request, $this->next()));
         $this->assertNull($result->controller());
     }
 }

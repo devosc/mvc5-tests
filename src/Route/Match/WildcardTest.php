@@ -6,14 +6,24 @@
 namespace Mvc5\Test\Route\Match;
 
 use Mvc5\Arg;
+use Mvc5\Request\Config as Request;
 use Mvc5\Route\Config as Route;
 use Mvc5\Route\Match\Wildcard;
-use Mvc5\Route\Request\Config as Request;
 use Mvc5\Test\Test\TestCase;
 
 class WildcardTest
     extends TestCase
 {
+    /**
+     * @return \Closure
+     */
+    protected function next()
+    {
+        return function($route, $request) {
+            return $request;
+        };
+    }
+
     /**
      *
      */
@@ -23,9 +33,7 @@ class WildcardTest
         $request  = new Request([Arg::PARAMS => ['foobar'=> 'foo/bar/baz/bat']]);
         $wildcard = new Wildcard;
 
-        $this->assertEquals($request, $wildcard($request, $route));
-
-        $request = $wildcard($request, $route);
+        $request = $wildcard($route, $request, $this->next());
 
         $this->assertEquals(['foo' => 'bar', 'baz' => 'bat'], $request[Arg::PARAMS]);
     }
@@ -39,7 +47,7 @@ class WildcardTest
         $request  = new Request;
         $wildcard = new Wildcard;
 
-        $this->assertEquals($request, $wildcard($request, $route));
+        $this->assertEquals($request, $wildcard($route, $request, $this->next()));
     }
 
     /**
@@ -51,7 +59,7 @@ class WildcardTest
         $request  = new Request([Arg::PARAMS => [Arg::WILDCARD => 'foo/bar/baz']]);
         $wildcard = new Wildcard;
 
-        $this->assertEquals($request, $wildcard($request, $route));
+        $this->assertEquals($request, $wildcard($route, $request, $this->next()));
     }
 
     /**
@@ -63,7 +71,7 @@ class WildcardTest
         $request  = new Request;
         $wildcard = new Wildcard;
 
-        $this->assertEquals($request, $wildcard($request, $route));
+        $this->assertEquals($request, $wildcard($route, $request, $this->next()));
     }
 
     /**
@@ -75,7 +83,7 @@ class WildcardTest
         $request  = new Request;
         $wildcard = new Wildcard;
 
-        $this->assertEquals($request, $wildcard($request, $route));
+        $this->assertEquals($request, $wildcard($route, $request, $this->next()));
     }
 
     /**
@@ -87,9 +95,7 @@ class WildcardTest
         $request  = new Request([Arg::PARAMS => [Arg::WILDCARD => 'foo/bar/baz/bat', 'foo' => 'foobar']]);
         $wildcard = new Wildcard;
 
-        $this->assertEquals($request, $wildcard($request, $route));
-
-        $request = $wildcard($request, $route);
+        $request = $wildcard($route, $request, $this->next());
 
         $this->assertEquals(['foo' => 'foobar', 'baz' => 'bat'], $request[Arg::PARAMS]);
     }
@@ -103,9 +109,7 @@ class WildcardTest
         $request  = new Request([Arg::PARAMS => [Arg::WILDCARD => 'foo/bar/baz/bat']]);
         $wildcard = new Wildcard;
 
-        $this->assertEquals($request, $wildcard($request, $route));
-
-        $request = $wildcard($request, $route);
+        $request = $wildcard($route, $request, $this->next());
 
         $this->assertEquals(['foo' => 'bar', 'baz' => 'bat'], $request[Arg::PARAMS]);
     }

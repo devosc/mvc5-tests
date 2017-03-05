@@ -7,7 +7,7 @@ namespace Mvc5\Test\Event;
 
 use Mvc5\Arg;
 use Mvc5\Event;
-use Mvc5\Route\Match as RouteMatch;
+use Mvc5\Resolver\Dispatch as ResolverDispatch;
 use Mvc5\Test\Test\TestCase;
 
 class ModelTest
@@ -38,9 +38,9 @@ class ModelTest
      */
     function test_event_const()
     {
-        $event = new RouteMatch;
+        $event = new ResolverDispatch;
 
-        $this->assertEquals(Arg::ROUTE_MATCH, $event->event());
+        $this->assertEquals(Arg::SERVICE_RESOLVER, $event->event());
     }
 
     /**

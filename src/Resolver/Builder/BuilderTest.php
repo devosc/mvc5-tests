@@ -48,7 +48,7 @@ class BuilderTest
     function test_missing_param()
     {
         $this->setExpectedException(
-            'RuntimeException', 'Missing required parameter $route for ' . Dispatch::class
+            'RuntimeException', 'Missing required parameter $match for ' . Dispatch::class
         );
 
         Builder::create(Dispatch::class, [], new App);
@@ -70,7 +70,7 @@ class BuilderTest
     function test_null_arg()
     {
         $class = Builder::create(Autowire::class, ['model' => new Model, 'foo' => null], new App);
-        
+
         $this->assertInstanceOf(Autowire::class, $class);
         $this->assertNull($class->foo);
     }

@@ -7,10 +7,9 @@ namespace Mvc5\Test\Route\Match;
 
 use Mvc5\Arg;
 use Mvc5\Http\Error\NotFound;
-use Mvc5\Request\Config as Mvc5Request;
-use Mvc5\Route\Match\Controller;
-use Mvc5\Route\Request\Config as Request;
+use Mvc5\Request\Config as Request;
 use Mvc5\Route\Config as Route;
+use Mvc5\Route\Match\Controller;
 use Mvc5\Test\Test\TestCase;
 
 class ControllerTest
@@ -35,19 +34,27 @@ class ControllerTest
     ];
 
     /**
+     * @return \Closure
+     */
+    protected function next()
+    {
+        return function($route, $request) {
+            return $request;
+        };
+    }
+
+    /**
      *
      */
     function test_controller_action()
     {
         $controller = new Controller;
         $route      = new Route([Arg::OPTIONS => $this->options]);
-        $request    = new Request(new Mvc5Request([
-            Arg::PARAMS => [self::CONTROLLER => 'home', self::ACTION => 'view']
-        ]));
+        $request    = new Request([Arg::PARAMS => [self::CONTROLLER => 'home', self::ACTION => 'view']]);
 
         $this->assertNull($request[Arg::CONTROLLER]);
 
-        $request = $controller($request, $route);
+        $request = $controller($route, $request, $this->next());
 
         $this->assertEquals(Home\View\Controller::class, $request[Arg::CONTROLLER]);
     }
@@ -59,13 +66,11 @@ class ControllerTest
     {
         $controller = new Controller;
         $route      = new Route([Arg::OPTIONS => $this->options]);
-        $request    = new Request(new Mvc5Request([
-            Arg::PARAMS => [self::CONTROLLER => 'home-news', self::ACTION => 'show_latest']
-        ]));
+        $request    = new Request([Arg::PARAMS => [self::CONTROLLER => 'home-news', self::ACTION => 'show_latest']]);
 
         $this->assertNull($request[Arg::CONTROLLER]);
 
-        $request = $controller($request, $route);
+        $request = $controller($route, $request, $this->next());
 
         $this->assertEquals(Home\News\Show_Latest\Controller::class, $request[Arg::CONTROLLER]);
     }
@@ -82,13 +87,11 @@ class ControllerTest
 
         $controller = new Controller(null, $options + $this->options);
         $route      = new Route;
-        $request    = new Request(new Mvc5Request([
-            Arg::PARAMS => [self::CONTROLLER => 'foo', self::ACTION => 'bar']
-        ]));
+        $request    = new Request([Arg::PARAMS => [self::CONTROLLER => 'foo', self::ACTION => 'bar']]);
 
         $this->assertNull($request[Arg::CONTROLLER]);
 
-        $request = $controller($request, $route);
+        $request = $controller($route, $request, $this->next());
 
         $this->assertEquals(foo\bar\controller::class, $request[Arg::CONTROLLER]);
     }
@@ -100,11 +103,11 @@ class ControllerTest
     {
         $controller = new Controller;
         $route      = new Route([Arg::OPTIONS => [Arg::PREFIX => __NAMESPACE__ . '\\']]);
-        $request    = new Request(new Mvc5Request([Arg::PARAMS => [self::CONTROLLER => 'home']]));
+        $request    = new Request([Arg::PARAMS => [self::CONTROLLER => 'home']]);
 
         $this->assertNull($request[Arg::CONTROLLER]);
 
-        $request = $controller($request, $route);
+        $request = $controller($route, $request, $this->next());
 
         $this->assertEquals(Home\Controller::class, $request[Arg::CONTROLLER]);
     }
@@ -116,9 +119,9 @@ class ControllerTest
     {
         $controller = new Controller;
         $route      = new Route;
-        $request    = new Request(new Mvc5Request([Arg::CONTROLLER => 'foo']));
+        $request    = new Request([Arg::CONTROLLER => 'foo']);
 
-        $this->assertEquals($request, $controller($request, $route));
+        $this->assertEquals($request, $controller($route, $request, $this->next()));
     }
 
     /**
@@ -128,9 +131,9 @@ class ControllerTest
     {
         $controller = new Controller;
         $route      = new Route;
-        $request    = new Request(new Mvc5Request([Arg::PARAMS => [self::CONTROLLER => 'foo']]));
+        $request    = new Request([Arg::PARAMS => [self::CONTROLLER => 'foo']]);
 
-        $this->assertEquals(new NotFound, $controller($request, $route));
+        $this->assertEquals(new NotFound, $controller($route, $request, $this->next()));
     }
 
     /**
@@ -144,11 +147,11 @@ class ControllerTest
 
         $controller = new Controller($loader);
         $route      = new Route([Arg::OPTIONS => [Arg::PREFIX => __NAMESPACE__ . '\\']]);
-        $request    = new Request(new Mvc5Request([Arg::PARAMS => [self::CONTROLLER => 'home']]));
+        $request    = new Request([Arg::PARAMS => [self::CONTROLLER => 'home']]);
 
         $this->assertNull($request[Arg::CONTROLLER]);
 
-        $request = $controller($request, $route);
+        $request = $controller($route, $request, $this->next());
 
         $this->assertInstanceOf(Home\Controller::class, $request[Arg::CONTROLLER]);
     }
@@ -165,13 +168,11 @@ class ControllerTest
 
         $controller = new Controller;
         $route      = new Route([Arg::OPTIONS => $options + $this->options]);
-        $request    = new Request(new Mvc5Request([
-            Arg::PARAMS => ['foo' => 'home', 'bar' => 'view']
-        ]));
+        $request    = new Request([Arg::PARAMS => ['foo' => 'home', 'bar' => 'view']]);
 
         $this->assertNull($request[Arg::CONTROLLER]);
 
-        $request = $controller($request, $route);
+        $request = $controller($route, $request, $this->next());
 
         $this->assertEquals(Home\View\Controller::class, $request[Arg::CONTROLLER]);
     }
@@ -183,9 +184,9 @@ class ControllerTest
     {
         $controller = new Controller;
         $route      = new Route([Arg::OPTIONS => $this->options]);
-        $request    = new Request(new Mvc5Request([Arg::PARAMS => [self::CONTROLLER => 'home', self::ACTION => '-_-']]));
+        $request    = new Request([Arg::PARAMS => [self::CONTROLLER => 'home', self::ACTION => '-_-']]);
 
-        $this->assertNull($controller($request, $route));
+        $this->assertNull($controller($route, $request, $this->next()));
     }
 
     /**
@@ -195,9 +196,33 @@ class ControllerTest
     {
         $controller = new Controller;
         $route      = new Route([Arg::OPTIONS => $this->options]);
-        $request    = new Request(new Mvc5Request([Arg::PARAMS => [self::CONTROLLER => '-']]));
+        $request    = new Request([Arg::PARAMS => [self::CONTROLLER => '-']]);
 
-        $this->assertNull($controller($request, $route));
+        $this->assertNull($controller($route, $request, $this->next()));
+    }
+
+    /**
+     *
+     */
+    function test_middleware()
+    {
+        $controller = new Controller;
+        $route      = new Route([Arg::OPTIONS => $this->options, Arg::MIDDLEWARE => ['a']]);
+        $request    = new Request([Arg::PARAMS => [self::CONTROLLER => 'home', self::ACTION => '-_-']]);
+
+        $this->assertEquals($request, $controller($route, $request, $this->next()));
+    }
+
+    /**
+     *
+     */
+    function test_middleware_not_provided()
+    {
+        $controller = new Controller;
+        $route      = new Route([Arg::OPTIONS => $this->options]);
+        $request    = new Request([Arg::PARAMS => [self::CONTROLLER => 'home', self::ACTION => '-_-']]);
+
+        $this->assertNull($controller($route, $request, $this->next()));
     }
 
     /**
@@ -207,8 +232,8 @@ class ControllerTest
     {
         $controller = new Controller;
         $route      = new Route;
-        $request    = new Request(new Mvc5Request);
+        $request    = new Request;
 
-        $this->assertNull($controller($request, $route));
+        $this->assertNull($controller($route, $request, $this->next()));
     }
 }

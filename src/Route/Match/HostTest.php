@@ -7,15 +7,24 @@ namespace Mvc5\Test\Route\Match;
 
 use Mvc5\Arg;
 use Mvc5\Http\Error\NotFound;
-use Mvc5\Request\Config as Mvc5Request;
+use Mvc5\Request\Config as Request;
 use Mvc5\Route\Config as Route;
 use Mvc5\Route\Match\Host;
-use Mvc5\Route\Request\Config as Request;
 use Mvc5\Test\Test\TestCase;
 
 class HostTest
     extends TestCase
 {
+    /**
+     * @return \Closure
+     */
+    protected function next()
+    {
+        return function($route, $request) {
+            return $request;
+        };
+    }
+
     /**
      *
      */
@@ -23,9 +32,9 @@ class HostTest
     {
         $route   = new Route([Arg::HOST => 'foo']);
         $host    = new Host;
-        $request = new Request(new Mvc5Request([Arg::URI => [Arg::HOST => 'foo']]));
+        $request = new Request([Arg::URI => [Arg::HOST => 'foo']]);
 
-        $this->assertEquals($request, $host($request, $route));
+        $this->assertEquals($request, $host($route, $request, $this->next()));
     }
 
     /**
@@ -35,9 +44,9 @@ class HostTest
     {
         $route   = new Route([Arg::HOST => 'foo']);
         $host    = new Host;
-        $request = new Request(new Mvc5Request([Arg::URI => [Arg::HOST => 'bar']]));
+        $request = new Request([Arg::URI => [Arg::HOST => 'bar']]);
 
-        $this->assertInstanceOf(NotFound::class, $host($request, $route));
+        $this->assertInstanceOf(NotFound::class, $host($route, $request, $this->next()));
     }
 
     /**
@@ -47,8 +56,8 @@ class HostTest
     {
         $route   = new Route([Arg::HOST => 'foo', Arg::OPTIONAL => ['host']]);
         $host    = new Host;
-        $request = new Request(new Mvc5Request([Arg::URI => [Arg::HOST => 'bar']]));
+        $request = new Request([Arg::URI => [Arg::HOST => 'bar']]);
 
-        $this->assertNull($host($request, $route));
+        $this->assertNull($host($route, $request, $this->next()));
     }
 }
