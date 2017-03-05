@@ -70,7 +70,7 @@ class RouteTest
      * @param $request
      * @param $response
      * @param string $return
-     * @return callable|mixed|null|object
+     * @return mixed|Request|Response
      */
     protected function route($config, $request, $response, $return = 'response')
     {
@@ -96,7 +96,6 @@ class RouteTest
         $request  = new Request;
         $response = new Response;
 
-        /** @var Response $result */
         $response = $this->route($config, $request, $response);
 
         $this->assertInstanceOf(Response::class, $response);
@@ -133,7 +132,7 @@ class RouteTest
     {
         $config = [
             'middleware' => [
-                'route\match' => [function(Route $route, Request $request, $next) {
+                'route\match' => [function(/*$route, $request, $next*/) {
                     return new Response(['body' => 'foo']);
                 }]
             ],
@@ -143,7 +142,6 @@ class RouteTest
         $request  = new Request;
         $response = new Response;
 
-        /** @var Response $response */
         $response = $this->route($config, $request, $response);
 
         $this->assertInstanceOf(Response::class, $response);

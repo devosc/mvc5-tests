@@ -86,11 +86,13 @@ class RouterTest
     }
 
     /**
-     * @return array
+     * @param Request $request
+     * @param array $config
+     * @return Request
      */
-    protected function routes()
+    protected function dispatch($request, array $config = [])
     {
-        return $this->config()['routes'];
+        return $this->app($config)->call('route\dispatch', [$request]);
     }
 
     /**
@@ -98,7 +100,7 @@ class RouterTest
      */
     function test_child_not_found()
     {
-        $request = $this->app()->call('route\dispatch', [new Request([Arg::URI => [Arg::PATH => '/foo/baz']])]);
+        $request = $this->dispatch(new Request([Arg::URI => [Arg::PATH => '/foo/baz']]));
 
         $this->assertInstanceOf(NotFound::class, $request->error());
     }
@@ -108,7 +110,7 @@ class RouterTest
      */
     function test_child_route()
     {
-        $request = $this->app()->call('route\dispatch', [new Request([Arg::URI => [Arg::PATH => '/foo/bat']])]);
+        $request = $this->dispatch(new Request([Arg::URI => [Arg::PATH => '/foo/bat']]));
 
         $this->assertEquals('foo/bat', $request->name());
     }
@@ -119,13 +121,10 @@ class RouterTest
     function test_error()
     {
         $config = $this->config([
-            'routes' => new Route([
-                Arg::ROUTE => '/',
-                Arg::METHOD => 'GET'
-            ])
-        ]);
+            'routes' => ['route' => '/', 'method' => 'GET']]
+        );
 
-        $request = $this->app($config)->call('route\dispatch', [new Request([Arg::METHOD => 'POST'])]);
+        $request = $this->dispatch(new Request([Arg::METHOD => 'POST']), $config);
 
         $this->assertInstanceOf(MethodNotAllowed::class, $request->error());
     }
@@ -136,11 +135,10 @@ class RouterTest
     function test_not_found()
     {
         $config = $this->config([
-            'routes' => new Route([
-                Arg::ROUTE => '/'
-            ])
+            'routes' => ['route' => '/']
         ]);
-        $request = $this->app($config)->call('route\dispatch', [new Request([Arg::URI => [Arg::PATH => '/foo']])]);
+
+        $request = $this->dispatch(new Request([Arg::URI => [Arg::PATH => '/foo']]), $config);
 
         $this->assertInstanceOf(NotFound::class, $request->error());
     }
@@ -161,7 +159,7 @@ class RouterTest
             ]
         ]);
 
-        $request = $this->app($config)->call('route\dispatch', [new Request([Arg::URI => [Arg::PATH => '/foo/bar']])]);
+        $request = $this->dispatch(new Request([Arg::URI => [Arg::PATH => '/foo/bar']]), $config);
 
         $this->assertEquals('foo/bar', $request->name());
         $this->assertEquals(Foo\Bar\Controller::class, $request->controller());
@@ -183,7 +181,7 @@ class RouterTest
             ])
         ]);
 
-        $request = $this->app($config)->call('route\dispatch', [new Request([Arg::URI => [Arg::PATH => '/foo/bars']])]);
+        $request = $this->dispatch(new Request([Arg::URI => [Arg::PATH => '/foo/bars']]), $config);
 
         $this->assertEquals(['controller' => 'foo', 'action' => 'bars', 'limit' => '15'], $request->params());
     }
@@ -193,14 +191,9 @@ class RouterTest
      */
     function test_request()
     {
-        $config = $this->config([
-            'routes' => new Route([
-                Arg::NAME => 'app',
-                Arg::ROUTE => '/'
-            ])
-        ]);
+        $config = $this->config(['routes' => ['name' => 'app', 'route' => '/']]);
 
-        $request = $this->app($config)->call('route\dispatch', [new Request]);
+        $request = $this->dispatch(new Request, $config);
 
         $this->assertEquals('app', $request->name());
         $this->assertEquals('/', $request->path());
@@ -223,7 +216,7 @@ class RouterTest
             ]
         ]);
 
-        $response = $this->app($config)->call('route\dispatch', [new Request]);
+        $response = $this->dispatch(new Request, $config);
 
         $this->assertInstanceOf(Response::class, $response);
     }

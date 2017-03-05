@@ -12,10 +12,10 @@ use Mvc5\Http\Response\Config as Response;
 use Mvc5\Plugin\Param;
 use Mvc5\Plugin\Plugin;
 use Mvc5\Plugin\Service;
+use Mvc5\Request\Config as Mvc5Request;
 use Mvc5\Route\Generator;
 use Mvc5\Route\Match;
 use Mvc5\Route\Match\Path;
-use Mvc5\Route\Route;
 use Mvc5\Test\Test\TestCase;
 use Mvc5\Web\Route\Collection;
 
@@ -68,7 +68,7 @@ class CollectionTest
      * @param $request
      * @param $response
      * @param string $return
-     * @return callable|mixed|null|object
+     * @return mixed|Request|Response
      */
     protected function route($config, $request, $response, $return = 'response')
     {
@@ -92,7 +92,6 @@ class CollectionTest
         $request  = new Request([Arg::URI => [Arg::PATH => '/']]);
         $response = new Response;
 
-        /** @var Response $response */
         $response = $this->route($config, $request, $response);
 
         $this->assertInstanceOf(Response::class, $response);
@@ -105,21 +104,24 @@ class CollectionTest
     function test_request()
     {
         $config = [
-            'middleware' => [
-                'route\match' => [function(Route $route, Request $request, $next) {
-                    return $request->with('route', $route);
-                }]
+            'routes' => [
+                [
+                    'name' => 'baz',
+                    'route' => '/foo',
+                    'children' => [
+                        'bat' => ['route' => '/bar']
+                    ]
+                ]
             ],
-            'routes' => [['name' => 'home', 'route' => '/']],
         ];
 
-        $request  = new Request;
+        $request  = new Mvc5Request(['uri' => ['path' => '/foo/bar']]);
         $response = new Response;
 
         $request = $this->route($config, $request, $response, 'request');
 
-        $this->assertInstanceOf(Request::class, $request);
-        $this->assertEquals('home', $request[Arg::NAME]);
+        $this->assertInstanceOf(Mvc5Request::class, $request);
+        $this->assertEquals('baz/bat', $request[Arg::NAME]);
     }
 
     /**
@@ -139,7 +141,6 @@ class CollectionTest
         $request  = new Request;
         $response = new Response;
 
-        /** @var Response $response */
         $response = $this->route($config, $request, $response);
 
         $this->assertInstanceOf(Response::class, $response);

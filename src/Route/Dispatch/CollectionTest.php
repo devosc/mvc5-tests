@@ -73,14 +73,20 @@ class CollectionTest
     }
 
     /**
+     * @param $request
+     * @return Request
+     */
+    protected function dispatch(Request $request)
+    {
+        return $this->app()->call('route\dispatch', [$request]);
+    }
+
+    /**
      *
      */
     function test_child_not_matched()
     {
-        $request = new Request([Arg::URI => [Arg::PATH => '/foo/bar/bat']]);
-
-        /** @var Request $request */
-        $request = $this->app()->call('route\dispatch', [$request]);
+        $request = $this->dispatch(new Request(['uri' => ['path' => '/foo/bar/bat']]));
 
         $this->assertEquals(new NotFound, $request->error());
     }
@@ -90,12 +96,7 @@ class CollectionTest
      */
     function test_match_child()
     {
-        $request = new Request([Arg::URI => [Arg::PATH => '/foo/bar']]);
-
-        /**
-         * @var Request $request
-         */
-        $request = $this->app()->call('route\dispatch', [$request]);
+        $request = $this->dispatch(new Request(['uri' => ['path' => '/foo/bar']]));
 
         $this->assertEquals('baz/bat', $request->name());
         $this->assertEquals('foobar', $request->controller());
@@ -106,12 +107,7 @@ class CollectionTest
      */
     function test_match_top()
     {
-        $request = new Request([Arg::URI => [Arg::PATH => '/']]);
-
-        /**
-         * @var Request $request
-         */
-        $request = $this->app()->call('route\dispatch', [$request]);
+        $request = $this->dispatch(new Request(['uri' => ['path' => '/']]));
 
         $this->assertEquals('home', $request->name());
         $this->assertEquals('Home\Controller', $request->controller());
