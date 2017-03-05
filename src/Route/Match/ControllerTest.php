@@ -206,7 +206,7 @@ class ControllerTest
      */
     function test_middleware()
     {
-        $controller = new Controller(null, ['middleware' => true]);
+        $controller = new Controller;
         $route      = new Route([Arg::OPTIONS => $this->options, Arg::MIDDLEWARE => ['a']]);
         $request    = new Request([Arg::PARAMS => [self::CONTROLLER => 'home', self::ACTION => '-_-']]);
 
@@ -218,7 +218,7 @@ class ControllerTest
      */
     function test_middleware_not_provided()
     {
-        $controller = new Controller(null, ['middleware' => true]);
+        $controller = new Controller;
         $route      = new Route([Arg::OPTIONS => $this->options]);
         $request    = new Request([Arg::PARAMS => [self::CONTROLLER => 'home', self::ACTION => '-_-']]);
 
