@@ -124,9 +124,13 @@ class RouterTest
             'routes' => ['route' => '/', 'method' => 'GET']]
         );
 
-        $request = $this->dispatch(new Request([Arg::METHOD => 'POST']), $config);
+        $request = new Request([Arg::METHOD => 'POST']);
 
-        $this->assertInstanceOf(MethodNotAllowed::class, $request->error());
+        $result = $this->dispatch($request, $config);
+
+        $this->assertInstanceOf(Request::class, $result);
+        $this->assertTrue($result !== $request);
+        $this->assertInstanceOf(MethodNotAllowed::class, $result->error());
     }
 
     /**
