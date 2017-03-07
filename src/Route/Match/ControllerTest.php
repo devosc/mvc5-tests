@@ -212,4 +212,16 @@ class ControllerTest
 
         $this->assertNull($controller($route, $request, $this->next()));
     }
+
+    /**
+     *
+     */
+    function test_middleware_and_no_controller_param()
+    {
+        $controller = new Controller;
+        $route      = new Route([Arg::MIDDLEWARE => ['a']]);
+        $request    = new Request;
+
+        $this->assertEquals($request, $controller($route, $request, $this->next()));
+    }
 }
