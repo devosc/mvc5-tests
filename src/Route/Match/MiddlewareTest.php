@@ -95,11 +95,11 @@ class MiddlewareTest
                                     function($request, $response, $next) {
                                         $response['test'] = $response['test'] . ', c';
                                         return $next($request, $response);
-                                    },
-                                    function($request, $response, $next) {
-                                        return $response['test'];
                                     }
                                 ],
+                                'controller' => function($request, $response, $next) {
+                                    return $response['test'];
+                                }
                             ]
                         ]
                     ]
@@ -112,7 +112,7 @@ class MiddlewareTest
                 ],
                 'route\generator'        => Generator::class,
                 'route\match'            => new Service(Match::class, [new Param('middleware.route\match')]),
-                'route\match\controller' => [Controller::class, null, ['middleware' => true]],
+                'route\match\controller' => Controller::class,
                 'route\match\merge'      => Merge::class,
                 'route\match\method'     => Method::class,
                 'route\match\middleware' => [Middleware::class, new Link],
