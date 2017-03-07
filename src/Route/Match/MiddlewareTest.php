@@ -95,11 +95,11 @@ class MiddlewareTest
                                     function($request, $response, $next) {
                                         $response['test'] = $response['test'] . ', c';
                                         return $next($request, $response);
+                                    },
+                                    function($request, $response, $next) {
+                                        return $response['test'];
                                     }
                                 ],
-                                'controller' => function($request, $response, $next) {
-                                    return $response['test'];
-                                }
                             ]
                         ]
                     ]
