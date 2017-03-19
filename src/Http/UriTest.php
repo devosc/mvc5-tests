@@ -15,6 +15,15 @@ class UriTest
     /**
      *
      */
+    function test_string()
+    {
+        $url = 'http://user:password@localhost:8080/foobar?foo=bar#top';
+        $this->assertEquals($url, (string) new Uri($url));
+    }
+
+    /**
+     *
+     */
     function test_fragment()
     {
         $uri = new Uri([Arg::FRAGMENT => 'foo']);
@@ -30,16 +39,6 @@ class UriTest
         $uri = new Uri([Arg::HOST => 'localhost']);
 
         $this->assertEquals('localhost', $uri->host());
-    }
-
-    /**
-     *
-     */
-    function test_method()
-    {
-        $uri = new Uri([Arg::METHOD => 'GET']);
-
-        $this->assertEquals('GET', $uri->method());
     }
 
     /**
