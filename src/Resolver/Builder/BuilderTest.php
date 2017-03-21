@@ -47,9 +47,7 @@ class BuilderTest
      */
     function test_missing_param()
     {
-        $this->setExpectedException(
-            'RuntimeException', 'Missing required parameter $match for ' . Dispatch::class
-        );
+        $this->expectExceptionMessage('Missing required parameter $match for ' . Dispatch::class);
 
         Builder::create(Dispatch::class, [], new App);
     }

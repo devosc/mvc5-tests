@@ -18,7 +18,7 @@ class UnresolvableTest
      */
     function test_invoke()
     {
-        $this->setExpectedException(\RuntimeException::class, 'Unresolvable plugin: foo');
+        $this->expectExceptionMessage('Unresolvable plugin: foo');
 
         (new Unresolvable)->__invoke('foo');
     }
@@ -28,7 +28,7 @@ class UnresolvableTest
      */
     function test_plugin()
     {
-        $this->setExpectedException(\RuntimeException::class, 'Unresolvable plugin: foo');
+        $this->expectExceptionMessage('Unresolvable plugin: foo');
 
         Unresolvable::plugin('foo');
     }
@@ -38,9 +38,7 @@ class UnresolvableTest
      */
     function test_unresolvable_plugin()
     {
-        $this->setExpectedException(
-            RuntimeException::class, 'Unresolvable plugin: ' . Plugin::class
-        );
+        $this->expectExceptionMessage('Unresolvable plugin: ' . Plugin::class);
 
         (new App)->plugin(new Plugin);
     }

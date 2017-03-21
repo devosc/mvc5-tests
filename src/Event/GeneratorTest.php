@@ -126,7 +126,7 @@ class GeneratorTest
      */
     function test_event_not_found_exception()
     {
-        $this->setExpectedException('RuntimeException', 'Unresolvable plugin: foo');
+        $this->expectExceptionMessage('Unresolvable plugin: foo');
 
         (new App)->trigger('foo');
     }

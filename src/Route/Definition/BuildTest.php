@@ -58,7 +58,7 @@ class BuildTest
     {
         $build = new Build;
 
-        $this->setExpectedException('Exception', 'Route path not specified');
+        $this->expectExceptionMessage('Route path not specified');
 
         $build->build([]);
     }

@@ -18,7 +18,7 @@ class ImmutableTest
     {
         $config = new Immutable;
 
-        $this->setExpectedException(\Exception::class, 'Invalid operation: object cannot be modified');
+        $this->expectExceptionMessage('Invalid operation: object cannot be modified');
 
         $config['foo'] = 'bar';
     }
@@ -30,7 +30,7 @@ class ImmutableTest
     {
         $config = new Immutable;
 
-        $this->setExpectedException(\Exception::class, 'Invalid operation: object cannot be modified');
+        $this->expectExceptionMessage('Invalid operation: object cannot be modified');
 
         $config->foo = 'bar';
     }

@@ -123,7 +123,7 @@ class CallTest
      */
     function test_string_fallback_exception()
     {
-        $this->setExpectedException(Unresolvable::class, 'Unresolvable plugin: test_event');
+        $this->expectExceptionMessage('Unresolvable plugin: test_event');
 
         (new App)->call('test_event');
     }

@@ -36,7 +36,7 @@ class ContextTest
 
         Context::bind($app);
 
-        $this->setExpectedException(\RuntimeException::class, 'Service already exists');
+        $this->expectExceptionMessage('Service already exists');
 
         Context::bind($app);
     }
@@ -72,7 +72,7 @@ class ContextTest
      */
     function test_service_does_not_exist()
     {
-        $this->setExpectedException(\RuntimeException::class, 'Service does not exist');
+        $this->expectExceptionMessage('Service does not exist');
 
         Context::service();
     }

@@ -27,7 +27,7 @@ class CompileTest
 
         $params = ['category' => 'bar'];
 
-        $this->setExpectedException('InvalidArgumentException', 'Missing parameter "author"');
+        $this->expectExceptionMessage('Missing parameter "author"');
 
         $compile->compile($route['tokens'], $params, $route['defaults']);
     }

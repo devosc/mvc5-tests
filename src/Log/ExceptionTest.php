@@ -78,7 +78,7 @@ class ExceptionTest
     {
         $handler = new ThrowException;
 
-        $this->setExpectedException(\Exception::class, 'Hello!');
+        $this->expectExceptionMessage('Hello!');
 
         $handler(new \Exception('Hello!'), 'foobar', true);
     }
@@ -90,7 +90,7 @@ class ExceptionTest
     {
         $handler = new ThrowException;
 
-        $this->setExpectedException(\Exception::class, 'Hello!');
+        $this->expectExceptionMessage('Hello!');
 
         $handler(null, new \Exception('Hello!'), true);
     }

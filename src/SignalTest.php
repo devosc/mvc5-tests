@@ -82,7 +82,7 @@ class SignalTest
      */
     function test_no_param_function()
     {
-        $this->setExpectedException('RuntimeException', 'Missing required parameter $haystack for strpos');
+        $this->expectExceptionMessage('Missing required parameter $haystack for strpos');
 
         (new App)->call('@strpos');
     }
@@ -92,9 +92,7 @@ class SignalTest
      */
     function test_no_param_exception_class_method()
     {
-        $this->setExpectedException(
-            'RuntimeException', 'Missing required parameter $name for Mvc5\Session\Config::remove'
-        );
+        $this->expectExceptionMessage('Missing required parameter $name for Mvc5\Session\Config::remove');
 
         (new App)->call([new Session, 'remove'], ['foo' => 'bar']);
     }
@@ -104,9 +102,7 @@ class SignalTest
      */
     function test_no_param_exception_invoke()
     {
-        $this->setExpectedException(
-            'RuntimeException', 'Missing required parameter $name for Mvc5\App::__invoke'
-        );
+        $this->expectExceptionMessage('Missing required parameter $name for Mvc5\App::__invoke');
 
         (new App)->call(new App, ['foo' => 'bar']);
     }
@@ -118,7 +114,7 @@ class SignalTest
     {
         $method = 'Mvc5\Resolver\Builder::create';
 
-        $this->setExpectedException('RuntimeException', 'Missing required parameter $name for ' . $method);
+        $this->expectExceptionMessage('Missing required parameter $name for ' . $method);
 
         (new App)->call('@' . $method, ['foo' => 'bar']);
     }

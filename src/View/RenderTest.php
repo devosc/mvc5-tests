@@ -35,7 +35,8 @@ class RenderTest
     {
         $render = new Render;
 
-        $this->setExpectedException(NotFound::class, 'Template name cannot be empty: Mvc5\Model');
+        $this->expectException(NotFound::class);
+        $this->expectExceptionMessage('Template name cannot be empty: Mvc5\Model');
 
         $render(new Model);
     }
@@ -48,7 +49,7 @@ class RenderTest
         $render = new Render;
         $template = __DIR__ . '/exception.phtml';
 
-        $this->setExpectedException('Exception', 'Exception Test');
+        $this->expectExceptionMessage('Exception Test');
 
         $render(new Model($template));
     }
@@ -60,7 +61,8 @@ class RenderTest
     {
         $render = new Render(null, null, null, null, null, true);
 
-        $this->setExpectedException(NotFound::class, 'File not found: ' . __DIR__ . '/foo.phtml');
+        $this->expectException(NotFound::class);
+        $this->expectExceptionMessage('File not found: ' . __DIR__ . '/foo.phtml');
 
         $render(new Model(['__template' => __DIR__ . '/foo.phtml']));
     }

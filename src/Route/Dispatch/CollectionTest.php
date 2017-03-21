@@ -5,7 +5,6 @@
 
 namespace Mvc5\Test\Route\Dispatch;
 
-use Mvc5\Arg;
 use Mvc5\App;
 use Mvc5\Http\Error\NotFound;
 use Mvc5\Plugin\Param;

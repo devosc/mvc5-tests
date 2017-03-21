@@ -58,7 +58,7 @@ class AddTest
 
         $path = ['/', 'foo'];
 
-        $this->setExpectedException('RuntimeException');
+        $this->expectException(\RuntimeException::class);
 
         $this->assertInstanceOf(Route::class, $add($parent, $route, $path));
     }

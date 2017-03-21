@@ -30,7 +30,7 @@ class ProvideTest
     {
         $app = new App;
 
-        $this->setExpectedException(\RuntimeException::class, 'Unresolvable plugin: bar');
+        $this->expectExceptionMessage('Unresolvable plugin: bar');
 
         $app->plugin(new Provide('bar'));
     }

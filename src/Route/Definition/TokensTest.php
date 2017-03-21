@@ -36,7 +36,7 @@ class TokensTest
     {
         $tokens = new Tokens;
 
-        $this->setExpectedException('RuntimeException', 'Found closing bracket without matching opening bracket');
+        $this->expectExceptionMessage('Found closing bracket without matching opening bracket');
 
         $tokens('/{foo}]');
     }
@@ -48,7 +48,7 @@ class TokensTest
     {
         $tokens = new Tokens;
 
-        $this->setExpectedException('RuntimeException', 'Found unbalanced brackets');
+        $this->expectExceptionMessage('Found unbalanced brackets');
 
         $tokens('/[{foo}');
     }
