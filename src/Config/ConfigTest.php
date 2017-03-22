@@ -122,11 +122,37 @@ class ConfigTest
     /**
      *
      */
+    function test_remove_array()
+    {
+        $config = new Config(['foo' => 'bar', 'baz' => 'bat']);
+
+        $this->assertTrue($config->has('foo'));
+        $this->assertTrue($config->has('baz'));
+
+        $config->remove(['foo', 'baz']);
+
+        $this->assertFalse($config->has('foo'));
+        $this->assertFalse($config->has('baz'));
+    }
+
+    /**
+     *
+     */
     function test_set()
     {
         $config = new Config;
 
         $this->assertEquals('bar', $config->set('foo', 'bar'));
+    }
+
+    /**
+     *
+     */
+    function test_set_array()
+    {
+        $config = new Config;
+
+        $this->assertEquals(['foo' => 'bar', 'baz' => 'bat'], $config->set(['foo' => 'bar', 'baz' => 'bat']));
     }
 
     /**
@@ -140,6 +166,20 @@ class ConfigTest
 
         $this->assertNotEquals($new, $config);
         $this->assertNull($config->get('foo'));
+        $this->assertEquals('bar', $new->get('foo'));
+        $this->assertEquals('bat', $new->get('baz'));
+    }
+
+    /**
+     *
+     */
+    function test_with_array()
+    {
+        $config = new Config;
+
+        $new = $config->with(['foo' => 'bar', 'baz' => 'bat']);
+
+        $this->assertNotEquals($new, $config);
         $this->assertEquals('bar', $new->get('foo'));
         $this->assertEquals('bat', $new->get('baz'));
     }
@@ -187,6 +227,19 @@ class ConfigTest
         $this->assertEquals('bar', $config->get('foo'));
         $this->assertNull($new->get('foo'));
         $this->assertEquals('bat', $new->get('baz'));
+    }
+
+    /**
+     *
+     */
+    function test_without_array()
+    {
+        $config = new Config(['foo' => 'bar', 'baz' => 'bat']);
+
+        $new = $config->without(['foo', 'baz']);
+
+        $this->assertFalse($new->has('foo'));
+        $this->assertFalse($new->has('baz'));
     }
 
     /**
