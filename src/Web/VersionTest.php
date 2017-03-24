@@ -27,6 +27,9 @@ class VersionTest
             return $response;
         };
 
-        $this->assertEquals($response, $version($request, $response, $next));
+        $new = $version($request, $response, $next);
+
+        $this->assertNotEquals($response, $new);
+        $this->assertNull($new->version());
     }
 }

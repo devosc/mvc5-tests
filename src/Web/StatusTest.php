@@ -27,6 +27,10 @@ class StatusTest
             return $response;
         };
 
-        $this->assertEquals($response, $status($request, $response, $next));
+        $new = $status($request, $response, $next);
+
+        $this->assertNotEquals($response, $new);
+        $this->assertEquals(200, $new->status());
+        $this->assertEquals('OK', $new->reason());
     }
 }
