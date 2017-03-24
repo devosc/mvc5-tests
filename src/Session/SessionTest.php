@@ -6,7 +6,6 @@
 namespace Mvc5\Test\Session;
 
 use Mvc5\Cookie\Config as Cookies;
-use Mvc5\Cookie\Container;
 use Mvc5\Session\Config as Session;
 use Mvc5\Test\Test\TestCase;
 
@@ -93,7 +92,7 @@ class SessionTest
      */
     function test_destroy_with_cookie_container()
     {
-        $session = new Session(new Cookies(new Container));
+        $session = new Session(new Cookies);
 
         $session->start();
 
