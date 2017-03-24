@@ -9,7 +9,7 @@ use Mvc5\App;
 use Mvc5\Config;
 use Mvc5\Plugin\Child;
 use Mvc5\Plugin\Plugin;
-use Mvc5\Response\Config as Response;
+use Mvc5\Model;
 use Mvc5\Test\Test\TestCase;
 
 class ChildTest
@@ -52,12 +52,12 @@ class ChildTest
     {
         $app = new App([
             'services' => [
-                'foo' => new Plugin(Response::class, ['body' => 'foo'], ['status' => '200']),
-                'bar' => new Plugin('foo', ['body' => 'bar'], [], null, true)
+                'foo' => new Plugin(Model::class, [['foo' => 'bar']], [['set', ['foobar' => 'bar']]]),
+                'bar' => new Plugin('foo', [['foo' => 'baz']], [['set', ['a' => 'b']]], null, true)
             ]
         ]);
 
-        $this->assertEquals(new Response('bar', '200'), $app->plugin('bar'));
+        $this->assertEquals(new Model(['foo' => 'baz', 'foobar' => 'bar', 'a' => 'b']), $app->plugin('bar'));
     }
 
     /**
@@ -67,12 +67,12 @@ class ChildTest
     {
         $app = new App([
             'services' => [
-                'foo' => new Plugin(Response::class, ['body' => 'foo'], ['status' => '200']),
-                'bar' => new Plugin('foo', ['status' => '404'], ['body' => 'bar'])
+                'foo' => new Plugin(Model::class, [['foo' => 'bar']], [['set', ['foobar' => 'bat']]]),
+                'bar' => new Plugin('foo', [['foo' => 'baz']], [['set', ['a' => 'b']]])
             ]
         ]);
 
-        $this->assertEquals(new Response('bar', '404'), $app->plugin('bar'));
+        $this->assertEquals(new Model(['foo' => 'baz', 'a' => 'b']), $app->plugin('bar'));
     }
 
     /**
@@ -82,12 +82,12 @@ class ChildTest
     {
         $app = new App([
             'services' => [
-                'foo' => new Plugin(Response::class, ['body' => 'foo', 'status' => '200']),
-                'bar' => new Plugin('foo', ['status' => '404']),
+                'foo' => new Plugin(Model::class, ['template' => 'bar']),
+                'bar' => new Plugin('foo', ['template' => 'baz']),
             ]
         ]);
 
-        $this->assertEquals(new Response('foo', '404'), $app->plugin('bar'));
+        $this->assertEquals(new Model('baz'), $app->plugin('bar'));
     }
 
     /**
