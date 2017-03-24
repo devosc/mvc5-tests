@@ -5,7 +5,7 @@
 
 namespace Mvc5\Test\Response;
 
-use Mvc5\Cookie\Container as CookieJar;
+use Mvc5\Http\Cookies\Config as HttpCookies;
 use Mvc5\Http\Headers\Config as HttpHeaders;
 use Mvc5\Response\Config as Response;
 use Mvc5\Test\Test\TestCase;
@@ -16,32 +16,12 @@ class ResponseTest
     /**
      *
      */
-    function test_array_headers()
-    {
-        $response = new Response(null, null, ['foo' => 'bar']);
-
-        $this->assertEquals(new HttpHeaders(['foo' => 'bar']), $response->headers());
-    }
-
-    /**
-     *
-     */
-    function test_cookies()
-    {
-        $response = new Response(null, null, [], ['cookies' => ['foo']]);
-
-        $this->assertEquals(['foo'], $response->cookies());
-    }
-
-    /**
-     *
-     */
     function test_default_values()
     {
         $response = new Response;
 
         $this->assertNull($response->body());
-        $this->assertEquals(new CookieJar, $response->cookies());
+        $this->assertEquals(new HttpCookies, $response->cookies());
         $this->assertEquals(new HttpHeaders, $response->headers());
         $this->assertNull($response->status());
     }
@@ -53,9 +33,20 @@ class ResponseTest
     {
         $response = new Response;
 
-        $response->cookie('foo', 'bar');
+        $new = $response->cookie('foo', 'bar');
 
-        $this->assertTrue($response->cookies()->has('foo'));
+        $this->assertFalse($response->cookies()->has('foo'));
+        $this->assertTrue($new->cookies()->has('foo'));
+    }
+
+    /**
+     *
+     */
+    function test_cookies()
+    {
+        $response = new Response(null, null, [], ['cookies' => ['foo' => 'bar']]);
+
+        $this->assertEquals(new HttpCookies(['foo' => 'bar']), $response->cookies());
     }
 
     /**
@@ -65,7 +56,10 @@ class ResponseTest
     {
         $response = new Response;
 
-        $this->assertEquals(['foo'], $response->cookies(['foo']));
+        $new = $response->cookies(['foo']);
+
+        $this->assertEquals(new HttpCookies, $response->cookies());
+        $this->assertEquals(new HttpCookies(['foo']), $new->cookies());
     }
 
     /**
@@ -75,9 +69,10 @@ class ResponseTest
     {
         $response = new Response;
 
-        $response->header('foo', 'bar');
+        $new = $response->header('foo', 'bar');
 
-        $this->assertEquals(new HttpHeaders(['foo' => 'bar']), $response->headers());
+        $this->assertEquals(new HttpHeaders, $response->headers());
+        $this->assertEquals(new HttpHeaders(['foo' => 'bar']), $new->headers());
     }
 
     /**
@@ -97,7 +92,10 @@ class ResponseTest
     {
         $response = new Response;
 
-        $this->assertEquals(['foo' => 'bar'], $response->headers(['foo' => 'bar']));
+        $new = $response->headers(['foo' => 'bar']);
+
+        $this->assertEquals(new HttpHeaders, $response->headers());
+        $this->assertEquals(new HttpHeaders(['foo' => 'bar']), $new->headers());
     }
 
     /**
@@ -107,7 +105,10 @@ class ResponseTest
     {
         $response = new Response;
 
-        $this->assertEquals('200', $response->status('200'));
+        $new = $response->status('404');
+
+        $this->assertNull($response->status());
+        $this->assertEquals('404', $new->status());
     }
 
     /**
@@ -117,6 +118,9 @@ class ResponseTest
     {
         $response = new Response;
 
-        $this->assertEquals('1.1', $response->status('1.1'));
+        $new = $response->status('1.1');
+
+        $this->assertNull($response->status());
+        $this->assertEquals('1.1', $new->status());
     }
 }
