@@ -48,12 +48,11 @@ class MiddlewareTest
         $route       = new Route(['middleware' => ['b']]);
         $request     = new Request(['controller' => 'c']);
 
-        $this->assertEquals('c', $request->controller());
-
         /** @var Request $result */
         $result = $middleware($route, $request, $this->next());
 
-        $this->assertEquals($request, $result);
+        $this->assertNotEquals($request, $result);
+        $this->assertEquals('c', $request->controller());
         $this->assertEquals(new HttpMiddleware(['b', 'c']), $result->controller());
     }
 
@@ -76,16 +75,14 @@ class MiddlewareTest
                 'name'       => 'home',
                 'route'      => '/',
                 'middleware' => [function($request, $response, $next) {
-                    $response['test'] = 'a';
-                    return $next($request, $response);
+                    return $next($request, $response->with('test', 'a'));
                 }],
                 'children' => [
                     [
                         'name'     => 'baz',
                         'route' => 'foo',
                         'middleware' => [function($request, $response, $next) {
-                            $response['test'] = $response['test'] . ', b';
-                            return $next($request, $response);
+                            return $next($request, $response->with('test', $response['test'] . ', b'));
                         }],
                         'children' => [
                             [
@@ -93,8 +90,7 @@ class MiddlewareTest
                                 'route' => '/bar',
                                 'middleware' => [
                                     function($request, $response, $next) {
-                                        $response['test'] = $response['test'] . ', c';
-                                        return $next($request, $response);
+                                        return $next($request, $response->with('test', $response['test'] . ', c'));
                                     },
                                     function($request, $response, $next) {
                                         return $response['test'];
@@ -140,12 +136,11 @@ class MiddlewareTest
         $route       = new Route(['middleware' => ['b', 'c']]);
         $request     = new Request;
 
-        $this->assertNull($request->controller());
-
         /** @var Request $result */
         $result = $middleware($route, $request, $this->next());
 
-        $this->assertEquals($request, $result);
+        $this->assertNotEquals($request, $result);
+        $this->assertNull($request->controller());
         $this->assertEquals(new HttpMiddleware(['b', 'c']), $result->controller());
     }
 

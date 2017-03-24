@@ -45,7 +45,10 @@ class PathTest
         $path    = new Path;
         $request = new Request([Arg::URI => [Arg::PATH => 'foo']]);
 
-        $this->assertEquals($request, $path($route, $request, $this->next()));
+        $new = $path($route, $request, $this->next());
+
+        $this->assertNotEquals($request, $new);
+        $this->assertEquals($route, $new['route']);
     }
 
     /**
@@ -88,9 +91,12 @@ class PathTest
 
         $this->assertNull($request[Arg::ROUTE]);
         $this->assertNull($request[Arg::MATCHED]);
-        $this->assertEquals($request, $path($route, $request, $this->next()));
-        $this->assertEquals(3, $request[Arg::MATCHED]);
-        $this->assertNull($request[Arg::ROUTE]);
+
+        $new = $path($route, $request, $this->next());
+
+        $this->assertNotEquals($request, $new);
+        $this->assertEquals(3, $new[Arg::MATCHED]);
+        $this->assertNull($new[Arg::ROUTE]);
     }
 
     /**
