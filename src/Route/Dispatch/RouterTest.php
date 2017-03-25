@@ -197,7 +197,7 @@ class RouterTest
     {
         $config = $this->config(['routes' => ['name' => 'app', 'route' => '/']]);
 
-        $request = $this->dispatch(new Request, $config);
+        $request = $this->dispatch(new Request(['uri' => ['path' => '/']]), $config);
 
         $this->assertEquals('app', $request->name());
         $this->assertEquals('/', $request->path());
