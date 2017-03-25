@@ -33,7 +33,7 @@ class ResponseTest
     {
         $response = new Response;
 
-        $new = $response->cookie('foo', 'bar');
+        $new = $response->withCookie('foo', 'bar');
 
         $this->assertFalse($response->cookies()->has('foo'));
         $this->assertTrue($new->cookies()->has('foo'));
@@ -56,7 +56,7 @@ class ResponseTest
     {
         $response = new Response;
 
-        $new = $response->cookies(['foo']);
+        $new = $response->withCookies(['foo']);
 
         $this->assertEquals(new HttpCookies, $response->cookies());
         $this->assertEquals(new HttpCookies(['foo']), $new->cookies());
@@ -69,7 +69,7 @@ class ResponseTest
     {
         $response = new Response;
 
-        $new = $response->header('foo', 'bar');
+        $new = $response->withHeader('foo', 'bar');
 
         $this->assertEquals(new HttpHeaders, $response->headers());
         $this->assertEquals(new HttpHeaders(['foo' => 'bar']), $new->headers());
@@ -92,7 +92,7 @@ class ResponseTest
     {
         $response = new Response;
 
-        $new = $response->headers(['foo' => 'bar']);
+        $new = $response->withHeaders(['foo' => 'bar']);
 
         $this->assertEquals(new HttpHeaders, $response->headers());
         $this->assertEquals(new HttpHeaders(['foo' => 'bar']), $new->headers());
@@ -105,7 +105,7 @@ class ResponseTest
     {
         $response = new Response;
 
-        $new = $response->status('404');
+        $new = $response->withStatus('404');
 
         $this->assertNull($response->status());
         $this->assertEquals('404', $new->status());
@@ -118,9 +118,9 @@ class ResponseTest
     {
         $response = new Response;
 
-        $new = $response->status('1.1');
+        $new = $response->withVersion('1.1');
 
-        $this->assertNull($response->status());
-        $this->assertEquals('1.1', $new->status());
+        $this->assertNull($response->version());
+        $this->assertEquals('1.1', $new->version());
     }
 }
