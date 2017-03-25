@@ -455,16 +455,6 @@ class RequestTest
     /**
      *
      */
-    function test_stream()
-    {
-        $request = new Request([Arg::STREAM => 'foo']);
-
-        $this->assertEquals('foo', $request->stream());
-    }
-
-    /**
-     *
-     */
     function test_user()
     {
         $request = new Request([Arg::USER => 'foo']);
