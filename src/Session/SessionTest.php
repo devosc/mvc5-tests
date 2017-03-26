@@ -321,6 +321,28 @@ class SessionTest
     /**
      *
      */
+    function test_remove_array()
+    {
+        $session = new Session;
+
+        $session->start();
+
+        $session->set(['foo' => 'bar', 'baz' => 'bat']);
+
+        $this->assertEquals('bar', $session['foo']);
+        $this->assertEquals('bat', $session['baz']);
+
+        $session->remove(['foo', 'baz']);
+
+        $this->assertEmpty($session['foo']);
+        $this->assertEmpty($session['baz']);
+
+        $session->destroy();
+    }
+
+    /**
+     *
+     */
     function test_rewind()
     {
         $session = new Session;
@@ -353,6 +375,23 @@ class SessionTest
         $session->set('foo', 'bar');
 
         $this->assertEquals('bar', $session->get('foo'));
+
+        $session->destroy();
+    }
+
+    /**
+     *
+     */
+    function test_set_array()
+    {
+        $session = new Session;
+
+        $session->start();
+
+        $session->set(['foo' => 'bar', 'baz' => 'bat']);
+
+        $this->assertEquals('bar', $session->get('foo'));
+        $this->assertEquals('bat', $session->get('baz'));
 
         $session->destroy();
     }

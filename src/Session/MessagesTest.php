@@ -71,6 +71,27 @@ class MessagesTest
     /**
      *
      */
+    function test_remove_array()
+    {
+        $messages = new Messages;
+
+        $messages->set([
+            'foo' => ['message' => 'bar', 'type' => 'success'],
+            'baz' => ['message' => 'bat', 'type' => 'info']
+        ]);
+
+        $this->assertTrue($messages->has('foo'));
+        $this->assertTrue($messages->has('baz'));
+
+        $messages->remove(['foo', 'baz']);
+
+        $this->assertFalse($messages->has('foo'));
+        $this->assertFalse($messages->has('baz'));
+    }
+
+    /**
+     *
+     */
     function test_serialize()
     {
         $messages = new Messages;
@@ -91,6 +112,22 @@ class MessagesTest
         $this->assertEmpty($messages());
         $this->assertEquals(['message' => 'Success!', 'type' => 'success'], $messages('login'));
         $this->assertEmpty($messages('login'));
+    }
+
+    /**
+     *
+     */
+    function test_set_array()
+    {
+        $messages = new Messages;
+
+        $messages->set([
+            'foo' => ['message' => 'bar', 'type' => 'success'],
+            'baz' => ['message' => 'bat', 'type' => 'info']
+        ]);
+
+        $this->assertEquals(['message' => 'bar', 'type' => 'success'], $messages('foo'));
+        $this->assertEquals(['message' => 'bat', 'type' => 'info'], $messages('baz'));
     }
 
     /**

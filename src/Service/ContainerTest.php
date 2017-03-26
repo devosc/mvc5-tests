@@ -305,6 +305,24 @@ class ContainerTest
     /**
      *
      */
+    function test_remove_array()
+    {
+        $config = new Container;
+
+        $config->container(['foo' => 'bar', 'baz' => 'bat']);
+
+        $this->assertTrue($config->has('foo'));
+        $this->assertTrue($config->has('baz'));
+
+        $config->remove(['foo', 'baz']);
+
+        $this->assertFalse($config->has('foo'));
+        $this->assertFalse($config->has('baz'));
+    }
+
+    /**
+     *
+     */
     function test_rewind_array()
     {
         $config = new Container;
@@ -372,6 +390,19 @@ class ContainerTest
         $config->set('foo', 'bar');
 
         $this->assertEquals('bar', $config->get('foo'));
+    }
+
+    /**
+     *
+     */
+    function test_set_array()
+    {
+        $config = new Container;
+
+        $config->set(['foo' => 'bar', 'baz' => 'bat']);
+
+        $this->assertEquals('bar', $config->get('foo'));
+        $this->assertEquals('bat', $config->get('baz'));
     }
 
     /**
