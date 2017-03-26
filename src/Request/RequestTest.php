@@ -483,9 +483,9 @@ class RequestTest
             Arg::DATA   => ['dir' => 'asc'],
         ]);
 
-        $this->assertEquals('bar', $request->variable('foo'));
-        $this->assertEquals('baz', $request->variable('bat'));
-        $this->assertEquals('asc', $request->variable('dir'));
+        $this->assertEquals('bar', $request->var('foo'));
+        $this->assertEquals('baz', $request->var('bat'));
+        $this->assertEquals('asc', $request->var('dir'));
     }
 
     /**
@@ -495,7 +495,7 @@ class RequestTest
     {
         $request = new Request;
 
-        $this->assertEquals('bar', $request->variable('foo', 'bar'));
+        $this->assertEquals('bar', $request->var('foo', 'bar'));
     }
 
     /**
@@ -505,7 +505,7 @@ class RequestTest
     {
         $request = new Request;
 
-        $this->assertNull($request->variable('foo'));
+        $this->assertNull($request->var('foo'));
     }
 
     /**
@@ -519,9 +519,9 @@ class RequestTest
             Arg::DATA   => ['foo' => 'bat', 'bat' => 'baz', 'foobar' => 'bar'],
         ]);
 
-        $this->assertEquals('bar', $request->variable('foo'));
-        $this->assertEquals('bar', $request->variable('bat'));
-        $this->assertEquals('bar', $request->variable('foobar'));
+        $this->assertEquals('bar', $request->var('foo'));
+        $this->assertEquals('bar', $request->var('bat'));
+        $this->assertEquals('bar', $request->var('foobar'));
     }
 
     /**
