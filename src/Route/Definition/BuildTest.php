@@ -6,7 +6,6 @@
 namespace Mvc5\Test\Route\Definition;
 
 use Mvc5\Arg;
-use Mvc5\Config as _Config;
 use Mvc5\Route\Route;
 use Mvc5\Route\Config;
 use Mvc5\Test\Test\TestCase;
@@ -21,7 +20,7 @@ class BuildTest
     protected function route(array $route = [])
     {
         return $route + [
-            Arg::CHILDREN    => ['foo' => [Arg::ROUTE => 'foo']],
+            Arg::CHILDREN    => ['foo' => ['route' => 'foo']],
             Arg::CONSTRAINTS => null,
             Arg::NAME        => null,
             Arg::OPTIONS     => null,
@@ -38,9 +37,7 @@ class BuildTest
     {
         $build = new Build;
 
-        $route = $build->build($this->route(['class' => Config::class]), true, true);
-
-        $foo = new Config(['route' => 'foo', 'tokens' => [['literal', 'foo']], 'regex' => 'foo']);
+        $route = $build->build($this->route(['class' => Config::class]));
 
         $this->assertInstanceOf(Config::class, $route);
         $this->assertNull($route->name());
@@ -48,7 +45,7 @@ class BuildTest
         $this->assertEquals([], $route->constraints());
         $this->assertEquals([], $route->options());
         $this->assertEquals([['literal', '/']], $route->tokens());
-        $this->assertEquals(['foo' => $foo], $route->children());
+        $this->assertEquals(['foo' => ['route' => 'foo']], $route->children());
     }
 
     /**
@@ -87,9 +84,7 @@ class BuildTest
     {
         $build = new Build;
 
-        $route = $build->build($this->route(), true, true);
-
-        $foo = new Config(['route' => 'foo', 'tokens' => [['literal', 'foo']], 'regex' => 'foo']);
+        $route = $build->build($this->route());
 
         $this->assertInstanceOf(Route::class, $route);
         $this->assertNull($route->name());
@@ -97,7 +92,7 @@ class BuildTest
         $this->assertEquals([], $route->constraints());
         $this->assertEquals([], $route->options());
         $this->assertEquals([['literal', '/']], $route->tokens());
-        $this->assertEquals(['foo' => $foo], $route->children());
+        $this->assertEquals(['foo' => ['route' => 'foo']], $route->children());
     }
 
     /**
@@ -106,11 +101,8 @@ class BuildTest
     function test_route_object()
     {
         $build = new Build;
-        $route = new Config($this->route());
 
-        $route = $build->build($route, true, true);
-
-        $foo = new Config(['route' => 'foo', 'tokens' => [['literal', 'foo']], 'regex' => 'foo']);
+        $route = $build->build(new Config($this->route()));
 
         $this->assertInstanceOf(Route::class, $route);
         $this->assertNull($route->name());
@@ -118,6 +110,6 @@ class BuildTest
         $this->assertEquals([], $route->constraints());
         $this->assertEquals([], $route->options());
         $this->assertEquals([['literal', '/']], $route->tokens());
-        $this->assertEquals(['foo' => $foo], $route->children());
+        $this->assertEquals(['foo' => ['route' => 'foo']], $route->children());
     }
 }

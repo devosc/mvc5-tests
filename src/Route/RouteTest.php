@@ -29,20 +29,7 @@ class RouteTest
     {
         $route = new Route([Arg::ACTION => ['GET' => 'foo']]);
 
-        $this->assertEquals(['GET' => 'foo'], $route->actions());
-    }
-
-    /**
-     *
-     */
-    function test_add()
-    {
-        $child = new Route([Arg::ROUTE => 'foo']);
-        $route = new Route;
-
-        $route->add('bar', $child);
-
-        $this->assertEquals($child, $route->child('bar'));
+        $this->assertEquals(['GET' => 'foo'], $route->action());
     }
 
     /**
@@ -83,16 +70,6 @@ class RouteTest
         $route = new Route;
 
         $this->assertEquals([], $route->children());
-    }
-
-    /**
-     *
-     */
-    function test_class_name()
-    {
-        $route = new Route([Arg::CLASS_NAME => 'foo']);
-
-        $this->assertEquals('foo', $route->className());
     }
 
     /**

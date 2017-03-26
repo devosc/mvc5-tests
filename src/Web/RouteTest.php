@@ -110,7 +110,7 @@ class RouteTest
         $config = [
             'middleware' => [
                 'route\match' => [function(Route $route, Request $request, $next) {
-                    return $request->with('route', $route);
+                    return $request->with(['matched' => true, 'name' => $route['name'], 'route' => $route]);
                 }]
             ],
             'routes' => ['name' => 'home', 'route' => '/'],

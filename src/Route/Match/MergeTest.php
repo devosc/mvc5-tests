@@ -33,8 +33,10 @@ class MergeTest
         $request = new Request;
         $route   = new Route(['parent' => new Route(['middleware' => ['a']]),'middleware' => ['b']]);
 
-        $this->assertEquals($route, $method($route, $request, $this->next()));
-        $this->assertEquals(['a', 'b'], $route[Arg::MIDDLEWARE]);
+        $new = $method($route, $request, $this->next());
+
+        $this->assertNotEquals($route, $new);
+        $this->assertEquals(['a', 'b'], $new[Arg::MIDDLEWARE]);
     }
 
     /**
@@ -46,8 +48,11 @@ class MergeTest
         $request = new Request;
         $route   = new Route(['parent' => new Route(['options' => ['prefix' => 'Foo\\']])]);
 
-        $this->assertEquals($route, $method($route, $request, $this->next()));
-        $this->assertEquals(['prefix' => 'Foo\\'], $route->options());
+        /** @var Route $new */
+        $new = $method($route, $request, $this->next());
+
+        $this->assertNotEquals($route, $new);
+        $this->assertEquals(['prefix' => 'Foo\\'], $new->options());
     }
 
     /**
