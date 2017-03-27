@@ -73,21 +73,21 @@ class MiddlewareTest
             ],
             'routes' => [
                 'name'       => 'home',
-                'route'      => '/',
+                'path'      => '/',
                 'middleware' => [function($request, $response, $next) {
                     return $next($request, $response->with('test', 'a'));
                 }],
                 'children' => [
                     [
                         'name'     => 'baz',
-                        'route' => 'foo',
+                        'path' => 'foo',
                         'middleware' => [function($request, $response, $next) {
                             return $next($request, $response->with('test', $response['test'] . ', b'));
                         }],
                         'children' => [
                             [
                                 'name'  => 'bat',
-                                'route' => '/bar',
+                                'path' => '/bar',
                                 'middleware' => [
                                     function($request, $response, $next) {
                                         return $next($request, $response->with('test', $response['test'] . ', c'));

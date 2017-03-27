@@ -52,15 +52,15 @@ class RouterTest
                 ],
                 'routes' => [
                     'name'     => 'home',
-                    'route'    => '/',
+                    'path'    => '/',
                     'options'  => ['prefix' => __NAMESPACE__ . '\\'],
                     'children' => new Config([
                         'foo' => [
-                            'route' => 'foo',
+                            'path' => 'foo',
                             'children' => [
                                 'bar' => new Route([
                                     'defaults' => ['controller' => 'foo/bar'],
-                                    'route'    => '/bar',
+                                    'path'    => '/bar',
                                     'regex'    => '/bar'
                                 ]),
                                 'bat' => [
@@ -121,7 +121,7 @@ class RouterTest
     function test_error()
     {
         $config = $this->config([
-            'routes' => ['route' => '/', 'method' => 'GET']]
+            'routes' => ['path' => '/', 'method' => 'GET']]
         );
 
         $request = new Request([Arg::METHOD => 'POST']);
@@ -139,7 +139,7 @@ class RouterTest
     function test_not_found()
     {
         $config = $this->config([
-            'routes' => ['route' => '/']
+            'routes' => ['path' => '/']
         ]);
 
         $request = $this->dispatch(new Request([Arg::URI => [Arg::PATH => '/foo']]), $config);
@@ -195,7 +195,7 @@ class RouterTest
      */
     function test_request()
     {
-        $config = $this->config(['routes' => ['name' => 'app', 'route' => '/']]);
+        $config = $this->config(['routes' => ['name' => 'app', 'path' => '/']]);
 
         $request = $this->dispatch(new Request(['uri' => ['path' => '/']]), $config);
 
@@ -216,7 +216,7 @@ class RouterTest
                 }]
             ],
             'routes' => [
-                Arg::ROUTE => '/'
+                Arg::PATH => '/'
             ]
         ]);
 

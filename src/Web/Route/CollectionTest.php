@@ -86,7 +86,7 @@ class CollectionTest
                     return 'foo';
                 }]
             ],
-            'routes' => [['route' => '/']],
+            'routes' => [['path' => '/']],
         ];
 
         $request  = new Request([Arg::URI => [Arg::PATH => '/']]);
@@ -107,9 +107,9 @@ class CollectionTest
             'routes' => [
                 [
                     'name' => 'baz',
-                    'route' => '/foo',
+                    'path' => '/foo',
                     'children' => [
-                        'bat' => ['route' => '/bar']
+                        'bat' => ['path' => '/bar']
                     ]
                 ]
             ],
@@ -135,7 +135,7 @@ class CollectionTest
                     return new Response(['body' => 'foo']);
                 }]
             ],
-            'routes' => [['route' => '/']],
+            'routes' => [['path' => '/']],
         ];
 
         $request  = new Request;

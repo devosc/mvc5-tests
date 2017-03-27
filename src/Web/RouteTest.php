@@ -89,7 +89,7 @@ class RouteTest
                 }]
             ],
             'routes' => [
-                'route' => '/'
+                'path' => '/'
             ]
         ];
 
@@ -110,10 +110,10 @@ class RouteTest
         $config = [
             'middleware' => [
                 'route\match' => [function(Route $route, Request $request, $next) {
-                    return $request->with(['matched' => true, 'name' => $route['name'], 'route' => $route]);
+                    return $request->with(['matched' => true, 'name' => $route['name'], 'path' => $route]);
                 }]
             ],
-            'routes' => ['name' => 'home', 'route' => '/'],
+            'routes' => ['name' => 'home', 'path' => '/'],
         ];
 
         $request  = new Request;
@@ -136,7 +136,7 @@ class RouteTest
                     return new Response(['body' => 'foo']);
                 }]
             ],
-            'routes' => ['route' => '/'],
+            'routes' => ['path' => '/'],
         ];
 
         $request  = new Request;

@@ -12,7 +12,6 @@ use Mvc5\Plugin\Plugin;
 use Mvc5\Plugin\Service;
 use Mvc5\Request\Config as Request;
 use Mvc5\Route\Dispatch\Collection;
-use Mvc5\Route\Config as Route;
 use Mvc5\Route\Generator;
 use Mvc5\Route\Match;
 use Mvc5\Route\Match\Path;
@@ -45,15 +44,15 @@ class CollectionTest
             'routes' => [
                 [
                     'name'  => 'home',
-                    'route' => '/',
+                    'path' => '/',
                     'controller' => 'Home\Controller'
                 ],
                 'baz' => [
-                    'route' => '/foo',
+                    'path' => '/foo',
                     'children' => [
                         [
                             'name'     => 'bat',
-                            'route' => '/bar',
+                            'path' => '/bar',
                             'controller' => 'foobar'
                         ]
                     ]

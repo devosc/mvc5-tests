@@ -19,7 +19,7 @@ class CompileTest
         $compile = new Compile;
 
         $route = (new Generator)->__invoke([
-            'route'      => '/{author}[/{category}][/{optional_missing_param}]',
+            'path'      => '/{author}[/{category}][/{optional_missing_param}]',
             'defaults'   => [
                 'category' => 'web'
             ]
@@ -40,7 +40,7 @@ class CompileTest
         $compile = new Compile;
 
         $route = (new Generator)->__invoke([
-            'route'      => '/[{author}[/{category}]]',
+            'path'      => '/[{author}[/{category}]]',
             'defaults'   => [
                 'author'   => 'owner',
                 'category' => 'web'
@@ -59,7 +59,7 @@ class CompileTest
     {
         $compile = new Compile;
 
-        $route = (new Generator)->__invoke(['route' => '/{$}']);
+        $route = (new Generator)->__invoke(['path' => '/{$}']);
 
         $this->assertEquals('/', $compile->compile($route['tokens'], [], $route['defaults']));
     }
@@ -72,7 +72,7 @@ class CompileTest
         $compile = new Compile;
 
         $route = (new Generator)->__invoke([
-            'route'      => '/{author}[/{category}][/{optional_missing_param}]',
+            'path'      => '/{author}[/{category}][/{optional_missing_param}]',
             'defaults'   => [
                 'author'   => 'owner',
                 'category' => 'web'

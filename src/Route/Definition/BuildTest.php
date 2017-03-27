@@ -20,12 +20,12 @@ class BuildTest
     protected function route(array $route = [])
     {
         return $route + [
-            Arg::CHILDREN    => ['foo' => ['route' => 'foo']],
+            Arg::CHILDREN    => ['foo' => ['path' => 'foo']],
             Arg::CONSTRAINTS => null,
             Arg::NAME        => null,
             Arg::OPTIONS     => null,
+            Arg::PATH        => '/',
             Arg::REGEX       => null,
-            Arg::ROUTE       => '/',
             Arg::TOKENS      => null
         ];
     }
@@ -45,7 +45,7 @@ class BuildTest
         $this->assertEquals([], $route->constraints());
         $this->assertEquals([], $route->options());
         $this->assertEquals([['literal', '/']], $route->tokens());
-        $this->assertEquals(['foo' => ['route' => 'foo']], $route->children());
+        $this->assertEquals(['foo' => ['path' => 'foo']], $route->children());
     }
 
     /**
@@ -92,7 +92,7 @@ class BuildTest
         $this->assertEquals([], $route->constraints());
         $this->assertEquals([], $route->options());
         $this->assertEquals([['literal', '/']], $route->tokens());
-        $this->assertEquals(['foo' => ['route' => 'foo']], $route->children());
+        $this->assertEquals(['foo' => ['path' => 'foo']], $route->children());
     }
 
     /**
@@ -110,6 +110,6 @@ class BuildTest
         $this->assertEquals([], $route->constraints());
         $this->assertEquals([], $route->options());
         $this->assertEquals([['literal', '/']], $route->tokens());
-        $this->assertEquals(['foo' => ['route' => 'foo']], $route->children());
+        $this->assertEquals(['foo' => ['path' => 'foo']], $route->children());
     }
 }

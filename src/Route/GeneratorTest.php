@@ -24,8 +24,8 @@ class GeneratorTest
             Arg::CONSTRAINTS => [],
             Arg::NAME        => null,
             Arg::OPTIONS     => [],
+            Arg::PATH        => '/',
             Arg::REGEX       => null,
-            Arg::ROUTE       => '/',
             Arg::TOKENS      => null
         ];
 
@@ -44,8 +44,8 @@ class GeneratorTest
             Arg::CONSTRAINTS => [],
             Arg::NAME        => null,
             Arg::OPTIONS     => [],
+            Arg::PATH        => '/',
             Arg::REGEX       => null,
-            Arg::ROUTE       => '/',
             Arg::TOKENS      => null
         ]);
 

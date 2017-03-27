@@ -195,6 +195,16 @@ class RouteTest
     /**
      *
      */
+    function test_path()
+    {
+        $route = new Route([Arg::PATH => 'foo']);
+
+        $this->assertEquals('foo', $route->path());
+    }
+
+    /**
+     *
+     */
     function test_port_exists()
     {
         $route = new Route([Arg::PORT => '80']);
@@ -220,16 +230,6 @@ class RouteTest
         $route = new Route([Arg::REGEX => 'foo']);
 
         $this->assertEquals('foo', $route->regex());
-    }
-
-    /**
-     *
-     */
-    function test_route()
-    {
-        $route = new Route([Arg::ROUTE => 'foo']);
-
-        $this->assertEquals('foo', $route->route());
     }
 
     /**

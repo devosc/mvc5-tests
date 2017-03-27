@@ -3,9 +3,10 @@
  *
  */
 
-namespace Mvc5\Test\Route\Definition;
+namespace Mvc5\Test\Url;
 
 use Mvc5\Arg;
+use Mvc5\Url\Assemble;
 use Mvc5\Test\Test\TestCase;
 
 class AssembleTest
@@ -27,8 +28,6 @@ class AssembleTest
      */
     function test_canonical_with_options_standard_http()
     {
-        $assemble = new Assemble;
-
         $options = $this->options([
             Arg::CANONICAL => true,
             Arg::HOST      => 'localhost',
@@ -37,7 +36,7 @@ class AssembleTest
         ]);
 
         $this->assertEquals(
-            'http://localhost/app', $assemble->assemble('http', 'localhost', '80', '/app', $options)
+            'http://localhost/app', (new Assemble)('http', 'localhost', '80', '/app', $options)
         );
     }
 
@@ -46,8 +45,6 @@ class AssembleTest
      */
     function test_canonical_with_options_standard_http_no_scheme()
     {
-        $assemble = new Assemble;
-
         $options = $this->options([
             Arg::CANONICAL  => true,
             Arg::HOST       => 'localhost',
@@ -56,7 +53,7 @@ class AssembleTest
         ]);
 
         $this->assertEquals(
-            '//localhost/app', $assemble->assemble(null, 'localhost', '80', '/app', $options)
+            '//localhost/app', (new Assemble)(null, 'localhost', '80', '/app', $options)
         );
     }
 
@@ -65,8 +62,6 @@ class AssembleTest
      */
     function test_canonical_with_options_not_standard_http()
     {
-        $assemble = new Assemble;
-
         $options = $this->options([
             Arg::CANONICAL => true,
             Arg::HOST      => 'localhost',
@@ -75,7 +70,7 @@ class AssembleTest
         ]);
 
         $this->assertEquals(
-            'http://localhost:8080/app', $assemble->assemble('http', 'localhost', '8080', '/app', $options)
+            'http://localhost:8080/app', (new Assemble)('http', 'localhost', '8080', '/app', $options)
         );
     }
 
@@ -84,8 +79,6 @@ class AssembleTest
      */
     function test_different_domain_not_canonical_with_options_standard_http()
     {
-        $assemble = new Assemble;
-
         $options = $this->options([
             Arg::HOST   => 'localhost',
             Arg::PORT   => '80',
@@ -93,7 +86,7 @@ class AssembleTest
         ]);
 
         $this->assertEquals(
-            '//0.0.0.0/app', $assemble->assemble('http', '0.0.0.0', '80', '/app', $options)
+            '//0.0.0.0/app', (new Assemble)('http', '0.0.0.0', '80', '/app', $options)
         );
     }
 
@@ -102,8 +95,6 @@ class AssembleTest
      */
     function test_different_domain_not_canonical_with_options_not_standard_http()
     {
-        $assemble = new Assemble;
-
         $options = $this->options([
             Arg::HOST   => 'localhost',
             Arg::PORT   => '8080',
@@ -111,7 +102,7 @@ class AssembleTest
         ]);
 
         $this->assertEquals(
-            'http://0.0.0.0:8080/app', $assemble->assemble('http', '0.0.0.0', '8080', '/app', $options)
+            'http://0.0.0.0:8080/app', (new Assemble)('http', '0.0.0.0', '8080', '/app', $options)
         );
     }
 
@@ -120,8 +111,6 @@ class AssembleTest
      */
     function test_different_domain_canonical_with_options_standard_http()
     {
-        $assemble = new Assemble;
-
         $options = $this->options([
             Arg::CANONICAL => true,
             Arg::HOST      => 'localhost',
@@ -130,7 +119,7 @@ class AssembleTest
         ]);
 
         $this->assertEquals(
-            'http://0.0.0.0/app', $assemble->assemble('http', '0.0.0.0', '80', '/app', $options)
+            'http://0.0.0.0/app', (new Assemble)('http', '0.0.0.0', '80', '/app', $options)
         );
     }
 
@@ -139,8 +128,6 @@ class AssembleTest
      */
     function test_different_domain_canonical_with_options_not_standard_http()
     {
-        $assemble = new Assemble;
-
         $options = $this->options([
             Arg::CANONICAL => true,
             Arg::HOST      => 'localhost',
@@ -149,7 +136,7 @@ class AssembleTest
         ]);
 
         $this->assertEquals(
-            'http://0.0.0.0:8080/app', $assemble->assemble('http', '0.0.0.0', '8080', '/app', $options)
+            'http://0.0.0.0:8080/app', (new Assemble)('http', '0.0.0.0', '8080', '/app', $options)
         );
     }
 
@@ -158,9 +145,7 @@ class AssembleTest
      */
     function test_empty()
     {
-        $assemble = new Assemble;
-
-        $this->assertEmpty($assemble->assemble(null, null, null, null, $this->options()));
+        $this->assertEmpty((new Assemble)(null, null, null, null, $this->options()));
     }
 
     /**
@@ -168,10 +153,8 @@ class AssembleTest
      */
     function test_not_canonical_no_options_standard_http()
     {
-        $assemble = new Assemble;
-
         $this->assertEquals(
-            'http://localhost/app', $assemble->assemble('http', 'localhost', '80', '/app', $this->options())
+            'http://localhost/app', (new Assemble)('http', 'localhost', '80', '/app', $this->options())
         );
     }
 
@@ -180,10 +163,8 @@ class AssembleTest
      */
     function test_not_canonical_no_options_not_standard_http()
     {
-        $assemble = new Assemble;
-
         $this->assertEquals(
-            'http://localhost:8080/app', $assemble->assemble('http', 'localhost', '8080', '/app', $this->options())
+            'http://localhost:8080/app', (new Assemble)('http', 'localhost', '8080', '/app', $this->options())
         );
     }
 
@@ -192,8 +173,6 @@ class AssembleTest
      */
     function test_not_canonical_with_options_standard_http()
     {
-        $assemble = new Assemble;
-
         $options = $this->options([
             Arg::HOST   => 'localhost',
             Arg::PORT   => '80',
@@ -201,7 +180,7 @@ class AssembleTest
         ]);
 
         $this->assertEquals(
-            '/app', $assemble->assemble('http', 'localhost', '80', '/app', $options)
+            '/app', (new Assemble)('http', 'localhost', '80', '/app', $options)
         );
     }
 
@@ -210,15 +189,13 @@ class AssembleTest
      */
     function test_options_only_not_canonical_standard_http()
     {
-        $assemble = new Assemble;
-
         $options = $this->options([
             Arg::HOST   => 'localhost',
             Arg::PORT   => '80',
             Arg::SCHEME => 'http',
         ]);
 
-        $this->assertEquals('/app', $assemble->assemble(null, null, null, '/app', $options));
+        $this->assertEquals('/app', (new Assemble)(null, null, null, '/app', $options));
     }
 
     /**
@@ -226,15 +203,13 @@ class AssembleTest
      */
     function test_options_only_not_canonical_non_standard_http()
     {
-        $assemble = new Assemble;
-
         $options = $this->options([
             Arg::HOST   => 'localhost',
             Arg::PORT   => '8080',
             Arg::SCHEME => 'http',
         ]);
 
-        $this->assertEquals('http://localhost:8080/app', $assemble->assemble(null, null, null, '/app', $options));
+        $this->assertEquals('http://localhost:8080/app', (new Assemble)(null, null, null, '/app', $options));
     }
 
     /**
@@ -242,8 +217,6 @@ class AssembleTest
      */
     function test_options_only_canonical_standard_http()
     {
-        $assemble = new Assemble;
-
         $options = $this->options([
             Arg::CANONICAL => true,
             Arg::HOST      => 'localhost',
@@ -251,7 +224,7 @@ class AssembleTest
             Arg::SCHEME    => 'http',
         ]);
 
-        $this->assertEquals('http://localhost/app', $assemble->assemble(null, null, null, '/app', $options));
+        $this->assertEquals('http://localhost/app', (new Assemble)(null, null, null, '/app', $options));
     }
 
     /**
@@ -259,8 +232,6 @@ class AssembleTest
      */
     function test_options_only_canonical_non_standard_http()
     {
-        $assemble = new Assemble;
-
         $options = $this->options([
             Arg::CANONICAL => true,
             Arg::HOST      => 'localhost',
@@ -268,7 +239,7 @@ class AssembleTest
             Arg::SCHEME    => 'http',
         ]);
 
-        $this->assertEquals('http://localhost:8080/app', $assemble->assemble(null, null, null, '/app', $options));
+        $this->assertEquals('http://localhost:8080/app', (new Assemble)(null, null, null, '/app', $options));
     }
 
     /**
@@ -276,13 +247,11 @@ class AssembleTest
      */
     function test_path_with_query_and_fragment()
     {
-        $assemble = new Assemble;
-
         $options = $this->options([
             Arg::FRAGMENT => 'baz',
             Arg::QUERY    => ['foo' => 'bar'],
         ]);
 
-        $this->assertEquals('/app?foo=bar#baz', $assemble->assemble(null, null, null, '/app', $options));
+        $this->assertEquals('/app?foo=bar#baz', (new Assemble)(null, null, null, '/app', $options));
     }
 }

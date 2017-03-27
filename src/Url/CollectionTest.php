@@ -5,6 +5,7 @@
 
 namespace Mvc5\Test\Url;
 
+use Mvc5\Url\Assemble;
 use Mvc5\Url\Collection;
 use Mvc5\Test\Test\TestCase;
 
@@ -16,13 +17,13 @@ class CollectionTest
      */
     protected $routes = [
         'home' => [
-            'route' => '/',
+            'path' => '/',
         ],
         'baz' => [
-            'route' => '/foo',
+            'path' => '/foo',
             'children' => [
                 'bat' => [
-                    'route' => '/bar'
+                    'path' => '/bar'
                 ]
             ]
         ]
@@ -33,7 +34,7 @@ class CollectionTest
      */
     function test()
     {
-        $url = new Collection($this->routes);
+        $url = new Collection(new Assemble, $this->routes);
 
         $this->assertEquals('/foo/bar', $url('baz/bat'));
     }
