@@ -75,16 +75,6 @@ class RequestTest
     /**
      *
      */
-    function test_content_type()
-    {
-        $request = new Request([Arg::CONTENT_TYPE => 'foo']);
-
-        $this->assertEquals('foo', $request->contentType());
-    }
-
-    /**
-     *
-     */
     function test_controller()
     {
         $request = new Request([Arg::CONTROLLER => 'foo']);
