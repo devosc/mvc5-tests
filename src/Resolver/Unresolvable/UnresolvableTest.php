@@ -8,7 +8,6 @@ namespace Mvc5\Test\Resolver\Unresolvable;
 use Mvc5\App;
 use Mvc5\Resolver\Unresolvable;
 use Mvc5\Test\Test\TestCase;
-use RuntimeException;
 
 class UnresolvableTest
     extends TestCase

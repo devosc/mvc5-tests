@@ -10,7 +10,6 @@ use Mvc5\Event;
 use Mvc5\Model;
 use Mvc5\Plugin\Invoke;
 use Mvc5\Plugin\Value;
-use Mvc5\Resolver\Unresolvable;
 use Mvc5\Test\Test\TestCase;
 
 class CallTest
