@@ -36,7 +36,7 @@ class AssembleTest
         ]);
 
         $this->assertEquals(
-            'http://localhost/app', (new Assemble)('http', 'localhost', '80', '/app', $options)
+            'http://localhost/app', Assemble::url('http', 'localhost', '80', '/app', $options)
         );
     }
 
@@ -53,7 +53,7 @@ class AssembleTest
         ]);
 
         $this->assertEquals(
-            '//localhost/app', (new Assemble)(null, 'localhost', '80', '/app', $options)
+            '//localhost/app', Assemble::url(null, 'localhost', '80', '/app', $options)
         );
     }
 
@@ -70,7 +70,7 @@ class AssembleTest
         ]);
 
         $this->assertEquals(
-            'http://localhost:8080/app', (new Assemble)('http', 'localhost', '8080', '/app', $options)
+            'http://localhost:8080/app', Assemble::url('http', 'localhost', '8080', '/app', $options)
         );
     }
 
@@ -86,7 +86,7 @@ class AssembleTest
         ]);
 
         $this->assertEquals(
-            '//0.0.0.0/app', (new Assemble)('http', '0.0.0.0', '80', '/app', $options)
+            '//0.0.0.0/app', Assemble::url('http', '0.0.0.0', '80', '/app', $options)
         );
     }
 
@@ -102,7 +102,7 @@ class AssembleTest
         ]);
 
         $this->assertEquals(
-            'http://0.0.0.0:8080/app', (new Assemble)('http', '0.0.0.0', '8080', '/app', $options)
+            'http://0.0.0.0:8080/app', Assemble::url('http', '0.0.0.0', '8080', '/app', $options)
         );
     }
 
@@ -119,7 +119,7 @@ class AssembleTest
         ]);
 
         $this->assertEquals(
-            'http://0.0.0.0/app', (new Assemble)('http', '0.0.0.0', '80', '/app', $options)
+            'http://0.0.0.0/app', Assemble::url('http', '0.0.0.0', '80', '/app', $options)
         );
     }
 
@@ -136,7 +136,7 @@ class AssembleTest
         ]);
 
         $this->assertEquals(
-            'http://0.0.0.0:8080/app', (new Assemble)('http', '0.0.0.0', '8080', '/app', $options)
+            'http://0.0.0.0:8080/app', Assemble::url('http', '0.0.0.0', '8080', '/app', $options)
         );
     }
 
@@ -145,7 +145,7 @@ class AssembleTest
      */
     function test_empty()
     {
-        $this->assertEmpty((new Assemble)(null, null, null, null, $this->options()));
+        $this->assertEmpty(Assemble::url(null, null, null, null, $this->options()));
     }
 
     /**
@@ -154,7 +154,7 @@ class AssembleTest
     function test_not_canonical_no_options_standard_http()
     {
         $this->assertEquals(
-            'http://localhost/app', (new Assemble)('http', 'localhost', '80', '/app', $this->options())
+            'http://localhost/app', Assemble::url('http', 'localhost', '80', '/app', $this->options())
         );
     }
 
@@ -164,7 +164,7 @@ class AssembleTest
     function test_not_canonical_no_options_not_standard_http()
     {
         $this->assertEquals(
-            'http://localhost:8080/app', (new Assemble)('http', 'localhost', '8080', '/app', $this->options())
+            'http://localhost:8080/app', Assemble::url('http', 'localhost', '8080', '/app', $this->options())
         );
     }
 
@@ -180,7 +180,7 @@ class AssembleTest
         ]);
 
         $this->assertEquals(
-            '/app', (new Assemble)('http', 'localhost', '80', '/app', $options)
+            '/app', Assemble::url('http', 'localhost', '80', '/app', $options)
         );
     }
 
@@ -195,7 +195,7 @@ class AssembleTest
             Arg::SCHEME => 'http',
         ]);
 
-        $this->assertEquals('/app', (new Assemble)(null, null, null, '/app', $options));
+        $this->assertEquals('/app', Assemble::url(null, null, null, '/app', $options));
     }
 
     /**
@@ -209,7 +209,7 @@ class AssembleTest
             Arg::SCHEME => 'http',
         ]);
 
-        $this->assertEquals('http://localhost:8080/app', (new Assemble)(null, null, null, '/app', $options));
+        $this->assertEquals('http://localhost:8080/app', Assemble::url(null, null, null, '/app', $options));
     }
 
     /**
@@ -224,7 +224,7 @@ class AssembleTest
             Arg::SCHEME    => 'http',
         ]);
 
-        $this->assertEquals('http://localhost/app', (new Assemble)(null, null, null, '/app', $options));
+        $this->assertEquals('http://localhost/app', Assemble::url(null, null, null, '/app', $options));
     }
 
     /**
@@ -239,7 +239,7 @@ class AssembleTest
             Arg::SCHEME    => 'http',
         ]);
 
-        $this->assertEquals('http://localhost:8080/app', (new Assemble)(null, null, null, '/app', $options));
+        $this->assertEquals('http://localhost:8080/app', Assemble::url(null, null, null, '/app', $options));
     }
 
     /**
@@ -252,6 +252,6 @@ class AssembleTest
             Arg::QUERY    => ['foo' => 'bar'],
         ]);
 
-        $this->assertEquals('/app?foo=bar#baz', (new Assemble)(null, null, null, '/app', $options));
+        $this->assertEquals('/app?foo=bar#baz', Assemble::url(null, null, null, '/app', $options));
     }
 }

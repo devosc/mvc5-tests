@@ -8,7 +8,6 @@ namespace Mvc5\Test\Url;
 use Mvc5\Arg;
 use Mvc5\Route\Config as Route;
 use Mvc5\Test\Test\TestCase;
-use Mvc5\Url\Assemble;
 use Mvc5\Url\Generator;
 
 class GeneratorTest
@@ -30,7 +29,7 @@ class GeneratorTest
             Arg::CANONICAL => true
         ];
 
-        $generator = new Generator(new Assemble, $route, $options);
+        $generator = new Generator($route, $options);
 
         $this->assertEquals('http://localhost/foo', $generator('app', ['controller' => 'foo']));
     }
@@ -55,7 +54,7 @@ class GeneratorTest
             Arg::PORT   => '8000',
         ];
 
-        $generator = new Generator(new Assemble, $route);
+        $generator = new Generator($route);
 
         $this->assertEquals('http://localhost:8000/foo/bar/baz', $generator('app', ['bar' => 'baz']));
     }

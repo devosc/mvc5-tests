@@ -5,7 +5,6 @@
 
 namespace Mvc5\Test\Url;
 
-use Mvc5\Url\Assemble;
 use Mvc5\Url\Collection;
 use Mvc5\Test\Test\TestCase;
 
@@ -34,7 +33,7 @@ class CollectionTest
      */
     function test()
     {
-        $url = new Collection(new Assemble, $this->routes);
+        $url = new Collection($this->routes);
 
         $this->assertEquals('/foo/bar', $url('baz/bat'));
     }
