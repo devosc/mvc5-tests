@@ -40,5 +40,13 @@ class HeadersTest
         $without = $headers->without('Host');
 
         $this->assertFalse(isset($without['Host']));
+
+        $with = $headers->with('Host', 'foo');
+        $this->assertTrue(isset($with['Host']));
+        $this->assertEquals('foo', $with['host']);
+
+        $with = $headers->with(['baz' => 'bat']);
+        $this->assertTrue(isset($with['baz']));
+        $this->assertEquals('bat', $with['baz']);
     }
 }
