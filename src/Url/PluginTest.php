@@ -29,17 +29,12 @@ class PluginTest
     {
         $request = new Request([
             Arg::NAME => 'app',
-            Arg::PARAMS => ['controller' => 'foo'],
-            Arg::URI => [
-                Arg::HOST => 'localhost',
-                Arg::PORT => '8080',
-                Arg::SCHEME => 'https'
-            ]
+            Arg::PARAMS => ['controller' => 'foo']
         ]);
 
         $url = new Plugin($request, new Generator($this->route));
 
-        $this->assertEquals('https://localhost:8080/foo', $url());
+        $this->assertEquals('/foo', $url());
     }
 
     /**

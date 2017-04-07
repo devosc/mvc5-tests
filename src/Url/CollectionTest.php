@@ -35,6 +35,6 @@ class CollectionTest
     {
         $url = new Collection($this->routes);
 
-        $this->assertEquals('/foo/bar', $url('baz/bat'));
+        $this->assertEquals('/foo/bar', (string) $url('baz/bat'));
     }
 }

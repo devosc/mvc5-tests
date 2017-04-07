@@ -14,24 +14,24 @@ class GeneratorTest
     extends TestCase
 {
     /**
-     *
+     * @param null $route
+     * @param array $options
+     * @return Generator
      */
-    function test_options()
+    protected function generator($route = null, $options = [])
     {
-        $route = [
+        return new Generator($route ?: $this->route(), $options);
+    }
+
+    /**
+     * @return array
+     */
+    protected function route()
+    {
+        return [
             Arg::NAME     => 'app',
             Arg::PATH    => '/{controller}',
         ];
-
-        $options = [
-            Arg::SCHEME    => 'http',
-            Arg::HOST      => 'localhost',
-            Arg::CANONICAL => true
-        ];
-
-        $generator = new Generator($route, $options);
-
-        $this->assertEquals('http://localhost/foo', $generator('app', ['controller' => 'foo']));
     }
 
     /**

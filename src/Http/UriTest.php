@@ -99,7 +99,7 @@ class UriTest
         $uri = new Uri([
             Arg::FRAGMENT => 'top',
             Arg::HOST     => 'localhost',
-            Arg::PATH     => 'foobar',
+            Arg::PATH     => '/foobar',
             Arg::QUERY    => 'foo=bar',
             Arg::PORT     => '80',
             Arg::SCHEME   => 'http',
