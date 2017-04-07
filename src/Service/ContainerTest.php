@@ -20,13 +20,13 @@ class ContainerTest
 
         $clone = clone $config;
 
-        $this->assertTrue($clone == $config);
+        $this->assertEquals($clone, $config);
 
         $clone->config(['foo' => 'bar']);
         $clone->set('a', 'a');
         $clone->configure('baz', 'bat');
 
-        $this->assertFalse($clone == $config);
+        $this->assertNotSame($clone, $config);
         $this->assertEquals([], $config->config());
         $this->assertEquals([], $config->container());
         $this->assertEquals([], $config->services());
@@ -49,7 +49,7 @@ class ContainerTest
 
         $clone = clone $resolver;
 
-        $this->assertTrue($clone == $resolver);
+        $this->assertEquals($clone, $resolver);
         $this->assertInstanceOf(\stdClass::class, $clone->get('a'));
         $this->assertEquals($a, $clone->get('a'));
         $this->assertTrue($a === $clone->get('a'));
@@ -67,13 +67,13 @@ class ContainerTest
 
         $clone = clone $config;
 
-        $this->assertTrue($clone == $config);
+        $this->assertEquals($clone, $config);
 
         $clone->config(new Config(['foo' => 'bar']));
         $clone->set('a', 'a');
         $clone->configure('baz', 'bat');
 
-        $this->assertFalse($clone == $config);
+        $this->assertNotSame($clone, $config);
         $this->assertEquals(new Config, $config->config());
         $this->assertEquals(new Config, $config->services());
         $this->assertEquals(new Config, $config->container());

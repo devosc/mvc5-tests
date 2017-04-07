@@ -27,10 +27,10 @@ class CloneTest
 
         $clone = clone $app;
 
-        $this->assertTrue($clone == $app);
+        $this->assertEquals($clone, $app);
         $this->assertInstanceOf(\stdClass::class, $clone->get('a'));
         $this->assertEquals($a, $clone->get('a'));
-        $this->assertTrue($a === $clone->get('a'));
+        $this->assertSame($a, $clone->get('a'));
     }
 
     /**
@@ -55,14 +55,14 @@ class CloneTest
 
         $clone = clone $app;
 
-        $this->assertTrue($clone == $app);
+        $this->assertEquals($clone, $app);
 
         $clone->config(['foo' => 'bar']);
         $clone->set('a', 'a');
         $clone->events(['b' => 'b']);
         $clone->configure('baz', 'bat');
 
-        $this->assertFalse($clone == $app);
+        $this->assertNotSame($clone, $app);
 
         $this->assertEquals([], $app->config());
         $this->assertEquals([], $app->events());
@@ -84,12 +84,12 @@ class CloneTest
 
         $clone = clone $app;
 
-        $this->assertTrue($clone == $app);
+        $this->assertEquals($clone, $app);
 
         $config = $clone->config();
         $config['foo'] = 'bar';
 
-        $this->assertFalse($clone == $app);
+        $this->assertNotSame($clone, $app);
         $this->assertEquals(new Config, $app->config());
         $this->assertEquals(new Config(['foo' => 'bar']), $clone->config());
     }
@@ -103,12 +103,12 @@ class CloneTest
 
         $clone = clone $app;
 
-        $this->assertTrue($clone == $app);
+        $this->assertEquals($clone, $app);
 
         $container = $clone->container();
         $container['a'] = 'a';
 
-        $this->assertFalse($clone == $app);
+        $this->assertNotSame($clone, $app);
         $this->assertEquals(new Config, $app->container());
         $this->assertEquals(new Config(['a' => 'a']), $clone->container());
 
@@ -129,12 +129,12 @@ class CloneTest
 
         $clone = clone $app;
 
-        $this->assertTrue($clone == $app);
+        $this->assertEquals($clone, $app);
 
         $events = $clone->events();
         $events['a'] = 'a';
 
-        $this->assertFalse($clone == $app);
+        $this->assertNotSame($clone, $app);
         $this->assertEquals(new Config, $app->events());
         $this->assertEquals(new Config(['a' => 'a']), $clone->events());
 
@@ -160,7 +160,7 @@ class CloneTest
 
         $clone = clone $app;
 
-        $this->assertTrue($clone == $app);
+        $this->assertEquals($clone, $app);
 
         $config    = $clone->config();
         $container = $clone->container();
@@ -172,7 +172,7 @@ class CloneTest
         $events['b']     = 'b';
         $services['baz'] = 'bat';
 
-        $this->assertFalse($clone == $app);
+        $this->assertNotSame($clone, $app);
 
         $this->assertEquals(new Config, $app->config());
         $this->assertEquals(new Config, $app->container());
@@ -193,12 +193,12 @@ class CloneTest
 
         $clone = clone $app;
 
-        $this->assertTrue($clone == $app);
+        $this->assertEquals($clone, $app);
 
         $services = $clone->services();
         $services['baz'] = 'bat';
 
-        $this->assertFalse($clone == $app);
+        $this->assertNotSame($clone, $app);
         $this->assertEquals(new Config, $app->services());
         $this->assertEquals(new Config(['baz' => 'bat']), $clone->services());
 
