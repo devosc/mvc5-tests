@@ -14,27 +14,6 @@ class GeneratorTest
     extends TestCase
 {
     /**
-     * @param null $route
-     * @param array $options
-     * @return Generator
-     */
-    protected function generator($route = null, $options = [])
-    {
-        return new Generator($route ?: $this->route(), $options);
-    }
-
-    /**
-     * @return array
-     */
-    protected function route()
-    {
-        return [
-            Arg::NAME     => 'app',
-            Arg::PATH    => '/{controller}',
-        ];
-    }
-
-    /**
      *
      */
     function test_route()
@@ -57,5 +36,6 @@ class GeneratorTest
         $generator = new Generator($route);
 
         $this->assertEquals('http://localhost:8000/foo/bar/baz', $generator('app', ['bar' => 'baz']));
+        $this->assertNull($generator('/foo/bar'));
     }
 }
