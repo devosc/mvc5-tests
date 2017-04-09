@@ -53,14 +53,8 @@ class PluginTest
      */
     function test_no_route_config()
     {
-        $route = [
-            Arg::NAME => 'app',
-            Arg::PATH => '/foo'
-        ];
+        $url = new Plugin(new Request([Arg::NAME => 'app']), new Generator($this->route));
 
-        $url = new Plugin(new Request([Arg::NAME => 'app']), new Generator($route));
-
-        //$this->assertEquals('/foo', $url());
         $this->assertEquals('/app.html?foo=bar#top', $url('/app.html', ['foo' => 'bar'], 'top'));
     }
 
