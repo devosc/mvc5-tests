@@ -19,23 +19,28 @@ class GeneratorTest
     function test_route()
     {
         $route = [
-            Arg::NAME     => 'home',
-            Arg::PATH    => '/',
-            Arg::CHILDREN => [
-                'app' => new Route([
-                    Arg::PATH    => 'foo',
-                    Arg::WILDCARD => true,
-                    ARG::TOKENS   => [['literal','foo']]
-                ])
-            ],
-            Arg::SCHEME => 'http',
-            Arg::HOST   => 'localhost',
-            Arg::PORT   => '8000',
+            'app' => new Route([
+                Arg::NAME   => 'app',
+                Arg::PATH   => '/foo',
+                Arg::SCHEME => 'http',
+                Arg::HOST   => 'localhost',
+                Arg::PORT   => '8000',
+                Arg::WILDCARD => true,
+                ARG::TOKENS   => [['literal','/foo']]
+            ])
         ];
 
         $generator = new Generator($route);
 
-        $this->assertEquals('http://localhost:8000/foo/bar/baz', $generator('app', ['bar' => 'baz']));
+        $this->assertEquals('http://localhost:8000/foo/bar/baz', (string) $generator('app', ['bar' => 'baz']));
+    }
+
+    /**
+     *
+     */
+    function test_null()
+    {
+        $generator = new Generator([]);
         $this->assertNull($generator('/foo/bar'));
     }
 }

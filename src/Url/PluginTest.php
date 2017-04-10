@@ -19,8 +19,9 @@ class PluginTest
      * @var array
      */
     protected $route = [
-        Arg::NAME => 'app',
-        Arg::PATH => '/{controller}'
+        'app' => [
+            Arg::PATH => '/{controller}'
+        ]
     ];
 
     /**
@@ -36,6 +37,7 @@ class PluginTest
         $url = new Plugin($request, new Generator($this->route));
 
         $this->assertEquals('/foo', $url());
+        $this->assertEquals('/bar', $url([null, 'controller' => 'bar']));
     }
 
     /**
