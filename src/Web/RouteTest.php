@@ -88,9 +88,9 @@ class RouteTest
                     return 'foo';
                 }]
             ],
-            'routes' => [
+            'routes' => [[
                 'path' => '/'
-            ]
+            ]]
         ];
 
         $request  = new Request;
@@ -113,7 +113,7 @@ class RouteTest
                     return $request->with(['matched' => true, 'name' => $route['name'], 'path' => $route]);
                 }]
             ],
-            'routes' => ['name' => 'home', 'path' => '/'],
+            'routes' => [['name' => 'home', 'path' => '/']],
         ];
 
         $request  = new Request;
@@ -136,7 +136,7 @@ class RouteTest
                     return new Response(['body' => 'foo']);
                 }]
             ],
-            'routes' => ['path' => '/'],
+            'routes' => [['path' => '/']],
         ];
 
         $request  = new Request;

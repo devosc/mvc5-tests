@@ -51,25 +51,31 @@ class RouterTest
                     ]
                 ],
                 'routes' => [
-                    'name'     => 'home',
-                    'path'    => '/',
-                    'options'  => ['prefix' => __NAMESPACE__ . '\\'],
-                    'children' => new Config([
-                        'foo' => [
-                            'path' => 'foo',
-                            'children' => [
-                                'bar' => new Route([
-                                    'defaults' => ['controller' => 'foo/bar'],
-                                    'path'    => '/bar',
-                                    'regex'    => '/bar'
-                                ]),
-                                'bat' => [
-                                    'defaults' => ['controller' => 'foo/bat'],
-                                    'regex' => '/bat'
+                    [
+                        'name'     => 'home',
+                        'path'    => '/',
+                        'controller' => 'Home\Controller',
+                    ],
+                    'app' => [
+                        'path' => '/foo',
+                        'options'  => ['prefix' => __NAMESPACE__ . '\\'],
+                        'children' => new Config([
+                            'bar' => [
+                                'path' => '/bar',
+                                'children' => [
+                                    'baz' => new Route([
+                                        'defaults' => ['controller' => 'bar/baz'],
+                                        'path'    => '/baz',
+                                        'regex'    => '/baz'
+                                    ]),
+                                    'bat' => [
+                                        'defaults' => ['controller' => 'bar/bat'],
+                                        'regex' => '/bat'
+                                    ]
                                 ]
                             ]
-                        ]
-                    ])
+                        ])
+                    ]
                 ],
                 'services' => [
                     'route\dispatch'  => [
@@ -98,6 +104,17 @@ class RouterTest
     /**
      *
      */
+    function test_match_top()
+    {
+        $request = $this->dispatch(new Request(['uri' => ['path' => '/']]));
+
+        $this->assertEquals('home', $request->name());
+        $this->assertEquals('Home\Controller', $request->controller());
+    }
+
+    /**
+     *
+     */
     function test_child_not_found()
     {
         $request = $this->dispatch(new Request([Arg::URI => [Arg::PATH => '/foo/baz']]));
@@ -110,9 +127,9 @@ class RouterTest
      */
     function test_child_route()
     {
-        $request = $this->dispatch(new Request([Arg::URI => [Arg::PATH => '/foo/bat']]));
+        $request = $this->dispatch(new Request([Arg::URI => [Arg::PATH => '/foo/bar']]));
 
-        $this->assertEquals('foo/bat', $request->name());
+        $this->assertEquals('app/bar', $request->name());
     }
 
     /**
@@ -121,7 +138,7 @@ class RouterTest
     function test_error()
     {
         $config = $this->config([
-            'routes' => ['path' => '/', 'method' => 'GET']]
+            'routes' => [['path' => '/', 'method' => 'GET']]]
         );
 
         $request = new Request([Arg::METHOD => 'POST']);
@@ -139,7 +156,7 @@ class RouterTest
     function test_not_found()
     {
         $config = $this->config([
-            'routes' => ['path' => '/']
+            'routes' => [['path' => '/']]
         ]);
 
         $request = $this->dispatch(new Request([Arg::URI => [Arg::PATH => '/foo']]), $config);
@@ -163,10 +180,10 @@ class RouterTest
             ]
         ]);
 
-        $request = $this->dispatch(new Request([Arg::URI => [Arg::PATH => '/foo/bar']]), $config);
+        $request = $this->dispatch(new Request([Arg::URI => [Arg::PATH => '/foo/bar/baz']]), $config);
 
-        $this->assertEquals('foo/bar', $request->name());
-        $this->assertEquals(Foo\Bar\Controller::class, $request->controller());
+        $this->assertEquals('app/bar/baz', $request->name());
+        $this->assertEquals(Bar\Baz\Controller::class, $request->controller());
     }
 
     /**
@@ -175,14 +192,14 @@ class RouterTest
     function test_parent_params()
     {
         $config = $this->config([
-            'routes' => new Route([
+            'routes' => new Route([[
                 Arg::REGEX => '/(?P<controller>[a-zA-Z0-9]+)',
                 Arg::DEFAULTS => ['limit' => '10'],
                 Arg::CHILDREN => [
                     [Arg::REGEX => '/(?P<foobar>bar)', Arg::DEFAULTS => ['limit' => '5']],
                     [Arg::REGEX => '/(?P<action>bars)', Arg::DEFAULTS => ['limit' => '15']]
                 ]
-            ])
+            ]])
         ]);
 
         $request = $this->dispatch(new Request([Arg::URI => [Arg::PATH => '/foo/bars']]), $config);
@@ -195,7 +212,7 @@ class RouterTest
      */
     function test_request()
     {
-        $config = $this->config(['routes' => ['name' => 'app', 'path' => '/']]);
+        $config = $this->config(['routes' => [['name' => 'app', 'path' => '/']]]);
 
         $request = $this->dispatch(new Request(['uri' => ['path' => '/']]), $config);
 
@@ -216,7 +233,7 @@ class RouterTest
                 }]
             ],
             'routes' => [
-                Arg::PATH => '/'
+                [Arg::PATH => '/']
             ]
         ]);
 

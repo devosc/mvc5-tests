@@ -71,7 +71,7 @@ class MiddlewareTest
                     'route\match\middleware',
                 ]
             ],
-            'routes' => [
+            'routes' => [[
                 'name'       => 'home',
                 'path'      => '/',
                 'middleware' => [function($request, $response, $next) {
@@ -100,7 +100,7 @@ class MiddlewareTest
                         ]
                     ]
                 ]
-            ],
+            ]],
             'services' => [
                 'middleware' => new Service(HttpMiddleware::class),
                 'route\dispatch' => [
