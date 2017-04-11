@@ -15,13 +15,37 @@ class AssembleTest
     /**
      *
      */
-    function test()
+    function test_uri()
     {
         $this->assertEquals(
-            'http://localhost/app?foo=bar#baz', (new Assemble)(new Uri([
-                'scheme' => 'http', 'host' => 'localhost', 'port' => 80,
+            'http://foo:bar@localhost/app?foo=bar#baz', (new Assemble)(new Uri([
+                'scheme' => 'http', 'host' => 'localhost', 'port' => 80, 'user' => 'foo', 'pass' => 'bar',
                     'path' => '/app', 'query' => ['foo' => 'bar'], 'fragment' => 'baz'
             ]))
         );
+    }
+
+    /**
+     *
+     */
+    function test_url()
+    {
+        $this->assertEquals(
+            'http://foo:bar@localhost:8080/app?foo=bar#baz', (new Assemble)->url(
+                '/app', ['foo' => 'bar'], 'baz',
+                    ['scheme' => 'http', 'host' => 'localhost', 'port' => 8080, 'user' => 'foo', 'pass' => 'bar']
+            )
+        );
+    }
+
+    /**
+     *
+     */
+    function test_target()
+    {
+        $this->assertEquals('/app?foo=bar', Assemble::target('/app', ['foo' => 'bar']));
+        $this->assertEquals('/?foo=bar', Assemble::target('', ['foo' => 'bar']));
+        $this->assertEquals('/app?foo=bar', Assemble::target(new Uri(['path' => '/app', 'query' => ['foo' => 'bar']])));
+        $this->assertEquals('/?foo=bar', Assemble::target(new Uri(['query' => ['foo' => 'bar']])));
     }
 }
