@@ -36,7 +36,7 @@ class PluginTest
 
         $url = new Plugin($request, new Generator($this->route));
 
-        $this->assertEquals('/foo', $url());
+        $this->assertEquals('/foo', $url(''));
         $this->assertEquals('/bar', $url([null, 'controller' => 'bar']));
     }
 
@@ -56,6 +56,16 @@ class PluginTest
     function test_no_route_config()
     {
         $url = new Plugin(new Request([Arg::NAME => 'app']), new Generator($this->route));
+
+        $this->assertEquals('/app.html?foo=bar#top', $url('/app.html', ['foo' => 'bar'], 'top'));
+    }
+
+    /**
+     *
+     */
+    function test_slash_prefix()
+    {
+        $url = new Plugin(new Request([Arg::NAME => 'app']), function() { return 'foobar'; });
 
         $this->assertEquals('/app.html?foo=bar#top', $url('/app.html', ['foo' => 'bar'], 'top'));
     }
