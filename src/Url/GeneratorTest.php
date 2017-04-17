@@ -14,6 +14,36 @@ class GeneratorTest
     /**
      *
      */
+    function test_host()
+    {
+        $route = [
+            'app' => [
+                'scheme' => 'http',
+                'host'   => [
+                    'name' => '{subdomain}.app.dev'
+                ],
+                'port'   => '8000',
+                'path'   => '/foo',
+                'children' => [
+                    'bar' => [
+                        'path' => '/bar',
+                        'wildcard' => true
+                    ]
+                ]
+            ]
+        ];
+
+        $generator = new Generator($route);
+
+        $this->assertEquals(
+            'http://foobar.app.dev:8000/foo/bar/bat/baz',
+                (string) $generator('app/bar', ['subdomain' => 'foobar', 'bat' => 'baz'])
+        );
+    }
+
+    /**
+     *
+     */
     function test_route()
     {
         $route = [
@@ -24,7 +54,8 @@ class GeneratorTest
                 'path'   => '/foo',
                 'children' => [
                     'bar' => [
-                        'path' => '/bar'
+                        'path' => '/bar',
+                        'wildcard' => true
                     ]
                 ]
             ]
@@ -32,7 +63,7 @@ class GeneratorTest
 
         $generator = new Generator($route);
 
-        $this->assertEquals('http://localhost:8000/foo/bar', (string) $generator('app/bar'));
+        $this->assertEquals('http://localhost:8000/foo/bar/bat/baz', (string) $generator('app/bar', ['bat' => 'baz']));
     }
 
     /**

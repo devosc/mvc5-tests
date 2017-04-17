@@ -81,4 +81,38 @@ class PluginTest
 
         $this->assertEquals('/app.html?foo=bar#top', $url($uri));
     }
+
+
+    /**
+     *
+     */
+    function test_parent()
+    {
+        $request = new Request([
+            Arg::NAME => 'app/foo',
+            Arg::PARAMS => ['user' => 'phpdev', 'controller' => 'foo'],
+            Arg::PARENT => new Request([
+                Arg::NAME => 'app',
+                Arg::PARAMS => ['user' => 'phpdev'],
+            ])
+        ]);
+
+        $route = [
+            'app' => [
+                Arg::PATH => '/{user}',
+                Arg::CHILDREN => [
+                    'foo' => [
+                        Arg::PATH => '/{controller}'
+                    ]
+                ]
+            ]
+        ];
+
+        $url = new Plugin($request, new Generator($route));
+
+        $this->assertEquals('/phpdev/foo', $url());
+        $this->assertEquals('/phpdev/foo', $url('app/foo'));
+        $this->assertEquals('/phpdev/foobar', $url(['app/foo', 'controller' => 'foobar']));
+        $this->assertEquals('/phpdev', $url('app'));
+    }
 }

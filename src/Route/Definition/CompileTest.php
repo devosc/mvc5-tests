@@ -5,6 +5,7 @@
 
 namespace Mvc5\Test\Route\Definition;
 
+use Mvc5\Route\Definition\Compiler;
 use Mvc5\Route\Generator;
 use Mvc5\Test\Test\TestCase;
 
@@ -16,7 +17,7 @@ class CompileTest
      */
     function test_missing_required_parameter()
     {
-        $compile = new Compile;
+        $compiler = new Compiler;
 
         $route = (new Generator)->__invoke([
             'path'      => '/{author}[/{category}][/{optional_missing_param}]',
@@ -29,7 +30,7 @@ class CompileTest
 
         $this->expectExceptionMessage('Missing parameter "author"');
 
-        $compile->compile($route['tokens'], $params, $route['defaults']);
+        $compiler($route['tokens'], $params, $route['defaults']);
     }
 
     /**
@@ -37,7 +38,7 @@ class CompileTest
      */
     function test_optional_params_provided()
     {
-        $compile = new Compile;
+        $compiler = new Compiler;
 
         $route = (new Generator)->__invoke([
             'path'      => '/[{author}[/{category}]]',
@@ -49,7 +50,7 @@ class CompileTest
 
         $params = ['author' => 'foo', 'category' => 'bar'];
 
-        $this->assertEquals('/foo/bar', $compile->compile($route['tokens'], $params, $route['defaults']));
+        $this->assertEquals('/foo/bar', $compiler($route['tokens'], $params, $route['defaults']));
     }
 
     /**
@@ -57,11 +58,11 @@ class CompileTest
      */
     function test_param_with_no_name()
     {
-        $compile = new Compile;
+        $compiler = new Compiler;
 
         $route = (new Generator)->__invoke(['path' => '/{$}']);
 
-        $this->assertEquals('/', $compile->compile($route['tokens'], [], $route['defaults']));
+        $this->assertEquals('/', $compiler($route['tokens'], [], $route['defaults']));
     }
 
     /**
@@ -69,7 +70,7 @@ class CompileTest
      */
     function test_use_default_if_required_parameter()
     {
-        $compile = new Compile;
+        $compiler = new Compiler;
 
         $route = (new Generator)->__invoke([
             'path'      => '/{author}[/{category}][/{optional_missing_param}]',
@@ -81,6 +82,6 @@ class CompileTest
 
         $params = ['category' => 'bar'];
 
-        $this->assertEquals('/owner/bar', $compile->compile($route['tokens'], $params, $route['defaults']));
+        $this->assertEquals('/owner/bar', $compiler($route['tokens'], $params, $route['defaults']));
     }
 }
