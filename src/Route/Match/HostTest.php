@@ -40,6 +40,30 @@ class HostTest
     /**
      *
      */
+    function test_match_regex()
+    {
+        $route   = new Route([Arg::HOST => ['regex' => '(?P<domain>[^/]+)']]);
+        $host    = new Host;
+        $request = new Request([Arg::URI => [Arg::HOST => 'app.dev'], Arg::PARAMS => ['domain' => 'app.dev']]);
+
+        $this->assertEquals($request, $host($route, $request, $this->next()));
+    }
+
+    /**
+     *
+     */
+    function test_regex_not_match()
+    {
+        $route   = new Route([Arg::HOST => ['regex' => '(?P<domain>[^/]+)']]);
+        $host    = new Host;
+        $request = new Request;
+
+        $this->assertInstanceOf(NotFound::class, $host($route, $request, $this->next()));
+    }
+
+    /**
+     *
+     */
     function test_not_matched()
     {
         $route   = new Route([Arg::HOST => 'foo']);

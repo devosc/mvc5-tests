@@ -112,4 +112,29 @@ class BuildTest
         $this->assertEquals([['literal', '/']], $route->tokens());
         $this->assertEquals(['foo' => ['path' => 'foo']], $route->children());
     }
+
+
+    /**
+     *
+     */
+    function test_host()
+    {
+        $build = new Build;
+
+        $route = $build->build($this->route(['host' => [
+            'name' => '{subdomain}.app.dev'
+        ]]));
+
+        $host = [
+            'name' => '{subdomain}.app.dev',
+            'tokens' =>
+                [
+                    ['param', 'subdomain', '[^/]+'],
+                    ['literal', '.app.dev'],
+                ],
+            'regex' => '(?P<subdomain>[^/]+)\\.app\\.dev',
+        ];
+
+        $this->assertEquals($host, $route->host());
+    }
 }
