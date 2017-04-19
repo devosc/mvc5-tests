@@ -27,7 +27,7 @@ class PluginTest
     /**
      *
      */
-    function atest_current()
+    function test_current()
     {
         $request = new Request([
             Arg::NAME => 'app',
@@ -43,7 +43,7 @@ class PluginTest
     /**
      *
      */
-    function atest_named()
+    function test_named()
     {
         $url = new Plugin(new Request, new Generator($this->route));
 
@@ -53,7 +53,7 @@ class PluginTest
     /**
      *
      */
-    function atest_no_route_config()
+    function test_no_route_config()
     {
         $url = new Plugin(new Request([Arg::NAME => 'app']), new Generator($this->route));
 
@@ -63,7 +63,7 @@ class PluginTest
     /**
      *
      */
-    function atest_slash_prefix()
+    function test_slash_prefix()
     {
         $url = new Plugin(new Request([Arg::NAME => 'app']), function() { return 'foobar'; });
 
@@ -73,7 +73,7 @@ class PluginTest
     /**
      *
      */
-    function atest_uri()
+    function test_uri()
     {
         $url = new Plugin(new Request, new Generator($this->route));
 
