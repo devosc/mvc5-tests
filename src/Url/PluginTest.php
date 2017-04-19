@@ -27,7 +27,7 @@ class PluginTest
     /**
      *
      */
-    function test_current()
+    function atest_current()
     {
         $request = new Request([
             Arg::NAME => 'app',
@@ -43,7 +43,7 @@ class PluginTest
     /**
      *
      */
-    function test_named()
+    function atest_named()
     {
         $url = new Plugin(new Request, new Generator($this->route));
 
@@ -53,7 +53,7 @@ class PluginTest
     /**
      *
      */
-    function test_no_route_config()
+    function atest_no_route_config()
     {
         $url = new Plugin(new Request([Arg::NAME => 'app']), new Generator($this->route));
 
@@ -63,7 +63,7 @@ class PluginTest
     /**
      *
      */
-    function test_slash_prefix()
+    function atest_slash_prefix()
     {
         $url = new Plugin(new Request([Arg::NAME => 'app']), function() { return 'foobar'; });
 
@@ -73,7 +73,7 @@ class PluginTest
     /**
      *
      */
-    function test_uri()
+    function atest_uri()
     {
         $url = new Plugin(new Request, new Generator($this->route));
 
@@ -89,11 +89,15 @@ class PluginTest
     function test_parent()
     {
         $request = new Request([
-            Arg::NAME => 'app/foo',
+            Arg::NAME => 'app/foo/bar',
             Arg::PARAMS => ['user' => 'phpdev', 'controller' => 'foo'],
             Arg::PARENT => new Request([
-                Arg::NAME => 'app',
-                Arg::PARAMS => ['user' => 'phpdev'],
+                Arg::NAME => 'app/foo',
+                Arg::PARAMS => ['user' => 'phpdev', 'controller' => 'foo'],
+                Arg::PARENT => new Request([
+                    Arg::NAME => 'app',
+                    Arg::PARAMS => ['user' => 'phpdev'],
+                ])
             ])
         ]);
 
@@ -102,7 +106,15 @@ class PluginTest
                 Arg::PATH => '/{user}',
                 Arg::CHILDREN => [
                     'foo' => [
-                        Arg::PATH => '/{controller}'
+                        Arg::PATH => '/{controller}',
+                        Arg::CHILDREN => [
+                            'bar' => [
+                                Arg::PATH => '/bar'
+                            ]
+                        ]
+                    ],
+                    'baz' => [
+                        Arg::PATH => '/{id}'
                     ]
                 ]
             ]
@@ -110,9 +122,11 @@ class PluginTest
 
         $url = new Plugin($request, new Generator($route));
 
-        $this->assertEquals('/phpdev/foo', $url());
+        $this->assertEquals('/phpdev/foo/bar', $url());
+        $this->assertEquals('/phpdev/foo/bar', $url('app/foo/bar'));
         $this->assertEquals('/phpdev/foo', $url('app/foo'));
-        $this->assertEquals('/phpdev/foobar', $url(['app/foo', 'controller' => 'foobar']));
+        $this->assertEquals('/phpdev/foobar/bar', $url(['app/foo/bar', 'controller' => 'foobar']));
         $this->assertEquals('/phpdev', $url('app'));
+        $this->assertEquals('/phpdev/2', $url(['app/baz', 'id' => 2]));
     }
 }
