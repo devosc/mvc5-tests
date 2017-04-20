@@ -27,6 +27,46 @@ class PluginTest
     /**
      *
      */
+    function test_absolute_global()
+    {
+        $request = new Request([
+            Arg::NAME => 'app',
+            Arg::PARAMS => ['controller' => 'foo'],
+            Arg::URI => [
+                Arg::SCHEME => 'http',
+                Arg::HOST => 'localhost',
+                Arg::PORT => '8080'
+            ]
+        ]);
+
+        $url = new Plugin($request, new Generator($this->route), null, true);
+
+        $this->assertEquals('http://localhost:8080/foo', $url());
+    }
+
+    /**
+     *
+     */
+    function test_absolute_local()
+    {
+        $request = new Request([
+            Arg::NAME => 'app',
+            Arg::PARAMS => ['controller' => 'foo'],
+            Arg::URI => [
+                Arg::SCHEME => 'http',
+                Arg::HOST => 'localhost',
+                Arg::PORT => '8080'
+            ]
+        ]);
+
+        $url = new Plugin($request, new Generator($this->route));
+
+        $this->assertEquals('http://localhost:8080/foo', $url('app', '', '', ['absolute' => true]));
+    }
+
+    /**
+     *
+     */
     function test_current()
     {
         $request = new Request([
