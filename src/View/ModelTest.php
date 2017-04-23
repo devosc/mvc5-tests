@@ -49,9 +49,18 @@ class ModelTest
         $service = new ViewModel;
 
         $this->assertInstanceOf(Model::class, $service->setModel($model));
-        $this->assertTrue($model === $service->model(['foo' => 'bar']));
-        $this->assertTrue($model === $service->view('baz'));
-        $this->assertEquals('baz', $model->template());
+
+        $foo = $service->model(['foo' => 'bar']);
+
+        $this->assertInstanceOf(Model::class, $foo);
+        $this->assertNotSame($model, $foo);
+        $this->assertEquals('bar', $foo->get('foo'));
+
+        $baz = $service->view('baz');
+
+        $this->assertInstanceOf(Model::class, $baz);
+        $this->assertNotSame($model, $baz);
+        $this->assertEquals('baz', $baz->template());
     }
 
     /**
