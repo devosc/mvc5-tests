@@ -15,6 +15,7 @@ class ViewModelPlugin
      */
     use Service;
     use _ViewModel {
+        layout as public;
         model as public;
         view as public;
     }

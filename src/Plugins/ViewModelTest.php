@@ -7,11 +7,31 @@ namespace Mvc5\Test\Plugins;
 
 use Mvc5\App;
 use Mvc5\Model as Mvc5Model;
+use Mvc5\Layout;
 use Mvc5\Test\Test\TestCase;
 
 class ViewModelTest
     extends TestCase
 {
+    /**
+     *
+     */
+    function test_layout()
+    {
+        $plugin = new ViewModelPlugin(new App(['services' => ['layout' => [Layout::class, 'template' => 'layout']]]));
+
+        $layout = $plugin->layout();
+
+        $this->assertInstanceOf(Layout::class, $layout);
+        $this->assertEquals('layout', $layout->template());
+
+        $test = $plugin->layout(['foo' => 'bar'], 'test');
+
+        $this->assertInstanceOf(Layout::class, $test);
+        $this->assertEquals('test', $test->template());
+        $this->assertEquals('bar', $test->get('foo'));
+    }
+
     /**
      *
      */
