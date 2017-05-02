@@ -20,8 +20,7 @@ class SessionTest
     {
         $config = ['services' => ['session' => Session::class]];
 
-        $plugin = new SessionPlugin;
-        $plugin->service(new App($config));
+        $plugin = new SessionPlugin(new App($config));
 
         $this->assertInstanceOf(Session::class, $plugin->session());
     }
@@ -32,8 +31,7 @@ class SessionTest
     {
         $config = ['services' => ['session' => new Hydrator(Session::class, ['$foo' => 'bar'])]];
 
-        $plugin = new SessionPlugin;
-        $plugin->service(new App($config));
+        $plugin = new SessionPlugin(new App($config));
 
         $this->assertEquals('bar', $plugin->session('foo'));
     }

@@ -5,7 +5,9 @@
 
 namespace Mvc5\Test\View;
 
+use Mvc5\App;
 use Mvc5\Test\Test\TestCase;
+use Mvc5\View\Engine\PhpEngine;
 use Mvc5\View\Render;
 use Mvc5\View\Renderer;
 
@@ -17,7 +19,7 @@ class RendererTest
      */
     function test_render_object()
     {
-        $renderer = new Renderer(new Render);
+        $renderer = new Renderer(new Render(new App, new PhpEngine));
 
         $model = new HomeModel(__DIR__ . '/home.phtml');
 
@@ -29,7 +31,7 @@ class RendererTest
      */
     function test_render_template_name()
     {
-        $renderer = new Renderer(new Render);
+        $renderer = new Renderer(new Render(new App, new PhpEngine));
 
         $template =__DIR__ . '/home.phtml';
 

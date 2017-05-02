@@ -27,8 +27,7 @@ class ParamTest
      */
     function test_plugin()
     {
-        $app = new App;
-        $app->config(['foo' => ['bar' => 'baz']]);
+        $app = new App(['foo' => ['bar' => 'baz']]);
 
         $this->assertEquals('baz', $app->plugin(new Param('foo.bar')));
     }

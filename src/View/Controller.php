@@ -5,21 +5,23 @@
 
 namespace Mvc5\Test\View;
 
-use Mvc5\Model;
-use Mvc5\Model\ViewModel as _Model;
-use Mvc5\View\Model as _ViewModel;
+use Mvc5\ViewModel;
+use Mvc5\View\Model;
 
 class Controller
 {
     /**
      *
      */
-    use _ViewModel;
+    use Model {
+        model as public;
+        view as public;
+    }
 
     /**
      *
      */
-    const VIEW_MODEL = Model::class;
+    const VIEW_MODEL = ViewModel::class;
 
     /**
      *
@@ -27,9 +29,17 @@ class Controller
     const TEMPLATE_NAME = 'home';
 
     /**
+     * @param null $model
+     */
+    function __construct($model = null)
+    {
+        $this->model = $model;
+    }
+
+    /**
      * @param array $vars
      * @param null $template
-     * @return _Model
+     * @return ViewModel
      */
     function __invoke(array $vars = [], $template = null)
     {

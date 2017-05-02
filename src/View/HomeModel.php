@@ -5,17 +5,11 @@
 
 namespace Mvc5\Test\View;
 
-use Mvc5\Model\Plugin;
-use Mvc5\Model\ViewModel as _ViewModel;
+use Mvc5\ViewModel;
 
 class HomeModel
-    implements _ViewModel
+    extends ViewModel
 {
-    /**
-     *
-     */
-    use Plugin;
-
     /**
      *
      */

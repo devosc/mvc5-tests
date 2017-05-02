@@ -9,8 +9,8 @@ use Mvc5\App;
 use Mvc5\Config;
 use Mvc5\Plugin\Child;
 use Mvc5\Plugin\Plugin;
-use Mvc5\Model;
 use Mvc5\Test\Test\TestCase;
+use Mvc5\ViewModel;
 
 class ChildTest
     extends TestCase
@@ -52,12 +52,12 @@ class ChildTest
     {
         $app = new App([
             'services' => [
-                'foo' => new Plugin(Model::class, [['foo' => 'bar']], [['set', ['foobar' => 'bar']]]),
+                'foo' => new Plugin(Config::class, [['foo' => 'bar']], [['set', ['foobar' => 'bar']]]),
                 'bar' => new Plugin('foo', [['foo' => 'baz']], [['set', ['a' => 'b']]], null, true)
             ]
         ]);
 
-        $this->assertEquals(new Model(['foo' => 'baz', 'foobar' => 'bar', 'a' => 'b']), $app->plugin('bar'));
+        $this->assertEquals(new Config(['foo' => 'baz', 'foobar' => 'bar', 'a' => 'b']), $app->plugin('bar'));
     }
 
     /**
@@ -67,12 +67,12 @@ class ChildTest
     {
         $app = new App([
             'services' => [
-                'foo' => new Plugin(Model::class, [['foo' => 'bar']], [['set', ['foobar' => 'bat']]]),
+                'foo' => new Plugin(Config::class, [['foo' => 'bar']], [['set', ['foobar' => 'bat']]]),
                 'bar' => new Plugin('foo', [['foo' => 'baz']], [['set', ['a' => 'b']]])
             ]
         ]);
 
-        $this->assertEquals(new Model(['foo' => 'baz', 'a' => 'b']), $app->plugin('bar'));
+        $this->assertEquals(new Config(['foo' => 'baz', 'a' => 'b']), $app->plugin('bar'));
     }
 
     /**
@@ -82,12 +82,12 @@ class ChildTest
     {
         $app = new App([
             'services' => [
-                'foo' => new Plugin(Model::class, ['template' => 'bar']),
+                'foo' => new Plugin(ViewModel::class, ['template' => 'bar']),
                 'bar' => new Plugin('foo', ['template' => 'baz']),
             ]
         ]);
 
-        $this->assertEquals(new Model('baz'), $app->plugin('bar'));
+        $this->assertEquals(new ViewModel('baz'), $app->plugin('bar'));
     }
 
     /**
@@ -95,8 +95,11 @@ class ChildTest
      */
     function test_plugin()
     {
-        $app = new App;
-        $app->configure('bar', new Plugin(Config::class));
+        $app = new App([
+            'services' => [
+                'bar' => new Plugin(Config::class)
+            ]
+        ]);
 
         $this->assertInstanceOf(Config::class, $app->plugin(new Child('foo', 'bar')));
     }

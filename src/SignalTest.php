@@ -9,7 +9,7 @@ use Mvc5\App;
 use Mvc5\Plugin\Gem\SignalArgs;
 use Mvc5\Service\Service;
 use Mvc5\Session\Config as Session;
-use Mvc5\Template;
+use Mvc5\ViewModel;
 use Mvc5\Test\Test\TestCase;
 
 class SignalTest
@@ -58,7 +58,7 @@ class SignalTest
      */
     function test_default_param()
     {
-        $this->assertNull((new App)->call([new Template, 'template']));
+        $this->assertNull((new App)->call([new ViewModel, 'template']));
     }
 
     /**

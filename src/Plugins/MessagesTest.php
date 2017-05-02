@@ -21,8 +21,7 @@ class MessagesTest
 
         $app = new App(['services' => ['session\messages' => $messages]]);
 
-        $plugin = new MessagesPlugin;
-        $plugin->service($app);
+        $plugin = new MessagesPlugin($app);
 
         $plugin->danger('Hello!');
 
@@ -38,8 +37,7 @@ class MessagesTest
 
         $app = new App(['services' => ['session\messages' => $messages]]);
 
-        $plugin = new MessagesPlugin;
-        $plugin->service($app);
+        $plugin = new MessagesPlugin($app);
 
         $plugin->info('Hello!');
 
@@ -55,8 +53,7 @@ class MessagesTest
 
         $app = new App(['services' => ['session\messages' => $messages]]);
 
-        $plugin = new MessagesPlugin;
-        $plugin->service($app);
+        $plugin = new MessagesPlugin($app);
 
         $plugin->info('Hello!');
 
@@ -72,8 +69,7 @@ class MessagesTest
 
         $app = new App(['services' => ['session\messages' => $messages]]);
 
-        $plugin = new MessagesPlugin;
-        $plugin->service($app);
+        $plugin = new MessagesPlugin($app);
 
         $this->assertEquals($messages, $plugin->messages());
     }
@@ -87,8 +83,7 @@ class MessagesTest
 
         $app = new App(['services' => ['session\messages' => $messages]]);
 
-        $plugin = new MessagesPlugin;
-        $plugin->service($app);
+        $plugin = new MessagesPlugin($app);
 
         $plugin->success('Hello!');
 
@@ -104,8 +99,7 @@ class MessagesTest
 
         $app = new App(['services' => ['session\messages' => $messages]]);
 
-        $plugin = new MessagesPlugin;
-        $plugin->service($app);
+        $plugin = new MessagesPlugin($app);
 
         $plugin->warning('Hello!');
 

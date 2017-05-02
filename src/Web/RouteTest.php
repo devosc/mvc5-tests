@@ -9,9 +9,9 @@ use Mvc5\App;
 use Mvc5\Arg;
 use Mvc5\Http\Request\Config as Request;
 use Mvc5\Http\Response\Config as Response;
+use Mvc5\Plugin\Link;
 use Mvc5\Plugin\Param;
 use Mvc5\Plugin\Plugin;
-use Mvc5\Plugin\Service;
 use Mvc5\Route\Generator;
 use Mvc5\Route\Match;
 use Mvc5\Route\Match\Path;
@@ -46,7 +46,7 @@ class RouteTest
             'routes' => [],
             'services' => [
                 'route\generator' => Generator::class,
-                'route\match' => new Service(Match::class, [new Param('middleware.route\match')]),
+                'route\match' => [Match::class, new Link, new Param('middleware.route\match')],
                 'web\route' => [
                     WebRoute::class, new Plugin('route\match'), new Plugin('route\generator'), new Param('routes')
                 ]

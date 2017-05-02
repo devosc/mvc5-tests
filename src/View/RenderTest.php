@@ -7,11 +7,12 @@ namespace Mvc5\Test\View;
 
 use Mvc5\App;
 use Mvc5\Arg;
-use Mvc5\Layout;
-use Mvc5\Model;
+use Mvc5\Plugin\Link;
 use Mvc5\Test\Test\TestCase;
+use Mvc5\View\Engine\PhpEngine;
 use Mvc5\View\Render;
-use Mvc5\View\Template\NotFound;
+use Mvc5\ViewLayout;
+use Mvc5\ViewModel;
 
 class RenderTest
     extends TestCase
@@ -23,7 +24,7 @@ class RenderTest
     {
         $model  = new HomeModel('home', ['title' => 'foo']);
 
-        $render = new Render([], __DIR__);
+        $render = new Render(new App, new PhpEngine, ['directory' => __DIR__]);
 
         $this->assertEquals('<h1>foo</h1>', trim($render($model)));
     }
@@ -31,40 +32,14 @@ class RenderTest
     /**
      *
      */
-    function test_empty_filename_exception()
-    {
-        $render = new Render;
-
-        $this->expectException(NotFound::class);
-        $this->expectExceptionMessage('Template name cannot be empty: Mvc5\Model');
-
-        $render(new Model);
-    }
-
-    /**
-     *
-     */
     function test_exception()
     {
-        $render = new Render;
+        $render = new Render(new App, new PhpEngine);
         $template = __DIR__ . '/exception.phtml';
 
         $this->expectExceptionMessage('Exception Test');
 
-        $render(new Model($template));
-    }
-
-    /**
-     *
-     */
-    function test_file_not_found_exception()
-    {
-        $render = new Render(null, null, null, null, null, true);
-
-        $this->expectException(NotFound::class);
-        $this->expectExceptionMessage('File not found: ' . __DIR__ . '/foo.phtml');
-
-        $render(new Model(['__template' => __DIR__ . '/foo.phtml']));
+        $render(new ViewModel($template));
     }
 
     /**
@@ -72,8 +47,7 @@ class RenderTest
      */
     function test_no_view_model_provider()
     {
-        $render = new Render([], __DIR__);
-        $render->service(new App);
+        $render = new Render(new App, new PhpEngine, ['directory' => __DIR__]);
 
         $this->assertEquals('<h1>foo</h1>', trim($render->render(['__template' => 'home', 'title' => 'foo'])));
     }
@@ -83,7 +57,7 @@ class RenderTest
      */
     function test_not_a_view_model()
     {
-        $render = new Render;
+        $render = new Render(new App, new PhpEngine);
 
         $this->assertEquals('foo', $render('foo'));
     }
@@ -93,15 +67,23 @@ class RenderTest
      */
     function test_render_child()
     {
-        $model  = new HomeModel('home');
-        $layout = new Layout('layout', [Arg::CHILD_MODEL => $model]);
-
-        $render = new Render([
-            'home'   => __DIR__ . '/index.phtml',
-            'layout' => __DIR__ . '/layout.phtml'
+        $app = new App([
+            'services' => [
+                'render' => [
+                    Render::class, new Link, new PhpEngine, [
+                        'paths' => [
+                            'home'   => __DIR__ . '/index.phtml',
+                            'layout' => __DIR__ . '/layout.phtml'
+                        ]
+                    ]
+                ]
+            ]
         ]);
 
-        $this->assertEquals('<h1>Home</h1>', trim($render($layout)));
+        $model  = new HomeModel('home');
+        $layout = new ViewLayout('layout', [Arg::CHILD_MODEL => $model]);
+
+        $this->assertEquals('<h1>Home</h1>', trim($app->call('render', [$layout])));
     }
 
     /**
@@ -109,11 +91,11 @@ class RenderTest
      */
     function test_view_model_provider()
     {
-        $render = new Render([], __DIR__, function($name) {
+        $provider = function($name) {
             return new HomeModel('home', ['title' => 'foo']);
-        });
+        };
 
-        $render->service(new App);
+        $render = new Render(new App, new PhpEngine, ['directory' => __DIR__, 'provider' => $provider]);
 
         $this->assertEquals('<h1>foo</h1>', trim($render->render('baz')));
     }

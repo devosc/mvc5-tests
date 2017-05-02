@@ -19,7 +19,7 @@ class MatchTest
      */
     function test_empty_stack_returns_request()
     {
-        $middleware = new Match;
+        $middleware = new Match(new App);
         $request    = new Request;
         $route      = new Route;
 
@@ -31,16 +31,17 @@ class MatchTest
      */
     function test_reset()
     {
-        $middleware = new Match([
-            function(Route $route, Request $request, callable $next) {
-                return $next($route, $request);
-            },
-            function(Route $route, Request $request, callable $next) {
-                return $next($route, $request);
-            }
-        ]);
-
-        $middleware->service(new App);
+        $middleware = new Match(
+            new App,
+            [
+                function(Route $route, Request $request, callable $next) {
+                    return $next($route, $request);
+                },
+                function(Route $route, Request $request, callable $next) {
+                    return $next($route, $request);
+                }
+            ]
+        );
 
         $this->assertInstanceOf(Request::class, $middleware(new Route, new Request));
         $this->assertInstanceOf(Request::class, $middleware(new Route, new Request));

@@ -20,7 +20,7 @@ class ModelTest
     {
         $event = new Event('foo');
 
-        $this->assertEquals('foo', $event->event());
+        $this->assertEquals('foo', $event->name());
     }
 
     /**
@@ -30,7 +30,7 @@ class ModelTest
     {
         $event = new Event;
 
-        $this->assertEquals(get_class($event), $event->event());
+        $this->assertEquals(get_class($event), $event->name());
     }
 
     /**
@@ -40,7 +40,7 @@ class ModelTest
     {
         $event = new ResolverDispatch;
 
-        $this->assertEquals(Arg::SERVICE_RESOLVER, $event->event());
+        $this->assertEquals(Arg::SERVICE_RESOLVER, $event->name());
     }
 
     /**

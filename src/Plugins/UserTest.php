@@ -19,8 +19,7 @@ class UserTest
     {
         $config = ['services' => ['user' => Config::class]];
 
-        $plugin = new UserPlugin;
-        $plugin->service(new App($config));
+        $plugin = new UserPlugin(new App($config));
 
         $this->assertInstanceOf(Config::class, $plugin->user());
     }

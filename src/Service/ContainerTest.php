@@ -22,23 +22,17 @@ class ContainerTest
 
         $this->assertEquals($clone, $config);
 
-        $clone->config(['foo' => 'bar']);
         $clone->set('a', 'a');
-        $clone->configure('baz', 'bat');
 
         $this->assertNotSame($clone, $config);
-        $this->assertEquals([], $config->config());
         $this->assertEquals([], $config->container());
-        $this->assertEquals([], $config->services());
-        $this->assertEquals(['foo' => 'bar'], $clone->config());
         $this->assertEquals(['a' => 'a'], $clone->container());
-        $this->assertEquals(['baz' => 'bat'], $clone->services());
     }
 
     /**
      *
      */
-    function test_clone_container_array()
+    function atest_clone_container_array()
     {
         $resolver = new Container;
 
@@ -58,7 +52,7 @@ class ContainerTest
     /**
      *
      */
-    function test_clone_with_objects()
+    function atest_clone_with_objects()
     {
         $config = new Container(new Config);
 
@@ -85,7 +79,7 @@ class ContainerTest
     /**
      *
      */
-    function test_config()
+    function atest_config()
     {
         $config = new Container;
 
@@ -95,7 +89,7 @@ class ContainerTest
     /**
      *
      */
-    function test_config_empty()
+    function atest_config_empty()
     {
         $config = new Container;
 
@@ -105,7 +99,7 @@ class ContainerTest
     /**
      *
      */
-    function test_configure()
+    function atest_configure()
     {
         $config = new Container;
 
@@ -115,7 +109,7 @@ class ContainerTest
     /**
      *
      */
-    function test_configured_not_null()
+    function atest_configured_not_null()
     {
         $config = new Container;
 
@@ -127,7 +121,7 @@ class ContainerTest
     /**
      *
      */
-    function test_configured_null()
+    function atest_configured_null()
     {
         $config = new Container;
 
@@ -137,7 +131,7 @@ class ContainerTest
     /**
      *
      */
-    function test_container_empty()
+    function atest_container_empty()
     {
         $config = new Container;
 
@@ -147,7 +141,7 @@ class ContainerTest
     /**
      *
      */
-    function test_container_not_empty()
+    function atest_container_not_empty()
     {
         $config = new Container;
 
@@ -157,7 +151,7 @@ class ContainerTest
     /**
      *
      */
-    function test_count()
+    function atest_count()
     {
         $config = new Container;
 
@@ -169,7 +163,7 @@ class ContainerTest
     /**
      *
      */
-    function test_current_array()
+    function atest_current_array()
     {
         $config = new Container;
 
@@ -181,7 +175,7 @@ class ContainerTest
     /**
      *
      */
-    function test_current_iterator()
+    function atest_current_iterator()
     {
         $config = new Container;
 
@@ -193,7 +187,7 @@ class ContainerTest
     /**
      *
      */
-    function test_get()
+    function atest_get()
     {
         $config = new Container;
 
@@ -205,7 +199,7 @@ class ContainerTest
     /**
      *
      */
-    function test_get_returns_null()
+    function atest_get_returns_null()
     {
         $config = new Container;
 
@@ -215,7 +209,7 @@ class ContainerTest
     /**
      *
      */
-    function test_has()
+    function atest_has()
     {
         $config = new Container;
 
@@ -225,7 +219,7 @@ class ContainerTest
     /**
      *
      */
-    function test_has_stored()
+    function atest_has_stored()
     {
         $config = new Container;
 
@@ -237,7 +231,7 @@ class ContainerTest
     /**
      *
      */
-    function test_key_array()
+    function atest_key_array()
     {
         $config = new Container;
 
@@ -249,7 +243,7 @@ class ContainerTest
     /**
      *
      */
-    function test_key_iterator()
+    function atest_key_iterator()
     {
         $config = new Container;
 
@@ -261,7 +255,7 @@ class ContainerTest
     /**
      *
      */
-    function test_next_array()
+    function atest_next_array()
     {
         $config = new Container;
 
@@ -275,7 +269,7 @@ class ContainerTest
     /**
      *
      */
-    function test_next_iterator()
+    function atest_next_iterator()
     {
         $config = new Container;
 
@@ -289,7 +283,7 @@ class ContainerTest
     /**
      *
      */
-    function test_remove()
+    function atest_remove()
     {
         $config = new Container;
 
@@ -305,7 +299,7 @@ class ContainerTest
     /**
      *
      */
-    function test_remove_array()
+    function atest_remove_array()
     {
         $config = new Container;
 
@@ -323,7 +317,7 @@ class ContainerTest
     /**
      *
      */
-    function test_rewind_array()
+    function atest_rewind_array()
     {
         $config = new Container;
 
@@ -343,7 +337,7 @@ class ContainerTest
     /**
      *
      */
-    function test_rewind_iterator()
+    function atest_rewind_iterator()
     {
         $config = new Container;
 
@@ -363,7 +357,7 @@ class ContainerTest
     /**
      *
      */
-    function test_services_empty()
+    function atest_services_empty()
     {
         $config = new Container;
 
@@ -373,7 +367,7 @@ class ContainerTest
     /**
      *
      */
-    function test_services_not_empty()
+    function atest_services_not_empty()
     {
         $config = new Container;
 
@@ -383,7 +377,7 @@ class ContainerTest
     /**
      *
      */
-    function test_set()
+    function atest_set()
     {
         $config = new Container;
 
@@ -395,7 +389,7 @@ class ContainerTest
     /**
      *
      */
-    function test_set_array()
+    function atest_set_array()
     {
         $config = new Container;
 
@@ -408,7 +402,7 @@ class ContainerTest
     /**
      *
      */
-    function test_valid_array()
+    function atest_valid_array()
     {
         $config = new Container;
 
@@ -420,7 +414,7 @@ class ContainerTest
     /**
      *
      */
-    function test_valid_not_array()
+    function atest_valid_not_array()
     {
         $config = new Container;
 
@@ -430,7 +424,7 @@ class ContainerTest
     /**
      *
      */
-    function test_valid_with_iterator()
+    function atest_valid_with_iterator()
     {
         $config = new Container;
 
@@ -442,7 +436,7 @@ class ContainerTest
     /**
      *
      */
-    function test_valid_not_with_iterator()
+    function atest_valid_not_with_iterator()
     {
         $config = new Container;
 

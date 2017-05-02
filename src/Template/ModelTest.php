@@ -3,10 +3,10 @@
  *
  */
 
-namespace Mvc5\Test\Model;
+namespace Mvc5\Test\Template;
 
 use Mvc5\Arg;
-use Mvc5\Model;
+use Mvc5\Template\Model;
 use Mvc5\Test\Test\TestCase;
 
 class ModelTest
@@ -28,7 +28,7 @@ class ModelTest
      */
     function test_array_construct_with_template_constant()
     {
-        $model = new TestModel(['bar' => 'baz']);
+        $model = new TemplateModel(['bar' => 'baz']);
 
         $this->assertEquals('foo', $model->template());
         $this->assertEquals('baz', $model->get('bar'));
@@ -39,7 +39,7 @@ class ModelTest
      */
     function test_template_const()
     {
-        $model = new TestModel;
+        $model = new TemplateModel;
 
         $this->assertEquals('foo', $model->template());
     }
@@ -67,23 +67,33 @@ class ModelTest
     /**
      *
      */
-    function test_template_set()
+    function test_with_template()
     {
-        $model = new Model;
+        $model = new Model('foo');
 
-        $this->assertEquals('foo', $model->template('foo'));
+        $result = $model->withTemplate('bar');
+
+        $this->assertNotSame($result, $model);
+        $this->assertEquals('foo', $model->template());
+        $this->assertEquals('bar', $result->template());
     }
 
     /**
      *
      */
-    function test_vars_set()
+    function test_with_vars()
     {
         $vars = ['bar' => 'baz'];
 
         $model = new Model('foo');
 
-        $this->assertEquals([Arg::TEMPLATE_MODEL => 'foo'] + $vars, $model->vars($vars));
+        $result = $model->with($vars);
+
+        $this->assertNotSame($result, $model);
+        $this->assertEquals('foo', $model->template());
+        $this->assertEquals('foo', $result->template());
+        $this->assertEquals([Arg::TEMPLATE_MODEL => 'foo'], $model->vars());
+        $this->assertEquals([Arg::TEMPLATE_MODEL => 'foo'] + $vars, $result->vars());
     }
 
     /**

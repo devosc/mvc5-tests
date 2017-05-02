@@ -27,8 +27,11 @@ class PlugTest
      */
     function test_plugin()
     {
-        $app = new App;
-        $app->configure('foo', 'bar');
+        $app = new App([
+            'services' => [
+                'foo' => 'bar'
+            ]
+        ]);
 
         $this->assertEquals('bar', $app->plugin(new Plug('foo')));
     }

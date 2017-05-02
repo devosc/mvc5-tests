@@ -8,7 +8,7 @@ namespace Mvc5\Test\Config;
 use Mvc5\App;
 use Mvc5\Arg;
 use Mvc5\Config;
-use Mvc5\Immutable;
+use Mvc5\Model;
 use Mvc5\Plugin\Value;
 use Mvc5\Test\Test\TestCase;
 
@@ -204,7 +204,7 @@ class ConfigTest
      */
     function test_with_immutable()
     {
-        $config = new Config(new Immutable(['baz' => 'bat']));
+        $config = new Config(new Model(['baz' => 'bat']));
 
         $new = $config->with('foo', 'bar');
 
@@ -262,7 +262,7 @@ class ConfigTest
      */
     function test_without_immutable()
     {
-        $config = new Config(new Immutable(['foo' => 'bar', 'baz' => 'bat']));
+        $config = new Config(new Model(['foo' => 'bar', 'baz' => 'bat']));
 
         $new = $config->without('foo');
 

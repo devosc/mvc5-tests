@@ -21,8 +21,7 @@ class ResponseTest
     {
         $config = ['services' => ['response\json' => Json::class]];
 
-        $plugin = new ResponsePlugin;
-        $plugin->service(new App($config));
+        $plugin = new ResponsePlugin(new App($config));
 
         $this->assertInstanceOf(Json::class, $plugin->json(['foo']));
     }
@@ -34,8 +33,7 @@ class ResponseTest
     {
         $config = ['services' => ['response\redirect' => Redirect::class]];
 
-        $plugin = new ResponsePlugin;
-        $plugin->service(new App($config));
+        $plugin = new ResponsePlugin(new App($config));
 
         $this->assertInstanceOf(Redirect::class, $plugin->redirect('/'));
     }
@@ -47,8 +45,7 @@ class ResponseTest
     {
         $config = ['services' => ['response' => Response::class]];
 
-        $plugin = new ResponsePlugin;
-        $plugin->service(new App($config));
+        $plugin = new ResponsePlugin(new App($config));
 
         $this->assertInstanceOf(Response::class, $plugin->response('foo'));
     }

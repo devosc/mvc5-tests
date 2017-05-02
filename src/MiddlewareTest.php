@@ -21,7 +21,7 @@ class MiddlewareTest
      */
     function test_empty_stack_returns_response()
     {
-        $middleware = new Middleware;
+        $middleware = new Middleware(new App);
         $request    = new HttpRequest;
         $response   = new HttpResponse;
 
@@ -33,16 +33,17 @@ class MiddlewareTest
      */
     function test_reset()
     {
-        $middleware = new Middleware([
-            function(Request $request, Response $response, callable $next) {
-                return $next($request, $response);
-            },
-            function(Request $request, Response $response, callable $next) {
-                return $next($request, $response);
-            }
-        ]);
-
-        $middleware->service(new App);
+        $middleware = new Middleware(
+            new App,
+            [
+                function(Request $request, Response $response, callable $next) {
+                    return $next($request, $response);
+                },
+                function(Request $request, Response $response, callable $next) {
+                    return $next($request, $response);
+                }
+            ]
+        );
 
         $this->assertInstanceOf(Response::class, $middleware(new HttpRequest, new HttpResponse));
         $this->assertInstanceOf(Response::class, $middleware(new HttpRequest, new HttpResponse));

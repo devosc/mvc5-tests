@@ -18,7 +18,7 @@ class EventTest
     {
         $event = new Event('foo');
 
-        $this->assertEquals('foo', $event->event());
+        $this->assertEquals('foo', $event->name());
     }
 
     /**

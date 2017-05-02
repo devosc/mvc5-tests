@@ -19,8 +19,7 @@ class ConfigTest
     {
         $config = ['services' => ['config' => new Config]];
 
-        $plugin = new ConfigPlugin;
-        $plugin->service(new App($config));
+        $plugin = new ConfigPlugin(new App($config));
 
         $this->assertEquals($config, $plugin->config());
     }

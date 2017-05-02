@@ -6,13 +6,13 @@
 namespace Mvc5\Test\Event;
 
 use Mvc5\Event\Event;
-use Mvc5\Event\Signal;
+use Mvc5\Event\EventModel;
 
-class SignalEvent
+class TestEvent
     implements Event
 {
     /**
      *
      */
-    use Signal;
+    use EventModel;
 }

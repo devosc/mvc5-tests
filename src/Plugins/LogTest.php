@@ -17,10 +17,9 @@ class LogTest
      */
     function test()
     {
-        $config = ['services' => ['log' => Error::class]];
+        $app = new App(['services' => ['log' => Error::class]]);
 
-        $plugin = new LogPlugin;
-        $plugin->service(new App($config));
+        $plugin = new LogPlugin($app);
 
         $this->assertTrue($plugin->log('Hello!'));
     }

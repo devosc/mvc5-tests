@@ -5,7 +5,7 @@
 
 namespace Mvc5\Test\Plugins;
 
-use Mvc5\Plugin;
+use Mvc5\Plugins\Service;
 use Mvc5\Plugins\Session;
 
 class SessionPlugin
@@ -13,7 +13,7 @@ class SessionPlugin
     /**
      *
      */
-    use Plugin;
+    use Service;
     use Session {
         session as public;
     }

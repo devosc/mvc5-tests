@@ -5,8 +5,8 @@
 
 namespace Mvc5\Test\Plugins;
 
-use Mvc5\Plugin;
 use Mvc5\Plugins\Messages;
+use Mvc5\Plugins\Service;
 
 class MessagesPlugin
 {
@@ -21,5 +21,5 @@ class MessagesPlugin
         success as public;
         warning as public;
     }
-    use Plugin;
+    use Service;
 }

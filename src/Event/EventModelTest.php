@@ -8,7 +8,7 @@ namespace Mvc5\Test\Event;
 use Mvc5\Event\Event;
 use Mvc5\Test\Test\TestCase;
 
-class SignalTest
+class EventModelTest
     extends TestCase
 {
     /**
@@ -16,7 +16,7 @@ class SignalTest
      */
     function test_named_args()
     {
-        $event = new SignalEvent;
+        $event = new TestEvent;
 
         $callable = function($foo){
             return 'foo' . $foo;
@@ -30,13 +30,13 @@ class SignalTest
      */
     function test_no_args()
     {
-        $event = new SignalEvent;
+        $event = new TestEvent;
 
         $callable = function(Event $event){
-            return $event->event();
+            return $event->name();
         };
 
-        $this->assertEquals(SignalEvent::class, $event($callable));
+        $this->assertEquals(TestEvent::class, $event($callable));
     }
 
     /**
@@ -44,7 +44,7 @@ class SignalTest
      */
     function test_numeric_args()
     {
-        $event = new SignalEvent;
+        $event = new TestEvent;
 
         $callable = function($foo, $bar){
             return $foo. '/' . $bar;

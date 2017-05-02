@@ -6,8 +6,8 @@
 namespace Mvc5\Test\Plugins;
 
 use Mvc5\App;
-use Mvc5\Model as Mvc5Model;
-use Mvc5\Layout;
+use Mvc5\ViewModel;
+use Mvc5\ViewLayout;
 use Mvc5\Test\Test\TestCase;
 
 class ViewModelTest
@@ -18,16 +18,18 @@ class ViewModelTest
      */
     function test_layout()
     {
-        $plugin = new ViewModelPlugin(new App(['services' => ['layout' => [Layout::class, 'template' => 'layout']]]));
+        $app = new App(['services' => ['layout' => [ViewLayout::class, 'template' => 'layout']]]);
+
+        $plugin = new ViewModelPlugin($app);
 
         $layout = $plugin->layout();
 
-        $this->assertInstanceOf(Layout::class, $layout);
+        $this->assertInstanceOf(ViewLayout::class, $layout);
         $this->assertEquals('layout', $layout->template());
 
         $test = $plugin->layout(['foo' => 'bar'], 'test');
 
-        $this->assertInstanceOf(Layout::class, $test);
+        $this->assertInstanceOf(ViewLayout::class, $test);
         $this->assertEquals('test', $test->template());
         $this->assertEquals('bar', $test->get('foo'));
     }
@@ -81,8 +83,8 @@ class ViewModelTest
      */
     function test_view()
     {
-        $plugin = new ViewModelPlugin(new App(['services' => ['view\model' => Mvc5Model::class]]));
+        $plugin = new ViewModelPlugin(new App(['services' => ['view\model' => ViewModel::class]]));
 
-        $this->assertInstanceOf(Mvc5Model::class, $plugin->view());
+        $this->assertInstanceOf(ViewModel::class, $plugin->view());
     }
 }

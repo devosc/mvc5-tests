@@ -3,10 +3,10 @@
  *
  */
 
-namespace Mvc5\Test\Model;
+namespace Mvc5\Test\Template;
 
 use Mvc5\Arg;
-use Mvc5\Layout;
+use Mvc5\Template\Layout;
 use Mvc5\Test\Test\TestCase;
 
 class LayoutTest
@@ -25,18 +25,6 @@ class LayoutTest
     /**
      *
      */
-    function test_model_set()
-    {
-        $vars = ['foo' => 'bar'];
-
-        $layout = new Layout;
-
-        $this->assertEquals($vars, $layout->model($vars));
-    }
-
-    /**
-     *
-     */
     function test_vars()
     {
         $vars = ['foo' => 'bar'];
@@ -44,17 +32,5 @@ class LayoutTest
         $layout = new Layout(null, $vars);
 
         $this->assertEquals($vars, $layout->vars());
-    }
-
-    /**
-     *
-     */
-    function test_vars_set()
-    {
-        $vars = ['foo' => 'bar'];
-
-        $layout = new Layout;
-
-        $this->assertEquals($vars, $layout->vars($vars));
     }
 }
