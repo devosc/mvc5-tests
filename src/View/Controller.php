@@ -26,7 +26,7 @@ class Controller
     /**
      *
      */
-    const TEMPLATE_NAME = 'home';
+    const TEMPLATE = 'home';
 
     /**
      * @param null $model

@@ -28,5 +28,5 @@ class ViewModelController
     /**
      *
      */
-    const TEMPLATE_NAME = 'home';
+    const TEMPLATE = 'home';
 }

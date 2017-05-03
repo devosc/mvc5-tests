@@ -13,5 +13,5 @@ class TemplateModel
     /**
      *
      */
-    const TEMPLATE_NAME = 'foo';
+    const TEMPLATE = 'foo';
 }

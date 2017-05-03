@@ -13,7 +13,7 @@ class HomeModel
     /**
      *
      */
-    const TEMPLATE_NAME = __DIR__ . '/index.phtml';
+    const TEMPLATE = __DIR__ . '/index.phtml';
 
     /**
      *
