@@ -6,7 +6,7 @@
 namespace Mvc5\Test\Plugins;
 
 use Mvc5\Plugins\Service;
-use Mvc5\Plugins\ViewModel;
+use Mvc5\Plugins\View;
 
 class ViewModelPlugin
 {
@@ -14,7 +14,7 @@ class ViewModelPlugin
      *
      */
     use Service;
-    use ViewModel {
+    use View {
         layout as public;
         model as public;
         view as public;

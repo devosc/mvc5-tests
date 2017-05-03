@@ -5,8 +5,8 @@
 
 namespace Mvc5\Test\Plugins;
 
-use Mvc5\ViewModel as _ViewModel;
-use Mvc5\Plugins\ViewModel;
+use Mvc5\ViewModel;
+use Mvc5\Plugins\View;
 use Mvc5\Plugins\Service;
 
 class ViewModelController
@@ -14,7 +14,7 @@ class ViewModelController
     /**
      *
      */
-    use ViewModel {
+    use View {
         model as public;
         view as public;
     }
@@ -23,7 +23,7 @@ class ViewModelController
     /**
      *
      */
-    const VIEW_MODEL = _ViewModel::class;
+    const VIEW_MODEL = ViewModel::class;
 
     /**
      *
