@@ -5,11 +5,11 @@
 
 namespace Mvc5\Test\Plugin;
 
-use Mvc5\Model as Mvc5Model;
-use Mvc5\Plugin\Model;
+use Mvc5\ViewModel as _ViewModel;
+use Mvc5\Plugin\ViewModel;
 use Mvc5\Test\Test\TestCase;
 
-class ModelTest
+class ViewModelTest
     extends TestCase
 {
     /**
@@ -17,10 +17,10 @@ class ModelTest
      */
     function test()
     {
-        $model = new Model('foo', ['bar'], ['baz'], 'item');
+        $model = new ViewModel('foo', ['bar'], ['baz'], 'item');
 
-        $this->assertEquals(Mvc5Model::class, $model->name());
-        $this->assertEquals(['template' => 'foo', 'config' => ['bar']], $model->args());
+        $this->assertEquals(_ViewModel::class, $model->name());
+        $this->assertEquals(['template' => 'foo', 'vars' => ['bar']], $model->args());
         $this->assertEquals(['baz'], $model->calls());
         $this->assertEquals('item', $model->param());
         $this->assertFalse($model->merge());
