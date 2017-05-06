@@ -89,14 +89,28 @@ class RenderTest
     /**
      *
      */
-    function test_view_model_provider()
+    function test_view_model_service_lookup()
     {
-        $provider = function($name) {
-            return new HomeModel('home', ['title' => 'foo']);
-        };
+        $app = new App([
+            'services' => [
+                'baz' => new HomeModel('home', ['title' => 'foo'])
+            ]
+        ]);
 
-        $render = new Render(new App, new PhpEngine, ['directory' => __DIR__, 'provider' => $provider]);
+        $render = new Render($app, new PhpEngine, ['directory' => __DIR__]);
 
         $this->assertEquals('<h1>foo</h1>', trim($render->render('baz')));
+    }
+
+    /**
+     *
+     */
+    function test_render_without_view_model_service_lookup()
+    {
+        $app = new App();
+
+        $render = new Render($app, new PhpEngine, ['directory' => __DIR__]);
+
+        $this->assertEquals('<h1>foo</h1>', trim($render->render('/home', ['title' => 'foo'])));
     }
 }
