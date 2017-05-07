@@ -6,7 +6,7 @@
 namespace Mvc5\Test\Response;
 
 use Mvc5\Http\Error as HttpError;
-use Mvc5\Http\Error\Config as Error;
+use Mvc5\Http\Error\Error;
 use Mvc5\Request\Config as Request;
 use Mvc5\Response\Config as Response;
 use Mvc5\Response\Dispatch;
