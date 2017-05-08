@@ -5,14 +5,13 @@
 
 namespace Mvc5\Test\Service;
 
-use Mvc5\Config\Configuration;
-use Mvc5\Service\Config\Container as _Container;
+use Mvc5\Config;
 
 class Container
-    implements Configuration
+    extends Config
 {
     /**
      *
      */
-    use _Container;
+    use \Mvc5\Service\Config\Container;
 }
