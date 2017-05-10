@@ -7,7 +7,7 @@ namespace Mvc5\Test\Plugin;
 
 use Mvc5\App;
 use Mvc5\Config;
-use Mvc5\Log\Error;
+use Mvc5\Log\ErrorLog;
 use Mvc5\Plugin\Plugin;
 use Mvc5\Test\Test\TestCase;
 
@@ -91,11 +91,11 @@ class PluginTest
 
         $app = new App([
             'services' => [
-                'foo' => new Plugin(Error::class, ['message_type' => 'foobar', 'destination' => 'bar'])
+                'foo' => new Plugin(ErrorLog::class, ['message_type' => 'foobar', 'destination' => 'bar'])
             ]
         ]);
 
-        $this->assertEquals(new Error('foo', 'bar', 'baz'), $app->plugin($plugin, ['extra_headers' => 'baz']));
+        $this->assertEquals(new ErrorLog('foo', 'bar', 'baz'), $app->plugin($plugin, ['extra_headers' => 'baz']));
     }
 
     /**
