@@ -5,7 +5,7 @@
 
 namespace Mvc5\Test\Exception;
 
-use Mvc5\Exception\Exception;
+use Mvc5\Exception\Generator;
 
 class PHPException
     extends \Exception
@@ -13,7 +13,7 @@ class PHPException
     /**
      *
      */
-    use Exception;
+    use Generator;
 
     /**
      *
