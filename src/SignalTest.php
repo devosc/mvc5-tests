@@ -112,7 +112,7 @@ class SignalTest
      */
     function test_no_param_exception_static_method()
     {
-        $method = 'Mvc5\Resolver\Builder::create';
+        $method = 'Mvc5\Service\Builder::create';
 
         $this->expectExceptionMessage('Missing required parameter $name for ' . $method);
 
@@ -149,7 +149,7 @@ class SignalTest
     function test_static_string()
     {
         $this->assertInstanceOf(
-            \ReflectionClass::class, (new App)->call('@Mvc5\Resolver\Builder::reflectionClass', ['name' => self::class])
+            \ReflectionClass::class, (new App)->call('@Mvc5\Service\Builder::reflectionClass', ['name' => self::class])
         );
     }
 

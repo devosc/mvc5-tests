@@ -3,12 +3,12 @@
  *
  */
 
-namespace Mvc5\Test\Resolver\Builder;
+namespace Mvc5\Test\Service\Builder;
 
 use Mvc5\App;
 use Mvc5\Config;
 use Mvc5\Model;
-use Mvc5\Resolver\Builder;
+use Mvc5\Service\Builder;
 use Mvc5\Route\Dispatch;
 use Mvc5\Route\Match\Path;
 use Mvc5\Test\Test\TestCase;

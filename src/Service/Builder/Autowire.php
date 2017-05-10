@@ -3,7 +3,7 @@
  *
  */
 
-namespace Mvc5\Test\Resolver\Builder;
+namespace Mvc5\Test\Service\Builder;
 
 use Mvc5\Model;
 
