@@ -18,11 +18,10 @@ class AssignTest
      */
     function test_view_model()
     {
-        $assign = new Assign;
         $layout = new ViewLayout;
         $model = new ViewModel;
 
-        $result = $assign($layout, $model);
+        $result = (new Assign($layout))($model);
 
         $this->assertInstanceOf(ViewLayout::class, $result);
         $this->assertNotSame($layout, $result);
@@ -35,8 +34,6 @@ class AssignTest
      */
     function test_string_model()
     {
-        $assign = new Assign;
-
-        $this->assertEquals('foo', $assign(new ViewLayout, 'foo'));
+        $this->assertEquals('foo', (new Assign(new ViewLayout))('foo'));
     }
 }
