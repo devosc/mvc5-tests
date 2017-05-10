@@ -5,7 +5,7 @@
 
 namespace Mvc5\Test\Log;
 
-use Mvc5\Log\Error;
+use Mvc5\Log\ErrorLog;
 use Mvc5\Test\Test\TestCase;
 
 class ErrorTest
@@ -16,7 +16,7 @@ class ErrorTest
      */
     function test()
     {
-        $log = new Error;
+        $log = new ErrorLog;
 
         $this->assertTrue($log('Hello!'));
     }
