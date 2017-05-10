@@ -16,17 +16,11 @@ class HeadersTest
      */
     function test()
     {
-        $headers = new Headers(['bar' => 'baz', 'Host' => 'foo']);
+        $headers = new Headers(['bar' => 'baz']);
 
-        $this->assertEquals('foo', $headers->current());
+        $this->assertEquals('baz', $headers->current());
         $this->assertTrue(isset($headers['bar']));
         $this->assertEquals('baz', $headers['bar']);
-        $this->assertTrue(isset($headers['Host']));
-        $this->assertEquals('foo', $headers['host']);
-
-        unset($headers['host']);
-
-        $this->assertFalse(isset($headers['Host']));
 
         $with = $headers->with(['bar' => 'baz', 'Host' => 'foo']);
 
