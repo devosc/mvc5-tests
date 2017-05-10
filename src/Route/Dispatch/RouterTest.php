@@ -13,7 +13,6 @@ use Mvc5\Http\Error\MethodNotAllowed;
 use Mvc5\Plugin\Link;
 use Mvc5\Plugin\Param;
 use Mvc5\Plugin\Plugin;
-use Mvc5\Plugin\Service;
 use Mvc5\Request\Config as Request;
 use Mvc5\Route\Config as Route;
 use Mvc5\Route\Dispatch;
