@@ -60,11 +60,15 @@ class CallTest
     /**
      *
      */
-    function atest_relay()
+    function test_relay()
     {
         $app = new App([
             'services' => [
-                'view\model' => ViewModel::class
+                'view\model' => new class() {
+                    function service($service) {
+                        return $service;
+                    }
+                }
             ]
         ]);
 

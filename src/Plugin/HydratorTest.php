@@ -77,73 +77,71 @@ class HydratorTest
     /**
      *
      */
-    function atest_call_method_on_current_object_with_multiple_args()
+    function test_call_method_on_current_object_with_multiple_args()
     {
-        $plugin = new Hydrator(App::class, ['container' => ['foo' => 'bar'], 'template' => 'baz']);
+        $plugin = new Hydrator(Config::class, [['set', 'foo', 'bar'], ['set', 'bat', 'baz']]);
 
-        $model = (new App)->plugin($plugin);
+        $config = (new App)->plugin($plugin);
 
-        $this->assertInstanceOf(Config::class, $model);
-        $this->assertEquals('bar', $model->get('foo'));
-        $this->assertEquals('baz', $model->template());
+        $this->assertInstanceOf(Config::class, $config);
+        $this->assertEquals('bar', $config->get('foo'));
+        $this->assertEquals('baz', $config->get('bat'));
     }
 
     /**
      *
      */
-    function atest_call_method_on_current_object_with_single_argument()
+    function test_call_method_on_current_object_with_single_argument()
     {
-        $plugin = new Hydrator(ViewModel::class, ['template' => 'foo']);
+        $plugin = new Hydrator(Config::class, ['set' => ['foo' => 'bar']]);
 
-        $model = (new App)->plugin($plugin);
+        $config = (new App)->plugin($plugin);
 
-        $this->assertInstanceOf(ViewModel::class, $model);
-        $this->assertEquals('foo', $model->template());
+        $this->assertInstanceOf(Config::class, $config);
+        $this->assertEquals('bar', $config->get('foo'));
     }
 
     /**
      *
      */
-    function atest_call_plugin_and_pass_current_object_as_named_arg()
+    function test_call_plugin_and_pass_current_object_as_named_arg()
     {
         $plugin = new Hydrator(
-            ViewLayout::class, [['$layout', new Plugin(AssignLayout::class), 'model' => new Plugin(ViewModel::class)]]
+            Config::class, [['$config', function(Config $config){ $config['foo'] = 'bar'; }]]
         );
 
-        $layout = (new App)->plugin($plugin);
+        $config = (new App)->plugin($plugin);
 
-        $this->assertInstanceOf(ViewLayout::class, $layout);
-        $this->assertInstanceOf(ViewModel::class, $layout->model());
+        $this->assertInstanceOf(Config::class, $config);
+        $this->assertEquals('bar', $config->get('foo'));
     }
 
     /**
      *
      */
-    function atest_call_same_method_on_current_object_with_multiple_args()
+    function test_call_same_method_on_current_object_with_multiple_args()
     {
-        $plugin = new Hydrator(ViewModel::class, [['set', 'foo', 'bar'], ['set', 'bat', 'baz'], 'template' => 'foobar']);
+        $plugin = new Hydrator(Config::class, [['set', 'foo', 'bar'], ['set', 'bat', 'baz']]);
 
-        $model = (new App)->plugin($plugin);
+        $config = (new App)->plugin($plugin);
 
-        $this->assertInstanceOf(ViewModel::class, $model);
-        $this->assertEquals('bar', $model->get('foo'));
-        $this->assertEquals('baz', $model->get('bat'));
-        $this->assertEquals('foobar', $model->template());
+        $this->assertInstanceOf(Config::class, $config);
+        $this->assertEquals('bar', $config->get('foo'));
+        $this->assertEquals('baz', $config->get('bat'));
     }
 
     /**
      * [$service, $method]
      */
-    function atest_call_service_method_and_pass_current_object_as_named_arg()
+    function test_call_service_method_and_pass_current_object_as_named_arg()
     {
         $plugin = new Hydrator(
-            ViewLayout::class, [['$layout', [new Plugin(AssignLayout::class), '__invoke'], 'model' => new Plugin(ViewModel::class)]]
+            ViewModel::class, [['$model', [new Plugin(AssignLayout::class, [new ViewLayout]), '__invoke']]]
         );
 
         $layout = (new App)->plugin($plugin);
 
-        $this->assertInstanceOf(ViewLayout::class, $layout);
-        $this->assertInstanceOf(ViewModel::class, $layout->model());
+        $this->assertInstanceOf(ViewModel::class, $layout);
     }
 
     /**

@@ -39,22 +39,22 @@ class SerializeTest
     /**
      * @runInSeparateProcess
      */
-    function atest_unserialize()
+    function test_unserialize()
     {
         $session = new Session;
 
         $session->start();
 
-        $app = new App(null, null, true);
+        $config = [
+            'container' => [
+                'baz' => 'bat'
+            ],
+            'events' => [
+                'foo' => 'bar'
+            ]
+        ];
 
-        $config = ['foo' => 'bar'];
-        $app->config($config);
-
-        $container = ['baz' => function() {}];
-        $app->container($container);
-
-        $events = ['bar' => 'baz'];
-        $app->events($events);
+        $app = new App($config, null, true);
 
         $session['resolver'] = $app;
 
@@ -65,7 +65,7 @@ class SerializeTest
         $app = $session['resolver'];
         $this->assertEquals($config, $app->config());
         $this->assertEmpty($app->container());
-        $this->assertEquals($events, $app->events());
+        $this->assertEquals(['foo' => 'bar'], $app->events());
         $this->assertTrue($app->scope());
 
         $session->destroy();

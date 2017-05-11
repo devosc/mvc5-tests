@@ -143,7 +143,7 @@ class CloneTest
     /**
      *
      */
-    function atest_with_objects()
+    function test_with_objects()
     {
         $config = new Config([
             'container' => new Config,
@@ -156,29 +156,15 @@ class CloneTest
         $clone = clone $app;
 
         $this->assertEquals($clone, $app);
-        $this->assertEquals($config, $app->config());
-        $this->assertEquals($config, $clone->config());
-
-        $config    = $clone->config();
-        $container = $clone->container();
-        $events    = $clone->events();
-        $services  = $clone->services();
-
-        $config['foo']   = 'bar';
-        $container['a']  = 'a';
-        $events['b']     = 'b';
-        $services['baz'] = 'bat';
-
         $this->assertNotSame($clone, $app);
-
-
-        $this->assertEquals(new Config, $app->container());
-        $this->assertEquals(new Config, $app->events());
-        $this->assertEquals(new Config, $app->services());
-        $this->assertEquals(new Config(['foo' => 'bar']), $clone->config());
-        $this->assertEquals(new Config(['a' => 'a']), $clone->container());
-        $this->assertEquals(new Config(['b' => 'b']), $clone->events());
-        $this->assertEquals(new Config(['baz' => 'bat']), $clone->services());
+        $this->assertEquals($clone->config(), $app->config());
+        $this->assertNotSame($clone->config(), $app->config());
+        $this->assertEquals($clone->container(), $app->container());
+        $this->assertNotSame($clone->container(), $app->container());
+        $this->assertEquals($clone->events(), $app->events());
+        $this->assertNotSame($clone->events(), $app->events());
+        $this->assertEquals($clone->services(), $app->services());
+        $this->assertNotSame($clone->services(), $app->services());
     }
 
     /**

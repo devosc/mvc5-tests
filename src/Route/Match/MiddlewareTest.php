@@ -40,9 +40,9 @@ class MiddlewareTest
     /**
      *
      */
-    function atest_middleware()
+    function test_middleware()
     {
-        $app         = new App(['services' => ['middleware' => [HttpMiddleware::class, new Link]]]);
+        $app         = new App(['services' => ['middleware' => [HttpMiddleware::class, 'service' => new Link]]]);
         $middleware  = new Middleware($app, 'controller');
         $route       = new Route(['middleware' => ['b']]);
         $request     = new Request(['controller' => 'c']);

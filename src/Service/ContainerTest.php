@@ -16,432 +16,335 @@ class ContainerTest
      */
     function test_clone_with_arrays()
     {
-        $config = new Container;
+        $container = new Container;
 
-        $clone = clone $config;
+        $clone = clone $container;
 
-        $this->assertEquals($clone, $config);
+        $this->assertEquals($clone, $container);
 
         $clone->set('a', 'a');
 
-        $this->assertNotSame($clone, $config);
-        $this->assertEquals([], $config->container());
+        $this->assertNotSame($clone, $container);
+        $this->assertEquals([], $container->container());
         $this->assertEquals(['a' => 'a'], $clone->container());
     }
 
     /**
      *
      */
-    function atest_clone_container_array()
+    function test_clone_container_array()
     {
-        $resolver = new Container;
-
         $a = new \stdClass;
         $a->b = 'b';
 
-        $resolver->container(['a' => $a]);
+        $container = new Container(['services' => ['a' => $a]]);
 
-        $clone = clone $resolver;
+        $clone = clone $container;
 
-        $this->assertEquals($clone, $resolver);
-        $this->assertInstanceOf(\stdClass::class, $clone->get('a'));
-        $this->assertEquals($a, $clone->get('a'));
-        $this->assertTrue($a === $clone->get('a'));
+        $this->assertEquals(['a' => $a], $clone->services());
     }
 
     /**
      *
      */
-    function atest_clone_with_objects()
+    function test_clone_with_objects()
     {
-        $config = new Container(new Config);
+        $container = new Container(new Config([
+            'container' => new Config,
+            'services' => new Config
+        ]));
 
-        $config->container(new Config);
-        $config->services(new Config);
+        $clone = clone $container;
 
-        $clone = clone $config;
+        $this->assertEquals($clone, $container);
 
-        $this->assertEquals($clone, $config);
-
-        $clone->config(new Config(['foo' => 'bar']));
-        $clone->set('a', 'a');
-        $clone->configure('baz', 'bat');
-
-        $this->assertNotSame($clone, $config);
-        $this->assertEquals(new Config, $config->config());
-        $this->assertEquals(new Config, $config->services());
-        $this->assertEquals(new Config, $config->container());
-        $this->assertEquals(new Config(['foo' => 'bar']), $clone->config());
-        $this->assertEquals(new Config(['a' => 'a']), $clone->container());
-        $this->assertEquals(new Config(['baz' => 'bat']), $clone->services());
+        $this->assertNotSame($clone->config(), $container->config());
+        $this->assertNotSame($clone->container(), $container->container());
+        $this->assertNotSame($clone->services(), $container->services());
     }
 
     /**
      *
      */
-    function atest_config()
+    function test_config()
     {
-        $config = new Container;
+        $container = new Container(['services' => ['foo' => 'bar']]);
 
-        $this->assertEquals(['foo'], $config->config(['foo']));
+        $this->assertEquals(['services' => ['foo' => 'bar']], $container->config());
     }
 
     /**
      *
      */
-    function atest_config_empty()
+    function test_configured_not_null()
     {
-        $config = new Container;
+        $container = new Container(['services' => ['foo' => 'bar']]);
 
-        $this->assertEquals([], $config->config());
+        $this->assertEquals('bar', $container->configured('foo'));
     }
 
     /**
      *
      */
-    function atest_configure()
+    function test_configured_null()
     {
-        $config = new Container;
+        $container = new Container;
 
-        $this->assertEquals('bar', $config->configure('foo', 'bar'));
+        $this->assertNull($container->configured('foo'));
     }
 
     /**
      *
      */
-    function atest_configured_not_null()
+    function test_count()
     {
-        $config = new Container;
+        $container = new Container(['container' => [1, 2, 3, 4, 5]]);
 
-        $config->configure('foo', 'bar');
-
-        $this->assertEquals('bar', $config->configured('foo'));
+        $this->assertEquals(5, count($container));
     }
 
     /**
      *
      */
-    function atest_configured_null()
+    function test_current_array()
     {
-        $config = new Container;
+        $container = new Container(['container' => ['foo' => 'bar']]);
 
-        $this->assertEquals(null, $config->configured('foo'));
+        $this->assertEquals('bar', $container->current());
     }
 
     /**
      *
      */
-    function atest_container_empty()
+    function test_current_iterator()
     {
-        $config = new Container;
+        $container = new Container(['container' => new Config(['foo' => 'bar'])]);
 
-        $this->assertEquals([], $config->container());
+        $this->assertEquals('bar', $container->current());
     }
 
     /**
      *
      */
-    function atest_container_not_empty()
+    function test_get()
     {
-        $config = new Container;
+        $container = new Container(['container' => ['foo' => 'bar']]);
 
-        $this->assertEquals(['foo'], $config->container(['foo']));
+        $this->assertEquals('bar', $container->get('foo'));
     }
 
     /**
      *
      */
-    function atest_count()
+    function test_get_returns_null()
     {
-        $config = new Container;
+        $container = new Container;
 
-        $config->container([1, 2, 3, 4, 5]);
-
-        $this->assertEquals(5, count($config));
+        $this->assertNull($container->get('foo'));
     }
 
     /**
      *
      */
-    function atest_current_array()
+    function test_has()
     {
-        $config = new Container;
+        $container = new Container;
 
-        $config->container(['foo' => 'bar']);
-
-        $this->assertEquals('bar', $config->current());
+        $this->assertFalse($container->has('foo'));
     }
 
     /**
      *
      */
-    function atest_current_iterator()
+    function test_has_stored()
     {
-        $config = new Container;
+        $container = new Container(['container' => ['foo' => 'bar']]);
 
-        $config->container(new Config(['foo' => 'bar']));
-
-        $this->assertEquals('bar', $config->current());
+        $this->assertTrue($container->has('foo'));
     }
 
     /**
      *
      */
-    function atest_get()
+    function test_key_array()
     {
-        $config = new Container;
+        $container = new Container(['container' => ['foo' => 'bar']]);
 
-        $config->container(['foo' => 'bar']);
-
-        $this->assertEquals('bar', $config->get('foo'));
+        $this->assertEquals('foo', $container->key());
     }
 
     /**
      *
      */
-    function atest_get_returns_null()
+    function test_key_iterator()
     {
-        $config = new Container;
+        $container = new Container(['container' => new Config(['foo' => 'bar'])]);
 
-        $this->assertNull($config->get('foo'));
+        $this->assertEquals('foo', $container->key());
     }
 
     /**
      *
      */
-    function atest_has()
+    function test_next_array()
     {
-        $config = new Container;
+        $container = new Container(['container' => ['foo' => 'bar', 'baz' => 'bat']]);
 
-        $this->assertFalse($config->has('foo'));
+        $container->next();
+
+        $this->assertEquals('bat', $container->current());
     }
 
     /**
      *
      */
-    function atest_has_stored()
+    function test_next_iterator()
     {
-        $config = new Container;
+        $container = new Container(['container' => new Config(['foo' => 'bar', 'baz' => 'bat'])]);
 
-        $config->container(['foo' => 'bar']);
+        $container->next();
 
-        $this->assertTrue($config->has('foo'));
+        $this->assertEquals('bat', $container->current());
     }
 
     /**
      *
      */
-    function atest_key_array()
+    function test_remove()
     {
-        $config = new Container;
+        $container = new Container(['container' => ['foo' => 'bar']]);
 
-        $config->container(['foo' => 'bar']);
+        $this->assertTrue($container->has('foo'));
 
-        $this->assertEquals('foo', $config->key());
+        $container->remove('foo');
+
+        $this->assertFalse($container->has('foo'));
     }
 
     /**
      *
      */
-    function atest_key_iterator()
+    function test_remove_array()
     {
-        $config = new Container;
+        $container = new Container(['container' => ['foo' => 'bar', 'baz' => 'bat']]);
 
-        $config->container(new Config(['foo' => 'bar']));
+        $this->assertTrue($container->has('foo'));
+        $this->assertTrue($container->has('baz'));
 
-        $this->assertEquals('foo', $config->key());
+        $container->remove(['foo', 'baz']);
+
+        $this->assertFalse($container->has('foo'));
+        $this->assertFalse($container->has('baz'));
     }
 
     /**
      *
      */
-    function atest_next_array()
+    function test_rewind_array()
     {
-        $config = new Container;
+        $container = new Container(['container' => ['foo' => 'bar', 'baz' => 'bat']]);
 
-        $config->container(['foo' => 'bar', 'baz' => 'bat']);
+        $this->assertEquals('bar', $container->current());
 
-        $config->next();
+        $container->next();
 
-        $this->assertEquals('bat', $config->current());
+        $this->assertEquals('bat', $container->current());
+
+        $container->rewind();
+
+        $this->assertEquals('bar', $container->current());
     }
 
     /**
      *
      */
-    function atest_next_iterator()
+    function test_rewind_iterator()
     {
-        $config = new Container;
+        $container = new Container(['container' => new Config(['foo' => 'bar', 'baz' => 'bat'])]);
 
-        $config->container(new Config(['foo' => 'bar', 'baz' => 'bat']));
+        $this->assertEquals('bar', $container->current());
 
-        $config->next();
+        $container->next();
 
-        $this->assertEquals('bat', $config->current());
+        $this->assertEquals('bat', $container->current());
+
+        $container->rewind();
+
+        $this->assertEquals('bar', $container->current());
     }
 
     /**
      *
      */
-    function atest_remove()
+    function test_services()
     {
-        $config = new Container;
+        $container = new Container(['services' => ['foo' => 'bar']]);
 
-        $config->container(['foo' => 'bar']);
-
-        $this->assertTrue($config->has('foo'));
-
-        $config->remove('foo');
-
-        $this->assertFalse($config->has('foo'));
+        $this->assertEquals(['foo' => 'bar'], $container->services());
     }
 
     /**
      *
      */
-    function atest_remove_array()
+    function test_set()
     {
-        $config = new Container;
+        $container = new Container;
 
-        $config->container(['foo' => 'bar', 'baz' => 'bat']);
+        $container->set('foo', 'bar');
 
-        $this->assertTrue($config->has('foo'));
-        $this->assertTrue($config->has('baz'));
-
-        $config->remove(['foo', 'baz']);
-
-        $this->assertFalse($config->has('foo'));
-        $this->assertFalse($config->has('baz'));
+        $this->assertEquals('bar', $container->get('foo'));
     }
 
     /**
      *
      */
-    function atest_rewind_array()
+    function test_set_array()
     {
-        $config = new Container;
+        $container = new Container;
 
-        $config->container(['foo' => 'bar', 'baz' => 'bat']);
+        $container->set(['foo' => 'bar', 'baz' => 'bat']);
 
-        $this->assertEquals('bar', $config->current());
-
-        $config->next();
-
-        $this->assertEquals('bat', $config->current());
-
-        $config->rewind();
-
-        $this->assertEquals('bar', $config->current());
+        $this->assertEquals('bar', $container->get('foo'));
+        $this->assertEquals('bat', $container->get('baz'));
     }
 
     /**
      *
      */
-    function atest_rewind_iterator()
+    function test_valid_array()
     {
-        $config = new Container;
+        $container = new Container(['container' => ['foo' => 'bar']]);
 
-        $config->container(new Config(['foo' => 'bar', 'baz' => 'bat']));
-
-        $this->assertEquals('bar', $config->current());
-
-        $config->next();
-
-        $this->assertEquals('bat', $config->current());
-
-        $config->rewind();
-
-        $this->assertEquals('bar', $config->current());
+        $this->assertTrue($container->valid());
     }
 
     /**
      *
      */
-    function atest_services_empty()
+    function test_valid_not_array()
     {
-        $config = new Container;
+        $container = new Container;
 
-        $this->assertEquals([], $config->services());
+        $this->assertFalse($container->valid());
     }
 
     /**
      *
      */
-    function atest_services_not_empty()
+    function test_valid_with_iterator()
     {
-        $config = new Container;
+        $container = new Container(['container' => new Config(['foo' => 'bar'])]);
 
-        $this->assertEquals(['foo'], $config->services(['foo']));
+        $this->assertTrue($container->valid());
     }
 
     /**
      *
      */
-    function atest_set()
+    function test_valid_not_with_iterator()
     {
-        $config = new Container;
+        $container = new Container(['container' => new Config]);
 
-        $config->set('foo', 'bar');
-
-        $this->assertEquals('bar', $config->get('foo'));
-    }
-
-    /**
-     *
-     */
-    function atest_set_array()
-    {
-        $config = new Container;
-
-        $config->set(['foo' => 'bar', 'baz' => 'bat']);
-
-        $this->assertEquals('bar', $config->get('foo'));
-        $this->assertEquals('bat', $config->get('baz'));
-    }
-
-    /**
-     *
-     */
-    function atest_valid_array()
-    {
-        $config = new Container;
-
-        $config->container(['foo' => 'bar']);
-
-        $this->assertTrue($config->valid());
-    }
-
-    /**
-     *
-     */
-    function atest_valid_not_array()
-    {
-        $config = new Container;
-
-        $this->assertFalse($config->valid());
-    }
-
-    /**
-     *
-     */
-    function atest_valid_with_iterator()
-    {
-        $config = new Container;
-
-        $config->container(new Config(['foo' => 'bar']));
-
-        $this->assertTrue($config->valid());
-    }
-
-    /**
-     *
-     */
-    function atest_valid_not_with_iterator()
-    {
-        $config = new Container;
-
-        $config->container(new Config);
-
-        $this->assertFalse($config->valid());
+        $this->assertFalse($container->valid());
     }
 }
