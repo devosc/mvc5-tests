@@ -21,6 +21,7 @@ class AssignTest
         $layout = new ViewLayout;
         $model = new ViewModel;
 
+        /** @var ViewLayout $result */
         $result = (new Assign($layout))($model);
 
         $this->assertInstanceOf(ViewLayout::class, $result);

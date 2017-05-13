@@ -73,14 +73,14 @@ class MiddlewareTest
             'routes' => [[
                 'name'       => 'home',
                 'path'      => '/',
-                'middleware' => [function($request, $response, $next) {
+                'middleware' => [function(Request $request, Response $response, callable $next) {
                     return $next($request, $response->with('test', 'a'));
                 }],
                 'children' => [
                     [
                         'name'     => 'baz',
                         'path' => 'foo',
-                        'middleware' => [function($request, $response, $next) {
+                        'middleware' => [function(Request $request, Response $response, callable $next) {
                             return $next($request, $response->with('test', $response['test'] . ', b'));
                         }],
                         'children' => [
@@ -88,10 +88,10 @@ class MiddlewareTest
                                 'name'  => 'bat',
                                 'path' => '/bar',
                                 'middleware' => [
-                                    function($request, $response, $next) {
+                                    function(Request $request, Response $response, callable $next) {
                                         return $next($request, $response->with('test', $response['test'] . ', c'));
                                     },
-                                    function($request, $response, $next) {
+                                    function(Request $request, Response $response, callable $next) {
                                         return $response['test'];
                                     }
                                 ],
