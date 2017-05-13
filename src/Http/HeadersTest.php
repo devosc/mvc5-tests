@@ -5,7 +5,7 @@
 
 namespace Mvc5\Test\Http;
 
-use Mvc5\Http\Headers\Config as Headers;
+use Mvc5\Http\HttpHeaders;
 use Mvc5\Test\Test\TestCase;
 
 class HeadersTest
@@ -16,7 +16,7 @@ class HeadersTest
      */
     function test()
     {
-        $headers = new Headers(['bar' => 'baz']);
+        $headers = new HttpHeaders(['bar' => 'baz']);
 
         $this->assertEquals('baz', $headers->current());
         $this->assertTrue(isset($headers['bar']));

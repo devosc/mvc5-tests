@@ -5,6 +5,7 @@
 
 namespace Mvc5\Test\Http\Status;
 
+use Mvc5\Http\StatusCode;
 use Mvc5\Test\Test\TestCase;
 
 class StatusCodeTest
@@ -15,8 +16,6 @@ class StatusCodeTest
      */
     function test()
     {
-        $reasonPhrase = new ReasonPhrase;
-
-        $this->assertEquals('OK', $reasonPhrase->statusReasonPhrase('200'));
+        $this->assertEquals('OK', StatusCode::reasonPhrase('200'));
     }
 }

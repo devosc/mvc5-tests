@@ -6,7 +6,7 @@
 namespace Mvc5\Test\Url;
 
 use Mvc5\Arg;
-use Mvc5\Http\Uri\Config as HttpUri;
+use Mvc5\Http\HttpUri;
 use Mvc5\Request\Config as Request;
 use Mvc5\Test\Test\TestCase;
 use Mvc5\Url\Generator;

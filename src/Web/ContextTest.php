@@ -6,8 +6,8 @@
 namespace Mvc5\Test\Web;
 
 use Mvc5\App;
-use Mvc5\Http\Request\Config as Request;
-use Mvc5\Http\Response\Config as Response;
+use Mvc5\Http\HttpRequest;
+use Mvc5\Http\HttpResponse;
 use Mvc5\Service\Context as _Context;
 use Mvc5\Test\Test\TestCase;
 use Mvc5\Web\Context;
@@ -21,11 +21,11 @@ class ContextTest
     function test()
     {
         $app      = new App;
-        $request  = new Request;
-        $response = new Response;
+        $request  = new HttpRequest;
+        $response = new HttpResponse;
         $web      = new Context($app);
 
-        $next = function(Request $request, Response $response) {
+        $next = function(HttpRequest $request, HttpResponse $response) {
             return $response;
         };
 

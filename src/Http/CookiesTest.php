@@ -5,7 +5,7 @@
 
 namespace Mvc5\Test\Http;
 
-use Mvc5\Http\Cookies\Config as Cookies;
+use Mvc5\Http\HttpCookies;
 use Mvc5\Test\Test\TestCase;
 
 class CookiesTest
@@ -16,7 +16,7 @@ class CookiesTest
      */
     function test_with()
     {
-        $cookies = new Cookies;
+        $cookies = new HttpCookies;
 
         $new = $cookies->withCookie('foo', 'bar');
 
@@ -40,7 +40,7 @@ class CookiesTest
      */
     function test_without()
     {
-        $cookies = new Cookies(['foo' => 'bar']);
+        $cookies = new HttpCookies(['foo' => 'bar']);
 
         $new = $cookies->withoutCookie('foo');
 

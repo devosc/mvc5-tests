@@ -7,8 +7,8 @@ namespace Mvc5\Test\Web;
 
 use Mvc5\App;
 use Mvc5\Arg;
-use Mvc5\Http\Request\Config as Request;
-use Mvc5\Http\Response\Config as Response;
+use Mvc5\Http\HttpRequest;
+use Mvc5\Http\HttpResponse;
 use Mvc5\Plugin\Link;
 use Mvc5\Plugin\Param;
 use Mvc5\Plugin\Plugin;
@@ -70,7 +70,7 @@ class RouteTest
      * @param $request
      * @param $response
      * @param string $return
-     * @return mixed|Request|Response
+     * @return mixed|HttpRequest|HttpResponse
      */
     protected function route($config, $request, $response, $return = 'response')
     {
@@ -93,12 +93,12 @@ class RouteTest
             ]]
         ];
 
-        $request  = new Request;
-        $response = new Response;
+        $request  = new HttpRequest;
+        $response = new HttpResponse;
 
         $response = $this->route($config, $request, $response);
 
-        $this->assertInstanceOf(Response::class, $response);
+        $this->assertInstanceOf(HttpResponse::class, $response);
         $this->assertEquals('foo', $response->body());
     }
 
@@ -109,19 +109,19 @@ class RouteTest
     {
         $config = [
             'middleware' => [
-                'route\match' => [function(Route $route, Request $request, $next) {
+                'route\match' => [function(Route $route, HttpRequest $request, $next) {
                     return $request->with(['matched' => true, 'name' => $route['name'], 'path' => $route]);
                 }]
             ],
             'routes' => [['name' => 'home', 'path' => '/']],
         ];
 
-        $request  = new Request;
-        $response = new Response;
+        $request  = new HttpRequest;
+        $response = new HttpResponse;
 
         $request = $this->route($config, $request, $response, 'request');
 
-        $this->assertInstanceOf(Request::class, $request);
+        $this->assertInstanceOf(HttpRequest::class, $request);
         $this->assertEquals('home', $request[Arg::NAME]);
     }
 
@@ -133,18 +133,18 @@ class RouteTest
         $config = [
             'middleware' => [
                 'route\match' => [function(/*$route, $request, $next*/) {
-                    return new Response(['body' => 'foo']);
+                    return new HttpResponse(['body' => 'foo']);
                 }]
             ],
             'routes' => [['path' => '/']],
         ];
 
-        $request  = new Request;
-        $response = new Response;
+        $request  = new HttpRequest;
+        $response = new HttpResponse;
 
         $response = $this->route($config, $request, $response);
 
-        $this->assertInstanceOf(Response::class, $response);
+        $this->assertInstanceOf(HttpResponse::class, $response);
         $this->assertEquals('foo', $response->body());
     }
 }

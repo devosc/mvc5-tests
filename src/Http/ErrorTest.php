@@ -6,7 +6,7 @@
 namespace Mvc5\Test\Http;
 
 use Mvc5\Arg;
-use Mvc5\Http\Error\Error;
+use Mvc5\Http\HttpError;
 use Mvc5\Test\Test\TestCase;
 
 class ErrorTest
@@ -17,7 +17,7 @@ class ErrorTest
      */
     function test_code()
     {
-        $config = new Error([Arg::CODE => 'foo']);
+        $config = new HttpError([Arg::CODE => 'foo']);
 
         $this->assertEquals('foo', $config->code());
     }
@@ -27,7 +27,7 @@ class ErrorTest
      */
     function test_description()
     {
-        $config = new Error([Arg::DESCRIPTION => 'foo']);
+        $config = new HttpError([Arg::DESCRIPTION => 'foo']);
 
         $this->assertEquals('foo', $config->description());
     }
@@ -37,7 +37,7 @@ class ErrorTest
      */
     function test_errors()
     {
-        $config = new Error([Arg::ERRORS => ['foo']]);
+        $config = new HttpError([Arg::ERRORS => ['foo']]);
 
         $this->assertEquals(['foo'], $config->errors());
     }
@@ -47,7 +47,7 @@ class ErrorTest
      */
     function test_message()
     {
-        $config = new Error([Arg::MESSAGE => 'foo']);
+        $config = new HttpError([Arg::MESSAGE => 'foo']);
 
         $this->assertEquals('foo', $config->message());
     }
@@ -57,7 +57,7 @@ class ErrorTest
      */
     function test_status()
     {
-        $config = new Error([Arg::STATUS => 'foo']);
+        $config = new HttpError([Arg::STATUS => 'foo']);
 
         $this->assertEquals('foo', $config->status());
     }

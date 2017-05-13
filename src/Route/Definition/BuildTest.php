@@ -6,8 +6,8 @@
 namespace Mvc5\Test\Route\Definition;
 
 use Mvc5\Arg;
-use Mvc5\Route\Route;
 use Mvc5\Route\Config;
+use Mvc5\Route\Route;
 use Mvc5\Test\Test\TestCase;
 
 class BuildTest

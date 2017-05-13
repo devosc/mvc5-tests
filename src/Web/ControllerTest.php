@@ -7,8 +7,8 @@ namespace Mvc5\Test\Web;
 
 use Mvc5\App;
 use Mvc5\Arg;
-use Mvc5\Http\Request\Config as Request;
-use Mvc5\Http\Response\Config as Response;
+use Mvc5\Http\HttpRequest;
+use Mvc5\Http\HttpResponse;
 use Mvc5\Test\Test\TestCase;
 use Mvc5\Web\Controller;
 
@@ -23,7 +23,7 @@ class ControllerTest
         $app = new App([
             'services' => [
                 'controller' => function() {
-                    return function(Request $request, Response $response, callable $next) {
+                    return function(HttpRequest $request, HttpResponse $response, callable $next) {
                         return $next($request, $response);
                     };
                 }
@@ -32,13 +32,13 @@ class ControllerTest
 
         $controller = new Controller($app);
 
-        $request = new Request([
+        $request = new HttpRequest([
             Arg::CONTROLLER => 'controller'
         ]);
 
-        $response = new Response;
+        $response = new HttpResponse;
 
-        $next = function(Request $request, Response $response) {
+        $next = function(HttpRequest $request, HttpResponse $response) {
             return $response;
         };
 
@@ -53,7 +53,7 @@ class ControllerTest
         $app = new App([
             'services' => [
                 'controller' => function() {
-                    return function(Request $request, Response $response, callable $next) {
+                    return function(HttpRequest $request, HttpResponse $response, callable $next) {
                         return 'foo';
                     };
                 }
@@ -62,13 +62,13 @@ class ControllerTest
 
         $controller = new Controller($app);
 
-        $request  = new Request([
+        $request  = new HttpRequest([
             Arg::CONTROLLER => 'controller'
         ]);
 
-        $response = new Response;
+        $response = new HttpResponse;
 
-        $next = function(Request $request, Response $response) {
+        $next = function(HttpRequest $request, HttpResponse $response) {
             return $response;
         };
 
@@ -83,12 +83,10 @@ class ControllerTest
     function test_no_controller()
     {
         $controller = new Controller(new App);
+        $request = new HttpRequest;
+        $response = new HttpResponse;
 
-        $request = new Request;
-
-        $response = new Response;
-
-        $next = function(Request $request, Response $response) {
+        $next = function(HttpRequest $request, HttpResponse $response) {
             return $response;
         };
 

@@ -6,7 +6,7 @@
 namespace Mvc5\Test\Http;
 
 use Mvc5\Arg;
-use Mvc5\Http\Request\Config as Request;
+use Mvc5\Http\HttpRequest;
 use Mvc5\Test\Test\TestCase;
 
 class RequestTest
@@ -17,7 +17,7 @@ class RequestTest
      */
     function test_body()
     {
-        $request = new Request([Arg::BODY => 'foo']);
+        $request = new HttpRequest([Arg::BODY => 'foo']);
 
         $this->assertEquals('foo', $request->body());
     }
@@ -27,7 +27,7 @@ class RequestTest
      */
     function test_headers()
     {
-        $request = new Request([Arg::HEADERS => ['foo' => 'bar']]);
+        $request = new HttpRequest([Arg::HEADERS => ['foo' => 'bar']]);
 
         $this->assertEquals(['foo' => 'bar'], $request->headers());
     }
@@ -37,7 +37,7 @@ class RequestTest
      */
     function test_method()
     {
-        $request = new Request([Arg::METHOD => 'GET']);
+        $request = new HttpRequest([Arg::METHOD => 'GET']);
 
         $this->assertEquals('GET', $request->method());
     }
@@ -47,7 +47,7 @@ class RequestTest
      */
     function test_uri()
     {
-        $request = new Request([Arg::URI => [Arg::PATH => 'foo']]);
+        $request = new HttpRequest([Arg::URI => [Arg::PATH => 'foo']]);
 
         $this->assertEquals([Arg::PATH => 'foo'], $request->uri());
     }
@@ -57,7 +57,7 @@ class RequestTest
      */
     function test_version()
     {
-        $request = new Request([Arg::VERSION => '1.1']);
+        $request = new HttpRequest([Arg::VERSION => '1.1']);
 
         $this->assertEquals('1.1', $request->version());
     }
@@ -67,7 +67,7 @@ class RequestTest
      */
     function test_version_null()
     {
-        $request = new Request;
+        $request = new HttpRequest;
 
         $this->assertNull($request->version());
     }

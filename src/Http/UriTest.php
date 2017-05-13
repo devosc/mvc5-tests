@@ -6,7 +6,7 @@
 namespace Mvc5\Test\Http;
 
 use Mvc5\Arg;
-use Mvc5\Http\Uri\Config as Uri;
+use Mvc5\Http\HttpUri;
 use Mvc5\Test\Test\TestCase;
 
 class UriTest
@@ -18,7 +18,7 @@ class UriTest
     function test_string()
     {
         $url = 'http://user:password@localhost:8080/foobar?foo=bar#top';
-        $this->assertEquals($url, (string) new Uri($url));
+        $this->assertEquals($url, (string) new HttpUri($url));
     }
 
     /**
@@ -26,7 +26,7 @@ class UriTest
      */
     function test_fragment()
     {
-        $uri = new Uri([Arg::FRAGMENT => 'foo']);
+        $uri = new HttpUri([Arg::FRAGMENT => 'foo']);
 
         $this->assertEquals('foo', $uri->fragment());
     }
@@ -36,7 +36,7 @@ class UriTest
      */
     function test_host()
     {
-        $uri = new Uri([Arg::HOST => 'localhost']);
+        $uri = new HttpUri([Arg::HOST => 'localhost']);
 
         $this->assertEquals('localhost', $uri->host());
     }
@@ -46,7 +46,7 @@ class UriTest
      */
     function test_password()
     {
-        $uri = new Uri([Arg::PASS => 'foo']);
+        $uri = new HttpUri([Arg::PASS => 'foo']);
 
         $this->assertEquals('foo', $uri->password());
     }
@@ -56,7 +56,7 @@ class UriTest
      */
     function test_path()
     {
-        $uri = new Uri([Arg::PATH => 'foo']);
+        $uri = new HttpUri([Arg::PATH => 'foo']);
 
         $this->assertEquals('foo', $uri->path());
     }
@@ -66,7 +66,7 @@ class UriTest
      */
     function test_port()
     {
-        $uri = new Uri([Arg::PORT => '80']);
+        $uri = new HttpUri([Arg::PORT => '80']);
 
         $this->assertEquals('80', $uri->port());
     }
@@ -76,7 +76,7 @@ class UriTest
      */
     function test_query()
     {
-        $uri = new Uri([Arg::QUERY => 'foo']);
+        $uri = new HttpUri([Arg::QUERY => 'foo']);
 
         $this->assertEquals('foo', $uri->query());
     }
@@ -86,7 +86,7 @@ class UriTest
      */
     function test_scheme()
     {
-        $uri = new Uri([Arg::SCHEME => 'http']);
+        $uri = new HttpUri([Arg::SCHEME => 'http']);
 
         $this->assertEquals('http', $uri->scheme());
     }
@@ -96,7 +96,7 @@ class UriTest
      */
     function test_to_string()
     {
-        $uri = new Uri([
+        $uri = new HttpUri([
             Arg::FRAGMENT => 'top',
             Arg::HOST     => 'localhost',
             Arg::PATH     => '/foobar',
@@ -115,7 +115,7 @@ class UriTest
      */
     function test_user()
     {
-        $uri = new Uri([Arg::USER => 'foo:bar']);
+        $uri = new HttpUri([Arg::USER => 'foo:bar']);
 
         $this->assertEquals('foo:bar', $uri->user());
     }

@@ -5,8 +5,7 @@
 
 namespace Mvc5\Test\Response;
 
-use Mvc5\Http\Error as HttpError;
-use Mvc5\Http\Error\Error;
+use Mvc5\Http\HttpError;
 use Mvc5\Request\Config as Request;
 use Mvc5\Response\Config as Response;
 use Mvc5\Response\Dispatch;
@@ -32,7 +31,7 @@ class DispatchTest
     {
         $dispatch = new Dispatch('foo', new Request, new Response);
 
-        $this->assertInstanceOf(HttpError::class, $dispatch(function() { return new Error; }));
+        $this->assertInstanceOf(HttpError::class, $dispatch(function() { return new HttpError; }));
     }
 
     /**
