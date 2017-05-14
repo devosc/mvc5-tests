@@ -13,7 +13,7 @@ use Mvc5\Http\Error\MethodNotAllowed;
 use Mvc5\Plugin\Link;
 use Mvc5\Plugin\Param;
 use Mvc5\Plugin\Plugin;
-use Mvc5\Request\Config as Request;
+use Mvc5\Request\HttpRequest;
 use Mvc5\Route\Config as Route;
 use Mvc5\Route\Dispatch;
 use Mvc5\Route\Generator;
@@ -22,7 +22,7 @@ use Mvc5\Route\Match\Controller;
 use Mvc5\Route\Match\Path;
 use Mvc5\Route\Match\Merge;
 use Mvc5\Route\Match\Method;
-use Mvc5\Response\Config as Response;
+use Mvc5\Response\HttpResponse;
 use Mvc5\Test\Test\TestCase;
 
 class RouterTest
@@ -92,9 +92,9 @@ class RouterTest
     }
 
     /**
-     * @param Request $request
+     * @param HttpRequest $request
      * @param array $config
-     * @return Request
+     * @return HttpRequest
      */
     protected function dispatch($request, array $config = [])
     {
@@ -106,7 +106,7 @@ class RouterTest
      */
     function test_match_top()
     {
-        $request = $this->dispatch(new Request(['uri' => ['path' => '/']]));
+        $request = $this->dispatch(new HttpRequest(['uri' => ['path' => '/']]));
 
         $this->assertEquals('home', $request->name());
         $this->assertEquals('Home\Controller', $request->controller());
@@ -117,7 +117,7 @@ class RouterTest
      */
     function test_child_not_found()
     {
-        $request = $this->dispatch(new Request([Arg::URI => [Arg::PATH => '/foo/baz']]));
+        $request = $this->dispatch(new HttpRequest([Arg::URI => [Arg::PATH => '/foo/baz']]));
 
         $this->assertInstanceOf(NotFound::class, $request->error());
     }
@@ -127,7 +127,7 @@ class RouterTest
      */
     function test_child_route()
     {
-        $request = $this->dispatch(new Request([Arg::URI => [Arg::PATH => '/foo/bar']]));
+        $request = $this->dispatch(new HttpRequest([Arg::URI => [Arg::PATH => '/foo/bar']]));
 
         $this->assertEquals('app/bar', $request->name());
     }
@@ -141,11 +141,11 @@ class RouterTest
             'routes' => [['path' => '/', 'method' => 'GET']]]
         );
 
-        $request = new Request([Arg::METHOD => 'POST']);
+        $request = new HttpRequest([Arg::METHOD => 'POST']);
 
         $result = $this->dispatch($request, $config);
 
-        $this->assertInstanceOf(Request::class, $result);
+        $this->assertInstanceOf(HttpRequest::class, $result);
         $this->assertTrue($result !== $request);
         $this->assertInstanceOf(MethodNotAllowed::class, $result->error());
     }
@@ -159,7 +159,7 @@ class RouterTest
             'routes' => [['path' => '/']]
         ]);
 
-        $request = $this->dispatch(new Request([Arg::URI => [Arg::PATH => '/foo']]), $config);
+        $request = $this->dispatch(new HttpRequest([Arg::URI => [Arg::PATH => '/foo']]), $config);
 
         $this->assertInstanceOf(NotFound::class, $request->error());
     }
@@ -180,7 +180,7 @@ class RouterTest
             ]
         ]);
 
-        $request = $this->dispatch(new Request([Arg::URI => [Arg::PATH => '/foo/bar/baz']]), $config);
+        $request = $this->dispatch(new HttpRequest([Arg::URI => [Arg::PATH => '/foo/bar/baz']]), $config);
 
         $this->assertEquals('app/bar/baz', $request->name());
         $this->assertEquals(Bar\Baz\Controller::class, $request->controller());
@@ -202,7 +202,7 @@ class RouterTest
             ]])
         ]);
 
-        $request = $this->dispatch(new Request([Arg::URI => [Arg::PATH => '/foo/bars']]), $config);
+        $request = $this->dispatch(new HttpRequest([Arg::URI => [Arg::PATH => '/foo/bars']]), $config);
 
         $this->assertEquals(['controller' => 'foo', 'action' => 'bars', 'limit' => '15'], $request->params());
     }
@@ -214,11 +214,11 @@ class RouterTest
     {
         $config = $this->config(['routes' => [['name' => 'app', 'path' => '/']]]);
 
-        $request = $this->dispatch(new Request(['uri' => ['path' => '/']]), $config);
+        $request = $this->dispatch(new HttpRequest(['uri' => ['path' => '/']]), $config);
 
         $this->assertEquals('app', $request->name());
         $this->assertEquals('/', $request->path());
-        $this->assertInstanceOf(Request::class, $request);
+        $this->assertInstanceOf(HttpRequest::class, $request);
     }
 
     /**
@@ -229,7 +229,7 @@ class RouterTest
         $config = $this->config([
             'middleware' => [
                 'route\match' => [function() {
-                    return new Response('foo');
+                    return new HttpResponse('foo');
                 }]
             ],
             'routes' => [
@@ -237,8 +237,8 @@ class RouterTest
             ]
         ]);
 
-        $response = $this->dispatch(new Request, $config);
+        $response = $this->dispatch(new HttpRequest, $config);
 
-        $this->assertInstanceOf(Response::class, $response);
+        $this->assertInstanceOf(HttpResponse::class, $response);
     }
 }

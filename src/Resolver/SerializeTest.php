@@ -6,7 +6,7 @@
 namespace Mvc5\Test\Resolver;
 
 use Mvc5\App;
-use Mvc5\Session\Config as Session;
+use Mvc5\Session\PHPSession;
 use Mvc5\Test\Test\TestCase;
 
 class SerializeTest
@@ -41,7 +41,7 @@ class SerializeTest
      */
     function test_unserialize()
     {
-        $session = new Session;
+        $session = new PHPSession;
 
         $session->start();
 

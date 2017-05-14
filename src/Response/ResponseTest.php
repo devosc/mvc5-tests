@@ -7,7 +7,7 @@ namespace Mvc5\Test\Response;
 
 use Mvc5\Http\HttpCookies;
 use Mvc5\Http\HttpHeaders;
-use Mvc5\Response\Config as Response;
+use Mvc5\Response\HttpResponse;
 use Mvc5\Test\Test\TestCase;
 
 class ResponseTest
@@ -18,7 +18,7 @@ class ResponseTest
      */
     function test_default_values()
     {
-        $response = new Response;
+        $response = new HttpResponse;
 
         $this->assertNull($response->body());
         $this->assertEquals(new HttpCookies, $response->cookies());
@@ -31,7 +31,7 @@ class ResponseTest
      */
     function test_set_cookie()
     {
-        $response = new Response;
+        $response = new HttpResponse;
 
         $new = $response->withCookie('foo', 'bar');
 
@@ -44,7 +44,7 @@ class ResponseTest
      */
     function test_cookies()
     {
-        $response = new Response(null, null, [], ['cookies' => ['foo' => 'bar']]);
+        $response = new HttpResponse(null, null, [], ['cookies' => ['foo' => 'bar']]);
 
         $this->assertEquals(new HttpCookies(['foo' => 'bar']), $response->cookies());
     }
@@ -54,7 +54,7 @@ class ResponseTest
      */
     function test_set_cookies()
     {
-        $response = new Response;
+        $response = new HttpResponse;
 
         $new = $response->withCookies(['foo']);
 
@@ -67,7 +67,7 @@ class ResponseTest
      */
     function test_set_header()
     {
-        $response = new Response;
+        $response = new HttpResponse;
 
         $new = $response->withHeader('foo', 'bar');
 
@@ -80,7 +80,7 @@ class ResponseTest
      */
     function test_headers()
     {
-        $response = new Response(null, null, ['foo' => 'bar']);
+        $response = new HttpResponse(null, null, ['foo' => 'bar']);
 
         $this->assertEquals(new HttpHeaders(['foo' => 'bar']), $response->headers());
     }
@@ -90,7 +90,7 @@ class ResponseTest
      */
     function test_set_headers()
     {
-        $response = new Response;
+        $response = new HttpResponse;
 
         $new = $response->withHeaders(['foo' => 'bar']);
 
@@ -103,7 +103,7 @@ class ResponseTest
      */
     function test_status()
     {
-        $response = new Response;
+        $response = new HttpResponse;
 
         $new = $response->withStatus('404');
 
@@ -116,7 +116,7 @@ class ResponseTest
      */
     function test_version()
     {
-        $response = new Response;
+        $response = new HttpResponse;
 
         $new = $response->withVersion('1.1');
 

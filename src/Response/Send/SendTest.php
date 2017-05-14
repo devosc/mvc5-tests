@@ -5,8 +5,8 @@
 
 namespace Mvc5\Test\Response\Send;
 
-use Mvc5\Response\Config as Response;
 use Mvc5\Response\Emitter\Callback;
+use Mvc5\Response\HttpResponse;
 use Mvc5\Response\Send;
 use Mvc5\Test\Test\TestCase;
 
@@ -20,7 +20,7 @@ class SendTest
     {
         $send = new Send;
 
-        $send(new Response(function () { echo 'Hello!'; }));
+        $send(new HttpResponse(function () { echo 'Hello!'; }));
 
         $this->assertEquals('Hello!', $this->getActualOutput());
     }
@@ -32,7 +32,7 @@ class SendTest
     {
         $send = new Send;
 
-        $send(new Response(new Callback(function () { echo 'Hello!'; })));
+        $send(new HttpResponse(new Callback(function () { echo 'Hello!'; })));
 
         $this->assertEquals('Hello!', $this->getActualOutput());
     }
@@ -44,7 +44,7 @@ class SendTest
     {
         $send = new Send;
 
-        $send(new Response);
+        $send(new HttpResponse);
 
         $this->assertEmpty($this->getActualOutput());
     }
@@ -56,7 +56,7 @@ class SendTest
     {
         $send = new Send;
 
-        $send(new Response('Hello!'));
+        $send(new HttpResponse('Hello!'));
 
         $this->assertEquals('Hello!', $this->getActualOutput());
     }
@@ -68,7 +68,7 @@ class SendTest
     {
         $send = new Send;
 
-        $response = new Response(null, 200, [
+        $response = new HttpResponse(null, 200, [
             'Content-Type' => 'text\html'
         ], [
             'cookies' => [

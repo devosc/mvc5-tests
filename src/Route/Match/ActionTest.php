@@ -6,7 +6,7 @@
 namespace Mvc5\Test\Route\Match;
 
 use Mvc5\Arg;
-use Mvc5\Request\Config as Request;
+use Mvc5\Request\HttpRequest;
 use Mvc5\Route\Match\Action;
 use Mvc5\Route\Config as Route;
 use Mvc5\Test\Test\TestCase;
@@ -31,9 +31,9 @@ class ActionTest
     {
         $action  = new Action;
         $route   = new Route([Arg::ACTION => ['GET' => 'foo']]);
-        $request = new Request([Arg::METHOD => 'GET']);
+        $request = new HttpRequest([Arg::METHOD => 'GET']);
 
-        /** @var Request $request */
+        /** @var HttpRequest $request */
 
         $request = $action($route, $request, $this->next());
 
@@ -47,9 +47,9 @@ class ActionTest
     {
         $action  = new Action;
         $route   = new Route;
-        $request = new Request([Arg::CONTROLLER => 'foo']);
+        $request = new HttpRequest([Arg::CONTROLLER => 'foo']);
 
-        /** @var Request $request */
+        /** @var HttpRequest $request */
 
         $request = $action($route, $request, $this->next());
 
@@ -63,7 +63,7 @@ class ActionTest
     {
         $action  = new Action;
         $route   = new Route;
-        $request = new Request;
+        $request = new HttpRequest;
 
         $this->assertEquals($request, $action($route, $request, $this->next()));
     }

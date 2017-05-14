@@ -6,9 +6,9 @@
 namespace Mvc5\Test\Plugins;
 
 use Mvc5\App;
-use Mvc5\Response\Json;
-use Mvc5\Response\Redirect;
-use Mvc5\Response\Config as Response;
+use Mvc5\Response\HttpResponse;
+use Mvc5\Response\JsonResponse;
+use Mvc5\Response\RedirectResponse;
 use Mvc5\Test\Test\TestCase;
 
 class ResponseTest
@@ -19,11 +19,11 @@ class ResponseTest
      */
     function test_json()
     {
-        $config = ['services' => ['response\json' => Json::class]];
+        $config = ['services' => ['response\json' => JsonResponse::class]];
 
         $plugin = new ResponsePlugin(new App($config));
 
-        $this->assertInstanceOf(Json::class, $plugin->json(['foo']));
+        $this->assertInstanceOf(JsonResponse::class, $plugin->json(['foo']));
     }
 
     /**
@@ -31,11 +31,11 @@ class ResponseTest
      */
     function test_redirect()
     {
-        $config = ['services' => ['response\redirect' => Redirect::class]];
+        $config = ['services' => ['response\redirect' => RedirectResponse::class]];
 
         $plugin = new ResponsePlugin(new App($config));
 
-        $this->assertInstanceOf(Redirect::class, $plugin->redirect('/'));
+        $this->assertInstanceOf(RedirectResponse::class, $plugin->redirect('/'));
     }
 
     /**
@@ -43,10 +43,10 @@ class ResponseTest
      */
     function test_response()
     {
-        $config = ['services' => ['response' => Response::class]];
+        $config = ['services' => ['response' => HttpResponse::class]];
 
         $plugin = new ResponsePlugin(new App($config));
 
-        $this->assertInstanceOf(Response::class, $plugin->response('foo'));
+        $this->assertInstanceOf(HttpResponse::class, $plugin->response('foo'));
     }
 }

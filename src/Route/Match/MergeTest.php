@@ -6,7 +6,7 @@
 namespace Mvc5\Test\Route\Match;
 
 use Mvc5\Arg;
-use Mvc5\Request\Config as Request;
+use Mvc5\Request\HttpRequest;
 use Mvc5\Route\Config as Route;
 use Mvc5\Route\Match\Merge;
 use Mvc5\Test\Test\TestCase;
@@ -30,7 +30,7 @@ class MergeTest
     function test_merge_middleware()
     {
         $method  = new Merge;
-        $request = new Request;
+        $request = new HttpRequest;
         $route   = new Route(['parent' => new Route(['middleware' => ['a']]),'middleware' => ['b']]);
 
         $new = $method($route, $request, $this->next());
@@ -45,7 +45,7 @@ class MergeTest
     function test_merge_options()
     {
         $method  = new Merge;
-        $request = new Request;
+        $request = new HttpRequest;
         $route   = new Route(['parent' => new Route(['options' => ['prefix' => 'Foo\\']])]);
 
         /** @var Route $new */
@@ -61,7 +61,7 @@ class MergeTest
     function test_no_parent()
     {
         $method  = new Merge;
-        $request = new Request;
+        $request = new HttpRequest;
         $route   = new Route;
 
         $this->assertEquals($route, $method($route, $request, $this->next()));

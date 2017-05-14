@@ -6,7 +6,7 @@
 namespace Mvc5\Test\Route\Match;
 
 use Mvc5\Arg;
-use Mvc5\Request\Config as Request;
+use Mvc5\Request\HttpRequest;
 use Mvc5\Route\Config as Route;
 use Mvc5\Route\Match\Path;
 use Mvc5\Test\Test\TestCase;
@@ -31,7 +31,7 @@ class PathTest
     {
         $route   = new Route;
         $path    = new Path;
-        $request = new Request([Arg::URI => [Arg::PATH => 'foo']]);
+        $request = new HttpRequest([Arg::URI => [Arg::PATH => 'foo']]);
 
         $this->assertNull($path($route, $request, $this->next()));
     }
@@ -43,7 +43,7 @@ class PathTest
     {
         $route   = new Route([Arg::REGEX => 'foo']);
         $path    = new Path;
-        $request = new Request([Arg::URI => [Arg::PATH => 'foo']]);
+        $request = new HttpRequest([Arg::URI => [Arg::PATH => 'foo']]);
 
         $new = $path($route, $request, $this->next());
 
@@ -61,7 +61,7 @@ class PathTest
 
         $route   = new Route($config);
         $path    = new Path;
-        $request = new Request([Arg::URI => [Arg::PATH => '/home/foo']]);
+        $request = new HttpRequest([Arg::URI => [Arg::PATH => '/home/foo']]);
 
         $new = $path($route, $request, $this->next());
 
@@ -76,7 +76,7 @@ class PathTest
     {
         $route   = new Route([Arg::REGEX => 'bar']);
         $path    = new Path;
-        $request = new Request([Arg::URI => [Arg::PATH => 'foo']]);
+        $request = new HttpRequest([Arg::URI => [Arg::PATH => 'foo']]);
 
         $this->assertNull($path($route, $request, $this->next()));
     }
@@ -89,7 +89,7 @@ class PathTest
         $route   = new Route([Arg::REGEX => 'foo', Arg::CHILDREN => ['bar' => []]]);
         $path    = new Path;
 
-        $request = new Request([Arg::URI => [Arg::PATH => 'foobar']]);
+        $request = new HttpRequest([Arg::URI => [Arg::PATH => 'foobar']]);
 
         $this->assertNull($request[Arg::ROUTE]);
         $this->assertNull($request[Arg::MATCHED]);
@@ -108,7 +108,7 @@ class PathTest
     {
         $route   = new Route([Arg::REGEX => 'foo']);
         $path    = new Path;
-        $request = new Request([Arg::URI => [Arg::PATH => 'foobar']]);
+        $request = new HttpRequest([Arg::URI => [Arg::PATH => 'foobar']]);
 
         $this->assertNull($path($route, $request, $this->next()));
     }

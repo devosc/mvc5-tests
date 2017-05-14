@@ -7,7 +7,7 @@ namespace Mvc5\Test\Url;
 
 use Mvc5\Arg;
 use Mvc5\Http\HttpUri;
-use Mvc5\Request\Config as Request;
+use Mvc5\Request\HttpRequest;
 use Mvc5\Test\Test\TestCase;
 use Mvc5\Url\Generator;
 use Mvc5\Url\Plugin;
@@ -29,7 +29,7 @@ class PluginTest
      */
     function test_absolute_global()
     {
-        $request = new Request([
+        $request = new HttpRequest([
             Arg::NAME => 'app',
             Arg::PARAMS => ['controller' => 'foo'],
             Arg::URI => [
@@ -49,7 +49,7 @@ class PluginTest
      */
     function test_absolute_local()
     {
-        $request = new Request([
+        $request = new HttpRequest([
             Arg::NAME => 'app',
             Arg::PARAMS => ['controller' => 'foo'],
             Arg::URI => [
@@ -69,7 +69,7 @@ class PluginTest
      */
     function test_current()
     {
-        $request = new Request([
+        $request = new HttpRequest([
             Arg::NAME => 'app',
             Arg::PARAMS => ['controller' => 'foo']
         ]);
@@ -85,7 +85,7 @@ class PluginTest
      */
     function test_named()
     {
-        $url = new Plugin(new Request, new Generator($this->route));
+        $url = new Plugin(new HttpRequest, new Generator($this->route));
 
         $this->assertEquals('/foo', $url(['app', 'controller' => 'foo']));
     }
@@ -95,7 +95,7 @@ class PluginTest
      */
     function test_no_route_config()
     {
-        $url = new Plugin(new Request([Arg::NAME => 'app']), new Generator($this->route));
+        $url = new Plugin(new HttpRequest([Arg::NAME => 'app']), new Generator($this->route));
 
         $this->assertEquals('/app.html?foo=bar#top', $url('/app.html', ['foo' => 'bar'], 'top'));
     }
@@ -105,7 +105,7 @@ class PluginTest
      */
     function test_slash_prefix()
     {
-        $url = new Plugin(new Request([Arg::NAME => 'app']), function() { return 'foobar'; });
+        $url = new Plugin(new HttpRequest([Arg::NAME => 'app']), function() { return 'foobar'; });
 
         $this->assertEquals('/app.html?foo=bar#top', $url('/app.html', ['foo' => 'bar'], 'top'));
     }
@@ -115,7 +115,7 @@ class PluginTest
      */
     function test_uri()
     {
-        $url = new Plugin(new Request, new Generator($this->route));
+        $url = new Plugin(new HttpRequest, new Generator($this->route));
 
         $uri = new HttpUri(['path' => '/app.html', 'query' => ['foo' => 'bar'], 'fragment' => 'top']);
 
@@ -128,13 +128,13 @@ class PluginTest
      */
     function test_parent()
     {
-        $request = new Request([
+        $request = new HttpRequest([
             Arg::NAME => 'app/foo/bar',
             Arg::PARAMS => ['user' => 'phpdev', 'controller' => 'foo'],
-            Arg::PARENT => new Request([
+            Arg::PARENT => new HttpRequest([
                 Arg::NAME => 'app/foo',
                 Arg::PARAMS => ['user' => 'phpdev', 'controller' => 'foo'],
-                Arg::PARENT => new Request([
+                Arg::PARENT => new HttpRequest([
                     Arg::NAME => 'app',
                     Arg::PARAMS => ['user' => 'phpdev'],
                 ])

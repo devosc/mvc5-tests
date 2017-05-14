@@ -8,7 +8,7 @@ namespace Mvc5\Test\Request\Error;
 use Mvc5\Arg;
 use Mvc5\Http\Error\NotFound;
 use Mvc5\Request\Error;
-use Mvc5\Request\Config as Request;
+use Mvc5\Request\HttpRequest;
 use Mvc5\Test\Test\TestCase;
 
 class ErrorTest
@@ -21,7 +21,7 @@ class ErrorTest
     {
         $error = new Error('error', 'error/controller');
 
-        $request = new Request([
+        $request = new HttpRequest([
             Arg::NAME => 'home', Arg::CONTROLLER => 'Home\Controller', Arg::ERROR => new NotFound
         ]);
 
@@ -38,7 +38,7 @@ class ErrorTest
     {
         $error = new Error('error', 'error/controller');
 
-        $request = new Request([
+        $request = new HttpRequest([
             Arg::NAME => 'home', Arg::CONTROLLER => 'Home\Controller'
         ]);
 

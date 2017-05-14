@@ -6,8 +6,8 @@
 namespace Mvc5\Test\Response;
 
 use Mvc5\Http\HttpError;
-use Mvc5\Request\Config as Request;
-use Mvc5\Response\Config as Response;
+use Mvc5\Request\HttpRequest;
+use Mvc5\Response\HttpResponse;
 use Mvc5\Response\Dispatch;
 use Mvc5\Test\Test\TestCase;
 
@@ -19,7 +19,7 @@ class DispatchTest
      */
     function test_any_response()
     {
-        $dispatch = new Dispatch('foo', new Request, new Response);
+        $dispatch = new Dispatch('foo', new HttpRequest, new HttpResponse);
 
         $this->assertEquals('foo', $dispatch(function() { return 'foo'; }));
     }
@@ -29,7 +29,7 @@ class DispatchTest
      */
     function test_error()
     {
-        $dispatch = new Dispatch('foo', new Request, new Response);
+        $dispatch = new Dispatch('foo', new HttpRequest, new HttpResponse);
 
         $this->assertInstanceOf(HttpError::class, $dispatch(function() { return new HttpError; }));
     }
@@ -39,9 +39,9 @@ class DispatchTest
      */
     function test_request()
     {
-        $dispatch = new Dispatch('foo', new Request, new Response);
+        $dispatch = new Dispatch('foo', new HttpRequest, new HttpResponse);
 
-        $this->assertInstanceOf(Request::class, $dispatch(function($request) { return $request; }));
+        $this->assertInstanceOf(HttpRequest::class, $dispatch(function($request) { return $request; }));
     }
 
     /**
@@ -49,8 +49,8 @@ class DispatchTest
      */
     function test_response()
     {
-        $dispatch = new Dispatch('foo', new Request, new Response);
+        $dispatch = new Dispatch('foo', new HttpRequest, new HttpResponse);
 
-        $this->assertInstanceOf(Response::class, $dispatch(function($response) { return $response; }));
+        $this->assertInstanceOf(HttpResponse::class, $dispatch(function($response) { return $response; }));
     }
 }

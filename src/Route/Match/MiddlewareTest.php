@@ -11,8 +11,8 @@ use Mvc5\Middleware as HttpMiddleware;
 use Mvc5\Plugin\Link;
 use Mvc5\Plugin\Param;
 use Mvc5\Plugin\Plugin;
-use Mvc5\Request\Config as Request;
-use Mvc5\Response\Config as Response;
+use Mvc5\Request\HttpRequest;
+use Mvc5\Response\HttpResponse;
 use Mvc5\Route\Config as Route;
 use Mvc5\Route\Dispatch;
 use Mvc5\Route\Generator;
@@ -45,9 +45,9 @@ class MiddlewareTest
         $app         = new App(['services' => ['middleware' => [HttpMiddleware::class, 'service' => new Link]]]);
         $middleware  = new Middleware($app, 'controller');
         $route       = new Route(['middleware' => ['b']]);
-        $request     = new Request(['controller' => 'c']);
+        $request     = new HttpRequest(['controller' => 'c']);
 
-        /** @var Request $result */
+        /** @var HttpRequest $result */
         $result = $middleware($route, $request, $this->next());
 
         $this->assertNotEquals($request, $result);
@@ -73,14 +73,14 @@ class MiddlewareTest
             'routes' => [[
                 'name'       => 'home',
                 'path'      => '/',
-                'middleware' => [function(Request $request, Response $response, callable $next) {
+                'middleware' => [function(HttpRequest $request, HttpResponse $response, callable $next) {
                     return $next($request, $response->with('test', 'a'));
                 }],
                 'children' => [
                     [
                         'name'     => 'baz',
                         'path' => 'foo',
-                        'middleware' => [function(Request $request, Response $response, callable $next) {
+                        'middleware' => [function(HttpRequest $request, HttpResponse $response, callable $next) {
                             return $next($request, $response->with('test', $response['test'] . ', b'));
                         }],
                         'children' => [
@@ -88,10 +88,10 @@ class MiddlewareTest
                                 'name'  => 'bat',
                                 'path' => '/bar',
                                 'middleware' => [
-                                    function(Request $request, Response $response, callable $next) {
+                                    function(HttpRequest $request, HttpResponse $response, callable $next) {
                                         return $next($request, $response->with('test', $response['test'] . ', c'));
                                     },
-                                    function(Request $request, Response $response, callable $next) {
+                                    function(HttpRequest $request, HttpResponse $response, callable $next) {
                                         return $response['test'];
                                     }
                                 ],
@@ -116,8 +116,8 @@ class MiddlewareTest
         ];
 
         $app      = new App($config);
-        $request  = new Request([Arg::URI => [Arg::PATH => '/foo/bar']]);
-        $response = new Response;
+        $request  = new HttpRequest([Arg::URI => [Arg::PATH => '/foo/bar']]);
+        $response = new HttpResponse;
 
         $request = $app->call('route\dispatch', [$request]);
         $middleware = $request->controller();
@@ -133,9 +133,9 @@ class MiddlewareTest
         $app         = new App(['services' => ['middleware' => [HttpMiddleware::class, 'service' => new Link]]]);
         $middleware  = new Middleware($app);
         $route       = new Route(['middleware' => ['b', 'c']]);
-        $request     = new Request;
+        $request     = new HttpRequest;
 
-        /** @var Request $result */
+        /** @var HttpRequest $result */
         $result = $middleware($route, $request, $this->next());
 
         $this->assertNotEquals($request, $result);
@@ -151,11 +151,11 @@ class MiddlewareTest
         $app        = new App;
         $middleware = new Middleware($app);
         $route      = new Route;
-        $request    = new Request;
+        $request    = new HttpRequest;
 
         $this->assertNull($request->controller());
 
-        /** @var Request $result */
+        /** @var HttpRequest $result */
         $result = $middleware($route, $request, $this->next());
 
         $this->assertEquals($result, $middleware($route, $request, $this->next()));
