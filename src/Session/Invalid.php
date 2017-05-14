@@ -5,10 +5,10 @@
 
 namespace Mvc5\Test\Session;
 
-use Mvc5\Session\Config;
+use Mvc5\Session\PHPSession;
 
 class Invalid
-    extends Config
+    extends PHPSession
 {
     /**
      * @param array $options

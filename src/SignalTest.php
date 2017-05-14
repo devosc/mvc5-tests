@@ -6,9 +6,9 @@
 namespace Mvc5\Test;
 
 use Mvc5\App;
+use Mvc5\Config;
 use Mvc5\Plugin\Gem\SignalArgs;
 use Mvc5\Service\Service;
-use Mvc5\Session\Config as Session;
 use Mvc5\ViewModel;
 use Mvc5\Test\Test\TestCase;
 
@@ -92,9 +92,9 @@ class SignalTest
      */
     function test_no_param_exception_class_method()
     {
-        $this->expectExceptionMessage('Missing required parameter $name for Mvc5\Session\Config::remove');
+        $this->expectExceptionMessage('Missing required parameter $name for Mvc5\Config::remove');
 
-        (new App)->call([new Session, 'remove'], ['foo' => 'bar']);
+        (new App)->call([new Config, 'remove'], ['foo' => 'bar']);
     }
 
     /**

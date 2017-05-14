@@ -5,8 +5,7 @@
 
 namespace Mvc5\Test\Session;
 
-use Mvc5\Cookie\Config as Cookies;
-use Mvc5\Session\Config as Session;
+use Mvc5\Session\PHPSession;
 use Mvc5\Test\Test\TestCase;
 
 /**
@@ -20,7 +19,7 @@ class SessionTest
      */
     function test_clear()
     {
-        $session = new Session;
+        $session = new PHPSession;
 
         $session->start();
 
@@ -40,7 +39,7 @@ class SessionTest
      */
     function test_close()
     {
-        $session = new Session;
+        $session = new PHPSession;
 
         $session->start();
 
@@ -56,7 +55,7 @@ class SessionTest
      */
     function test_count()
     {
-        $session = new Session;
+        $session = new PHPSession;
 
         $session->start();
 
@@ -74,7 +73,7 @@ class SessionTest
      */
     function test_current()
     {
-        $session = new Session;
+        $session = new PHPSession;
 
         $session->start();
 
@@ -92,7 +91,7 @@ class SessionTest
      */
     function test_destroy_with_cookie_container()
     {
-        $session = new Session(new Cookies);
+        $session = new PHPSession;
 
         $session->start();
 
@@ -108,7 +107,7 @@ class SessionTest
      */
     function test_destroy_without_cookie_container()
     {
-        $session = new Session;
+        $session = new PHPSession;
 
         $session->start();
 
@@ -124,7 +123,7 @@ class SessionTest
      */
     function test_destroy_without_removing_cookie()
     {
-        $session = new Session;
+        $session = new PHPSession;
 
         $session->start();
 
@@ -140,7 +139,7 @@ class SessionTest
      */
     function test_get()
     {
-        $session = new Session;
+        $session = new PHPSession;
 
         $session->start();
 
@@ -156,7 +155,7 @@ class SessionTest
      */
     function test_has()
     {
-        $session = new Session;
+        $session = new PHPSession;
 
         $session->start();
 
@@ -172,7 +171,7 @@ class SessionTest
      */
     function test_id()
     {
-        $session = new Session;
+        $session = new PHPSession;
 
         $session->start();
 
@@ -186,7 +185,7 @@ class SessionTest
      */
     function test_id_new()
     {
-        $session = new Session;
+        $session = new PHPSession;
 
         $this->assertEmpty($session->id());
 
@@ -205,7 +204,7 @@ class SessionTest
      */
     function test_key()
     {
-        $session = new Session;
+        $session = new PHPSession;
 
         $session->start();
 
@@ -221,7 +220,7 @@ class SessionTest
      */
     function test_name()
     {
-        $session = new Session;
+        $session = new PHPSession;
 
         $session->start();
 
@@ -235,7 +234,7 @@ class SessionTest
      */
     function test_name_new()
     {
-        $session = new Session;
+        $session = new PHPSession;
 
         $current = $session->name();
 
@@ -249,7 +248,7 @@ class SessionTest
      */
     function test_next()
     {
-        $session = new Session;
+        $session = new PHPSession;
 
         $session->start();
 
@@ -268,7 +267,7 @@ class SessionTest
      */
     function test_offsetGet()
     {
-        $session = new Session;
+        $session = new PHPSession;
 
         $session->start();
 
@@ -284,7 +283,7 @@ class SessionTest
      */
     function test_regenerate()
     {
-        $session = new Session;
+        $session = new PHPSession;
 
         $session->start();
 
@@ -303,7 +302,7 @@ class SessionTest
      */
     function test_remove()
     {
-        $session = new Session;
+        $session = new PHPSession;
 
         $session->start();
 
@@ -323,7 +322,7 @@ class SessionTest
      */
     function test_remove_array()
     {
-        $session = new Session;
+        $session = new PHPSession;
 
         $session->start();
 
@@ -345,7 +344,7 @@ class SessionTest
      */
     function test_rewind()
     {
-        $session = new Session;
+        $session = new PHPSession;
 
         $session->start();
 
@@ -368,7 +367,7 @@ class SessionTest
      */
     function test_set()
     {
-        $session = new Session;
+        $session = new PHPSession;
 
         $session->start();
 
@@ -384,7 +383,7 @@ class SessionTest
      */
     function test_set_array()
     {
-        $session = new Session;
+        $session = new PHPSession;
 
         $session->start();
 
@@ -401,7 +400,7 @@ class SessionTest
      */
     function test_start()
     {
-        $session = new Session;
+        $session = new PHPSession;
 
         $this->assertEquals(PHP_SESSION_NONE, $session->status());
 
@@ -417,7 +416,7 @@ class SessionTest
      */
     function test_start_already_active()
     {
-        $session = new Session;
+        $session = new PHPSession;
 
         $this->assertEquals(PHP_SESSION_NONE, $session->status());
 
@@ -434,7 +433,7 @@ class SessionTest
      */
     function test_start_ini_settings()
     {
-        $session = new Session;
+        $session = new PHPSession;
 
         $this->assertEquals(PHP_SESSION_NONE, $session->status());
         $this->assertEquals('PHPSESSID', ini_get('session.name'));
@@ -454,7 +453,7 @@ class SessionTest
      */
     function test_status()
     {
-        $session = new Session;
+        $session = new PHPSession;
 
         $session->start();
 
@@ -468,7 +467,7 @@ class SessionTest
      */
     function test_valid()
     {
-        $session = new Session;
+        $session = new PHPSession;
 
         $session->start();
 
@@ -484,7 +483,7 @@ class SessionTest
      */
     function test_with()
     {
-        $session = new Session;
+        $session = new PHPSession;
 
         $session->start();
 
@@ -499,7 +498,7 @@ class SessionTest
      */
     function test_without()
     {
-        $session = new Session;
+        $session = new PHPSession;
 
         $session->start();
 
@@ -517,7 +516,7 @@ class SessionTest
      */
     function test__get()
     {
-        $session = new Session;
+        $session = new PHPSession;
 
         $session->start();
 
