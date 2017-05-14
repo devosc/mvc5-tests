@@ -5,7 +5,7 @@
 
 namespace Mvc5\Test\Response;
 
-use Mvc5\Http\HttpCookies;
+use Mvc5\Cookie\HttpCookies;
 use Mvc5\Http\HttpHeaders;
 use Mvc5\Response\HttpResponse;
 use Mvc5\Test\Test\TestCase;

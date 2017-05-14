@@ -3,12 +3,12 @@
  *
  */
 
-namespace Mvc5\Test\Http;
+namespace Mvc5\Test\Cookie;
 
-use Mvc5\Http\HttpCookies;
+use Mvc5\Cookie\HttpCookies;
 use Mvc5\Test\Test\TestCase;
 
-class CookiesTest
+class HttpCookiesTest
     extends TestCase
 {
     /**
@@ -18,9 +18,9 @@ class CookiesTest
     {
         $cookies = new HttpCookies;
 
-        $new = $cookies->withCookie('foo', 'bar');
+        $new = $cookies->with('foo', 'bar');
 
-        $this->assertNotEquals($cookies, $new);
+        $this->assertNotSame($cookies, $new);
 
         $cookie = [
             'name' => 'foo',
@@ -42,14 +42,14 @@ class CookiesTest
     {
         $cookies = new HttpCookies(['foo' => 'bar']);
 
-        $new = $cookies->withoutCookie('foo');
+        $new = $cookies->without('foo');
 
         $this->assertNotEquals($cookies, $new);
         $this->assertEquals('bar', $cookies['foo']);
 
         $cookie = [
             'name' => 'foo',
-            'value' => false,
+            'value' => '',
             'expire' => 946706400,
             'path' => '/',
             'domain' => '',
