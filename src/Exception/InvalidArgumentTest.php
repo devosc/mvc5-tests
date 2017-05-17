@@ -6,7 +6,7 @@
 namespace Mvc5\Test\Exception;
 
 use Mvc5\Exception;
-use Mvc5\Exception\InvalidArgument;
+use Mvc5\Exception\InvalidArgumentException;
 use Mvc5\Test\Test\TestCase;
 
 class InvalidArgumentTest
@@ -26,7 +26,7 @@ class InvalidArgumentTest
         $this->assertEquals('foo', $exception->getMessage());
         $this->assertEquals(__FILE__, $exception->getFile());
         $this->assertEquals(22, $exception->getLine());
-        $this->assertInstanceOf(InvalidArgument::class, $exception);
+        $this->assertInstanceOf(InvalidArgumentException::class, $exception);
     }
 
     /**

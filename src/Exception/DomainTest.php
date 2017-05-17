@@ -6,7 +6,7 @@
 namespace Mvc5\Test\Exception;
 
 use Mvc5\Exception;
-use Mvc5\Exception\Domain;
+use Mvc5\Exception\DomainException;
 use Mvc5\Test\Test\TestCase;
 
 class DomainTest
@@ -26,7 +26,7 @@ class DomainTest
         $this->assertEquals('foo', $exception->getMessage());
         $this->assertEquals(__FILE__, $exception->getFile());
         $this->assertEquals(22, $exception->getLine());
-        $this->assertInstanceOf(Domain::class, $exception);
+        $this->assertInstanceOf(DomainException::class, $exception);
     }
 
     /**

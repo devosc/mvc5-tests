@@ -6,7 +6,7 @@
 namespace Mvc5\Test\Exception;
 
 use Mvc5\Exception;
-use Mvc5\Exception\Runtime;
+use Mvc5\Exception\RuntimeException;
 use Mvc5\Test\Test\TestCase;
 
 class RuntimeTest
@@ -43,6 +43,6 @@ class RuntimeTest
         $this->assertEquals('foo', $exception->getMessage());
         $this->assertEquals(__FILE__, $exception->getFile());
         $this->assertEquals(39, $exception->getLine());
-        $this->assertInstanceOf(Runtime::class, $exception);
+        $this->assertInstanceOf(RuntimeException::class, $exception);
     }
 }
