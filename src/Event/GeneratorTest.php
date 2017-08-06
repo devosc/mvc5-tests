@@ -20,25 +20,7 @@ class GeneratorTest
      */
     protected function app(array $config = [])
     {
-        $config += [
-            'events' => [
-                'test_event' => [
-                    '@Mvc5\Test\Event\GeneratorTest::foo',
-                    '@Mvc5\Test\Event\GeneratorTest::bar',
-                    '@Mvc5\Test\Event\GeneratorTest::baz'
-                ],
-                'test_event_iterator' => new Config([
-                    '@Mvc5\Test\Event\GeneratorTest::foo',
-                    '@Mvc5\Test\Event\GeneratorTest::bar',
-                    '@Mvc5\Test\Event\GeneratorTest::baz'
-                ]),
-                'stdClass' => [
-                    '@Mvc5\Test\Event\GeneratorTest::foo'
-                ]
-            ]
-        ];
-
-        return new App($config);
+        return new App($this->config($config));
     }
 
     /**
@@ -58,6 +40,31 @@ class GeneratorTest
     static function baz()
     {
         return 'baz';
+    }
+
+    /**
+     * @param array $config
+     * @return array
+     */
+    protected function config(array $config = [])
+    {
+        return $config += [
+            'events' => [
+                'test_event' => [
+                    '@Mvc5\Test\Event\GeneratorTest::foo',
+                    '@Mvc5\Test\Event\GeneratorTest::bar',
+                    '@Mvc5\Test\Event\GeneratorTest::baz'
+                ],
+                'test_event_iterator' => new Config([
+                    '@Mvc5\Test\Event\GeneratorTest::foo',
+                    '@Mvc5\Test\Event\GeneratorTest::bar',
+                    '@Mvc5\Test\Event\GeneratorTest::baz'
+                ]),
+                'stdClass' => [
+                    '@Mvc5\Test\Event\GeneratorTest::foo'
+                ]
+            ]
+        ];
     }
 
     /**
@@ -214,5 +221,17 @@ class GeneratorTest
 
         $this->assertEquals('baz', $app->trigger('test_event_iterator'));
         $this->assertEquals('baz', $app->trigger('test_event_iterator'));
+    }
+
+    /**
+     *
+     */
+    function test_traversable_event()
+    {
+        $this->assertEquals('baz', $this->app()->trigger(new EventIterator([
+            '@Mvc5\Test\Event\GeneratorTest::foo',
+            '@Mvc5\Test\Event\GeneratorTest::bar',
+            '@Mvc5\Test\Event\GeneratorTest::baz'
+        ])));
     }
 }
