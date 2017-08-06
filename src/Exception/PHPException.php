@@ -39,4 +39,13 @@ class PHPException
      *
      */
     const RUNTIME = \RuntimeException::class;
+
+    /**
+     * @param $name
+     * @param $args
+     */
+    static function __callStatic($name, $args)
+    {
+        static::raise(static::create($name, $args));
+    }
 }
