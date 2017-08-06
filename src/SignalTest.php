@@ -9,6 +9,7 @@ use Mvc5\App;
 use Mvc5\Config;
 use Mvc5\Plugin\Gem\SignalArgs;
 use Mvc5\Service\Service;
+use Mvc5\Signal;
 use Mvc5\ViewModel;
 use Mvc5\Test\Test\TestCase;
 
@@ -20,7 +21,7 @@ class SignalTest
      */
     function test_args()
     {
-        $this->assertEquals(['foo' => 'bar'], (new App)->call(function($args) { return $args; }, ['foo' => 'bar']));
+        $this->assertEquals(['foo' => 'bar'], Signal::emit(function($args) { return $args; }, ['foo' => 'bar']));
     }
 
     /**
@@ -28,7 +29,7 @@ class SignalTest
      */
     function test_null_param()
     {
-        $this->assertEquals('bar', (new App)->call(function($foo) { return !$foo ? 'bar' : $foo; }, ['foo' => null]));
+        $this->assertEquals('bar', Signal::emit(function($foo) { return !$foo ? 'bar' : $foo; }, ['foo' => null]));
     }
 
     /**
@@ -36,7 +37,7 @@ class SignalTest
      */
     function test_callback_missing_param()
     {
-        $this->assertEquals('bar', (new App)->call(function($foo) { return $foo; }, [], function($name) {
+        $this->assertEquals('bar', Signal::emit(function($foo) { return $foo; }, [], function($name) {
             return 'foo' == $name ? 'bar' : null;
         }));
     }
@@ -46,9 +47,9 @@ class SignalTest
      */
     function test_callback_missing_class_param()
     {
-        $method = '@Mvc5\Service\Context::bind';
+        $method = 'Mvc5\Service\Context::bind';
 
-        $this->assertInstanceOf(App::class, (new App)->call($method, ['foo' => 'bar'], function($name) {
+        $this->assertInstanceOf(App::class, Signal::emit($method, ['foo' => 'bar'], function($name) {
             return Service::class == $name ? new App : null;
         }));
     }
@@ -58,7 +59,7 @@ class SignalTest
      */
     function test_default_param()
     {
-        $this->assertNull((new App)->call([new ViewModel, 'template']));
+        $this->assertNull(Signal::emit([new ViewModel, 'template']));
     }
 
     /**
@@ -66,7 +67,7 @@ class SignalTest
      */
     function test_empty_args()
     {
-        $this->assertEquals([], (new App)->call(function() { return func_get_args(); }));
+        $this->assertEquals([], Signal::emit(function() { return func_get_args(); }));
     }
 
     /**
@@ -74,7 +75,7 @@ class SignalTest
      */
     function test_named_arg()
     {
-        $this->assertEquals('bar', (new App)->call(function($foo) { return $foo; }, ['foo' => 'bar']));
+        $this->assertEquals('bar', Signal::emit(function($foo) { return $foo; }, ['foo' => 'bar']));
     }
 
     /**
@@ -84,7 +85,7 @@ class SignalTest
     {
         $this->expectExceptionMessage('Missing required parameter $haystack for strpos');
 
-        (new App)->call('@strpos');
+        Signal::emit('strpos');
     }
 
     /**
@@ -94,7 +95,7 @@ class SignalTest
     {
         $this->expectExceptionMessage('Missing required parameter $name for Mvc5\Config::remove');
 
-        (new App)->call([new Config, 'remove'], ['foo' => 'bar']);
+        Signal::emit([new Config, 'remove'], ['foo' => 'bar']);
     }
 
     /**
@@ -104,7 +105,7 @@ class SignalTest
     {
         $this->expectExceptionMessage('Missing required parameter $name for Mvc5\App::__invoke');
 
-        (new App)->call(new App, ['foo' => 'bar']);
+        Signal::emit(new App, ['foo' => 'bar']);
     }
 
     /**
@@ -116,7 +117,7 @@ class SignalTest
 
         $this->expectExceptionMessage('Missing required parameter $name for ' . $method);
 
-        (new App)->call('@' . $method, ['foo' => 'bar']);
+        Signal::emit($method, ['foo' => 'bar']);
     }
 
     /**
@@ -124,7 +125,7 @@ class SignalTest
      */
     function test_numeric_args()
     {
-        $this->assertEquals('foo', (new App)->call(function($foo) { return $foo; }, ['foo']));
+        $this->assertEquals('foo', Signal::emit(function($foo) { return $foo; }, ['foo']));
     }
 
     /**
@@ -132,7 +133,7 @@ class SignalTest
      */
     function test_optional_arg()
     {
-        $this->assertNull((new App)->call(function($foo = null) { return $foo; }));
+        $this->assertNull(Signal::emit(function($foo = null) { return $foo; }));
     }
 
     /**
@@ -140,7 +141,7 @@ class SignalTest
      */
     function test_php_function()
     {
-        $this->assertEmpty((new App)->call('@session_id'));
+        $this->assertEmpty(Signal::emit('session_id'));
     }
 
     /**
@@ -149,7 +150,7 @@ class SignalTest
     function test_static_string()
     {
         $this->assertInstanceOf(
-            \ReflectionClass::class, (new App)->call('@Mvc5\Service\Builder::reflectionClass', ['name' => self::class])
+            \ReflectionClass::class, Signal::emit('Mvc5\Service\Builder::reflectionClass', ['name' => self::class])
         );
     }
 
@@ -162,6 +163,6 @@ class SignalTest
             return $args[0] instanceof SignalArgs ? $args[0]->args() : null;
         };
 
-        $this->assertEquals(['foo' => 'bar'], (new App)->call($function, ['foo' => 'bar']));
+        $this->assertEquals(['foo' => 'bar'], Signal::emit($function, ['foo' => 'bar']));
     }
 }
