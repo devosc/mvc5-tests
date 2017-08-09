@@ -48,7 +48,7 @@ class GeneratorTest
      */
     protected function config(array $config = [])
     {
-        return $config += [
+        return $config + [
             'events' => [
                 'test_event' => [
                     '@Mvc5\Test\Event\GeneratorTest::foo',
@@ -233,5 +233,20 @@ class GeneratorTest
             '@Mvc5\Test\Event\GeneratorTest::bar',
             '@Mvc5\Test\Event\GeneratorTest::baz'
         ])));
+    }
+
+    /**
+     *
+     */
+    function test_middleware_event()
+    {
+        $this->assertEquals('baz', $this->app()->trigger(new MiddlewareEvent($this->app(), [
+            function($value, $next) {
+                return $next($value . 'a');
+            },
+            function($value, $next) {
+                return $next($value . 'z');
+            }
+        ]), ['b']));
     }
 }
