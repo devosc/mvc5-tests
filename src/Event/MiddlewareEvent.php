@@ -20,7 +20,7 @@ class MiddlewareEvent
     use EventModel;
 
     /**
-     * @var array
+     * @var array|\Iterator
      */
     protected $config;
 
@@ -30,18 +30,18 @@ class MiddlewareEvent
     protected $service;
 
     /**
-     * @var array $stack
+     * @var array|\Iterator $stack
      */
     protected $stack;
 
     /**
      * @param Service $service
-     * @param array $stack
+     * @param array|\Iterator $stack
      */
-    function __construct(Service $service, array $stack = [])
+    function __construct(Service $service, $stack)
     {
         $this->service = $service;
-        $this->config = [current($stack)];
+        $this->config = [$this->start($stack)];
         $this->stack = $stack;
     }
 
@@ -70,9 +70,57 @@ class MiddlewareEvent
      */
     protected function callable()
     {
-        return function(...$params) {
-            return ($middleware = next($this->stack)) ? $this->call($middleware, $params) : ($params ? end($params) : null);
+        return function(...$args) {
+            return ($middleware = $this->step($this->stack)) ? $this->call($middleware, $args) : $this->end($args);
         };
+    }
+
+    /**
+     * @param array $args
+     * @return mixed|null
+     */
+    protected function end(array $args)
+    {
+        return $args ? end($args) : null;
+    }
+
+    /**
+     *
+     */
+    function rewind()
+    {
+        reset($this->config);
+        is_array($this->stack) ? reset($this->stack) : $this->stack->rewind();
+    }
+
+    /**
+     * @param array|\Iterator $stack
+     * @return mixed|null
+     */
+    protected function start(&$stack)
+    {
+        if (is_array($stack)) {
+            return reset($stack);
+        }
+
+        $stack->rewind();
+
+        return $stack->current();
+    }
+
+    /**
+     * @param array|\Iterator $stack
+     * @return mixed|null
+     */
+    protected function step(&$stack)
+    {
+        if (is_array($stack)) {
+            return next($stack);
+        }
+
+        $stack->next();
+
+        return $stack->current();
     }
 
     /**
