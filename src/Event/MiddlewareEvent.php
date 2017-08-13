@@ -41,8 +41,8 @@ class MiddlewareEvent
     function __construct(Service $service, $stack)
     {
         $this->service = $service;
-        $this->config = [$this->start($stack)];
         $this->stack = $stack;
+        $this->config = [$this->reset()];
     }
 
     /**
@@ -71,7 +71,7 @@ class MiddlewareEvent
     protected function callable()
     {
         return function(...$args) {
-            return ($middleware = $this->step($this->stack)) ? $this->call($middleware, $args) : $this->end($args);
+            return ($middleware = $this->step()) ? $this->call($middleware, $args) : $this->end($args);
         };
     }
 
@@ -85,42 +85,40 @@ class MiddlewareEvent
     }
 
     /**
+     * @return mixed|null
+     */
+    protected function reset()
+    {
+        if (is_array($this->stack)) {
+            return reset($this->stack);
+        }
+
+        $this->stack->rewind();
+
+        return $this->stack->current();
+    }
+
+    /**
      *
      */
     function rewind()
     {
         reset($this->config);
-        is_array($this->stack) ? reset($this->stack) : $this->stack->rewind();
+        $this->reset();
     }
 
     /**
-     * @param array|\Iterator $stack
      * @return mixed|null
      */
-    protected function start(&$stack)
+    protected function step()
     {
-        if (is_array($stack)) {
-            return reset($stack);
+        if (is_array($this->stack)) {
+            return next($this->stack);
         }
 
-        $stack->rewind();
+        $this->stack->next();
 
-        return $stack->current();
-    }
-
-    /**
-     * @param array|\Iterator $stack
-     * @return mixed|null
-     */
-    protected function step(&$stack)
-    {
-        if (is_array($stack)) {
-            return next($stack);
-        }
-
-        $stack->next();
-
-        return $stack->current();
+        return $this->stack->current();
     }
 
     /**
