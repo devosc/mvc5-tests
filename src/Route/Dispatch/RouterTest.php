@@ -10,6 +10,7 @@ use Mvc5\App;
 use Mvc5\Config;
 use Mvc5\Http\Error\NotFound;
 use Mvc5\Http\Error\MethodNotAllowed;
+use Mvc5\Middleware;
 use Mvc5\Plugin\Link;
 use Mvc5\Plugin\Param;
 use Mvc5\Plugin\Plugin;
@@ -17,7 +18,6 @@ use Mvc5\Request\HttpRequest;
 use Mvc5\Route\Config as Route;
 use Mvc5\Route\Dispatch;
 use Mvc5\Route\Generator;
-use Mvc5\Route\Match;
 use Mvc5\Route\Match\Controller;
 use Mvc5\Route\Match\Path;
 use Mvc5\Route\Match\Merge;
@@ -82,7 +82,7 @@ class RouterTest
                         Dispatch::class, new Plugin('route\match'), new Plugin('route\generator'), new Param('routes')
                     ],
                     'route\generator' => Generator::class,
-                    'route\match' => [Match::class, new Link, new Param('middleware.route\match')],
+                    'route\match' => [Middleware::class, new Link, new Param('middleware.route\match')],
                     'route\match\controller' => Controller::class,
                     'route\match\merge' => Merge::class,
                     'route\match\method' => Method::class,

@@ -7,7 +7,8 @@ namespace Mvc5\Test\Route\Match;
 
 use Mvc5\App;
 use Mvc5\Arg;
-use Mvc5\Middleware as HttpMiddleware;
+use Mvc5\Http\HttpMiddleware;
+use Mvc5\Middleware;
 use Mvc5\Plugin\Link;
 use Mvc5\Plugin\Param;
 use Mvc5\Plugin\Plugin;
@@ -17,11 +18,6 @@ use Mvc5\Route\Config as Route;
 use Mvc5\Route\Dispatch;
 use Mvc5\Route\Generator;
 use Mvc5\Route\Match;
-use Mvc5\Route\Match\Controller;
-use Mvc5\Route\Match\Path;
-use Mvc5\Route\Match\Merge;
-use Mvc5\Route\Match\Method;
-use Mvc5\Route\Match\Middleware;
 use Mvc5\Test\Test\TestCase;
 
 class MiddlewareTest
@@ -42,8 +38,8 @@ class MiddlewareTest
      */
     function test_middleware()
     {
-        $app         = new App(['services' => ['middleware' => [HttpMiddleware::class, 'service' => new Link]]]);
-        $middleware  = new Middleware($app, 'controller');
+        $app         = new App(['services' => ['http\middleware' => [HttpMiddleware::class, 'service' => new Link]]]);
+        $middleware  = new Match\Middleware($app, 'controller');
         $route       = new Route(['middleware' => ['b']]);
         $request     = new HttpRequest(['controller' => 'c']);
 
@@ -101,17 +97,17 @@ class MiddlewareTest
                 ]
             ]],
             'services' => [
-                'middleware' => [HttpMiddleware::class, 'service' => new Link],
+                'http\middleware' => [HttpMiddleware::class, 'service' => new Link],
                 'route\dispatch' => [
                     Dispatch::class, new Plugin('route\match'), new Plugin('route\generator'), new Param('routes')
                 ],
                 'route\generator'        => Generator::class,
-                'route\match'            => [Match::class, new Link, new Param('middleware.route\match')],
-                'route\match\controller' => Controller::class,
-                'route\match\merge'      => Merge::class,
-                'route\match\method'     => Method::class,
-                'route\match\middleware' => [Middleware::class, new Link],
-                'route\match\path'       => Path::class
+                'route\match'            => [Middleware::class, new Link, new Param('middleware.route\match')],
+                'route\match\controller' => Match\Controller::class,
+                'route\match\merge'      => Match\Merge::class,
+                'route\match\method'     => Match\Method::class,
+                'route\match\middleware' => [Match\Middleware::class, new Link],
+                'route\match\path'       => Match\Path::class
             ]
         ];
 
@@ -130,8 +126,8 @@ class MiddlewareTest
      */
     function test_middleware_without_controller()
     {
-        $app         = new App(['services' => ['middleware' => [HttpMiddleware::class, 'service' => new Link]]]);
-        $middleware  = new Middleware($app);
+        $app         = new App(['services' => ['http\middleware' => [HttpMiddleware::class, 'service' => new Link]]]);
+        $middleware  = new Match\Middleware($app);
         $route       = new Route(['middleware' => ['b', 'c']]);
         $request     = new HttpRequest;
 
@@ -149,7 +145,7 @@ class MiddlewareTest
     function test_no_middleware()
     {
         $app        = new App;
-        $middleware = new Middleware($app);
+        $middleware = new Match\Middleware($app);
         $route      = new Route;
         $request    = new HttpRequest;
 
