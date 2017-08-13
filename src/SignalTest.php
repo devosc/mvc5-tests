@@ -7,7 +7,6 @@ namespace Mvc5\Test;
 
 use Mvc5\App;
 use Mvc5\Config;
-use Mvc5\Plugin\Gem\SignalArgs;
 use Mvc5\Service\Service;
 use Mvc5\Signal;
 use Mvc5\ViewModel;
@@ -21,7 +20,55 @@ class SignalTest
      */
     function test_args()
     {
-        $this->assertEquals(['foo' => 'bar'], Signal::emit(function($args) { return $args; }, ['foo' => 'bar']));
+        $this->assertEquals('bar', Signal::emit(function($args) { return $args; }, ['bar']));
+    }
+
+    /**
+     *
+     */
+    function test_args_empty()
+    {
+        $this->assertEquals([], Signal::emit(function() { return func_get_args(); }));
+    }
+
+    /**
+     *
+     */
+    function test_args_named()
+    {
+        $this->assertEquals('bar', Signal::emit(function($foo) { return $foo; }, ['foo' => 'bar']));
+    }
+
+    /**
+     *
+     */
+    function test_args_optional()
+    {
+        $this->assertNull(Signal::emit(function($foo = null) { return $foo; }));
+    }
+
+    /**
+     *
+     */
+    function test_args_variadic()
+    {
+        $function = function($foo, ...$args) {
+            return array_merge([$foo], $args);
+        };
+
+        $this->assertEquals(['foo', 'bar'], Signal::emit($function, ['foo', 'bar']));
+    }
+
+    /**
+     *
+     */
+    function test_args_variadic_named()
+    {
+        $function = function($foo, ...$args) {
+            return array_merge([$foo], $args);
+        };
+
+        $this->assertEquals(['bar', 'bat'], Signal::emit($function, ['foo' => 'bar', 'baz' => 'bat']));
     }
 
     /**
@@ -60,22 +107,6 @@ class SignalTest
     function test_default_param()
     {
         $this->assertNull(Signal::emit([new ViewModel, 'template']));
-    }
-
-    /**
-     *
-     */
-    function test_empty_args()
-    {
-        $this->assertEquals([], Signal::emit(function() { return func_get_args(); }));
-    }
-
-    /**
-     *
-     */
-    function test_named_arg()
-    {
-        $this->assertEquals('bar', Signal::emit(function($foo) { return $foo; }, ['foo' => 'bar']));
     }
 
     /**
@@ -123,22 +154,6 @@ class SignalTest
     /**
      *
      */
-    function test_numeric_args()
-    {
-        $this->assertEquals('foo', Signal::emit(function($foo) { return $foo; }, ['foo']));
-    }
-
-    /**
-     *
-     */
-    function test_optional_arg()
-    {
-        $this->assertNull(Signal::emit(function($foo = null) { return $foo; }));
-    }
-
-    /**
-     *
-     */
     function test_php_function()
     {
         $this->assertEmpty(Signal::emit('session_id'));
@@ -157,12 +172,52 @@ class SignalTest
     /**
      *
      */
-    function test_variadic_args()
+    function test_argv()
     {
-        $function = function(...$args) {
-            return $args[0] instanceof SignalArgs ? $args[0]->args() : null;
+        $function = function($argv) {
+            return $argv;
         };
 
         $this->assertEquals(['foo' => 'bar'], Signal::emit($function, ['foo' => 'bar']));
+    }
+
+    /**
+     *
+     */
+    function test_with_argv()
+    {
+        $function = function($foo, $argv) {
+            return ['foo' => $foo] + $argv;
+        };
+
+        $args = ['foo' => 'bar', 'baz' => 'bat'];
+
+        $this->assertEquals($args, Signal::emit($function, $args));
+    }
+
+    /**
+     *
+     */
+    function test_variadic_argv()
+    {
+        $function = function(...$argv) {
+            return $argv[0]->args();
+        };
+
+        $this->assertEquals(['foo' => 'bar'], Signal::emit($function, ['foo' => 'bar']));
+    }
+
+    /**
+     *
+     */
+    function test_with_variadic_argv()
+    {
+        $function = function($foo, ...$argv) {
+            return ['foo' => $foo] + $argv[0]->args();
+        };
+
+        $args = ['foo' => 'bar', 'baz' => 'bat'];
+
+        $this->assertEquals($args, Signal::emit($function, $args));
     }
 }

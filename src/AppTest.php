@@ -85,8 +85,8 @@ class AppTest
                 'foo' => new Plugins([
                     'home' => 9,
                     'var2' => new Plugin(Config::class, [new Args(['var3' => new Provide('var4')])]),
-                    Config::class => function($args) {
-                        return new Config($args);
+                    Config::class => function($argv) {
+                        return new Config($argv);
                     },
                     'code' => 2,
                     'bar' => new Plugins([
