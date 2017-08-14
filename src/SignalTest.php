@@ -20,7 +20,11 @@ class SignalTest
      */
     function test_args()
     {
-        $this->assertEquals('bar', Signal::emit(function($args) { return $args; }, ['bar']));
+        $function = function($args) {
+            return $args;
+        };
+
+        $this->assertEquals('bar', Signal::emit($function, ['bar']));
     }
 
     /**
@@ -28,7 +32,11 @@ class SignalTest
      */
     function test_args_empty()
     {
-        $this->assertEquals([], Signal::emit(function() { return func_get_args(); }));
+        $function = function() {
+            return func_get_args();
+        };
+
+        $this->assertEquals([], Signal::emit($function));
     }
 
     /**
@@ -36,7 +44,11 @@ class SignalTest
      */
     function test_args_named()
     {
-        $this->assertEquals('bar', Signal::emit(function($foo) { return $foo; }, ['foo' => 'bar']));
+        $function = function($foo) {
+            return $foo;
+        };
+
+        $this->assertEquals('bar', Signal::emit($function, ['foo' => 'bar']));
     }
 
     /**
@@ -44,7 +56,11 @@ class SignalTest
      */
     function test_args_optional()
     {
-        $this->assertNull(Signal::emit(function($foo = null) { return $foo; }));
+        $function = function($foo = null) {
+            return $foo;
+        };
+
+        $this->assertNull(Signal::emit($function));
     }
 
     /**
@@ -76,7 +92,11 @@ class SignalTest
      */
     function test_null_param()
     {
-        $this->assertEquals('bar', Signal::emit(function($foo) { return !$foo ? 'bar' : $foo; }, ['foo' => null]));
+        $function = function($foo) {
+            return !$foo ? 'bar' : $foo;
+        };
+
+        $this->assertEquals('bar', Signal::emit($function, ['foo' => null]));
     }
 
     /**
@@ -84,9 +104,15 @@ class SignalTest
      */
     function test_callback_missing_param()
     {
-        $this->assertEquals('bar', Signal::emit(function($foo) { return $foo; }, [], function($name) {
+        $function = function($foo) {
+            return $foo;
+        };
+
+        $callback = function($name) {
             return 'foo' == $name ? 'bar' : null;
-        }));
+        };
+
+        $this->assertEquals('bar', Signal::emit($function, [], $callback));
     }
 
     /**
@@ -96,9 +122,11 @@ class SignalTest
     {
         $method = 'Mvc5\Service\Context::bind';
 
-        $this->assertInstanceOf(App::class, Signal::emit($method, ['foo' => 'bar'], function($name) {
+        $callback = function($name) {
             return Service::class == $name ? new App : null;
-        }));
+        };
+
+        $this->assertInstanceOf(App::class, Signal::emit($method, ['foo' => 'bar'], $callback));
     }
 
     /**
