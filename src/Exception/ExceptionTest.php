@@ -31,6 +31,23 @@ class ExceptionTest
     /**
      *
      */
+    function test_error()
+    {
+        try {
+
+            Exception::typeError('foo');
+
+        } catch(\Throwable $error) {}
+
+        $this->assertEquals('foo', $error->getMessage());
+        $this->assertEquals(__FILE__, $error->getFile());
+        $this->assertEquals(38, $error->getLine());
+        $this->assertInstanceOf(\TypeError::class, $error);
+    }
+
+    /**
+     *
+     */
     function test_php_exception()
     {
         try {
@@ -41,7 +58,7 @@ class ExceptionTest
 
         $this->assertEquals('foo', $exception->getMessage());
         $this->assertEquals(__FILE__, $exception->getFile());
-        $this->assertEquals(38, $exception->getLine());
+        $this->assertEquals(55, $exception->getLine());
         $this->assertInstanceOf(\Exception::class, $exception);
     }
 
@@ -58,7 +75,24 @@ class ExceptionTest
 
         $this->assertEquals('foo', $exception->getMessage());
         $this->assertEquals(__FILE__, $exception->getFile());
-        $this->assertEquals(55, $exception->getLine());
+        $this->assertEquals(72, $exception->getLine());
         $this->assertInstanceOf(\LogicException::class, $exception);
+    }
+
+    /**
+     *
+     */
+    function test_php_error()
+    {
+        try {
+
+            PHPException::typeError('foo');
+
+        } catch(\Throwable $error) {}
+
+        $this->assertEquals('foo', $error->getMessage());
+        $this->assertEquals(__FILE__, $error->getFile());
+        $this->assertEquals(89, $error->getLine());
+        $this->assertInstanceOf(\TypeError::class, $error);
     }
 }
