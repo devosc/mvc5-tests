@@ -264,10 +264,13 @@ class GeneratorTest
             },
             function($value, $next) {
                 return $next($value . 'z');
+            },
+            function($value, $next) {
+                return $value;
             }
         ]));
 
-        $this->assertEquals('baz', $this->app()->trigger($middlewareEvent, ['b']));
+        $this->assertEquals('baz', $this->app()->trigger(clone $middlewareEvent, ['b']));
         $this->assertEquals('baz', $this->app()->trigger($middlewareEvent, ['b']));
     }
 }

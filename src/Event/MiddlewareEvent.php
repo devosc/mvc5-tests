@@ -7,7 +7,7 @@ namespace Mvc5\Test\Event;
 
 use Mvc5\Config\Iterator;
 use Mvc5\Event\Event;
-use Mvc5\Event\EventModel;
+use Mvc5\Event\Model;
 use Mvc5\Service\Service;
 
 class MiddlewareEvent
@@ -16,8 +16,13 @@ class MiddlewareEvent
     /**
      *
      */
+    use Model;
     use Iterator;
-    use EventModel;
+
+    /**
+     * @var array|null
+     */
+    public $args;
 
     /**
      * @var array|\Iterator
@@ -30,19 +35,13 @@ class MiddlewareEvent
     protected $service;
 
     /**
-     * @var array|\Iterator $stack
-     */
-    protected $stack;
-
-    /**
      * @param Service $service
-     * @param array|\Iterator $stack
+     * @param array|\Iterator $config
      */
-    function __construct(Service $service, $stack)
+    function __construct(Service $service, $config)
     {
         $this->service = $service;
-        $this->stack = $stack;
-        $this->config = [$this->reset()];
+        $this->config = $config;
     }
 
     /**
@@ -51,7 +50,13 @@ class MiddlewareEvent
      */
     protected function args(array $args = [])
     {
-        $args[] = $this->callable();
+        (null !== $this->args) && $args = $this->args;
+
+        $args[] = function(...$args) {
+            $this->args = $args;
+            return $this;
+        };
+
         return $args;
     }
 
@@ -66,45 +71,13 @@ class MiddlewareEvent
     }
 
     /**
-     * @return \Closure
-     */
-    protected function callable()
-    {
-        return function(...$args) {
-            return ($middleware = $this->step()) ? $this->call($middleware, $args) : $this->end($args);
-        };
-    }
-
-    /**
      * @param array $args
      * @return mixed|null
      */
     protected function end(array $args)
     {
+        null !== $this->args && $args = $this->args;
         return $args ? end($args) : null;
-    }
-
-    /**
-     * @return mixed|null
-     */
-    protected function reset()
-    {
-        if (is_array($this->stack)) {
-            return reset($this->stack);
-        }
-
-        $this->stack->rewind();
-
-        return $this->stack->current();
-    }
-
-    /**
-     *
-     */
-    function rewind()
-    {
-        reset($this->config);
-        $this->reset();
     }
 
     /**
@@ -112,23 +85,27 @@ class MiddlewareEvent
      */
     protected function step()
     {
-        if (is_array($this->stack)) {
-            return next($this->stack);
-        }
-
-        $this->stack->next();
-
-        return $this->stack->current();
+        return !$this->stopped() ? $this->current() : null;
     }
 
     /**
      * @param callable $callable
      * @param array $args
-     * @param callable $callback
      * @return mixed
      */
-    function __invoke(callable $callable, array $args = [], callable $callback = null)
+    function __invoke($callable, array $args = [])
     {
-        return $this->signal($callable, $this->args($args), $callback);
+        $result = !$this->stopped() ? $this->call($callable, $this->args($args)) : $this->end($args);
+
+        if ($result !== $this && $this->stop()) {
+            $this->args = null;
+            return $result;
+        }
+
+        $end = $this->end($this->args);
+
+        !$this->valid() && $this->args = null;
+
+        return $end;
     }
 }
