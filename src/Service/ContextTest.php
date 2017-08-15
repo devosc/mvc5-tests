@@ -56,6 +56,16 @@ class ContextTest
     /**
      *
      */
+    function test_call_static()
+    {
+        new Context(new App);
+
+        $this->assertEquals(phpversion(), Context::{'@phpversion'}());
+    }
+
+    /**
+     *
+     */
     function test_invoke()
     {
         $app = new App;
