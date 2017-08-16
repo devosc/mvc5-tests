@@ -5,10 +5,10 @@
 
 namespace Mvc5\Test\Event;
 
+use Mvc5\Config\Base;
 use Mvc5\Config\Iterator;
 use Mvc5\Event\Event;
-use Mvc5\Event\Model;
-use Mvc5\Service\Service;
+use Mvc5\Event\EventModel;
 
 class MiddlewareEvent
     implements \Countable, Event, \Iterator
@@ -16,33 +16,9 @@ class MiddlewareEvent
     /**
      *
      */
-    use Model;
+    use Base;
+    use EventModel;
     use Iterator;
-
-    /**
-     * @var array|null
-     */
-    public $args;
-
-    /**
-     * @var array|\Iterator
-     */
-    protected $config;
-
-    /**
-     * @var Service
-     */
-    protected $service;
-
-    /**
-     * @param Service $service
-     * @param array|\Iterator $config
-     */
-    function __construct(Service $service, $config)
-    {
-        $this->service = $service;
-        $this->config = $config;
-    }
 
     /**
      * @param array $args
@@ -50,24 +26,11 @@ class MiddlewareEvent
      */
     protected function args(array $args = [])
     {
-        (null !== $this->args) && $args = $this->args;
-
         $args[] = function(...$args) {
-            $this->args = $args;
-            return $this;
+            return ($middleware = $this->middleware()) ? $this->call($middleware, $args) : $this->end($args);
         };
 
         return $args;
-    }
-
-    /**
-     * @param callable $middleware
-     * @param array $args
-     * @return mixed
-     */
-    protected function call($middleware, array $args = [])
-    {
-        return $this->service->call($middleware, $this->args($args));
     }
 
     /**
@@ -76,36 +39,50 @@ class MiddlewareEvent
      */
     protected function end(array $args)
     {
-        null !== $this->args && $args = $this->args;
         return $args ? end($args) : null;
     }
 
     /**
-     * @return mixed|null
+     * @param callable $middleware
+     * @param array $args
+     * @param callable $callback
+     * @return mixed
      */
-    protected function step()
+    protected function call($middleware, array $args = [], callable $callback = null)
     {
-        return !$this->stopped() ? $this->current() : null;
+        return $this->signal($middleware, $this->args($args), $callback);
+    }
+
+    /**
+     *
+     */
+    function middleware()
+    {
+        $this->next();
+        return $this->current();
+    }
+
+    /**
+     *
+     */
+    function rewind()
+    {
+        $this->stopped = false;
+        $this->config instanceof \Iterator ? $this->config->rewind() : reset($this->config);
     }
 
     /**
      * @param callable $callable
      * @param array $args
+     * @param callable $callback
      * @return mixed
      */
-    function __invoke($callable, array $args = [])
+    function __invoke($callable, array $args = [], callable $callback = null)
     {
-        $result = !$this->stopped() ? $this->call($callable, $this->args($args)) : $this->end($args);
+        $result = $this->call($callable, $this->args($args), $callback);
 
-        if ($result !== $this && $this->stop()) {
-            $this->args = null;
-            return $result;
-        }
+        $this->stop();
 
-        $end = $this->end($this->args);
-
-        !$this->valid() && $this->args = null;
-
-        return $end;
+        return $result;
     }
 }

@@ -240,7 +240,7 @@ class GeneratorTest
      */
     function test_middleware_array_event()
     {
-        $middlewareEvent = new MiddlewareEvent($this->app(), [
+        $middlewareEvent = new MiddlewareEvent([
             function($value, $next) {
                 return $next($value . 'a');
             },
@@ -258,19 +258,19 @@ class GeneratorTest
      */
     function test_middleware_iterator_event()
     {
-        $middlewareEvent = new MiddlewareEvent($this->app(), new Config([
+        $middleware = new MiddlewareEvent(new Config([
             function($value, $next) {
                 return $next($value . 'a');
             },
             function($value, $next) {
                 return $next($value . 'z');
             },
-            function($value, $next) {
+            function($value) {
                 return $value;
-            }
+            },
         ]));
 
-        $this->assertEquals('baz', $this->app()->trigger(clone $middlewareEvent, ['b']));
-        $this->assertEquals('baz', $this->app()->trigger($middlewareEvent, ['b']));
+        $this->assertEquals('baz', $this->app()->trigger($middleware, ['b']));
+        $this->assertEquals('baz', $this->app()->trigger($middleware, ['b']));
     }
 }
