@@ -9,6 +9,7 @@ use Mvc5\App;
 use Mvc5\Config;
 use Mvc5\Event as Mvc5Event;
 use Mvc5\Event\Event;
+use Mvc5\Iterator;
 use Mvc5\Test\Test\TestCase;
 
 class GeneratorTest
@@ -131,6 +132,14 @@ class GeneratorTest
     /**
      *
      */
+    function test_iterator()
+    {
+        $this->assertEquals('baz', $this->app()->trigger(new Iterator($this->config()['events']['test_event'])));
+    }
+
+    /**
+     *
+     */
     function test_event_not_found_exception()
     {
         $this->expectExceptionMessage('Unresolvable plugin: foo');
@@ -240,7 +249,7 @@ class GeneratorTest
      */
     function test_middleware_array_event()
     {
-        $middlewareEvent = new MiddlewareEvent([
+        $middleware = new MiddlewareEvent($this->app(), [
             function($value, $next) {
                 return $next($value . 'a');
             },
@@ -249,8 +258,8 @@ class GeneratorTest
             }
         ]);
 
-        $this->assertEquals('baz', $this->app()->trigger($middlewareEvent, ['b']));
-        $this->assertEquals('baz', $this->app()->trigger($middlewareEvent, ['b']));
+        $this->assertEquals('baz', $this->app()->trigger($middleware, ['b']));
+        $this->assertEquals('baz', $this->app()->trigger($middleware, ['b']));
     }
 
     /**
@@ -258,7 +267,7 @@ class GeneratorTest
      */
     function test_middleware_iterator_event()
     {
-        $middleware = new MiddlewareEvent(new Config([
+        $middleware = new MiddlewareEvent($this->app(), new Config([
             function($value, $next) {
                 return $next($value . 'a');
             },

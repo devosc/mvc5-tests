@@ -5,61 +5,70 @@
 
 namespace Mvc5\Test\Event;
 
-use Mvc5\Config\Base;
-use Mvc5\Config\Iterator;
+use Mvc5\Iterator;
 use Mvc5\Event\Event;
 use Mvc5\Event\EventModel;
+use Mvc5\Service\Service;
 
 class MiddlewareEvent
-    implements \Countable, Event, \Iterator
+    extends Iterator
+    implements Event
 {
     /**
      *
      */
-    use Base;
     use EventModel;
-    use Iterator;
+
+    /**
+     * @var Service
+     */
+    protected $service;
+
+    /**
+     * @param Service $service
+     * @param array|\Iterator $config
+     */
+    function __construct(Service $service, $config = [])
+    {
+        parent::__construct($config);
+        $this->service = $service;
+    }
 
     /**
      * @param array $args
      * @return array
      */
-    protected function args(array $args = [])
+    protected function args(array $args)
     {
         $args[] = function(...$args) {
-            return ($middleware = $this->middleware()) ? $this->call($middleware, $args) : $this->end($args);
+            return ($middleware = $this->next()) ? $this->call($middleware, $args) : ($args ? end($args) : null);
         };
 
         return $args;
     }
 
     /**
-     * @param array $args
-     * @return mixed|null
-     */
-    protected function end(array $args)
-    {
-        return $args ? end($args) : null;
-    }
-
-    /**
-     * @param callable $middleware
+     * @param $middleware
      * @param array $args
      * @param callable $callback
      * @return mixed
      */
-    protected function call($middleware, array $args = [], callable $callback = null)
+    protected function call($middleware, $args, callable $callback = null)
     {
-        return $this->signal($middleware, $this->args($args), $callback);
+        return $this->service->call($middleware, $this->args($args), $callback);
     }
 
     /**
-     *
+     * @return mixed
      */
-    function middleware()
+    function next()
     {
-        $this->next();
-        return $this->current();
+        if ($this->config instanceof \Iterator) {
+            $this->config->next();
+            return $this->config->current();
+        }
+
+        return next($this->config);
     }
 
     /**
@@ -79,7 +88,7 @@ class MiddlewareEvent
      */
     function __invoke($callable, array $args = [], callable $callback = null)
     {
-        $result = $this->call($callable, $this->args($args), $callback);
+        $result = $this->call($callable, $args, $callback);
 
         $this->stop();
 
