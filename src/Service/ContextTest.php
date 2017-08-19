@@ -56,6 +56,36 @@ class ContextTest
     /**
      *
      */
+    function test_call()
+    {
+        new Context(new App);
+
+        $this->assertEquals(phpversion(), Context::call('@phpversion'));
+    }
+
+    /**
+     *
+     */
+    function test_param()
+    {
+        new Context(new App(['foo' => ['bar' => 'baz']]));
+
+        $this->assertEquals('baz', Context::param('foo.bar'));
+    }
+
+    /**
+     *
+     */
+    function test_plugin()
+    {
+        new Context(new App(['services' => ['foo' => function() { return 'bar'; }]]));
+
+        $this->assertEquals('bar', Context::plugin('foo'));
+    }
+
+    /**
+     *
+     */
     function test_call_static()
     {
         new Context(new App);
