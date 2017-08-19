@@ -23,8 +23,8 @@ class ControllerTest
         $app = new App([
             'services' => [
                 'controller' => function() {
-                    return function(HttpRequest $request, HttpResponse $response, callable $next) {
-                        return $next($request, $response);
+                    return function(HttpRequest $request, HttpResponse $response) {
+                        return $response;
                     };
                 }
             ]
@@ -53,7 +53,7 @@ class ControllerTest
         $app = new App([
             'services' => [
                 'controller' => function() {
-                    return function(HttpRequest $request, HttpResponse $response, callable $next) {
+                    return function() {
                         return 'foo';
                     };
                 }
