@@ -47,11 +47,11 @@ class PluginTest
     /**
      *
      */
-    function test_param_false()
+    function test_param()
     {
-        $plugin = new Plugin('foo', [], [], null);
+        $plugin = new Plugin('foo', [], [], 'baz');
 
-        $this->assertEquals('item', $plugin->param());
+        $this->assertEquals('baz', $plugin->param());
     }
 
     /**
