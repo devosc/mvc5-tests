@@ -87,15 +87,15 @@ class PluginTest
      */
     function test_provide_with_merge()
     {
-        $plugin = new Plugin('foo', ['message_type' => 'foo']);
+        $plugin = new Plugin('foo', ['message_type' => 1]);
 
         $app = new App([
             'services' => [
-                'foo' => new Plugin(ErrorLog::class, ['message_type' => 'foobar', 'destination' => 'bar'])
+                'foo' => new Plugin(ErrorLog::class, ['message_type' => 2, 'destination' => 'bar'])
             ]
         ]);
 
-        $this->assertEquals(new ErrorLog('foo', 'bar', 'baz'), $app->plugin($plugin, ['extra_headers' => 'baz']));
+        $this->assertEquals(new ErrorLog(1, 'bar', 'baz'), $app->plugin($plugin, ['extra_headers' => 'baz']));
     }
 
     /**
