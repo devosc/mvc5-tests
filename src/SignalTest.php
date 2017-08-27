@@ -162,7 +162,7 @@ class SignalTest
      */
     function test_no_param_exception_invoke()
     {
-        $this->expectExceptionMessage('Missing required parameter $name for Mvc5\App::__invoke');
+        $this->expectExceptionMessage('Missing required parameter $plugin for Mvc5\App::__invoke');
 
         Signal::emit(new App, ['foo' => 'bar']);
     }
