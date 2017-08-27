@@ -9,6 +9,7 @@ use Mvc5\App;
 use Mvc5\Event;
 use Mvc5\ViewModel;
 use Mvc5\Plugin\Invoke;
+use Mvc5\Plugin\Link;
 use Mvc5\Plugin\Value;
 use Mvc5\Test\Test\TestCase;
 
@@ -64,23 +65,18 @@ class CallTest
     {
         $app = new App([
             'services' => [
-                'view\model' => new class() {
+                'model' => new class() {
                     function service($service) {
                         return $service;
                     }
-                }
-            ]
-        ]);
-
-        $service = new App([
-            'services' => [
+                },
+                'service' => new Link,
                 'test' => new Value('foobar')
             ]
         ]);
 
-        $this->assertEquals(
-            'foobar', $app->call('view\model.service.plugin', ['service' => $service, 'config' => 'test'])
-        );
+        $this->assertEquals('foobar', $app->call('model.service.plugin', ['test']));
+        $this->assertEquals('foobar', $app->call('model.service.plugin', ['plugin' => 'test']));
     }
 
     /**
