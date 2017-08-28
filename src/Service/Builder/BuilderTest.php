@@ -115,4 +115,24 @@ class BuilderTest
             Path::class, Builder::create(Path::class, [], new App)
         );
     }
+
+    /**
+     *
+     */
+    function test_variadic_constructor()
+    {
+        $obj = Builder::create(Variadic::class, ['a', 'b', 'c'], function() {});
+
+        $this->assertEquals(['a', 'b', 'c'], $obj->args);
+    }
+
+    /**
+     *
+     */
+    function test_variadic_constructor_with_named_args()
+    {
+        $obj = Builder::create(Variadic::class, ['foo' => 'a', 'bar' => 'b', 'baz' => 'c'], function() {});
+
+        $this->assertEquals(['a', 'b', 'c'], $obj->args);
+    }
 }
