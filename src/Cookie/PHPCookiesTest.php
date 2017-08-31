@@ -5,6 +5,7 @@
 
 namespace Mvc5\Test\Cookie;
 
+use Mvc5\Arg;
 use Mvc5\Config;
 use Mvc5\Cookie\Config\PHPCookies;
 use Mvc5\Cookie\Cookies;
@@ -15,11 +16,12 @@ class PHPCookiesTest
 {
     /**
      * @param array $cookies
+     * @param array $defaults
      * @return mixed
      */
-    protected function cookies(array $cookies = [])
+    protected function cookies(array $cookies = null, array $defaults = [])
     {
-        return new class($cookies)
+        return new class($cookies, $defaults)
             extends Config
             implements Cookies
         {
@@ -31,17 +33,50 @@ class PHPCookiesTest
             /**
              * @var array
              */
-            public static $cookie;
+            static $cookie;
 
             /**
              * @param array $cookie
-             * @return mixed
+             * @return bool
              */
             static function send(array $cookie)
             {
                 static::$cookie = static::params(...array_values($cookie));
+                return true;
             }
         };
+    }
+
+    /**
+     *
+     */
+    function test_super_global()
+    {
+        $_COOKIE = [
+            'foo' => 'bar'
+        ];
+
+        $cookies = $this->cookies();
+
+        $this->assertEquals('bar', $cookies['foo']);
+    }
+
+    /**
+     *
+     */
+    function test_defaults()
+    {
+        $cookies = $this->cookies(null, [
+            Arg::EXPIRE    => 0,
+            Arg::PATH      => '/foobar',
+            Arg::DOMAIN    => 'foo.bar',
+            Arg::SECURE    => false,
+            Arg::HTTP_ONLY => true
+        ]);
+
+        $this->assertEquals('bar', $cookies['foo'] = 'bar');
+
+        $this->assertEquals(['foo', 'bar', 0, '/foobar', 'foo.bar', false, true], $cookies::$cookie);
     }
 
     /**
