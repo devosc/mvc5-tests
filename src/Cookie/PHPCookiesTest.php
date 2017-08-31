@@ -5,12 +5,11 @@
 
 namespace Mvc5\Test\Cookie;
 
-use Mvc5\Cookie\PHPCookies;
+use Mvc5\Config;
+use Mvc5\Cookie\Config\PHPCookies;
+use Mvc5\Cookie\Cookies;
 use Mvc5\Test\Test\TestCase;
 
-/**
- * @runTestsInSeparateProcesses
- */
 class PHPCookiesTest
     extends TestCase
 {
@@ -20,28 +19,27 @@ class PHPCookiesTest
      */
     protected function cookies(array $cookies = [])
     {
-        return new class($cookies) extends PHPCookies
+        return new class($cookies)
+            extends Config
+            implements Cookies
         {
+            /**
+             *
+             */
+            use PHPCookies;
+
             /**
              * @var array
              */
-            public $cookie;
+            public static $cookie;
 
             /**
-             * @param string $name
-             * @param string $value
-             * @param int|null|string $expire
-             * @param string|null $path
-             * @param string|null $domain
-             * @param bool|null $secure
-             * @param bool|null $httponly
+             * @param array $cookie
              * @return mixed
              */
-            function set($name, $value = '', $expire = null,
-                         string $path = null, string $domain = null, bool $secure = null, bool $httponly = null)
+            static function send(array $cookie)
             {
-                $this->cookie = $this->cookie($name, $value, $expire, $path, $domain, $secure, $httponly);
-                return parent::set($name, $value);
+                static::$cookie = static::params(...array_values($cookie));
             }
         };
     }
@@ -55,12 +53,7 @@ class PHPCookiesTest
 
         unset($cookies['foo']);
 
-        $cookie = [
-            'name' => 'foo', 'value' => '', 'expire' => 946706400,
-            'path' => '/', 'domain' => '', 'secure' => false, 'httponly' => true
-        ];
-
-        $this->assertEquals($cookie, $cookies->cookie);
+        $this->assertEquals(['foo', '', 946706400, '/', '', false, true], $cookies::$cookie);
     }
 
     /**
@@ -72,12 +65,7 @@ class PHPCookiesTest
 
         $this->assertEquals('bar', $cookies['foo'] = 'bar');
 
-        $cookie = [
-            'name' => 'foo', 'value' => 'bar', 'expire' => 0,
-            'path' => '/', 'domain' => '', 'secure' => false, 'httponly' => true
-        ];
-
-        $this->assertEquals($cookie, $cookies->cookie);
+        $this->assertEquals(['foo', 'bar', 0, '/', '', false, true], $cookies::$cookie);
     }
 
     /**
@@ -89,12 +77,7 @@ class PHPCookiesTest
 
         $this->assertEquals('bar', $cookies->set('foo', 'bar', '+1 day'));
 
-        $cookie = [
-            'name' => 'foo', 'value' => 'bar', 'expire' => strtotime('+1 day'),
-            'path' => '/', 'domain' => '', 'secure' => false, 'httponly' => true
-        ];
-
-        $this->assertEquals($cookie, $cookies->cookie);
+        $this->assertEquals(['foo', 'bar', strtotime('+1 day'), '/', '', false, true], $cookies::$cookie);
     }
 
     /**
@@ -106,12 +89,7 @@ class PHPCookiesTest
 
         $this->assertEquals('bar', $cookies->set('foo', 'bar', 'foobar'));
 
-        $cookie = [
-            'name' => 'foo', 'value' => 'bar', 'expire' => 0,
-            'path' => '/', 'domain' => '', 'secure' => false, 'httponly' => true
-        ];
-
-        $this->assertEquals($cookie, $cookies->cookie);
+        $this->assertEquals(['foo', 'bar', 0, '/', '', false, true], $cookies::$cookie);
     }
 
     /**
@@ -119,12 +97,9 @@ class PHPCookiesTest
      */
     function test_with()
     {
-        $cookie = [
-            'name' => 'foo', 'value' => 'bar', 'expire' => 0,
-            'path' => '/', 'domain' => '', 'secure' => false, 'httponly' => true
-        ];
+        $cookies = $this->cookies()->with('foo', 'bar');
 
-        $this->assertEquals($cookie, $this->cookies()->with('foo', 'bar')->cookie);
+        $this->assertEquals(['foo', 'bar', 0, '/', '', false, true], $cookies::$cookie);
     }
 
     /**
@@ -132,12 +107,9 @@ class PHPCookiesTest
      */
     function test_without()
     {
-        $cookie = [
-            'name' => 'foo', 'value' => '', 'expire' => 946706400,
-            'path' => '/', 'domain' => '', 'secure' => false, 'httponly' => true
-        ];
+        $cookies = $this->cookies()->without('foo');
 
-        $this->assertEquals($cookie, $this->cookies()->without('foo')->cookie);
+        $this->assertEquals(['foo', '', 946706400, '/', '', false, true], $cookies::$cookie);
     }
 
     /**
