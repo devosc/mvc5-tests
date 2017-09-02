@@ -41,7 +41,7 @@ class PHPCookiesTest
              */
             static function send(array $cookie)
             {
-                static::$cookie = static::params(...array_values($cookie));
+                static::$cookie = is_string(key($cookie)) ? static::named($cookie) : static::args(...$cookie);
                 return true;
             }
         };
@@ -77,6 +77,22 @@ class PHPCookiesTest
         $this->assertEquals('bar', $cookies['foo'] = 'bar');
 
         $this->assertEquals(['foo', 'bar', 0, '/foobar', 'foo.bar', false, true], $cookies::$cookie);
+    }
+
+    /**
+     *
+     */
+    function test_send()
+    {
+        $cookies = $this->cookies();
+
+        $cookies::send(['path' => '/foobar', 'name' => 'foo', 'value' => 'bar']);
+
+        $this->assertEquals(['foo', 'bar', 0, '/foobar', '', false, true], $cookies::$cookie);
+
+        $cookies::send(['foo', 'bar', 0, '/foobar']);
+
+        $this->assertEquals(['foo', 'bar', 0, '/foobar', '', false, true], $cookies::$cookie);
     }
 
     /**
