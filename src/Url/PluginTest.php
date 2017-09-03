@@ -35,7 +35,7 @@ class PluginTest
             Arg::URI => [
                 Arg::SCHEME => 'http',
                 Arg::HOST => 'localhost',
-                Arg::PORT => '8080'
+                Arg::PORT => 8080
             ]
         ]);
 
@@ -55,7 +55,7 @@ class PluginTest
             Arg::URI => [
                 Arg::SCHEME => 'http',
                 Arg::HOST => 'localhost',
-                Arg::PORT => '8080'
+                Arg::PORT => 8080
             ]
         ]);
 

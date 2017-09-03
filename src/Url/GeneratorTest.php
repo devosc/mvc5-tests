@@ -22,7 +22,7 @@ class GeneratorTest
                 'host'   => [
                     'name' => '{subdomain}.app.dev'
                 ],
-                'port'   => '8000',
+                'port'   => 8000,
                 'path'   => '/foo',
                 'children' => [
                     'bar' => [
@@ -50,7 +50,7 @@ class GeneratorTest
             'app' => [
                 'scheme' => 'http',
                 'host'   => 'localhost',
-                'port'   => '8000',
+                'port'   => 8000,
                 'path'   => '/foo',
                 'children' => [
                     'bar' => [

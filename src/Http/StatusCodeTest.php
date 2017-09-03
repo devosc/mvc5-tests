@@ -16,7 +16,7 @@ class StatusCodeTest
      */
     function test()
     {
-        $this->assertEquals('OK', StatusCode::reasonPhrase('200'));
+        $this->assertEquals('OK', StatusCode::reasonPhrase(200));
     }
 
     /**
@@ -24,6 +24,6 @@ class StatusCodeTest
      */
     function test_invalid()
     {
-        $this->assertNull(StatusCode::reasonPhrase('5'));
+        $this->assertNull(StatusCode::reasonPhrase(5));
     }
 }

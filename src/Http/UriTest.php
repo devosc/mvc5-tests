@@ -66,9 +66,9 @@ class UriTest
      */
     function test_port()
     {
-        $uri = new HttpUri([Arg::PORT => '80']);
+        $uri = new HttpUri([Arg::PORT => 80]);
 
-        $this->assertEquals('80', $uri->port());
+        $this->assertEquals(80, $uri->port());
     }
 
     /**
@@ -101,7 +101,7 @@ class UriTest
             Arg::HOST     => 'localhost',
             Arg::PATH     => '/foobar',
             Arg::QUERY    => 'foo=bar',
-            Arg::PORT     => '80',
+            Arg::PORT     => 80,
             Arg::SCHEME   => 'http',
             Arg::USER     => 'user',
             Arg::PASS     => 'password'

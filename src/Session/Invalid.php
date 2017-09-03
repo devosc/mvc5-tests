@@ -5,16 +5,22 @@
 
 namespace Mvc5\Test\Session;
 
-use Mvc5\Session\PHPSession;
+use Mvc5\Session\Config\PHPSession;
+use Mvc5\Session\Session;
 
 class Invalid
-    extends PHPSession
+    implements Session
 {
+    /**
+     *
+     */
+    use PHPSession;
+
     /**
      * @param array $options
      * @return bool
      */
-    function start(array $options = [])
+    function start(array $options = []) : bool
     {
         return false;
     }

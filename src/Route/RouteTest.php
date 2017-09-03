@@ -267,9 +267,9 @@ class RouteTest
      */
     function test_wildcard_exists()
     {
-        $route = new Route([Arg::WILDCARD => 'foo']);
+        $route = new Route([Arg::WILDCARD => true]);
 
-        $this->assertEquals('foo', $route->wildcard());
+        $this->assertEquals(true, $route->wildcard());
     }
 
     /**
