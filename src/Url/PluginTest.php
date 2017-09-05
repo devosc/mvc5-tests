@@ -76,7 +76,7 @@ class PluginTest
 
         $url = new Plugin($request, new Generator($this->route));
 
-        $this->assertEquals('/foo', $url(''));
+        $this->assertEquals('/foo', $url());
         $this->assertEquals('/bar', $url([null, 'controller' => 'bar']));
     }
 
