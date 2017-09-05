@@ -86,9 +86,9 @@ class PHPCookiesTest
     {
         $cookies = $this->cookies();
 
-        $cookies::send(['path' => '/foobar', 'name' => 'foo', 'value' => 'bar']);
+        $cookies::send(['path' => '/foobar', 'name' => 'foo', 'value' => 'bar', 'httponly' => false]);
 
-        $this->assertEquals(['foo', 'bar', 0, '/foobar', '', false, true], $cookies::$cookie);
+        $this->assertEquals(['foo', 'bar', 0, '/foobar', '', false, false], $cookies::$cookie);
 
         $cookies::send(['foo', 'bar', 0, '/foobar']);
 
