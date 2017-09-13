@@ -6,7 +6,8 @@
 namespace Mvc5\Test\Plugin;
 
 use Mvc5\App;
-use Mvc5\Plugin\Args;
+use Mvc5\Plugin\NullValue;
+use Mvc5\Plugin\Value;
 use Mvc5\Plugin\Shared;
 use Mvc5\Test\Test\TestCase;
 
@@ -45,7 +46,7 @@ class SharedTest
         $value = 0;
 
         $this->assertFalse($app->has('foo'));
-        $this->assertEquals($value, $app->plugin(new Shared('foo', new Args($value))));
+        $this->assertEquals($value, $app->plugin(new Shared('foo', new Value($value))));
         $this->assertTrue($app->has('foo'));
         $this->assertEquals(['foo' => $value], $app->container());
         $this->assertEquals($value, $app->plugin(new Shared('foo')));
@@ -54,11 +55,23 @@ class SharedTest
     /**
      *
      */
-    function test_null()
+    function test_null_value()
     {
         $app = new App;
 
-        $this->assertNull($app->plugin(new Shared('foo', new Args(null))));
+        $this->assertNull($app->plugin(new Shared('foo', new Value(null))));
+        $this->assertFalse($app->has('foo'));
+        $this->assertNull($app->get('foo'));
+    }
+
+    /**
+     *
+     */
+    function test_null_value_plugin()
+    {
+        $app = new App;
+
+        $this->assertNull($app->plugin(new Shared('foo', new NullValue)));
         $this->assertFalse($app->has('foo'));
         $this->assertNull($app->get('foo'));
     }
@@ -78,11 +91,11 @@ class SharedTest
     /**
      *
      */
-    function test_with_config()
+    function test_shared_plugin()
     {
         $app = new App;
 
-        $this->assertEquals('bar', $app->plugin(new Shared('foo', new Args('bar'))));
+        $this->assertEquals('bar', $app->plugin(new Shared('foo', new Value('bar'))));
         $this->assertEquals('bar', $app->get('foo'));
     }
 }

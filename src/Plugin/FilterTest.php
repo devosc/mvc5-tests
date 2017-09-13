@@ -7,9 +7,9 @@ namespace Mvc5\Test\Plugin;
 
 use Mvc5\App;
 use Mvc5\Plugin\Args;
+use Mvc5\Plugin\Call;
 use Mvc5\Plugin\Filter;
 use Mvc5\Plugin\Param;
-use Mvc5\Plugin\Plugin;
 use Mvc5\Test\Test\TestCase;
 
 class FilterTest
@@ -156,20 +156,10 @@ class FilterTest
     /**
      *
      */
-    function test_plugin()
+    function test_resolvable_closure()
     {
-        $filter = new Filter('foo', [function($foo) { return $foo; }]);
+        $maybe = new Filter(function() {});
 
-        $this->assertEquals('foo', (new App)->plugin($filter));
-    }
-
-    /**
-     *
-     */
-    function test_resolvable()
-    {
-        $plugin = new Plugin('Mvc5\Config', [[function($foo) { return $foo; }]]);
-
-        $this->assertEquals('foo', (new App)->plugin(new Filter('foo', $plugin)));
+        $this->assertInstanceOf(Call::class, $maybe->config());
     }
 }
