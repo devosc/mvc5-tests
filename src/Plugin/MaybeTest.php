@@ -8,6 +8,8 @@ namespace Mvc5\Test\Plugin;
 use Mvc5\App;
 use Mvc5\Plugin\Maybe;
 use Mvc5\Plugin\Nothing;
+use Mvc5\Plugin\Nullable;
+use Mvc5\Plugin\Plugin;
 use Mvc5\Test\Test\TestCase;
 
 class MaybeTest
@@ -54,13 +56,14 @@ class MaybeTest
     function test_plugin_returns_nothing()
     {
         $app = new App(['services' => [
-            'foo' => new Maybe(new Nothing)
+            'foo' => new Nothing,
+            'foobar' => new Nullable(new Plugin('foo'))
         ]]);
 
         $this->assertInstanceOf(Nothing::class, $app->plugin('foo'));
-        $this->assertNull($app['foo']);
-        $this->assertNull($app->get('foo'));
-        $this->assertNull($app->shared('foo'));
+        $this->assertInstanceOf(Nothing::class, $app->shared('foo'));
+        $this->assertNull($app['foobar']);
+        $this->assertNull($app->get('foobar'));
     }
 
     /**
@@ -69,10 +72,12 @@ class MaybeTest
     function test_plugin_returns_null()
     {
         $app = new App(['services' => [
-            'foo' => new Maybe(null)
+            'foo' => new Maybe(null),
+            'foobar' => new Nullable(new Plugin('foo'))
         ]]);
 
-        $this->assertNull($app['foo']);
+        $this->assertNull($app['foobar']);
+        $this->assertInstanceOf(Nothing::class, $app['foo']);
         $this->assertInstanceOf(Nothing::class, $app->plugin('foo'));
     }
 

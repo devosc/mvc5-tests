@@ -9,6 +9,8 @@ use Mvc5\App;
 use Mvc5\Config;
 use Mvc5\Plugin\Maybe;
 use Mvc5\Plugin\Nothing;
+use Mvc5\Plugin\Nullable;
+use Mvc5\Plugin\Plugin;
 use Mvc5\Plugin\Shared;
 use Mvc5\Test\Test\TestCase;
 
@@ -201,7 +203,7 @@ class ContainerTest
         $app['foo'] = new Nothing;
 
         $this->assertTrue(isset($app['foo']));
-        $this->assertNull($app['foo']);
+        $this->assertNull(Maybe::nullable($app['foo']));
     }
 
     /**
@@ -226,13 +228,14 @@ class ContainerTest
 
         $app = new App;
 
-        $this->assertNull($app->shared('foo', function() use(&$count) {
+        $foo = $app->shared('foo', function() use(&$count) {
             ++$count;
             return new Nothing;
-        }));
+        });
 
-        $this->assertNull($app->get('foo'));
-        $this->assertNull($app->shared('foo'));
+        $this->assertInstanceOf(Nothing::class, $foo);
+        $this->assertNull(Maybe::nullable($app->get('foo')));
+        $this->assertNull(Maybe::nullable($app->shared('foo')));
         $this->assertEquals(1, $count);
     }
 
@@ -258,16 +261,17 @@ class ContainerTest
         $count = 0;
 
         $app = new App(['services' => [
-            'foo' => new Shared('foo', new Maybe(function() use (&$count) {
+            'foo' => new Maybe(function() use (&$count) {
                 ++$count;
                 return new Nothing;
-            }))
+            }),
+            'foobar' => new Nullable(new Shared('foo'))
         ]]);
 
-        $this->assertNull($app->plugin('foo'));
-        $this->assertNull($app->shared('foo'));
-        $this->assertNull($app->get('foo'));
-        $this->assertNull($app['foo']);
+        $this->assertNull($app->plugin('foobar'));
+        $this->assertNull($app->shared('foobar'));
+        $this->assertNull($app->get('foobar'));
+        $this->assertNull($app['foobar']);
         $this->assertEquals(1, $count);
     }
 
@@ -279,16 +283,17 @@ class ContainerTest
         $count = 0;
 
         $app = new App(['services' => [
-            'foo' => new Shared('foo', new Maybe(function() use (&$count) {
+            'foo' => new Maybe(function() use (&$count) {
                 ++$count;
                 return null;
-            }))
+            }),
+            'foobar' => new Nullable(new Shared('foo'))
         ]]);
 
-        $this->assertNull($app->plugin('foo'));
-        $this->assertNull($app->shared('foo'));
-        $this->assertNull($app->get('foo'));
-        $this->assertNull($app['foo']);
+        $this->assertNull($app->plugin('foobar'));
+        $this->assertNull($app->shared('foobar'));
+        $this->assertNull($app->get('foobar'));
+        $this->assertNull($app['foobar']);
         $this->assertEquals(1, $count);
     }
 
@@ -303,12 +308,13 @@ class ContainerTest
             'foo' => new Shared('foo', function() use(&$count) {
                 ++$count;
                 return new Nothing;
-            })
+            }),
+            'foobar' => new Nullable(new Plugin('foo'))
         ]]);
 
-        $this->assertNull($app->plugin('foo'));
-        $this->assertNull($app->shared('foo'));
-        $this->assertNull($app->get('foo'));
+        $this->assertNull($app->plugin('foobar'));
+        $this->assertNull($app->shared('foobar'));
+        $this->assertNull(Maybe::nullable($app->get('foo')));
         $this->assertEquals(1, $count);
     }
 
