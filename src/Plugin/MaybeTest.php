@@ -22,19 +22,8 @@ class MaybeTest
     {
         $maybe = new Maybe('foo');
 
-        $this->assertEquals('foo', $maybe->config());
-        $this->assertEquals([], $maybe->args());
-        $this->assertEquals([[Maybe::class, 'nothing']], $maybe->filter());
-        $this->assertNull($maybe->param());
-    }
-
-    /**
-     *
-     */
-    function test_nothing()
-    {
-        $this->assertEquals('foo', Maybe::nothing('foo'));
-        $this->assertInstanceOf(Nothing::class, Maybe::nothing(null));
+        $this->assertEquals([$maybe, '__invoke'], $maybe->config());
+        $this->assertEquals(['foo'], $maybe->args());
     }
 
     /**
@@ -48,22 +37,6 @@ class MaybeTest
 
         $this->assertFalse($app['foo']);
         $this->assertFalse($app->plugin('foo'));
-    }
-
-    /**
-     *
-     */
-    function test_plugin_returns_nothing()
-    {
-        $app = new App(['services' => [
-            'foo' => new Nothing,
-            'foobar' => new Nullable(new Plugin('foo'))
-        ]]);
-
-        $this->assertInstanceOf(Nothing::class, $app->plugin('foo'));
-        $this->assertInstanceOf(Nothing::class, $app->shared('foo'));
-        $this->assertNull($app['foobar']);
-        $this->assertNull($app->get('foobar'));
     }
 
     /**

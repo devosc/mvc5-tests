@@ -152,14 +152,4 @@ class FilterTest
 
         $this->assertNull($app->plugin(new Filter('foo', new Param('filters.foo'), ['bar']), ['s']));
     }
-
-    /**
-     *
-     */
-    function test_resolvable_closure()
-    {
-        $maybe = new Filter(function() {});
-
-        $this->assertInstanceOf(Call::class, $maybe->config());
-    }
 }
