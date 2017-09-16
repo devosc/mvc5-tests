@@ -9,6 +9,7 @@ use Mvc5\App;
 use Mvc5\Plugin\Maybe;
 use Mvc5\Plugin\Nothing;
 use Mvc5\Plugin\Nullable;
+use Mvc5\Plugin\Plug;
 use Mvc5\Plugin\Plugin;
 use Mvc5\Test\Test\TestCase;
 
@@ -24,46 +25,50 @@ class MaybeTest
 
         $this->assertEquals([$maybe, '__invoke'], $maybe->config());
         $this->assertEquals(['foo'], $maybe->args());
+        $this->assertInstanceOf(Nothing::class, (new Maybe)());
     }
 
     /**
      *
      */
-    function test_plugin_returns_false()
+    function test_custom_default()
     {
-        $app = new App(['services' => [
-            'foo' => new Maybe(false)
-        ]]);
-
-        $this->assertFalse($app['foo']);
-        $this->assertFalse($app->plugin('foo'));
+        $this->assertEquals('bar', (new App)(new Maybe(null, 'bar')));
     }
 
     /**
      *
      */
-    function test_plugin_returns_null()
+    function test_default()
+    {
+        $this->assertInstanceOf(Nothing::class, (new Maybe)());
+    }
+
+    /**
+     *
+     */
+    function test_null()
     {
         $app = new App(['services' => [
             'foo' => new Maybe(null),
             'foobar' => new Nullable(new Plugin('foo'))
         ]]);
 
-        $this->assertNull($app['foobar']);
         $this->assertInstanceOf(Nothing::class, $app['foo']);
-        $this->assertInstanceOf(Nothing::class, $app->plugin('foo'));
+        $this->assertNull($app['foobar']);
     }
 
     /**
      *
      */
-    function test_plugin_returns_something()
+    function test_not_null()
     {
         $app = new App(['services' => [
-            'foo' => new Maybe('foobar')
+            'foo' => new Maybe('foobar'),
+            'foobar' => new Nullable(new Plug('foo'))
         ]]);
 
         $this->assertEquals('foobar', $app['foo']);
-        $this->assertEquals('foobar', $app->plugin('foo'));
+        $this->assertEquals('foobar', $app['foobar']);
     }
 }
