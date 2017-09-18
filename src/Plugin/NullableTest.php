@@ -33,7 +33,7 @@ class NullableTest
     function test_custom_default()
     {
         $this->assertEquals('bar', (new App)(new Nullable(new Maybe, 'bar')));
-   }
+    }
 
     /**
      *
