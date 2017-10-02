@@ -36,13 +36,29 @@ class AppTest
     {
         $config = [
             Arg::SERVICES => [
-                Arg::CONTAINER => ['foo']
+                'foo' => ['foobar']
             ]
         ];
 
         $app = new App($config);
 
         $this->assertEquals($config, $app->config());
+    }
+
+    /**
+     *
+     */
+    function test_overload_call_method()
+    {
+        $config = [
+            Arg::SERVICES => [
+                'foo' => new Value(function($bar) { return 'foo' . $bar; })
+            ]
+        ];
+
+        $app = new App($config);
+
+        $this->assertEquals('foobar', $app->foo('bar'));
     }
 
     /**
