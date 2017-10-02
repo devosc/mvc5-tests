@@ -226,6 +226,23 @@ class SignalTest
     /**
      *
      */
+    function test_with_argv_exception()
+    {
+        $function = function($foo, $argv, $baz) {};
+
+        $args = ['foo' => 'bar', 'baz' => 'bat'];
+
+        try {
+            Signal::emit($function, $args);
+        } catch(\Throwable $exception) {
+            $this->assertInstanceOf(\Exception::class, $exception);
+            $this->assertEquals('Missing argument 3 for Mvc5\Test\SignalTest::Mvc5\Test\{closure}()', $exception->getMessage());
+        }
+    }
+
+    /**
+     *
+     */
     function test_variadic_argv()
     {
         $function = function(...$argv) {
