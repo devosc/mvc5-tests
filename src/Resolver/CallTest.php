@@ -8,6 +8,7 @@ namespace Mvc5\Test\Resolver;
 use Mvc5\App;
 use Mvc5\Event;
 use Mvc5\ViewModel;
+use Mvc5\Plugin\Callback;
 use Mvc5\Plugin\Invoke;
 use Mvc5\Plugin\Link;
 use Mvc5\Plugin\Value;
@@ -149,5 +150,22 @@ class CallTest
         ]);
 
         $this->assertEquals('foobar', $app->call('foo'));
+    }
+
+    /**
+     *
+     */
+    function test_call_overload()
+    {
+        $config = [
+            'services' => [
+                'foo' => new Callback(function($bar) { return $this->foobar('foo' . $bar); }),
+                'foobar' => new Invoke(function($foobar) { return $foobar; }),
+            ]
+        ];
+
+        $app = new App($config, null, true);
+
+        $this->assertEquals('foobar', $app->foo('bar'));
     }
 }

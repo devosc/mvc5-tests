@@ -48,22 +48,6 @@ class AppTest
     /**
      *
      */
-    function test_overload_call_method()
-    {
-        $config = [
-            Arg::SERVICES => [
-                'foo' => new Value(function($bar) { return 'foo' . $bar; })
-            ]
-        ];
-
-        $app = new App($config);
-
-        $this->assertEquals('foobar', $app->foo('bar'));
-    }
-
-    /**
-     *
-     */
     function test_invoke_with_provider()
     {
         $app = new App([], function() { return 'bar'; });
