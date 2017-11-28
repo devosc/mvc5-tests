@@ -175,6 +175,18 @@ class GeneratorTest
     /**
      *
      */
+    function test_start_event_iterator()
+    {
+        $iterator = new EventIterator;
+
+        $this->assertEquals(0, $iterator->num_valid_method_calls);
+        $this->assertNull($this->app()->trigger($iterator));
+        $this->assertEquals(1, $iterator->num_valid_method_calls);
+    }
+
+    /**
+     *
+     */
     function test_object_event()
     {
         $this->assertEquals('foo', $this->app()->trigger(new \stdClass));
@@ -237,11 +249,15 @@ class GeneratorTest
      */
     function test_traversable_event()
     {
-        $this->assertEquals('baz', $this->app()->trigger(new EventIterator([
+        $iterator = new EventIterator([
             '@Mvc5\Test\Event\GeneratorTest::foo',
             '@Mvc5\Test\Event\GeneratorTest::bar',
             '@Mvc5\Test\Event\GeneratorTest::baz'
-        ])));
+        ]);
+
+        $this->assertEquals(0, $iterator->num_valid_method_calls);
+        $this->assertEquals('baz', $this->app()->trigger($iterator));
+        $this->assertEquals(4, $iterator->num_valid_method_calls);
     }
 
     /**

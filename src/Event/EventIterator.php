@@ -24,11 +24,26 @@ class EventIterator
     protected $config;
 
     /**
+     * @var bool
+     */
+    public $num_valid_method_calls = 0;
+
+    /**
      * @param $config array|mixed
      */
-    function __construct($config)
+    function __construct($config = [])
     {
         $this->config = $config;
+    }
+
+    /**
+     * @return bool
+     */
+    function valid() : bool
+    {
+        ++$this->num_valid_method_calls;
+
+        return $this->config instanceof \Iterator ? $this->config->valid() : null !== key($this->config);
     }
 
     /**
