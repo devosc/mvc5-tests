@@ -234,8 +234,9 @@ class SignalTest
 
         try {
             Signal::emit($function, $args);
+        } catch(\ArgumentCountError $exception) {
+            $this->assertEquals('Too few arguments to function Mvc5\Test\SignalTest::Mvc5\Test\{closure}(), 2 passed and exactly 3 expected', $exception->getMessage());
         } catch(\Throwable $exception) {
-            $this->assertInstanceOf(\Exception::class, $exception);
             $this->assertEquals('Missing argument 3 for Mvc5\Test\SignalTest::Mvc5\Test\{closure}()', $exception->getMessage());
         }
     }
