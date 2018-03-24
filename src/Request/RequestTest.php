@@ -6,7 +6,11 @@
 namespace Mvc5\Test\Request;
 
 use Mvc5\Arg;
+use Mvc5\Http\Error;
+use Mvc5\Http\Error\NotFound;
 use Mvc5\Request\HttpRequest;
+use Mvc5\Route\Config as Mvc5Route;
+use Mvc5\Route\Route;
 use Mvc5\Test\Test\TestCase;
 
 class RequestTest
@@ -137,9 +141,9 @@ class RequestTest
      */
     function test_error()
     {
-        $request = new HttpRequest([Arg::ERROR => 'foo']);
+        $request = new HttpRequest([Arg::ERROR => new NotFound]);
 
-        $this->assertEquals('foo', $request->error());
+        $this->assertInstanceOf(Error::class, $request->error());
     }
 
     /**
@@ -337,9 +341,9 @@ class RequestTest
      */
     function test_route()
     {
-        $request = new HttpRequest([Arg::ROUTE => 'foo']);
+        $request = new HttpRequest([Arg::ROUTE => new Mvc5Route]);
 
-        $this->assertEquals('foo', $request->route());
+        $this->assertInstanceOf(Route::class, $request->route());
     }
 
     /**

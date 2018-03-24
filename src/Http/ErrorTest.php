@@ -17,9 +17,9 @@ class ErrorTest
      */
     function test_code()
     {
-        $config = new HttpError([Arg::CODE => 'foo']);
+        $config = new HttpError([Arg::CODE => 500]);
 
-        $this->assertEquals('foo', $config->code());
+        $this->assertEquals(500, $config->code());
     }
 
     /**
@@ -57,8 +57,8 @@ class ErrorTest
      */
     function test_status()
     {
-        $config = new HttpError([Arg::STATUS => 'foo']);
+        $config = new HttpError([Arg::STATUS => 500]);
 
-        $this->assertEquals('foo', $config->status());
+        $this->assertEquals(500, $config->status());
     }
 }

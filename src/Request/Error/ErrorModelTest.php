@@ -17,9 +17,9 @@ class ErrorModelTest
      */
     function test_code()
     {
-        $model = new ViewModel(null, [Arg::ERROR => [Arg::CODE => 'foo']]);
+        $model = new ViewModel(null, [Arg::ERROR => [Arg::CODE => 500]]);
 
-        $this->assertEquals('foo', $model->code());
+        $this->assertEquals(500, $model->code());
     }
 
     /**
