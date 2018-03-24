@@ -74,7 +74,19 @@ class UriTest
     /**
      *
      */
-    function test_query()
+    function test_query_array()
+    {
+        $args = ['foo' => 'bar', 'baz' => ['bat' => 'foobar']];
+
+        $uri = new HttpUri([Arg::QUERY => $args]);
+
+        $this->assertEquals($args, $uri->query());
+    }
+
+    /**
+     *
+     */
+    function test_query_string()
     {
         $uri = new HttpUri([Arg::QUERY => 'foo']);
 
@@ -108,6 +120,10 @@ class UriTest
         ]);
 
         $this->assertEquals('http://user:password@localhost/foobar?foo=bar#top', (string) $uri);
+
+        $uri = $uri->with(Arg::QUERY, ['foo' => 'bar', 'baz' => ['bat' => 'foobar']]);
+
+        $this->assertEquals('http://user:password@localhost/foobar?foo=bar&baz[bat]=foobar#top', (string) $uri);
     }
 
     /**
