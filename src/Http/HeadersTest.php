@@ -31,6 +31,7 @@ class HeadersTest
         $this->assertTrue(isset($with['Host']));
         $this->assertEquals('foo', $with['host']);
         $this->assertEquals(['foo' => 'bar'], $with['foobar']);
+        $this->assertEquals(['foo' => 'bar'], $with->get('foobar'));
 
         $without = $headers->without('Host');
 
