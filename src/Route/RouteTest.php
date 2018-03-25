@@ -207,9 +207,9 @@ class RouteTest
      */
     function test_port_exists()
     {
-        $route = new Route([Arg::PORT => '80']);
+        $route = new Route([Arg::PORT => 80]);
 
-        $this->assertEquals('80', $route->port());
+        $this->assertEquals(80, $route->port());
     }
 
     /**

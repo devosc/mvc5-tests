@@ -311,9 +311,9 @@ class RequestTest
      */
     function test_port_exists()
     {
-        $request = new HttpRequest([Arg::URI => [Arg::PORT => '80']]);
+        $request = new HttpRequest([Arg::URI => [Arg::PORT => 80]]);
 
-        $this->assertEquals('80', $request->port());
+        $this->assertEquals(80, $request->port());
     }
 
     /**

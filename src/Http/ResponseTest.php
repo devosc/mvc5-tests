@@ -47,9 +47,9 @@ class ResponseTest
      */
     function test_status()
     {
-        $response = new HttpResponse([Arg::STATUS => '200']);
+        $response = new HttpResponse([Arg::STATUS => 200]);
 
-        $this->assertEquals('200', $response->status());
+        $this->assertEquals(200, $response->status());
     }
 
     /**
