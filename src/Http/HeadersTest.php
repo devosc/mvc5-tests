@@ -22,7 +22,7 @@ class HeadersTest
         $this->assertTrue(isset($headers['bar']));
         $this->assertEquals('baz', $headers['bar']);
 
-        $with = $headers->with(['bar' => 'baz', 'Host' => 'foo']);
+        $with = $headers->with(['Host' => 'foo', 'foobar' => ['foo' => 'bar']]);
 
         $this->assertFalse(isset($headers['Host']));
         $this->assertEquals('foo', $with->current());
@@ -30,6 +30,7 @@ class HeadersTest
         $this->assertEquals('baz', $with['bar']);
         $this->assertTrue(isset($with['Host']));
         $this->assertEquals('foo', $with['host']);
+        $this->assertEquals(['foo' => 'bar'], $with['foobar']);
 
         $without = $headers->without('Host');
 
