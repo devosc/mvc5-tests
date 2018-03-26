@@ -5,7 +5,7 @@
 
 namespace Mvc5\Test\Config;
 
-use Mvc5\Session\Model;
+use Mvc5\Overload;
 use Mvc5\Test\Test\TestCase;
 
 class OverloadTest
@@ -14,104 +14,64 @@ class OverloadTest
     /**
      *
      */
-    function test_get()
+    function test_get_not_overloaded()
     {
-        $model = new Model(['foo' => 'bar']);
+        $model = new Overload;
 
-        $this->assertEquals('bar', $model->get('foo'));
-    }
+        $model->get('foo')['bar'] = 'baz';
 
-    /**
-     *
-     */
-    function test_get_not_set()
-    {
-        $model = new Model;
-
-        $this->assertNull($model->get('foo'));
-    }
-
-    /**
-     *
-     */
-    function test_get_overload_array()
-    {
-        $model = new Model;
+        $this->assertNull($model->get('foo')['bar']);
 
         $model['foo']['bar'] = 'baz';
 
-        $this->assertEquals(['bar' => 'baz'], $model->get('foo'));
+        $this->assertEquals('baz', $model->get('foo')['bar']);
     }
 
     /**
      *
      */
-    function test_get_overload_config()
+    function test_overload_offset_get()
     {
-        $model = new Model(new Model);
+        $model = new Overload;
 
         $model['foo']['bar'] = 'baz';
 
-        $this->assertEquals(['bar' => 'baz'], $model->get('foo'));
+        $this->assertEquals('baz', $model['foo']['bar']);
     }
 
     /**
      *
      */
-    function test_offset_get()
+    function test_overload_offset_get_config_object()
     {
-        $model = new Model;
+        $model = new Overload(new Overload);
 
-        $model['foo'] = ['bar' => 'baz'];
+        $model['foo']['bar'] = 'baz';
 
         $this->assertEquals('baz', $model['foo']['bar']);
-
-        $model['foo']['bar'] = 'bat';
-
-        $this->assertEquals('bat', $model['foo']['bar']);
     }
 
     /**
      *
      */
-    function test_offset_get_config_object()
+    function test_overload_get_property()
     {
-        $model = new Model(new Model(['foo' => ['bar' => 'baz']]));
+        $model = new Overload;
 
-        $this->assertEquals('baz', $model['foo']['bar']);
-
-        $model['foo']['bar'] = 'bat';
-
-        $this->assertEquals('bat', $model['foo']['bar']);
-    }
-
-    /**
-     *
-     */
-    function test_property_get()
-    {
-        $model = new Model;
-
-        $model->foo = ['bar' => 'baz'];
+        $model->foo['bar'] = 'baz';
 
         $this->assertEquals('baz', $model->foo['bar']);
-
-        $model->foo['bar'] = 'bat';
-
-        $this->assertEquals('bat', $model->foo['bar']);
     }
 
     /**
      *
      */
-    function test_property_get_config_object()
+    function test_overload_get_property_with_config_object()
     {
-        $model = new Model(new Model(['foo' => ['bar' => 'baz']]));
+        $model = new Overload(new Overload);
+
+        $model->foo['bar'] = 'baz';
 
         $this->assertEquals('baz', $model->foo['bar']);
-
-        $model->foo['bar'] = 'bat';
-
-        $this->assertEquals('bat', $model->foo['bar']);
     }
 }

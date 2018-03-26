@@ -144,8 +144,10 @@ class SessionTest
         $session->start();
 
         $session['foo'] = 'bar';
+        $session['baz'] = 'bat';
 
         $this->assertEquals('bar', $session->get('foo'));
+        $this->assertEquals(['foo' => 'bar', 'baz' => 'bat'], $session->get(['foo', 'baz']));
 
         $session->destroy();
     }
