@@ -160,8 +160,11 @@ class SessionTest
         $session->start();
 
         $session['foo'] = 'bar';
+        $session['bar'] = 'baz';
 
         $this->assertTrue($session->has('foo'));
+        $this->assertTrue($session->has(['foo', 'bar']));
+        $this->assertFalse($session->has(['foo', 'bar', 'foobar']));
 
         $session->destroy();
     }

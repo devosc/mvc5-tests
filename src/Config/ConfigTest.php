@@ -88,6 +88,20 @@ class ConfigTest
     /**
      *
      */
+    function test_get_multiple()
+    {
+        $config = new Config(['foo' => 'bar', 'baz' => 'bat']);
+
+        $this->assertEquals(['foo' => 'bar', 'foobar' => null, 'baz' => 'bat'], $config->get(['foo', 'foobar', 'baz']));
+
+        $config = new Config(new Config(['foo' => 'bar', 'baz' => 'bat']));
+
+        $this->assertEquals(['foo' => 'bar', 'foobar' => null, 'baz' => 'bat'], $config->get(['foo', 'foobar', 'baz']));
+    }
+
+    /**
+     *
+     */
     function test_has()
     {
         $config = new Config(['foo' => 'bar']);
@@ -103,6 +117,22 @@ class ConfigTest
         $config = new Config;
 
         $this->assertFalse($config->has('foo'));
+    }
+
+    /**
+     *
+     */
+    function test_has_multiple()
+    {
+        $config = new Config(['foo' => 'bar', 'baz' => 'bat']);
+
+        $this->assertTrue($config->has(['foo', 'baz']));
+        $this->assertFalse($config->has(['foo', 'foobar', 'baz']));
+
+        $config = new Config(new Config(['foo' => 'bar', 'baz' => 'bat']));
+
+        $this->assertTrue($config->has(['foo', 'baz']));
+        $this->assertFalse($config->has(['foo', 'foobar', 'baz']));
     }
 
     /**

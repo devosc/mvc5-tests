@@ -117,6 +117,16 @@ class ContainerTest
     /**
      *
      */
+    function test_get_multiple()
+    {
+        $app = new App(['container' => ['foo' => 'bar', 'baz' => 'bat']]);
+
+        $this->assertEquals(['foo' => 'bar', 'foobar' => null, 'baz' => 'bat'], $app->get(['foo', 'foobar', 'baz']));
+    }
+
+    /**
+     *
+     */
     function test_get_returns_null()
     {
         $app = new App;
@@ -132,6 +142,24 @@ class ContainerTest
         $app = new App;
 
         $this->assertFalse($app->has('foo'));
+    }
+
+    /**
+     *
+     */
+    function test_has_multiple()
+    {
+        $app = new App([
+            'container' => [
+                'baz' => 'bat'
+            ],
+            'services' => [
+                'foo' => 'bar'
+            ],
+        ]);
+
+        $this->assertTrue($app->has(['baz', 'foo']));
+        $this->assertFalse($app->has(['baz', 'foo', 'foobar']));
     }
 
     /**
