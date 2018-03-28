@@ -31,9 +31,10 @@ class RequestTest
      */
     function test_arg_not_null()
     {
-        $request = new HttpRequest([Arg::ARGS => ['foo' => 'bar']]);
+        $request = new HttpRequest([Arg::ARGS => ['foo' => 'bar', 'baz' => 'bat']]);
 
         $this->assertEquals('bar', $request->arg('foo'));
+        $this->assertEquals(['foo' => 'bar', 'baz' => 'bat'], $request->arg(['foo', 'baz']));
     }
 
     /**
@@ -91,9 +92,10 @@ class RequestTest
      */
     function test_cookie()
     {
-        $request = new HttpRequest([Arg::COOKIES => ['foo' => 'bar']]);
+        $request = new HttpRequest([Arg::COOKIES => ['foo' => 'bar', 'baz' => 'bat']]);
 
         $this->assertEquals('bar', $request->cookie('foo'));
+        $this->assertEquals(['foo' => 'bar', 'baz' => 'bat'], $request->cookie(['foo', 'baz']));
     }
 
     /**
@@ -111,9 +113,13 @@ class RequestTest
      */
     function test_data()
     {
-        $request = new HttpRequest([Arg::DATA => ['foo' => 'bar']]);
+        $data = ['foo' => 'bar', 'baz' => 'bat', 'foobar' => 'home'];
 
+        $request = new HttpRequest([Arg::DATA => $data]);
+
+        $this->assertEquals($data, $request->data());
         $this->assertEquals('bar', $request->data('foo'));
+        $this->assertEquals(['foo' => 'bar', 'baz' => 'bat'], $request->data(['foo', 'baz']));
     }
 
     /**
@@ -171,9 +177,10 @@ class RequestTest
      */
     function test_header()
     {
-        $request = new HttpRequest([Arg::HEADERS => ['foo' => 'bar']]);
+        $request = new HttpRequest([Arg::HEADERS => ['foo' => 'bar', 'baz' => 'bat']]);
 
         $this->assertEquals('bar', $request->header('foo'));
+        $this->assertEquals(['foo' => 'bar', 'baz' => 'bat'], $request->header(['foo', 'baz']));
     }
 
     /**
@@ -231,9 +238,10 @@ class RequestTest
      */
     function test_param()
     {
-        $request = new HttpRequest([Arg::PARAMS => ['foo' => 'bar']]);
+        $request = new HttpRequest([Arg::PARAMS => ['foo' => 'bar', 'baz' => 'bat']]);
 
         $this->assertEquals('bar', $request->param('foo'));
+        $this->assertEquals(['foo' => 'bar', 'baz' => 'bat'], $request->param(['foo', 'baz']));
     }
 
     /**
@@ -281,9 +289,13 @@ class RequestTest
      */
     function test_post()
     {
-        $request = new HttpRequest([Arg::DATA => ['foo' => 'bar']]);
+        $data = ['foo' => 'bar', 'baz' => 'bat', 'foobar' => 'home'];
 
+        $request = new HttpRequest([Arg::DATA => $data]);
+
+        $this->assertEquals($data, $request->post());
         $this->assertEquals('bar', $request->post('foo'));
+        $this->assertEquals(['foo' => 'bar', 'baz' => 'bat'], $request->post(['foo', 'baz']));
     }
 
     /**
@@ -371,19 +383,13 @@ class RequestTest
      */
     function test_server()
     {
-        $request = new HttpRequest([Arg::SERVER => ['foo' => 'bar']]);
+        $data = ['foo' => 'bar', 'baz' => 'bat', 'foobar' => 'home'];
 
-        $this->assertEquals(['foo' => 'bar'], $request->server());
-    }
+        $request = new HttpRequest([Arg::SERVER => $data]);
 
-    /**
-     *
-     */
-    function test_server_param()
-    {
-        $request = new HttpRequest([Arg::SERVER => ['foo' => 'bar']]);
-
+        $this->assertEquals($data, $request->server());
         $this->assertEquals('bar', $request->server('foo'));
+        $this->assertEquals(['foo' => 'bar', 'baz' => 'bat'], $request->server(['foo', 'baz']));
     }
 
     /**
@@ -411,19 +417,13 @@ class RequestTest
      */
     function test_session()
     {
-        $request = new HttpRequest([Arg::SESSION => ['foo' => 'bar']]);
+        $data = ['foo' => 'bar', 'baz' => 'bat', 'foobar' => 'home'];
 
-        $this->assertEquals(['foo' => 'bar'], $request->session());
-    }
+        $request = new HttpRequest([Arg::SESSION => $data]);
 
-    /**
-     *
-     */
-    function test_session_var()
-    {
-        $request = new HttpRequest([Arg::SESSION => ['foo' => 'bar']]);
-
+        $this->assertEquals($data, $request->session());
         $this->assertEquals('bar', $request->session('foo'));
+        $this->assertEquals(['foo' => 'bar', 'baz' => 'bat'], $request->session(['foo', 'baz']));
     }
 
     /**
@@ -480,6 +480,7 @@ class RequestTest
         $this->assertEquals('bar', $request->var('foo'));
         $this->assertEquals('baz', $request->var('bat'));
         $this->assertEquals('asc', $request->var('dir'));
+        $this->assertEquals(['foo' => 'bar', 'bat' => 'baz', 'dir' => 'asc'], $request->var(['foo', 'bat', 'dir']));
     }
 
     /**
@@ -516,6 +517,7 @@ class RequestTest
         $this->assertEquals('bar', $request->var('foo'));
         $this->assertEquals('bar', $request->var('bat'));
         $this->assertEquals('bar', $request->var('foobar'));
+        $this->assertEquals(['foo' => 'bar', 'bat' => 'bar', 'foobar' => 'bar'], $request->var(['foo', 'bat', 'foobar']));
     }
 
     /**
