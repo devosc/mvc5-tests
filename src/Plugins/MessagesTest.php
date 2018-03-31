@@ -58,6 +58,18 @@ class MessagesTest
         $plugin->info('Hello!');
 
         $this->assertEquals(['message' => 'Hello!', 'type' => 'info'], $plugin->message());
+        $this->assertNull($plugin->message());
+
+        $plugin->info('bar', 'foo');
+        $plugin->danger('bat', 'baz');
+        $plugin->warning('foobar', 'home');
+
+        $this->assertEquals([
+            'foo' => ['message' => 'bar', 'type' => 'info'],
+            'baz' => ['message' => 'bat', 'type' => 'danger']
+        ], $plugin->message(['foo', 'baz']));
+
+        $this->assertEquals(['message' => 'foobar', 'type' => 'warning'], $plugin->message('home'));
     }
 
     /**
