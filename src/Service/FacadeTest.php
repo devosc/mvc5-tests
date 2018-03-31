@@ -94,16 +94,17 @@ class FacadeTest
 
         $app = new App([
             'container' => [
-                'foo' => $plugin
+                'foo' => 'bar',
+                'baz' => 'bat',
+                'foobar' => $plugin
             ],
-            'services' => [
-                'shared' => new Invokable(new Plugin(Shared::class)),
-            ]
-        ], null, true);
+        ]);
 
         Context::bind($app);
 
-        $this->assertEquals($plugin, ServiceFacade::shared('foo'));
+        $this->assertEquals('bar', ServiceFacade::shared('foo'));
+        $this->assertEquals($plugin, ServiceFacade::shared('foobar'));
+        $this->assertEquals(['foo' => 'bar',  'baz' => 'bat'], ServiceFacade::shared(['foo', 'baz']));
     }
 
     /**

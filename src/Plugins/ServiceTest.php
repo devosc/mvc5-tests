@@ -59,14 +59,14 @@ class ServiceTest
      */
     function test_shared()
     {
-        $service = new ServicePlugin(new App);
+        $container = ['foo' => 'bar',  'baz' => 'bat'];
 
-        $provider = function() {
-            return 'foo';
-        };
+        $service = new ServicePlugin(new App(['container' => $container]));
 
-        $this->assertEquals('foo', $service->shared('foo', $provider));
-        $this->assertEquals('foo', $service->shared('foo'));
+        $this->assertEquals('bar', $service->shared('foo'));
+        $this->assertEquals('bat', $service->shared('foobar', function() { return 'bat'; }));
+        $this->assertEquals('bat', $service->shared('foobar'));
+        $this->assertEquals($container, $service->shared(['foo', 'baz']));
     }
 
     /**

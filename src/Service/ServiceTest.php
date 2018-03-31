@@ -24,4 +24,18 @@ class ServiceTest
         $this->assertEquals(['bar' => 'baz'], $app->param('foo'));
         $this->assertEquals($params + ['foobar' => null], $app->param(['foo', 'bar', 'foobar']));
     }
+
+    /**
+     *
+     */
+    function test_shared()
+    {
+        $container = ['foo' => 'bar',  'baz' => 'bat'];
+
+        $app = new App(['services' => ['foobar' => function() { return 'bat'; }],  'container' => $container]);
+
+        $this->assertEquals('bar', $app->shared('foo'));
+        $this->assertEquals($container + ['foobar' => 'bat'], $app->shared(['foo', 'baz', 'foobar']));
+        $this->assertEquals('bat', $app->shared('foobar'));
+    }
 }
