@@ -27,9 +27,13 @@ class ServiceTest
      */
     function test_param()
     {
-        $service = new ServicePlugin(new App(['foo' => ['bar' => 'baz']]));
+        $params = ['foo' => ['bar' => 'baz'],  'bar' => 'baz'];
+
+        $service = new ServicePlugin(new App($params));
 
         $this->assertEquals('baz', $service->param('foo.bar'));
+        $this->assertEquals(['bar' => 'baz'], $service->param('foo'));
+        $this->assertEquals($params + ['foobar' => null], $service->param(['foo', 'bar', 'foobar']));
     }
 
     /**
