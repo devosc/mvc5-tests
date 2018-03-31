@@ -68,9 +68,13 @@ class ContextTest
      */
     function test_param()
     {
-        new Context(new App(['foo' => ['bar' => 'baz']]));
+        $params = ['foo' => ['bar' => 'baz'],  'bar' => 'baz'];
+
+        new Context(new App($params));
 
         $this->assertEquals('baz', Context::param('foo.bar'));
+        $this->assertEquals(['bar' => 'baz'], Context::param('foo'));
+        $this->assertEquals($params + ['foobar' => null], Context::param(['foo', 'bar', 'foobar']));
     }
 
     /**

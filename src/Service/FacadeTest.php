@@ -43,13 +43,16 @@ class FacadeTest
      */
     function test_param()
     {
-        $app = new App([
-            'foo' => 'bar'
-        ]);
+        $params = ['foo' => ['bar' => 'baz'],  'bar' => 'baz'];
+
+        $app = new App($params);
 
         Context::bind($app);
 
-        $this->assertEquals('bar', ServiceFacade::param('foo'));
+        $this->assertEquals('baz', ServiceFacade::param('foo.bar'));
+        $this->assertEquals(['bar' => 'baz'], ServiceFacade::param('foo'));
+        $this->assertEquals($params + ['foobar' => null], ServiceFacade::param(['foo', 'bar', 'foobar']));
+
     }
 
     /**
