@@ -31,6 +31,7 @@ class RouterTest
     /**
      * @param array $config
      * @return App
+     * @throws \Throwable
      */
     protected function app(array $config = [])
     {
@@ -95,6 +96,7 @@ class RouterTest
      * @param HttpRequest $request
      * @param array $config
      * @return HttpRequest
+     * @throws \Throwable
      */
     protected function dispatch($request, array $config = [])
     {

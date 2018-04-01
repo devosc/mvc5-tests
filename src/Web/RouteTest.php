@@ -25,6 +25,7 @@ class RouteTest
     /**
      * @param array $config
      * @return App
+     * @throws \Throwable
      */
     protected function app(array $config = [])
     {
@@ -71,6 +72,7 @@ class RouteTest
      * @param $response
      * @param string $return
      * @return mixed|HttpRequest|HttpResponse
+     * @throws \Throwable
      */
     protected function route($config, $request, $response, $return = 'response')
     {

@@ -6,9 +6,6 @@
 namespace Mvc5\Test\Service;
 
 use Mvc5\App;
-use Mvc5\Plugin\Invokable;
-use Mvc5\Plugin\Plugin;
-use Mvc5\Plugin\Shared;
 use Mvc5\Service\Context;
 use Mvc5\Test\Test\TestCase;
 

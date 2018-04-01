@@ -7,7 +7,6 @@ namespace Mvc5\Test\Plugin;
 
 use Mvc5\App;
 use Mvc5\Plugin\Args;
-use Mvc5\Plugin\Call;
 use Mvc5\Plugin\Filter;
 use Mvc5\Plugin\Param;
 use Mvc5\Test\Test\TestCase;

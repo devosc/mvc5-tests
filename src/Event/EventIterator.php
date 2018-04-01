@@ -51,6 +51,7 @@ class EventIterator
      * @param array $args
      * @param callable $callback
      * @return mixed
+     * @throws \Throwable
      */
     function __invoke(callable $callable, array $args = [], callable $callback = null)
     {

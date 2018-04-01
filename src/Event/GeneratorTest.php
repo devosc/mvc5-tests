@@ -18,6 +18,7 @@ class GeneratorTest
     /**
      * @param array $config
      * @return App
+     * @throws \Throwable
      */
     protected function app(array $config = [])
     {
