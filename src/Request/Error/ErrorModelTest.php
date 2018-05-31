@@ -6,6 +6,7 @@
 namespace Mvc5\Test\Request\Error;
 
 use Mvc5\Arg;
+use Mvc5\Http\HttpError;
 use Mvc5\Request\Error\ViewModel;
 use Mvc5\Test\Test\TestCase;
 
@@ -17,7 +18,7 @@ class ErrorModelTest
      */
     function test_code()
     {
-        $model = new ViewModel(null, [Arg::ERROR => [Arg::CODE => 500]]);
+        $model = new ViewModel(new HttpError([Arg::CODE => 500]));
 
         $this->assertEquals(500, $model->code());
     }
@@ -27,7 +28,7 @@ class ErrorModelTest
      */
     function test_errors()
     {
-        $model = new ViewModel(null, [Arg::ERROR => [Arg::ERRORS => []]]);
+        $model = new ViewModel(new HttpError([Arg::ERRORS => []]));
 
         $this->assertEquals([], $model->errors());
     }
@@ -37,7 +38,7 @@ class ErrorModelTest
      */
     function test_message()
     {
-        $model = new ViewModel(null, [Arg::ERROR => [Arg::MESSAGE => 'foo']]);
+        $model = new ViewModel(new HttpError([Arg::MESSAGE => 'foo']));
 
         $this->assertEquals('foo', $model->message());
     }

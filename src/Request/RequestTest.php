@@ -19,6 +19,15 @@ class RequestTest
     /**
      *
      */
+    function test_accepts_json()
+    {
+        $this->assertFalse((new HttpRequest)->acceptsJson());
+        $this->assertTrue((new HttpRequest(['accepts_json' => true]))->acceptsJson());
+    }
+
+    /**
+     *
+     */
     function test_arg_default()
     {
         $request = new HttpRequest;

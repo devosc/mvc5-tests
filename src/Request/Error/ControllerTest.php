@@ -5,32 +5,47 @@
 
 namespace Mvc5\Test\Request\Error;
 
-use Mvc5\Http\Error\BadRequest as Error;
+use Mvc5\App;
+use Mvc5\Arg;
+use Mvc5\Http\Error\NotFound;
+use Mvc5\Http\HttpRequest;
 use Mvc5\Request\Error\Controller;
+use Mvc5\Request\Error\ErrorModel;
 use Mvc5\Request\Error\ViewModel;
-use Mvc5\Request\HttpRequest;
+use Mvc5\Response\JsonErrorResponse;
 use Mvc5\Test\Test\TestCase;
 
+/**
+ *
+ */
 class ControllerTest
     extends TestCase
 {
     /**
      *
      */
-    function test_controller()
+    function test_json_error_response()
     {
-        $controller = new Controller(new ViewModel);
+        $config = ['services' => [Arg::RESPONSE_JSON_ERROR => JsonErrorResponse::class]];
 
-        $this->assertInstanceOf(ViewModel::class, $controller(new HttpRequest));
+        $request = new HttpRequest(['accepts_json' => true, 'error' => new NotFound]);
+
+        $response = (new Controller(new App($config)))($request);
+
+        $this->assertInstanceOf(JsonErrorResponse::class, $response);
+        $this->assertEquals(404, $response->status());
     }
 
     /**
      *
      */
-    function test_controller_with_error()
+    function test_view_error_model()
     {
-        $controller = new Controller(new ViewModel);
+        $config = ['services' => [Arg::ERROR_MODEL => ViewModel::class]];
 
-        $this->assertInstanceOf(ViewModel::class, $controller(new HttpRequest, new Error));
+        $model = (new Controller(new App($config)))(new HttpRequest(['error' => new NotFound]));
+
+        $this->assertInstanceOf(ErrorModel::class, $model);
+        $this->assertInstanceOf(NotFound::class, $model['error']);
     }
 }
