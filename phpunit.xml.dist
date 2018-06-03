@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="./vendor/autoload.php"
+<phpunit bootstrap="../../autoload.php"
          backupGlobals="false"
          backupStaticAttributes="false"
          colors="true"
@@ -7,16 +7,15 @@
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
          processIsolation="false"
-         stopOnFailure="true"
-         syntaxCheck="false">
+         stopOnFailure="true">
     <testsuites>
         <testsuite name="Mvc5 Test Suite">
-            <directory>./vendor/mvc5/tests/src</directory>
+            <directory>./src</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./vendor/mvc5/mvc5/src</directory>
+            <directory suffix=".php">../mvc5/src</directory>
         </whitelist>
     </filter>
     <logging>
