@@ -19,6 +19,6 @@
         </whitelist>
     </filter>
     <logging>
-        <log type="coverage-html" target="build/logs/report" showUncoveredFiles="true" highlight="true"/>
+        <log type="coverage-html" target="build/logs/report" showUncoveredFiles="true"/>
     </logging>
 </phpunit>
