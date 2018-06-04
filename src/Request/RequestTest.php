@@ -186,10 +186,11 @@ class RequestTest
      */
     function test_header()
     {
-        $request = new HttpRequest([Arg::HEADERS => ['foo' => 'bar', 'baz' => 'bat']]);
+        $request = new HttpRequest([Arg::HEADERS => ['foo' => 'bar', 'baz' => 'bat', 'foobar' => ['foo', 'bar', 'bat']]]);
 
         $this->assertEquals('bar', $request->header('foo'));
-        $this->assertEquals(['foo' => 'bar', 'baz' => 'bat'], $request->header(['foo', 'baz']));
+        $this->assertEquals(['foo' => 'bar', 'baz' => 'bat', 'foobar' => 'foo, bar, bat'], $request->header(['foo', 'baz', 'foobar']));
+        $this->assertEquals('foo, bar, bat', $request->header('foobar'));
     }
 
     /**
