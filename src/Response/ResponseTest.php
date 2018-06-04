@@ -29,7 +29,7 @@ class ResponseTest
     /**
      *
      */
-    function test_set_cookie()
+    function test_with_cookie()
     {
         $response = new HttpResponse;
 
@@ -52,7 +52,7 @@ class ResponseTest
     /**
      *
      */
-    function test_set_cookies()
+    function test_with_cookies()
     {
         $response = new HttpResponse;
 
@@ -65,7 +65,7 @@ class ResponseTest
     /**
      *
      */
-    function test_set_header()
+    function test_with_header()
     {
         $response = new HttpResponse;
 
@@ -73,6 +73,18 @@ class ResponseTest
 
         $this->assertEquals(new HttpHeaders, $response->headers());
         $this->assertEquals(new HttpHeaders(['foo' => 'bar']), $new->headers());
+    }
+
+    /**
+     *
+     */
+    function test_header()
+    {
+        $response = new HttpResponse(null, null, ['foo' => 'bar', 'baz' => 'bat', 'foobar' => ['foo', 'bar', 'bat']]);
+
+        $this->assertEquals('bar', $response->header('foo'));
+        $this->assertEquals(['foo' => 'bar', 'baz' => 'bat', 'foobar' => 'foo, bar, bat'], $response->header(['foo', 'baz', 'foobar']));
+        $this->assertEquals('foo, bar, bat', $response->header('foobar'));
     }
 
     /**
@@ -88,7 +100,7 @@ class ResponseTest
     /**
      *
      */
-    function test_set_headers()
+    function test_with_headers()
     {
         $response = new HttpResponse;
 
