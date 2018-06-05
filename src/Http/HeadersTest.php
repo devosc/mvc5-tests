@@ -16,7 +16,7 @@ class HeadersTest
      */
     function test()
     {
-        $headers = new HttpHeaders(['bar' => 'baz', 'foobar' => ['foo' => 'bar']]);
+        $headers = new HttpHeaders(['bar' => 'baz', 'foobar' => ['foo', 'bar']]);
 
         $this->assertEquals('baz', $headers->current());
         $this->assertTrue(isset($headers['bar']));
@@ -30,7 +30,7 @@ class HeadersTest
         $this->assertEquals('baz', $with['bar']);
         $this->assertTrue(isset($with['Host']));
         $this->assertEquals('foo', $with['host']);
-        $this->assertEquals(['foo' => 'bar'], $with['foobar']);
+        $this->assertEquals(['foo', 'bar'], $with['foobar']);
 
         $without = $headers->without('Host');
 
@@ -46,7 +46,7 @@ class HeadersTest
         $this->assertFalse($with->has(['Host', 'baz']));
         $this->assertTrue($with->has(['baz', 'foobar']));
         $this->assertEquals(
-            ['Host' => null, 'baz' => 'bat', 'foobar' => ['foo' => 'bar']], $with->get(['Host', 'baz', 'foobar'])
+            ['Host' => null, 'baz' => 'bat', 'foobar' => ['foo', 'bar']], $with->get(['Host', 'baz', 'foobar'])
         );
     }
 }
