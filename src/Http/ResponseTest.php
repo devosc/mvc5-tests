@@ -6,6 +6,7 @@
 namespace Mvc5\Test\Http;
 
 use Mvc5\Arg;
+use Mvc5\Http\HttpHeaders;
 use Mvc5\Http\HttpResponse;
 use Mvc5\Test\Test\TestCase;
 
@@ -27,9 +28,19 @@ class ResponseTest
      */
     function test_headers()
     {
+        $response = new HttpResponse([Arg::HEADERS => new HttpHeaders(['foo' => 'bar'])]);
+
+        $this->assertEquals(['foo' => 'bar'], $response->headers()->all());
+    }
+
+    /**
+     *
+     */
+    function test_headers_array()
+    {
         $response = new HttpResponse([Arg::HEADERS => ['foo' => 'bar']]);
 
-        $this->assertEquals(['foo' => 'bar'], $response->headers());
+        $this->assertEquals(['foo' => 'bar'], $response->headers()->all());
     }
 
     /**
