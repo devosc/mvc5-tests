@@ -24,6 +24,7 @@ class HeadersTest
         $this->assertEquals('baz', $headers->current());
         $this->assertTrue(isset($headers['bar']));
         $this->assertEquals('baz', $headers['bar']);
+        $this->assertEquals('foo, bar', $headers->header('foobar'));
 
         $with = $headers->with(['Host' => 'foo']);
 
