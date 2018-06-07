@@ -14,6 +14,16 @@ class HttpCookiesTest
     /**
      *
      */
+    function test_all()
+    {
+        $cookies = new HttpCookies(['foo' => 'bar']);
+
+        $this->assertEquals(['foo' => 'bar'], $cookies->all());
+    }
+
+    /**
+     *
+     */
     function test_with()
     {
         $cookies = new HttpCookies;
