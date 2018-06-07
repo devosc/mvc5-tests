@@ -16,8 +16,11 @@ class HeadersTest
      */
     function test()
     {
-        $headers = new HttpHeaders(['bar' => 'baz', 'foobar' => ['foo', 'bar']]);
+        $config = ['bar' => 'baz', 'foobar' => ['foo', 'bar']];
 
+        $headers = new HttpHeaders($config);
+
+        $this->assertEquals($config, $headers->all());
         $this->assertEquals('baz', $headers->current());
         $this->assertTrue(isset($headers['bar']));
         $this->assertEquals('baz', $headers['bar']);

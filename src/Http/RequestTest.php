@@ -29,7 +29,7 @@ class RequestTest
     {
         $request = new HttpRequest([Arg::HEADERS => ['foo' => 'bar']]);
 
-        $this->assertEquals(['foo' => 'bar'], $request->headers());
+        $this->assertEquals(['foo' => 'bar'], $request->headers()->all());
     }
 
     /**
