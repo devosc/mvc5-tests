@@ -114,7 +114,7 @@ class RequestTest
     {
         $request = new HttpRequest([Arg::COOKIES => ['foo' => 'bar']]);
 
-        $this->assertEquals(['foo' => 'bar'], $request->cookies());
+        $this->assertEquals(['foo' => 'bar'], $request->cookies()->all());
     }
 
     /**
