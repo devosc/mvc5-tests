@@ -6,7 +6,10 @@
 namespace Mvc5\Test\Plugin;
 
 use Mvc5\App;
+use Mvc5\Plugin\Call;
+use Mvc5\Plugin\Invokable;
 use Mvc5\Plugin\Invoke;
+use Mvc5\Plugin\Value;
 use Mvc5\Test\Test\TestCase;
 
 class InvokeTest
@@ -60,6 +63,23 @@ class InvokeTest
         $app = new App;
 
         $invoke = new Invoke(function($foo, $bar, $baz) { return $foo . $bar . $baz; }, ['s']);
+
+        $callable = $app->plugin($invoke);
+
+        $this->assertEquals('foobars', $callable('foo', 'bar'));
+        $this->assertEquals('foobars', $app->call($callable, ['foo', 'bar']));
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    function test_resolve()
+    {
+        $app = new App;
+
+        $invoke = new Invoke(function($foo, $bar, $baz) {
+            return new Call(new Invokable(new Value($foo . $bar . $baz)));
+        }, ['s']);
 
         $callable = $app->plugin($invoke);
 
