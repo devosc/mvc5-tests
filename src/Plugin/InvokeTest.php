@@ -7,6 +7,7 @@ namespace Mvc5\Test\Plugin;
 
 use Mvc5\App;
 use Mvc5\Plugin\Invoke;
+use Mvc5\Plugin\Plugin;
 use Mvc5\Plugin\Value;
 use Mvc5\Test\Test\TestCase;
 
@@ -81,5 +82,59 @@ class InvokeTest
 
         $this->assertEquals('foobars', $callable('foo', 'bar'));
         $this->assertEquals('foobars', $app->call($callable, ['foo', 'bar']));
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    function test_resolve_without_scope()
+    {
+        if (!($level = ini_get('xdebug.max_nesting_level'))) {
+            $this->markTestSkipped('Skipping invoke plugin resolve without scope');
+            return;
+        }
+
+        $app = new App([
+            'services' => [
+                'foo' => new Invoke(new Plugin('foo'))
+            ]
+        ]);
+
+        try {
+
+            $app->call('foo');
+
+        } catch(\Throwable $exception) {
+            $this->assertEquals(
+                "Maximum function nesting level of '" . $level . "' reached, aborting!", $exception->getMessage()
+            );
+        }
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    function test_resolve_with_scope()
+    {
+        if (!($level = ini_get('xdebug.max_nesting_level'))) {
+            $this->markTestSkipped('Skipping invoke plugin resolve with scope');
+            return;
+        }
+
+        $app = new App([
+            'services' => [
+                'foo' => new Invoke(new Plugin('foo'))
+            ]
+        ], null, true);
+
+        try {
+
+            $app->call('foo');
+
+        } catch(\Throwable $exception) {
+            $this->assertEquals(
+                "Maximum function nesting level of '" . $level . "' reached, aborting!", $exception->getMessage()
+            );
+        }
     }
 }
