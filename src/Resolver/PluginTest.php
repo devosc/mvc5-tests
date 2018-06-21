@@ -19,7 +19,17 @@ class PluginTest
     /**
      *
      */
-    function test_closure_with_scope()
+    function test_closure_with_app_scope()
+    {
+        $app = new App(null, null, true);
+
+        $this->assertEquals($app, $app->plugin(function() { return $this; }));
+    }
+
+    /**
+     *
+     */
+    function test_closure_with_custom_scope()
     {
         $config = new Config;
 
@@ -33,7 +43,7 @@ class PluginTest
      */
     function test_closure_without_scope()
     {
-        $this->assertEquals('foo', (new App)->plugin(function() { return 'foo'; }));
+        $this->assertEquals($this, (new App)->plugin(function() { return $this; }));
     }
 
     /**

@@ -7,7 +7,6 @@ namespace Mvc5\Test\Plugin;
 
 use Mvc5\App;
 use Mvc5\Plugin\Invoke;
-use Mvc5\Plugin\Plugin;
 use Mvc5\Plugin\Value;
 use Mvc5\Test\Test\TestCase;
 
@@ -87,22 +86,24 @@ class InvokeTest
     /**
      * @throws \Throwable
      */
-    function test_resolve_without_scope()
+    function test_resolve_with_scope()
     {
         if (!($level = ini_get('xdebug.max_nesting_level'))) {
-            $this->markTestSkipped('Skipping invoke plugin resolve without scope');
+            $this->markTestSkipped('Skipping invoke plugin resolve with scope');
             return;
         }
 
         $app = new App([
             'services' => [
-                'foo' => new Invoke(new Plugin('foo'))
+                'foo' => new Invoke('foo')
             ]
-        ]);
+        ], null, true);
+
+        $callable = $app->plugin('foo');
 
         try {
 
-            $app->call('foo');
+            $callable('foo');
 
         } catch(\Throwable $exception) {
             $this->assertEquals(
@@ -114,22 +115,24 @@ class InvokeTest
     /**
      * @throws \Throwable
      */
-    function test_resolve_with_scope()
+    function test_resolve_without_scope()
     {
         if (!($level = ini_get('xdebug.max_nesting_level'))) {
-            $this->markTestSkipped('Skipping invoke plugin resolve with scope');
+            $this->markTestSkipped('Skipping invoke plugin resolve without scope');
             return;
         }
 
         $app = new App([
             'services' => [
-                'foo' => new Invoke(new Plugin('foo'))
+                'foo' => new Invoke('foo')
             ]
-        ], null, true);
+        ]);
+
+        $callable = $app->plugin('foo');
 
         try {
 
-            $app->call('foo');
+            $callable('foo');
 
         } catch(\Throwable $exception) {
             $this->assertEquals(
