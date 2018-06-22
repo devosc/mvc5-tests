@@ -103,7 +103,7 @@ class InvokeTest
 
         try {
 
-            $callable('foo');
+            $callable();
 
         } catch(\Throwable $exception) {
             $this->assertEquals(
@@ -132,7 +132,7 @@ class InvokeTest
 
         try {
 
-            $callable('foo');
+            $callable();
 
         } catch(\Throwable $exception) {
             $this->assertEquals(
