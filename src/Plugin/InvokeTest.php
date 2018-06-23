@@ -7,6 +7,7 @@ namespace Mvc5\Test\Plugin;
 
 use Mvc5\App;
 use Mvc5\Plugin\Invoke;
+use Mvc5\Plugin\Plugin;
 use Mvc5\Plugin\Value;
 use Mvc5\Test\Test\TestCase;
 
@@ -95,7 +96,7 @@ class InvokeTest
 
         $app = new App([
             'services' => [
-                'foo' => new Invoke('foo')
+                'foo' => new Invoke(new Plugin('foo'))
             ]
         ], null, true);
 
@@ -124,7 +125,7 @@ class InvokeTest
 
         $app = new App([
             'services' => [
-                'foo' => new Invoke('foo')
+                'foo' => new Invoke(new Plugin('foo'))
             ]
         ]);
 
