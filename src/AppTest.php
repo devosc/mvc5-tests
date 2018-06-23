@@ -9,6 +9,8 @@ use Mvc5\Arg;
 use Mvc5\App;
 use Mvc5\Config;
 use Mvc5\Plugin\Args;
+use Mvc5\Plugin\Callback;
+use Mvc5\Plugin\Invoke;
 use Mvc5\Plugin\Param;
 use Mvc5\Plugin\Plugin;
 use Mvc5\Plugin\Plugins;
@@ -116,6 +118,106 @@ class AppTest
         $this->assertEquals('6', $app['foo']['var2']['var3']);
         $this->assertEquals('foobar59360', $app->call($app['foo']['bar']['baz'], ['param2' => '0']));
         $this->assertEquals('foobar59360', $app->call('foo->bar->baz', ['param2' => '0']));
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    function test_provider_scope()
+    {
+        $app = new App([
+            'services' => [
+                'bar' => function() {
+                    return $this;
+                },
+                'foo' => new Plugin('bar')
+            ]
+        ], null, true);
+
+        $this->assertEquals($app, $app->plugin('bar'));
+        $this->assertEquals($this, $app->plugin('foo'));
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    function test_provider_custom_scope()
+    {
+        $config = new Config;
+
+        $app = new App([
+            'services' => [
+                'bar' => function() {
+                    return $this;
+                },
+                'foo' => new Plugin('bar')
+            ]
+        ], null, $config);
+
+        $this->assertEquals($config, $app->plugin('bar'));
+        $this->assertEquals($this, $app->plugin('foo'));
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    function test_provider_callable_closure_scope()
+    {
+        $app = new App([
+            'services' => [
+                'bar' => new Callback(function() {
+                    return $this;
+                }),
+                'foo' => new Invoke(function() {
+                    return $this;
+                }),
+            ]
+        ], null, true);
+
+        $this->assertEquals($app, $app->plugin('bar')());
+        $this->assertEquals($this, $app->plugin('foo')());
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    function test_provider_callable_closure_custom_scope()
+    {
+        $config = new Config;
+
+        $app = new App([
+            'services' => [
+                'bar' => new Callback(function() {
+                    return $this;
+                }),
+                'foo' => new Invoke(function() {
+                    return $this;
+                }),
+            ]
+        ], null, $config);
+
+        $this->assertEquals($config, $app->plugin('bar')());
+        $this->assertEquals($this, $app->plugin('foo')());
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    function test_provider_callable_closure_without_scope()
+    {
+        $app = new App([
+            'services' => [
+                'bar' => new Callback(function() {
+                    return $this;
+                }),
+                'foo' => new Invoke(function() {
+                    return $this;
+                }),
+            ]
+        ]);
+
+        $this->assertEquals($this, $app->plugin('bar')());
+        $this->assertEquals($this, $app->plugin('foo')());
     }
 
     /**
