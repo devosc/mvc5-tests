@@ -99,7 +99,6 @@ class InvokableTest
             $callable();
 
         } catch(\Throwable $exception) {
-            var_dump($exception->getMessage());exit;
             $this->assertEquals(
                 "Maximum function nesting level of '" . $level . "' reached, aborting!", $exception->getMessage()
             );
