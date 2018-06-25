@@ -123,7 +123,7 @@ class AppTest
     /**
      * @throws \Throwable
      */
-    function test_provider_scope()
+    function test_scope()
     {
         $app = new App([
             'services' => [
@@ -141,7 +141,7 @@ class AppTest
     /**
      * @throws \Throwable
      */
-    function test_provider_custom_scope()
+    function test_custom_scope()
     {
         $config = new Config;
 
@@ -161,7 +161,7 @@ class AppTest
     /**
      * @throws \Throwable
      */
-    function test_provider_callable_closure_scope()
+    function test_callable_closure_scope()
     {
         $app = new App([
             'services' => [
@@ -181,7 +181,7 @@ class AppTest
     /**
      * @throws \Throwable
      */
-    function test_provider_callable_closure_custom_scope()
+    function test_callable_closure_custom_scope()
     {
         $config = new Config;
 
@@ -203,7 +203,7 @@ class AppTest
     /**
      * @throws \Throwable
      */
-    function test_provider_callable_closure_without_scope()
+    function test_callable_closure_without_scope()
     {
         $app = new App([
             'services' => [
