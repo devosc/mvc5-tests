@@ -16,9 +16,12 @@ class HttpCookiesTest
      */
     function test_all()
     {
-        $cookies = new HttpCookies(['foo' => 'bar']);
+        $config = ['foo' => ['name' => 'bar', 'value' => '']];
 
-        $this->assertEquals(['foo' => 'bar'], $cookies->all());
+        $cookies = (new HttpCookies($config))->all();
+
+        $this->assertEquals($config, $cookies);
+        $this->assertEquals(['name' => 'bar', 'value' => ''], $cookies['foo']);
     }
 
     /**
@@ -32,15 +35,23 @@ class HttpCookiesTest
 
         $this->assertNotSame($cookies, $new);
 
-        $cookie = [
-            'name' => 'foo',
-            'value' => 'bar',
-            'expire' => 0,
-            'path' => '/',
-            'domain' => '',
-            'secure' => false,
-            'httponly' => true
-        ];
+        $cookie = ['name' => 'foo', 'value' => 'bar'];
+
+        $this->assertEquals($cookie, $new['foo']);
+    }
+
+    /**
+     *
+     */
+    function test_with_associative_array()
+    {
+        $cookies = new HttpCookies;
+
+        $new = $cookies->with(['name' => 'foo', 'value' => 'bar']);
+
+        $this->assertNotSame($cookies, $new);
+
+        $cookie = ['name' => 'foo', 'value' => 'bar'];
 
         $this->assertEquals($cookie, $new['foo']);
     }
@@ -50,21 +61,17 @@ class HttpCookiesTest
      */
     function test_without()
     {
-        $cookies = new HttpCookies(['foo' => 'bar']);
+        $cookies = new HttpCookies(['foo' => ['name' => 'bar', 'value' => '']]);
 
         $new = $cookies->without('foo');
 
         $this->assertNotEquals($cookies, $new);
-        $this->assertEquals('bar', $cookies['foo']);
+        $this->assertEquals(['name' => 'bar', 'value' => ''], $cookies['foo']);
 
         $cookie = [
             'name' => 'foo',
             'value' => '',
-            'expire' => 946706400,
-            'path' => '/',
-            'domain' => '',
-            'secure' => false,
-            'httponly' => true
+            'expire' => 946706400
         ];
 
         $this->assertEquals($cookie, $new['foo']);
