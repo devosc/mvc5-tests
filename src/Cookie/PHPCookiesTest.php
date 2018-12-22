@@ -15,7 +15,6 @@ use Mvc5\Test\Test\TestCase;
 use function Mvc5\Cookie\Config\cookie;
 use function Mvc5\Cookie\Config\options;
 use function Mvc5\Cookie\Config\php73;
-use function Mvc5\Cookie\Config\raw;
 
 class PHPCookiesTest
     extends TestCase
@@ -51,7 +50,7 @@ class PHPCookiesTest
                 !is_string(key($cookie)) && $cookie = cookie(...$cookie);
 
                 static::$sent = ['name' => (string) $cookie[Arg::NAME], 'value' => (string) $cookie[Arg::VALUE]] +
-                    options($cookie, $defaults, php73()) + raw($cookie);
+                    options($cookie, $defaults, php73()) + (isset($cookie[Arg::RAW]) ? [Arg::RAW => $cookie[Arg::RAW]] : []);
 
                 return true;
             }
