@@ -75,7 +75,7 @@ class SendTest
                 'foo' => [
                     'name'     => 'foo',
                     'value'    => 'bar',
-                    'expire'   => 0,
+                    'expires'   => 0,
                     'path'     => '',
                     'domain'   => '',
                     'secure'   => false,
