@@ -50,7 +50,7 @@ class PHPCookiesTest
                 static::$sent = [
                     Arg::NAME => (string) $cookie[Arg::NAME],
                     Arg::VALUE => (string) $cookie[Arg::VALUE]
-                ] + options($cookie, $defaults, version_compare(\PHP_VERSION, '7.3', '>='));
+                ] + options($cookie, $defaults, PHPCookiesTest::php73());
 
                 return true;
             }
@@ -68,7 +68,7 @@ class PHPCookiesTest
     /**
      * @return bool
      */
-    protected function php73() : bool
+    static function php73() : bool
     {
         return version_compare(\PHP_VERSION, '7.3', '>=');
     }
@@ -179,6 +179,18 @@ class PHPCookiesTest
     {
         $cookies = $this->cookies();
 
+        $cookies->remove(['foo', 'bar']);
+
+        $this->assertEquals(946706400, $cookies::sent()['expire']);
+    }
+
+    /**
+     *
+     */
+    function test_remove_assoc()
+    {
+        $cookies = $this->cookies();
+
         $cookies->remove(['name' => 'foo', 'value' => 'bar']);
 
         $this->assertEquals(946706400, $cookies::sent()['expire']);
@@ -202,6 +214,50 @@ class PHPCookiesTest
             'secure' => false,
             'httponly' => true
         ] + ($this->php73() ? ['samesite' => ''] : []);
+
+        $this->assertEquals($cookie, $cookies::sent());
+    }
+
+    /**
+     *
+     */
+    function test_set_array()
+    {
+        $cookies = $this->cookies();
+
+        $this->assertEquals(['foo', 'bar'], $cookies->set(['foo', 'bar']));
+
+        $cookie = [
+                'name' => 'foo',
+                'value' => 'bar',
+                'expire' => 0,
+                'path' => '/',
+                'domain' => '',
+                'secure' => false,
+                'httponly' => true
+            ] + ($this->php73() ? ['samesite' => ''] : []);
+
+        $this->assertEquals($cookie, $cookies::sent());
+    }
+
+    /**
+     *
+     */
+    function test_set_associative_array()
+    {
+        $cookies = $this->cookies();
+
+        $this->assertEquals(['name' => 'foo', 'value' => 'bar'], $cookies->set(['name' => 'foo', 'value' => 'bar']));
+
+        $cookie = [
+                'name' => 'foo',
+                'value' => 'bar',
+                'expire' => 0,
+                'path' => '/',
+                'domain' => '',
+                'secure' => false,
+                'httponly' => true
+            ] + ($this->php73() ? ['samesite' => ''] : []);
 
         $this->assertEquals($cookie, $cookies::sent());
     }
