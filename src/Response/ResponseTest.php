@@ -44,9 +44,9 @@ class ResponseTest
      */
     function test_cookies()
     {
-        $response = new HttpResponse(null, null, [], ['cookies' => ['foo' => 'bar']]);
+        $response = new HttpResponse(null, null, [], ['cookies' => ['foo' => ['foo', 'bar']]]);
 
-        $this->assertEquals(new HttpCookies(['foo' => 'bar']), $response->cookies());
+        $this->assertEquals(new HttpCookies(['foo' => ['foo', 'bar']]), $response->cookies());
     }
 
     /**
@@ -56,10 +56,10 @@ class ResponseTest
     {
         $response = new HttpResponse;
 
-        $new = $response->withCookies(['foo']);
+        $new = $response->withCookies(['foo' => ['foo', 'bar']]);
 
         $this->assertEquals(new HttpCookies, $response->cookies());
-        $this->assertEquals(new HttpCookies(['foo']), $new->cookies());
+        $this->assertEquals(new HttpCookies(['foo' => ['foo', 'bar']]), $new->cookies());
     }
 
     /**
