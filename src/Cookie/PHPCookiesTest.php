@@ -109,6 +109,28 @@ class PHPCookiesTest
     /**
      *
      */
+    function test_delete()
+    {
+        $cookies = $this->cookies();
+
+        $cookies::delete('foo');
+
+        $cookie = [
+                'name' => 'foo',
+                'value' => '',
+                'expires' => 946706400,
+                'path' => '/',
+                'domain' => '',
+                'secure' => false,
+                'httponly' => true
+            ] + (php73() ? ['samesite' => ''] : []);
+
+        $this->assertEquals($cookie, $cookies::sent());
+    }
+
+    /**
+     *
+     */
     function test_send()
     {
         $cookies = $this->cookies();
