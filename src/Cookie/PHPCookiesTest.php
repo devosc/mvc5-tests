@@ -80,6 +80,28 @@ class PHPCookiesTest
     /**
      *
      */
+    function test_static_defaults()
+    {
+        $cookies = $this->cookies();
+
+        $cookies->send(['foo']);
+
+        $cookie = [
+                'name' => 'foo',
+                'value' => '',
+                'expires' => 0,
+                'path' => '/',
+                'domain' => '',
+                'secure' => false,
+                'httponly' => true
+            ] + (php73() ? ['samesite' => 'lax'] : []);
+
+        $this->assertEquals($cookie, $cookies::sent());
+    }
+
+    /**
+     *
+     */
     function test_defaults()
     {
         $cookies = $this->cookies(null, [
