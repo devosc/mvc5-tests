@@ -42,6 +42,16 @@ class ResponseTest
     /**
      *
      */
+    function test_without_cookie()
+    {
+        $response = (new HttpResponse)->withoutCookie('foo');
+
+        $this->assertEquals(['name' => 'foo', 'value' => '', 'expires' => 946706400], $response->cookies()->get('foo'));
+    }
+
+    /**
+     *
+     */
     function test_cookies()
     {
         $response = new HttpResponse(null, null, [], ['cookies' => ['foo' => ['foo', 'bar']]]);
