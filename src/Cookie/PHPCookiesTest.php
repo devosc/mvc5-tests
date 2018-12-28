@@ -50,7 +50,7 @@ class PHPCookiesTest
                 !is_string(key($cookie)) && $cookie = cookie(...$cookie);
 
                 static::$sent = ['name' => (string) $cookie[Arg::NAME], 'value' => (string) $cookie[Arg::VALUE]] +
-                    options($cookie, $defaults, php73()) + (isset($cookie[Arg::RAW]) ? [Arg::RAW => $cookie[Arg::RAW]] : []);
+                    options($cookie['options'] ?? $cookie, $defaults, php73()) + (isset($cookie[Arg::RAW]) ? [Arg::RAW => $cookie[Arg::RAW]] : []);
 
                 return true;
             }
@@ -314,6 +314,31 @@ class PHPCookiesTest
                 'name' => 'foo',
                 'value' => 'bar',
                 'expires' => 0,
+                'path' => '/',
+                'domain' => '',
+                'secure' => false,
+                'httponly' => true
+            ] + (php73() ? ['samesite' => ''] : []);
+
+        $this->assertEquals($cookie, $cookies::sent());
+    }
+
+    /**
+     *
+     */
+    function test_set_associative_array_with_options()
+    {
+        $cookies = $this->cookies();
+
+        $this->assertEquals(
+            ['name' => 'foo', 'value' => 'bar', 'options' => ['expires' => 100]],
+            $cookies->set(['name' => 'foo', 'value' => 'bar', 'options' => ['expires' => 100]])
+        );
+
+        $cookie = [
+                'name' => 'foo',
+                'value' => 'bar',
+                'expires' => 100,
                 'path' => '/',
                 'domain' => '',
                 'secure' => false,
