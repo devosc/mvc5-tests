@@ -7,6 +7,7 @@ namespace Mvc5\Test\Cookie;
 
 use Mvc5\Cookie\HttpCookies;
 use Mvc5\Test\Test\TestCase;
+use PHPUnit\Framework\Error\Notice;
 
 use const Mvc5\Cookie\Config\EXPIRE_TIME;
 
@@ -175,5 +176,41 @@ class HttpCookiesTest
         $this->assertEquals($cookie, $cookies['foo']);
         $this->assertNotEquals($cookies, $new);
         $this->assertEquals($expired, $new['foo']);
+    }
+
+    /**
+     *
+     */
+    function test_invalid_name()
+    {
+        $cookies = new HttpCookies;
+
+        try {
+
+            $cookies->without([]);
+
+        } catch(Notice $e) {
+
+            $this->assertEquals('Undefined offset: 0', $e->getMessage());
+
+        }
+    }
+
+    /**
+     *
+     */
+    function test_invalid_associative_name()
+    {
+        $cookies = new HttpCookies;
+
+        try {
+
+            $cookies->without(['value' => '']);
+
+        } catch(Notice $e) {
+
+            $this->assertEquals('Undefined index: name', $e->getMessage());
+
+        }
     }
 }
