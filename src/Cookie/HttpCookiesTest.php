@@ -8,6 +8,8 @@ namespace Mvc5\Test\Cookie;
 use Mvc5\Cookie\HttpCookies;
 use Mvc5\Test\Test\TestCase;
 
+use const Mvc5\Cookie\Config\EXPIRE_TIME;
+
 class HttpCookiesTest
     extends TestCase
 {
@@ -16,12 +18,14 @@ class HttpCookiesTest
      */
     function test_all()
     {
-        $baz = ['baz', 'bat'];
+        $bat = ['baz', 'bat'];
+        $baz = ['name' => 'foo', 'value' => 'foobar', 'options' => ['expire' => 0]];
         $foo = ['name' => 'foo', 'value' => 'foobar'];
-        $config = ['baz' => $baz, 'foo' => $foo];
+        $config = ['bat' => $bat, 'baz' => $baz, 'foo' => $foo];
 
         $cookies = (new HttpCookies($config))->all();
         $this->assertEquals($config, $cookies);
+        $this->assertEquals($bat, $cookies['bat']);
         $this->assertEquals($baz, $cookies['baz']);
         $this->assertEquals($foo, $cookies['foo']);
     }
@@ -33,11 +37,11 @@ class HttpCookiesTest
     {
         $cookies = new HttpCookies;
 
-        $new = $cookies->with('foo', 'bar');
+        $new = $cookies->with('foo', 'bar', ['expire' => 0]);
 
         $this->assertNotSame($cookies, $new);
 
-        $cookie = ['name' => 'foo', 'value' => 'bar'];
+        $cookie = ['name' => 'foo', 'value' => 'bar', 'expire' => 0];
 
         $this->assertEquals($cookie, $new['foo']);
     }
@@ -68,12 +72,26 @@ class HttpCookiesTest
     {
         $cookies = new HttpCookies;
 
-        $new = $cookies->with(['name' => 'foo', 'value' => 'bar']);
-
-        $this->assertNotSame($cookies, $new);
-
         $cookie = ['name' => 'foo', 'value' => 'bar'];
 
+        $new = $cookies->with($cookie);
+
+        $this->assertNotSame($cookies, $new);
+        $this->assertEquals($cookie, $new['foo']);
+    }
+
+    /**
+     *
+     */
+    function test_with_associative_array_with_options()
+    {
+        $cookies = new HttpCookies;
+
+        $cookie = ['name' => 'foo', 'value' => 'bar', 'options' => ['expire' => 0]];
+
+        $new = $cookies->with($cookie);
+
+        $this->assertNotSame($cookies, $new);
         $this->assertEquals($cookie, $new['foo']);
     }
 
@@ -94,15 +112,68 @@ class HttpCookiesTest
      */
     function test_without()
     {
-        $cookies = new HttpCookies(['foo' => ['foo', 'bar']]);
+        $cookie = ['name' => 'foo', 'value' => 'bar'];
+        $expired = ['name' => 'foo', 'value' => '', 'expires' => EXPIRE_TIME];
+
+        $cookies = new HttpCookies(['foo' => $cookie]);
 
         $new = $cookies->without('foo');
 
-        $this->assertEquals(['foo', 'bar'], $cookies['foo']);
+        $this->assertEquals($cookie, $cookies['foo']);
         $this->assertNotEquals($cookies, $new);
+        $this->assertEquals($expired, $new['foo']);
+    }
 
-        $cookie = ['name' => 'foo', 'value' => '', 'expires' => 946706400];
+    /**
+     *
+     */
+    function test_without_array()
+    {
+        $cookie = ['name' => 'foo', 'value' => 'bar'];
 
-        $this->assertEquals($cookie, $new['foo']);
+        $expired = ['name' => 'foo', 'value' => '', 'expires' => EXPIRE_TIME,
+            'path' => null, 'domain' => null, 'secure' => null, 'httponly' => null, 'samesite' => null];
+
+        $cookies = new HttpCookies(['foo' => $cookie]);
+
+        $new = $cookies->without(['foo']);
+
+        $this->assertEquals($cookie, $cookies['foo']);
+        $this->assertNotEquals($cookies, $new);
+        $this->assertEquals($expired, $new['foo']);
+    }
+
+    /**
+     *
+     */
+    function test_without_associative_array()
+    {
+        $cookie = ['name' => 'foo', 'value' => 'bar'];
+        $expired = ['name' => 'foo', 'value' => '', 'expires' => EXPIRE_TIME];
+
+        $cookies = new HttpCookies(['foo' => $cookie]);
+
+        $new = $cookies->without(['name' => 'foo']);
+
+        $this->assertEquals($cookie, $cookies['foo']);
+        $this->assertNotEquals($cookies, $new);
+        $this->assertEquals($expired, $new['foo']);
+    }
+
+    /**
+     *
+     */
+    function test_without_associative_array_with_options()
+    {
+        $cookie = ['name' => 'foo', 'value' => 'bar', 'options' => ['path' => '/']];
+        $expired = ['name' => 'foo', 'value' => '', 'options' => ['path' => '/', 'expires' => EXPIRE_TIME]];
+
+        $cookies = new HttpCookies(['foo' => $cookie]);
+
+        $new = $cookies->without($cookie);
+
+        $this->assertEquals($cookie, $cookies['foo']);
+        $this->assertNotEquals($cookies, $new);
+        $this->assertEquals($expired, $new['foo']);
     }
 }
