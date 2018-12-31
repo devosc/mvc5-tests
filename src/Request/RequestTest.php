@@ -19,6 +19,15 @@ class RequestTest
     /**
      *
      */
+    function test_authenticated()
+    {
+        $this->assertFalse((new HttpRequest)->authenticated());
+        $this->assertTrue((new HttpRequest(['authenticated' => true]))->authenticated());
+    }
+
+    /**
+     *
+     */
     function test_accepts_json()
     {
         $this->assertFalse((new HttpRequest)->acceptsJson());
