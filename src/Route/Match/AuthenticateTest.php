@@ -32,15 +32,11 @@ class AuthenticateTest
      */
     function test()
     {
-        $match  = new Authenticate;
-        $route   = new Route;
+        $match = new Authenticate;
+        $route = new Route;
         $request = new HttpRequest;
 
-        /** @var HttpRequest $request */
-
-        $result = $match($route, $request, $this->next());
-
-        $this->assertEquals($request, $result);
+        $this->assertEquals($request, $match($route, $request, $this->next()));
     }
 
     /**
@@ -48,11 +44,9 @@ class AuthenticateTest
      */
     function test_login_redirect()
     {
-        $match  = new Authenticate;
-        $route   = new Route(['authenticate' => true]);
+        $match = new Authenticate;
+        $route = new Route(['authenticate' => true]);
         $request = new HttpRequest(['method' => 'GET', 'session' => new Overload, 'uri' => ['path' => '/']]);
-
-        /** @var HttpRequest $request */
 
         $response = $match($route, $request, $this->next());
 
@@ -67,11 +61,9 @@ class AuthenticateTest
      */
     function test_login_url()
     {
-        $match  = new Authenticate('/home');
-        $route   = new Route(['authenticate' => true]);
+        $match = new Authenticate('/home');
+        $route = new Route(['authenticate' => true]);
         $request = new HttpRequest(['method' => 'GET', 'session' => new Overload, 'uri' => ['path' => '/']]);
-
-        /** @var HttpRequest $request */
 
         $response = $match($route, $request, $this->next());
 
@@ -83,15 +75,11 @@ class AuthenticateTest
      */
     function test_no_authentication()
     {
-        $match  = new Authenticate;
-        $route   = new Route(['authenticate' => false]);
+        $match = new Authenticate;
+        $route = new Route(['authenticate' => false]);
         $request = new HttpRequest;
 
-        /** @var HttpRequest $request */
-
-        $result = $match($route, $request, $this->next());
-
-        $this->assertEquals($request, $result);
+        $this->assertEquals($request, $match($route, $request, $this->next()));
     }
 
     /**
@@ -99,15 +87,11 @@ class AuthenticateTest
      */
     function test_request_authenticated()
     {
-        $match  = new Authenticate;
-        $route   = new Route(['authenticate' => true]);
+        $match = new Authenticate;
+        $route = new Route(['authenticate' => true]);
         $request = new HttpRequest(['authenticated' => true]);
 
-        /** @var HttpRequest $request */
-
-        $result = $match($route, $request, $this->next());
-
-        $this->assertEquals($request, $result);
+        $this->assertEquals($request, $match($route, $request, $this->next()));
     }
 
     /**
@@ -115,15 +99,11 @@ class AuthenticateTest
      */
     function test_request_not_authenticated()
     {
-        $match  = new Authenticate;
-        $route   = new Route(['authenticate' => true]);
+        $match = new Authenticate;
+        $route = new Route(['authenticate' => true]);
         $request = new HttpRequest(['authenticated' => false]);
 
-        /** @var HttpRequest $request */
-
-        $result = $match($route, $request, $this->next());
-
-        $this->assertInstanceOf(Unauthorized::class, $result);
+        $this->assertInstanceOf(Unauthorized::class, $match($route, $request, $this->next()));
     }
 
     /**
@@ -131,15 +111,11 @@ class AuthenticateTest
      */
     function test_unauthorized()
     {
-        $match  = new Authenticate;
-        $route   = new Route(['authenticate' => true]);
+        $match = new Authenticate;
+        $route = new Route(['authenticate' => true]);
         $request = new HttpRequest;
 
-        /** @var HttpRequest $request */
-
-        $result = $match($route, $request, $this->next());
-
-        $this->assertInstanceOf(Unauthorized::class, $result);
+        $this->assertInstanceOf(Unauthorized::class, $match($route, $request, $this->next()));
     }
 
     /**
@@ -147,15 +123,11 @@ class AuthenticateTest
      */
     function test_unauthorized_json_request()
     {
-        $match  = new Authenticate;
-        $route   = new Route(['authenticate' => true]);
+        $match = new Authenticate;
+        $route = new Route(['authenticate' => true]);
         $request = new HttpRequest(['method' => 'GET', 'accepts_json' => true]);
 
-        /** @var HttpRequest $request */
-
-        $result = $match($route, $request, $this->next());
-
-        $this->assertInstanceOf(Unauthorized::class, $result);
+        $this->assertInstanceOf(Unauthorized::class, $match($route, $request, $this->next()));
     }
 
     /**
@@ -163,14 +135,10 @@ class AuthenticateTest
      */
     function test_unauthorized_post_request()
     {
-        $match  = new Authenticate;
-        $route   = new Route(['authenticate' => true]);
+        $match = new Authenticate;
+        $route = new Route(['authenticate' => true]);
         $request = new HttpRequest(['method' => 'POST']);
 
-        /** @var HttpRequest $request */
-
-        $result = $match($route, $request, $this->next());
-
-        $this->assertInstanceOf(Unauthorized::class, $result);
+        $this->assertInstanceOf(Unauthorized::class, $match($route, $request, $this->next()));
     }
 }
