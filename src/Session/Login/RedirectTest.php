@@ -29,8 +29,9 @@ class RedirectTest
 
         $controller = new Redirect($session, $redirect);
 
-        $response = $controller(new HttpRequest(['uri' => ['path' => '/']]));
+        $response = $controller(new HttpRequest(['uri' => ['path' => '/foo']]));
 
         $this->assertEquals($redirect, $response);
+        $this->assertEquals('/foo', $session['redirect_url']['path']);
     }
 }
