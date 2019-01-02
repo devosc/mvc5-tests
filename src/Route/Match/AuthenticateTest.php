@@ -37,6 +37,7 @@ class AuthenticateTest
         $request = new HttpRequest;
 
         $this->assertEquals($request, $match($route, $request, $this->next()));
+        $this->assertNull($request['controller']);
     }
 
     /**
@@ -48,26 +49,10 @@ class AuthenticateTest
         $route = new Route(['authenticate' => true]);
         $request = new HttpRequest(['method' => 'GET', 'session' => new Overload, 'uri' => ['path' => '/']]);
 
-        $response = $match($route, $request, $this->next());
+        $request = $match($route, $request, $this->next());
 
-        $this->assertInstanceOf(HttpRedirect::class, $response);
-        $this->assertInstanceOf(Uri::class, $request['session']['redirect_url']);
-        $this->assertEquals(302, $response['status']);
-        $this->assertEquals('/login', $response['headers']['location']);
-    }
-
-    /**
-     *
-     */
-    function test_login_url()
-    {
-        $match = new Authenticate('/home');
-        $route = new Route(['authenticate' => true]);
-        $request = new HttpRequest(['method' => 'GET', 'session' => new Overload, 'uri' => ['path' => '/']]);
-
-        $response = $match($route, $request, $this->next());
-
-        $this->assertEquals('/home', $response['headers']['location']);
+        $this->assertInstanceOf(HttpRequest::class, $request);
+        $this->assertEquals('login\redirect', $request['controller']);
     }
 
     /**
@@ -79,7 +64,10 @@ class AuthenticateTest
         $route = new Route(['authenticate' => false]);
         $request = new HttpRequest;
 
-        $this->assertEquals($request, $match($route, $request, $this->next()));
+        $request = $match($route, $request, $this->next());
+
+        $this->assertInstanceOf(HttpRequest::class, $request);
+        $this->assertNull($request['controller']);
     }
 
     /**
@@ -91,7 +79,10 @@ class AuthenticateTest
         $route = new Route(['authenticate' => true]);
         $request = new HttpRequest(['authenticated' => true]);
 
-        $this->assertEquals($request, $match($route, $request, $this->next()));
+        $request = $match($route, $request, $this->next());
+
+        $this->assertInstanceOf(HttpRequest::class, $request);
+        $this->assertNull($request['controller']);
     }
 
     /**
