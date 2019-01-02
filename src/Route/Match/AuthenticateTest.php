@@ -6,10 +6,10 @@
 namespace Mvc5\Test\Route\Match;
 
 use Mvc5\Http\Error\Unauthorized;
+use Mvc5\Http\HttpRedirect;
 use Mvc5\Http\HttpRequest;
 use Mvc5\Http\Uri;
 use Mvc5\Overload;
-use Mvc5\Response\RedirectResponse;
 use Mvc5\Route\Match\Authenticate;
 use Mvc5\Route\Config as Route;
 use Mvc5\Test\Test\TestCase;
@@ -50,7 +50,7 @@ class AuthenticateTest
 
         $response = $match($route, $request, $this->next());
 
-        $this->assertInstanceOf(RedirectResponse::class, $response);
+        $this->assertInstanceOf(HttpRedirect::class, $response);
         $this->assertInstanceOf(Uri::class, $request['session']['redirect_url']);
         $this->assertEquals(302, $response['status']);
         $this->assertEquals('/login', $response['headers']['location']);
