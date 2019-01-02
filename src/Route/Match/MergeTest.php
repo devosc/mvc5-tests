@@ -27,13 +27,56 @@ class MergeTest
     /**
      *
      */
+    function test_merge_authenticate_is_null()
+    {
+        $method  = new Merge;
+        $request = new HttpRequest;
+        $route   = new Route(['parent' => new Route]);
+
+        $child = $method($route, $request, $this->next());
+
+        $this->assertNull($child['authenticate']);
+    }
+
+    /**
+     *
+     */
+    function test_merge_authenticate_from_parent()
+    {
+        $method  = new Merge;
+        $request = new HttpRequest;
+        $route   = new Route(['parent' => new Route(['authenticate' => true])]);
+
+        $child = $method($route, $request, $this->next());
+
+        $this->assertTrue($child['authenticate']);
+    }
+
+    /**
+     *
+     */
+    function test_merge_authenticate_override_parent_value()
+    {
+        $method  = new Merge;
+        $request = new HttpRequest;
+        $parent  = new Route(['authenticate' => true]);
+        $route   = new Route(['authenticate' => false, 'parent' => $parent]);
+
+        $child = $method($route, $request, $this->next());
+
+        $this->assertTrue($parent['authenticate']);
+        $this->assertFalse($child['authenticate']);
+    }
+
+    /**
+     *
+     */
     function test_merge_csrf_token_is_null()
     {
         $method  = new Merge;
         $request = new HttpRequest;
         $route   = new Route(['parent' => new Route]);
 
-        /** @var Route $new */
         $child = $method($route, $request, $this->next());
 
         $this->assertNull($child['csrf_token']);
@@ -48,7 +91,6 @@ class MergeTest
         $request = new HttpRequest;
         $route   = new Route(['parent' => new Route(['csrf_token' => true])]);
 
-        /** @var Route $new */
         $child = $method($route, $request, $this->next());
 
         $this->assertTrue($child['csrf_token']);
@@ -64,7 +106,6 @@ class MergeTest
         $parent  = new Route(['csrf_token' => true]);
         $route   = new Route(['csrf_token' => false, 'parent' => $parent]);
 
-        /** @var Route $new */
         $child = $method($route, $request, $this->next());
 
         $this->assertTrue($parent['csrf_token']);
