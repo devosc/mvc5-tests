@@ -6,6 +6,7 @@
 namespace Mvc5\Test\Plugin;
 
 use Mvc5\App;
+use Mvc5\Config;
 use Mvc5\Plugin\NullValue;
 use Mvc5\Plugin\Value;
 use Mvc5\Plugin\Shared;
@@ -97,5 +98,20 @@ class SharedTest
 
         $this->assertEquals('bar', $app->plugin(new Shared('foo', new Value('bar'))));
         $this->assertEquals('bar', $app->get('foo'));
+    }
+
+    /**
+     *
+     */
+    function test_shared_plugin_with_args()
+    {
+        $app = new App([
+            'services' => [
+                'foobar' => new Shared('foobar', [Config::class, ['foo' => 'bar']])
+            ]
+        ]);
+
+        $this->assertEquals('bar', $app->plugin('foobar', [['foo' => 'bar']])['foo']);
+        $this->assertEquals('bar', $app->plugin('foobar', [['foo' => 'baz']])['foo']);
     }
 }
