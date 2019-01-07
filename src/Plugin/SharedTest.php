@@ -111,7 +111,7 @@ class SharedTest
             ]
         ]);
 
-        $this->assertEquals('bar', $app->plugin('foobar', [['foo' => 'bar']])['foo']);
-        $this->assertEquals('bar', $app->plugin('foobar', [['foo' => 'baz']])['foo']);
+        $this->assertEquals('baz', $app->plugin('foobar', [['foo' => 'baz']])['foo']);
+        $this->assertEquals('baz', $app->plugin('foobar', [['foo' => 'bat']])['foo']);
     }
 }
