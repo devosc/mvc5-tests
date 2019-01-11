@@ -147,7 +147,7 @@ class PHPCookiesTest
                 'domain' => '',
                 'secure' => false,
                 'httponly' => true
-            ] + (php73() ? ['samesite' => ''] : []);
+            ] + (php73() ? ['samesite' => 'lax'] : []);
 
         $this->assertEquals($cookie, $cookies::sent());
     }
@@ -169,7 +169,7 @@ class PHPCookiesTest
             'domain' => '',
             'secure' => false,
             'httponly' => false
-        ] + (php73() ? ['samesite' => ''] : []);
+        ] + (php73() ? ['samesite' => 'lax'] : []);
 
         $this->assertEquals($cookie, $cookies::sent());
 
@@ -208,7 +208,7 @@ class PHPCookiesTest
                 'secure' => false,
                 'httponly' => false,
                 'raw' => true
-            ] + (php73() ? ['samesite' => ''] : []);
+            ] + (php73() ? ['samesite' => 'lax'] : []);
 
         $this->assertEquals($cookie, $cookies::sent());
     }
@@ -230,7 +230,7 @@ class PHPCookiesTest
             'domain' => '',
             'secure' => false,
             'httponly' => true
-        ] + (php73() ? ['samesite' => ''] : []);
+        ] + (php73() ? ['samesite' => 'lax'] : []);
 
         $this->assertEquals($cookie, $cookies::sent());
     }
@@ -276,7 +276,7 @@ class PHPCookiesTest
             'domain' => '',
             'secure' => false,
             'httponly' => true
-        ] + (php73() ? ['samesite' => ''] : []);
+        ] + (php73() ? ['samesite' => 'lax'] : []);
 
         $this->assertEquals($cookie, $cookies::sent());
     }
@@ -298,7 +298,7 @@ class PHPCookiesTest
                 'domain' => '',
                 'secure' => false,
                 'httponly' => true
-            ] + (php73() ? ['samesite' => ''] : []);
+            ] + (php73() ? ['samesite' => 'lax'] : []);
 
         $this->assertEquals($cookie, $cookies::sent());
     }
@@ -320,7 +320,7 @@ class PHPCookiesTest
                 'domain' => '',
                 'secure' => false,
                 'httponly' => true
-            ] + (php73() ? ['samesite' => ''] : []);
+            ] + (php73() ? ['samesite' => 'lax'] : []);
 
         $this->assertEquals($cookie, $cookies::sent());
     }
@@ -345,7 +345,7 @@ class PHPCookiesTest
                 'domain' => '',
                 'secure' => false,
                 'httponly' => true
-            ] + (php73() ? ['samesite' => ''] : []);
+            ] + (php73() ? ['samesite' => 'lax'] : []);
 
         $this->assertEquals($cookie, $cookies::sent());
     }
@@ -367,7 +367,7 @@ class PHPCookiesTest
             'domain' => '',
             'secure' => false,
             'httponly' => true
-        ] + (php73() ? ['samesite' => ''] : []);
+        ] + (php73() ? ['samesite' => 'lax'] : []);
 
         $this->assertEquals($cookie, $cookies::sent());
     }
@@ -389,7 +389,7 @@ class PHPCookiesTest
             'domain' => '',
             'secure' => false,
             'httponly' => true
-        ] + (php73() ? ['samesite' => ''] : []);
+        ] + (php73() ? ['samesite' => 'lax'] : []);
 
         $this->assertEquals($cookie, $cookies::sent());
     }
@@ -409,7 +409,7 @@ class PHPCookiesTest
             'domain' => '',
             'secure' => false,
             'httponly' => true
-        ] + (php73() ? ['samesite' => ''] : []);
+        ] + (php73() ? ['samesite' => 'lax'] : []);
 
         $this->assertEquals($cookie, $cookies::sent());
     }
@@ -429,7 +429,7 @@ class PHPCookiesTest
             'domain' => '',
             'secure' => false,
             'httponly' => true
-        ] + (php73() ? ['samesite' => ''] : []);
+        ] + (php73() ? ['samesite' => 'lax'] : []);
 
         $this->assertEquals($cookie, $cookies::sent());
     }
@@ -449,7 +449,7 @@ class PHPCookiesTest
             'domain' => '',
             'secure' => false,
             'httponly' => true
-        ] + (php73() ? ['samesite' => ''] : []);
+        ] + (php73() ? ['samesite' => 'lax'] : []);
 
         $this->assertEquals($cookie, $cookies::sent());
     }
