@@ -51,7 +51,7 @@ class ControllerTest
         $this->assertEquals('foo', $result->message);
         $this->assertEquals(44, $result->line);
         $this->assertEquals(__FILE__, $result->file);
-        $this->assertInternalType('array', $result->trace);
+        $this->assertIsArray($result->trace);
     }
 
     /**
