@@ -20,7 +20,7 @@ class OverloadTest
 
         $model->get('foo')['bar'] = 'baz';
 
-        $this->assertNull($model->get('foo')['bar']);
+        $this->assertNull($model->get('foo')['bar'] ?? null);
 
         $model['foo']['bar'] = 'baz';
 
