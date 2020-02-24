@@ -29,6 +29,40 @@ class PluginTest
     }
 
     /**
+     * @throws \Throwable
+     */
+    function test_merge_calls_override_parent_method()
+    {
+        $app = new App([
+            'services' => [
+                'parent' => new Plugin(Config::class, [['a' => '1']], ['set' => ['b' => '2']]),
+                'child' => new Plugin('parent', [], ['set' => ['c' => '3']], null, true)
+            ]
+        ]);
+
+        $this->assertEquals(
+            new Config(['a' => '1', 'c' => '3']), $app->plugin('child')
+        );
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    function test_merge_calls_repeat_method()
+    {
+        $app = new App([
+            'services' => [
+                'parent' => new Plugin(Config::class, [['a' => '1']], [['set', 'b', '2']]),
+                'child' => new Plugin('parent', [], [['set', 'c', '3']], null, true)
+            ]
+        ]);
+
+        $this->assertEquals(
+            new Config(['a' => '1', 'b' => '2', 'c' => '3']), $app->plugin('child')
+        );
+    }
+
+    /**
      *
      */
     function test_not_parent_type_plugin()
