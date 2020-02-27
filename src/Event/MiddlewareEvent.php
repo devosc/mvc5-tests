@@ -5,6 +5,7 @@
 
 namespace Mvc5\Test\Event;
 
+use Mvc5\Config\Count;
 use Mvc5\Config\Iterator;
 use Mvc5\Event\Event;
 use Mvc5\Event\EventModel;
@@ -16,6 +17,7 @@ class MiddlewareEvent
     /**
      *
      */
+    use Count;
     use EventModel;
     use Iterator;
     use Middleware {
