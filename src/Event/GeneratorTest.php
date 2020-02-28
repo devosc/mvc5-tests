@@ -260,43 +260,4 @@ class GeneratorTest
         $this->assertEquals('baz', $this->app()->trigger($iterator));
         $this->assertEquals(4, $iterator->num_valid_method_calls);
     }
-
-    /**
-     *
-     */
-    function test_middleware_array_event()
-    {
-        $middleware = new MiddlewareEvent($this->app(), [
-            function($value, $next) {
-                return $next($value . 'a');
-            },
-            function($value, $next) {
-                return $next($value . 'z');
-            }
-        ]);
-
-        $this->assertEquals('baz', $this->app()->trigger($middleware, ['b']));
-        $this->assertEquals('baz', $this->app()->trigger($middleware, ['b']));
-    }
-
-    /**
-     *
-     */
-    function test_middleware_iterator_event()
-    {
-        $middleware = new MiddlewareEvent($this->app(), new Config([
-            function($value, $next) {
-                return $next($value . 'a');
-            },
-            function($value, $next) {
-                return $next($value . 'z');
-            },
-            function($value) {
-                return $value;
-            },
-        ]));
-
-        $this->assertEquals('baz', $this->app()->trigger($middleware, ['b']));
-        $this->assertEquals('baz', $this->app()->trigger($middleware, ['b']));
-    }
 }
