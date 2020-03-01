@@ -5,7 +5,7 @@
 
 namespace Mvc5\Test\Cookie;
 
-use Mvc5\Config;
+use Mvc5\ArrayObject;
 use Mvc5\Cookie\Config\PHPCookies;
 use Mvc5\Cookie\Cookies;
 use Mvc5\Cookie\HttpCookies;
@@ -28,7 +28,7 @@ class PHPCookiesTest
     protected function cookies(array $cookies = null, array $defaults = [])
     {
         return new class($cookies, $defaults)
-            extends Config
+            extends ArrayObject
             implements Cookies
         {
             /**
