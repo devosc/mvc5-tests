@@ -49,7 +49,7 @@ class SharedTest
         $this->assertFalse($app->has('foo'));
         $this->assertEquals($value, $app->plugin(new Shared('foo', new Value($value))));
         $this->assertTrue($app->has('foo'));
-        $this->assertEquals(['foo' => $value], $app->container());
+        $this->assertEquals($value, $app['foo']);
         $this->assertEquals($value, $app->plugin(new Shared('foo')));
     }
 

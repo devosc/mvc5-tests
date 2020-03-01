@@ -8,6 +8,8 @@ namespace Mvc5\Test\Resolver;
 use Mvc5\App;
 use Mvc5\Arg;
 use Mvc5\Config;
+use Mvc5\Container;
+use Mvc5\Model;
 use Mvc5\Test\Test\TestCase;
 
 class CloneTest
@@ -51,22 +53,27 @@ class CloneTest
      */
     function test_with_arrays()
     {
-        $app = new App([
+        $config = [
             'foo' => 'bar',
-        ]);
+            'services' => [
+                'config' => new \Mvc5\Plugin\Config
+            ]
+        ];
+
+        $app = new App($config);
 
         $clone = clone $app;
 
         $this->assertEquals($clone, $app);
 
-        $clone->set('a', 'a');
+        $clone->set('a', 'a2');
 
         $this->assertNotSame($clone, $app);
 
-        $this->assertEquals(['foo' => 'bar'], $app->config());
-        $this->assertEquals([], $app->container());
-        $this->assertEquals(['foo' => 'bar'], $clone->config());
-        $this->assertEquals(['a' => 'a'], $clone->container());
+        $this->assertEquals(new Model($config), $app['config']);
+        $this->assertEquals(new Model($config), $clone['config']);
+        $this->assertNull($app['a']);
+        $this->assertEquals('a2', $clone['a']);
     }
 
     /**
@@ -79,13 +86,7 @@ class CloneTest
         $clone = clone $app;
 
         $this->assertEquals($clone, $app);
-
-        $config = $clone->config();
-        $config['foo'] = 'bar';
-
         $this->assertNotSame($clone, $app);
-        $this->assertEquals(new Config, $app->config());
-        $this->assertEquals(new Config(['foo' => 'bar']), $clone->config());
     }
 
     /**
@@ -93,25 +94,21 @@ class CloneTest
      */
     function test_with_container_object()
     {
-        $app = new App([Arg::CONTAINER => new Config]);
+        $app = new App([
+            Arg::CONTAINER => new Container(['a' => 'a1'])
+        ]);
 
         $clone = clone $app;
 
         $this->assertEquals($clone, $app);
 
-        $container = $clone->container();
-        $container['a'] = 'a';
+        $clone['b'] = 'b1';
 
         $this->assertNotSame($clone, $app);
-        $this->assertEquals(new Config, $app->container());
-        $this->assertEquals(new Config(['a' => 'a']), $clone->container());
-
-        $this->assertNull($clone['b']);
-
-        $clone->config()[Arg::CONTAINER]['b'] = 'b';
-
-        $this->assertEquals('b', $clone['b']);
-        $this->assertTrue($clone->container() === $clone->config()[Arg::CONTAINER]);
+        $this->assertEquals('a1', $app['a']);
+        $this->assertEquals('a1', $clone['a']);
+        $this->assertNull($app['b']);
+        $this->assertEquals('b1', $clone['b']);
     }
 
     /**
@@ -124,20 +121,7 @@ class CloneTest
         $clone = clone $app;
 
         $this->assertEquals($clone, $app);
-
-        $events = $clone->events();
-        $events['a'] = 'a';
-
         $this->assertNotSame($clone, $app);
-        $this->assertEquals(new Config, $app->events());
-        $this->assertEquals(new Config(['a' => 'a']), $clone->events());
-
-        $this->assertNull($clone->events()['b']);
-
-        $clone->config()[Arg::EVENTS]['b'] = 'b';
-
-        $this->assertEquals('b', $clone->events()['b']);
-        $this->assertTrue($clone->events() === $clone->config()[Arg::EVENTS]);
     }
 
     /**
@@ -157,14 +141,6 @@ class CloneTest
 
         $this->assertEquals($clone, $app);
         $this->assertNotSame($clone, $app);
-        $this->assertEquals($clone->config(), $app->config());
-        $this->assertNotSame($clone->config(), $app->config());
-        $this->assertEquals($clone->container(), $app->container());
-        $this->assertNotSame($clone->container(), $app->container());
-        $this->assertEquals($clone->events(), $app->events());
-        $this->assertNotSame($clone->events(), $app->events());
-        $this->assertEquals($clone->services(), $app->services());
-        $this->assertNotSame($clone->services(), $app->services());
     }
 
     /**
@@ -177,19 +153,6 @@ class CloneTest
         $clone = clone $app;
 
         $this->assertEquals($clone, $app);
-
-        $services = $clone->services();
-        $services['baz'] = 'bat';
-
         $this->assertNotSame($clone, $app);
-        $this->assertEquals(new Config, $app->services());
-        $this->assertEquals(new Config(['baz' => 'bat']), $clone->services());
-
-        $this->assertNull($clone->services()['b']);
-
-        $clone->config()[Arg::SERVICES]['b'] = 'b';
-
-        $this->assertEquals('b', $clone->services()['b']);
-        $this->assertTrue($clone->services() === $clone->config()[Arg::SERVICES]);
     }
 }

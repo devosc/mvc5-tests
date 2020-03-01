@@ -28,11 +28,13 @@ class SerializeTest
 
         $app = new App($config, null, true);
 
+        $this->assertEquals('bat', $app['baz']);
+
         $serialized = serialize($app);
         $this->assertTrue(is_string($serialized));
 
         $app = unserialize($serialized);
-        $this->assertEquals($config, $app->config());
+        $this->assertNull($app['baz']);
         $this->assertTrue($app->scope());
     }
 
@@ -49,12 +51,11 @@ class SerializeTest
             'container' => [
                 'baz' => 'bat'
             ],
-            'events' => [
-                'foo' => 'bar'
-            ]
         ];
 
         $app = new App($config, null, true);
+
+        $this->assertEquals('bat', $app['baz']);
 
         $session['resolver'] = $app;
 
@@ -62,10 +63,11 @@ class SerializeTest
 
         $session->start();
 
-        $app = $session['resolver'];
-        $this->assertEquals($config, $app->config());
-        $this->assertEmpty($app->container());
-        $this->assertEquals(['foo' => 'bar'], $app->events());
+        $app2 = $session['resolver'];
+
+        $this->assertInstanceOf(App::class, $app2);
+        $this->assertNotSame($app, $app2);
+        $this->assertNull($app2['baz']);
         $this->assertTrue($app->scope());
 
         $session->destroy();

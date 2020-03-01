@@ -8,6 +8,7 @@ namespace Mvc5\Test;
 use Mvc5\Arg;
 use Mvc5\App;
 use Mvc5\Config;
+use Mvc5\Model;
 use Mvc5\Plugin\Args;
 use Mvc5\Plugin\Callback;
 use Mvc5\Plugin\Invoke;
@@ -38,13 +39,14 @@ class AppTest
     {
         $config = [
             Arg::SERVICES => [
-                'foo' => ['foobar']
+                'foo' => ['foobar'],
+                'config' => new \Mvc5\Plugin\Config
             ]
         ];
 
         $app = new App($config);
 
-        $this->assertEquals($config, $app->config());
+        $this->assertEquals(new Model($config), $app['config']);
     }
 
     /**

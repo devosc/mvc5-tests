@@ -167,15 +167,6 @@ class GeneratorTest
     /**
      *
      */
-    function test_events()
-    {
-        $this->assertEquals([], (new App)->events());
-        $this->assertEquals(['foo' => []], (new App(['events' => ['foo' => []]]))->events());
-    }
-
-    /**
-     *
-     */
     function test_start_event_iterator()
     {
         $iterator = new EventIterator;

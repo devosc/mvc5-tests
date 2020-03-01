@@ -6,6 +6,7 @@
 namespace Mvc5\Test\Plugin;
 
 use Mvc5\App;
+use Mvc5\Model;
 use Mvc5\Plugin\Config;
 use Mvc5\Test\Test\TestCase;
 
@@ -19,6 +20,6 @@ class ConfigTest
     {
         $app = new App(['foo' => 'bar']);
 
-        $this->assertEquals(['foo' => 'bar'], $app->plugin(new Config));
+        $this->assertEquals(new Model(['foo' => 'bar']), $app->plugin(new Config));
     }
 }

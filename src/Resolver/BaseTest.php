@@ -15,68 +15,6 @@ class ContainerTest
     /**
      *
      */
-    function test_clone_with_arrays()
-    {
-        $app = new App;
-
-        $clone = clone $app;
-
-        $this->assertEquals($clone, $app);
-
-        $clone->set('a', 'a');
-
-        $this->assertNotSame($clone, $app);
-        $this->assertEquals([], $app->container());
-        $this->assertEquals(['a' => 'a'], $clone->container());
-    }
-
-    /**
-     *
-     */
-    function test_clone_container_array()
-    {
-        $a = new \stdClass;
-        $a->b = 'b';
-
-        $app = new App(['services' => ['a' => $a]]);
-
-        $clone = clone $app;
-
-        $this->assertEquals(['a' => $a], $clone->services());
-    }
-
-    /**
-     *
-     */
-    function test_clone_with_objects()
-    {
-        $app = new App(new Config([
-            'container' => new Config,
-            'services' => new Config
-        ]));
-
-        $clone = clone $app;
-
-        $this->assertEquals($clone, $app);
-
-        $this->assertNotSame($clone->config(), $app->config());
-        $this->assertNotSame($clone->container(), $app->container());
-        $this->assertNotSame($clone->services(), $app->services());
-    }
-
-    /**
-     *
-     */
-    function test_config()
-    {
-        $app = new App(['services' => ['foo' => 'bar']]);
-
-        $this->assertEquals(['services' => ['foo' => 'bar']], $app->config());
-    }
-
-    /**
-     *
-     */
     function test_count()
     {
         $app = new App(['container' => [1, 2, 3, 4, 5]]);
@@ -309,16 +247,6 @@ class ContainerTest
         $app->rewind();
 
         $this->assertEquals('bar', $app->current());
-    }
-
-    /**
-     *
-     */
-    function test_services()
-    {
-        $app = new App(['services' => ['foo' => 'bar']]);
-
-        $this->assertEquals(['foo' => 'bar'], $app->services());
     }
 
     /**
