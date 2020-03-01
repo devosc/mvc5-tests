@@ -5,8 +5,10 @@
 
 namespace Mvc5\Test\Event;
 
+use Mvc5\ArrayModel;
 use Mvc5\Config\Count;
 use Mvc5\Config\Iterator;
+use Mvc5\Config\Model;
 use Mvc5\Event\Event;
 use Mvc5\Event\EventModel;
 
@@ -21,9 +23,9 @@ class EventIterator
     use EventModel;
 
     /**
-     * @var array|mixed
+     * @var Model
      */
-    protected $config;
+    protected Model $config;
 
     /**
      * @var bool
@@ -35,7 +37,7 @@ class EventIterator
      */
     function __construct($config = [])
     {
-        $this->config = $config;
+        $this->config = $config instanceof Model ? $config : new ArrayModel($config);
     }
 
     /**
@@ -45,7 +47,7 @@ class EventIterator
     {
         ++$this->num_valid_method_calls;
 
-        return $this->config instanceof \Iterator ? $this->config->valid() : null !== key($this->config);
+        return $this->config->valid();
     }
 
     /**
