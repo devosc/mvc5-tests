@@ -9,26 +9,39 @@ use Mvc5\App;
 use Mvc5\Plugin\Args;
 use Mvc5\Plugin\Filter;
 use Mvc5\Plugin\Param;
+use Mvc5\Plugin\Plugin;
+use Mvc5\Plugin\Value;
 use Mvc5\Test\Test\TestCase;
 
 class FilterTest
     extends TestCase
 {
     /**
-     *
+     * @throws \Throwable
      */
     function test()
     {
         $filter = new Filter(['foo'], ['bar'], ['baz'], 'foobar');
 
         $this->assertEquals(['foo'],  $filter->config());
-        $this->assertEquals(['bar'],  $filter->filter());
+        $this->assertEquals(new Value(['bar']),  $filter->plugin());
         $this->assertEquals(['baz'],  $filter->args());
         $this->assertEquals('foobar', $filter->param());
     }
 
     /**
-     *
+     * @throws \Throwable
+     */
+    function test_resolvable_filter()
+    {
+        $filter = new Filter(['foo'], new Plugin('bar'));
+
+        $this->assertEquals(['foo'],  $filter->config());
+        $this->assertEquals(new Plugin('bar'),  $filter->plugin());
+    }
+
+    /**
+     * @throws \Throwable
      */
     function test_args_plugin()
     {
@@ -38,7 +51,7 @@ class FilterTest
     }
 
     /**
-     *
+     * @throws \Throwable
      */
     function test_false()
     {
@@ -74,7 +87,7 @@ class FilterTest
     }
 
     /**
-     *
+     * @throws \Throwable
      */
     function test_merge_param()
     {
@@ -95,7 +108,7 @@ class FilterTest
     }
 
     /**
-     *
+     * @throws \Throwable
      */
     function test_named_param()
     {
@@ -123,7 +136,7 @@ class FilterTest
     }
 
     /**
-     *
+     * @throws \Throwable
      */
     function test_null()
     {
