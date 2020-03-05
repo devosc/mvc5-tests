@@ -6,7 +6,7 @@
 namespace Mvc5\Test\Plugins;
 
 use Mvc5\App;
-use Mvc5\Model;
+use Mvc5\ArrayModel;
 use Mvc5\Plugin\Config;
 use Mvc5\Test\Test\TestCase;
 
@@ -52,7 +52,7 @@ class ServiceTest
 
         $service = new ServicePlugin($app);
 
-        $this->assertEquals(new Model($config), $service->plugin('config'));
+        $this->assertEquals(new ArrayModel($config), $service->plugin('config'));
     }
 
     /**
