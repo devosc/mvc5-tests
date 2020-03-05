@@ -35,7 +35,6 @@ class SerializeTest
 
         $app = unserialize($serialized);
         $this->assertNull($app['baz']);
-        $this->assertTrue($app->scope());
     }
 
     /**
@@ -68,7 +67,6 @@ class SerializeTest
         $this->assertInstanceOf(App::class, $app2);
         $this->assertNotSame($app, $app2);
         $this->assertNull($app2['baz']);
-        $this->assertTrue($app->scope());
 
         $session->destroy();
     }

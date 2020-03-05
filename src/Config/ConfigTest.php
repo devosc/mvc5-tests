@@ -9,6 +9,7 @@ use Mvc5\App;
 use Mvc5\Arg;
 use Mvc5\Config;
 use Mvc5\Model;
+use Mvc5\Plugin\Scope;
 use Mvc5\Plugin\Value;
 use Mvc5\Test\Test\TestCase;
 
@@ -366,27 +367,25 @@ class ConfigTest
     }
 
     /**
-     *
+     * @throws \Throwable
      */
     function test_clone_object_scoped()
     {
-        $plugins = new App;
+        $app = new App;
 
-        $config = new Config($plugins);
-
-        $plugins->scope($config);
+        $config = (new App)(new Scope($app, Config::class));
 
         $this->assertEquals(clone $config, $config);
     }
 
     /**
-     *
+     * @throws \Throwable
      */
     function test_clone_object_scoped_true()
     {
-        $plugins = new App(null, null, true);
+        $app = new App(null, null, true);
 
-        $config = new Config($plugins);
+        $config = (new App)(new Scope($app, Config::class));
 
         $this->assertEquals(clone $config, $config);
     }
@@ -396,11 +395,9 @@ class ConfigTest
      */
     function test_clone_object_scoped_different_object()
     {
-        $plugins = new App;
+        $app = new App(null, null, true);
 
-        $config = new Config($plugins);
-
-        $plugins->scope(new \stdClass);
+        $config = (new App)(new Scope($app, \stdClass::class));
 
         $this->assertEquals(clone $config, $config);
     }

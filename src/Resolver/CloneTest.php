@@ -7,6 +7,7 @@ namespace Mvc5\Test\Resolver;
 
 use Mvc5\App;
 use Mvc5\Arg;
+use Mvc5\ArrayModel;
 use Mvc5\Config;
 use Mvc5\Container;
 use Mvc5\Model;
@@ -42,10 +43,7 @@ class CloneTest
     {
         $app = new App(null, null, new Config);
 
-        $clone = clone $app;
-
-        $this->assertTrue(is_object($clone->scope()));
-        $this->assertTrue($clone->scope() !== $app->scope());
+        $this->assertEquals($app, clone $app);
     }
 
     /**
@@ -70,8 +68,8 @@ class CloneTest
 
         $this->assertNotSame($clone, $app);
 
-        $this->assertEquals(new Model($config), $app['config']);
-        $this->assertEquals(new Model($config), $clone['config']);
+        $this->assertEquals(new ArrayModel($config), $app['config']);
+        $this->assertEquals(new ArrayModel($config), $clone['config']);
         $this->assertNull($app['a']);
         $this->assertEquals('a2', $clone['a']);
     }

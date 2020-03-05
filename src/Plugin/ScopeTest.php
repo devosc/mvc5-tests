@@ -20,9 +20,9 @@ class ScopeTest
      */
     function test()
     {
-        $scope = new Scope('foo', ['bar', 'baz']);
+        $scope = new Scope(new App, Config::class);
 
-        $args = ['foo', new Link, new Args(['bar', 'baz'])];
+        $args = [new App, new Link, Config::class];
 
         $this->assertTrue(is_callable($scope->config()));
         $this->assertEquals($args, $scope->args());
@@ -41,16 +41,15 @@ class ScopeTest
                 'foo' => function() {
                     /** @var Config $this */
                     return $this->get('bar');
-                }
+                },
+                'scope' => fn() => $this
             ]
-        ]);
+        ], null, true);
 
-        $plugin = new Scope(Config::class, [$app]);
-
-        $config = (new App)->plugin($plugin);
+        $config = (new App)(new Scope($app, Config::class));
 
         $this->assertInstanceOf(Config::class, $config);
-        $this->assertEquals($config, $app->scope());
+        $this->assertEquals($config, $app['scope']);
         $this->assertEquals('foobar', $config['foo']);
     }
 }
