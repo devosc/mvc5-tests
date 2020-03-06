@@ -10,7 +10,7 @@ use Mvc5\Arg;
 use Mvc5\ArrayModel;
 use Mvc5\Config;
 use Mvc5\Container;
-use Mvc5\Model;
+use Mvc5\Plugin\Link;
 use Mvc5\Test\Test\TestCase;
 
 class CloneTest
@@ -42,6 +42,16 @@ class CloneTest
     function test_scope_object()
     {
         $app = new App(null, null, new Config);
+
+        $this->assertEquals($app, clone $app);
+    }
+
+    /**
+     *
+     */
+    function test_scope_self()
+    {
+        $app = new App(null, null, new Link);
 
         $this->assertEquals($app, clone $app);
     }
