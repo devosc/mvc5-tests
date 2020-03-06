@@ -373,7 +373,7 @@ class ConfigTest
     {
         $app = new App;
 
-        $config = (new App)(new Scope($app, Config::class));
+        $config = (new App)(new Scope([], Config::class));
 
         $this->assertEquals(clone $config, $config);
     }
@@ -385,7 +385,7 @@ class ConfigTest
     {
         $app = new App(null, null, true);
 
-        $config = (new App)(new Scope($app, Config::class));
+        $config = (new App)(new Scope([], Config::class));
 
         $this->assertEquals(clone $config, $config);
     }
@@ -397,7 +397,7 @@ class ConfigTest
     {
         $app = new App(null, null, true);
 
-        $config = (new App)(new Scope($app, \stdClass::class));
+        $config = (new App)(new Scope([], \stdClass::class));
 
         $this->assertEquals(clone $config, $config);
     }
