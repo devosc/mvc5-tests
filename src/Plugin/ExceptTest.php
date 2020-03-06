@@ -8,6 +8,7 @@ namespace Mvc5\Test\Plugin;
 use Mvc5\App;
 use Mvc5\Plugin\Call;
 use Mvc5\Plugin\Expect;
+use Mvc5\Plugin\Plugin;
 use Mvc5\Plugin\Value;
 use Mvc5\Test\Test\TestCase;
 
@@ -21,8 +22,19 @@ class ExceptTest
     {
         $expect = new Expect('foo');
 
-        $this->assertEquals('foo', $expect->plugin());
-        $this->assertNull($expect->exception());
+        $this->assertEquals(new Value('foo'), $expect->plugin());
+        $this->assertEquals(new Value(null), $expect->exception());
+    }
+
+    /**
+     *
+     */
+    function test_resolvable()
+    {
+        $expect = new Expect(new Plugin('foo'), new Plugin('bar'));
+
+        $this->assertEquals(new Plugin('foo'), $expect->plugin());
+        $this->assertEquals(new Plugin('bar'), $expect->exception());
     }
 
     /**
