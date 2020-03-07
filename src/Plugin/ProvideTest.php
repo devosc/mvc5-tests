@@ -40,7 +40,7 @@ class ProvideTest
      */
     function test_provide()
     {
-        $app = new App(null, function($foo) { return $foo; });
+        $app = new App(null, fn($foo) => $foo);
 
         $this->assertEquals('bar', $app->plugin(new Provide('bar')));
     }

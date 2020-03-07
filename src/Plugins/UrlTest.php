@@ -16,7 +16,7 @@ class UrlTest
      */
     function test()
     {
-        $config = ['services' => ['url' => function() { return function($url) { return $url; }; }]];
+        $config = ['services' => ['url' => fn() => fn($url) => $url]];
 
         $plugin = new UrlPlugin(new App($config));
 

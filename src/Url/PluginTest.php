@@ -105,7 +105,7 @@ class PluginTest
      */
     function test_slash_prefix()
     {
-        $url = new Plugin(new HttpRequest([Arg::NAME => 'app']), function() { return 'foobar'; });
+        $url = new Plugin(new HttpRequest([Arg::NAME => 'app']), fn() => 'foobar');
 
         $this->assertEquals('/app.html?foo=bar#top', $url('/app.html', ['foo' => 'bar'], 'top'));
     }

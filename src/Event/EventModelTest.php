@@ -18,9 +18,7 @@ class EventModelTest
     {
         $event = new TestEvent;
 
-        $callable = function($foo){
-            return 'foo' . $foo;
-        };
+        $callable = fn($foo) => 'foo' . $foo;
 
         $this->assertEquals('foo/bar', $event($callable, ['foo' => '/bar']));
     }
@@ -32,9 +30,7 @@ class EventModelTest
     {
         $event = new TestEvent;
 
-        $callable = function(Event $event){
-            return $event->name();
-        };
+        $callable = fn(Event $event) => $event->name();
 
         $this->assertEquals(TestEvent::class, $event($callable));
     }
@@ -46,9 +42,7 @@ class EventModelTest
     {
         $event = new TestEvent;
 
-        $callable = function($foo, $bar){
-            return $foo. '/' . $bar;
-        };
+        $callable = fn($foo, $bar) => $foo. '/' . $bar;
 
         $this->assertEquals('foo/bar', $event($callable, ['foo', 'bar']));
     }

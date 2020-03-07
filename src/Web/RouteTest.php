@@ -61,9 +61,7 @@ class RouteTest
      */
     protected function next($return = null)
     {
-        return function($request, $response) use($return) {
-            return 'request' === $return ? $request : $response;
-        };
+        return fn($request, $response) => 'request' === $return ? $request : $response;
     }
 
     /**
@@ -86,9 +84,7 @@ class RouteTest
     {
         $config = [
             'middleware' => [
-                'route\match' => [function(/*$route, $request, $next*/) {
-                    return 'foo';
-                }]
+                'route\match' => [fn(/*$route, $request, $next*/) => 'foo']
             ],
             'routes' => [[
                 'path' => '/'
@@ -111,9 +107,8 @@ class RouteTest
     {
         $config = [
             'middleware' => [
-                'route\match' => [function(Route $route, HttpRequest $request, $next) {
-                    return $request->with(['matched' => true, 'name' => $route['name'], 'path' => $route]);
-                }]
+                'route\match' => [fn(Route $route, HttpRequest $request, $next) =>
+                    $request->with(['matched' => true, 'name' => $route['name'], 'path' => $route])]
             ],
             'routes' => [['name' => 'home', 'path' => '/']],
         ];
@@ -134,9 +129,7 @@ class RouteTest
     {
         $config = [
             'middleware' => [
-                'route\match' => [function(/*$route, $request, $next*/) {
-                    return new HttpResponse(['body' => 'foo']);
-                }]
+                'route\match' => [fn(/*$route, $request, $next*/) => new HttpResponse(['body' => 'foo'])]
             ],
             'routes' => [['path' => '/']],
         ];

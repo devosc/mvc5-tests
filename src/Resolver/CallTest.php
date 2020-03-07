@@ -22,7 +22,7 @@ class CallTest
      */
     function test_callable()
     {
-        $this->assertEquals('foo', (new App)->call(function() { return 'foo'; }));
+        $this->assertEquals('foo', (new App)->call(fn() => 'foo'));
     }
 
     /**
@@ -32,9 +32,7 @@ class CallTest
     {
         $app = new App([
             'events' => [
-                'foo' => [
-                    function() { return 'foobar'; }
-                ]
+                'foo' => [fn() => 'foobar']
             ]
         ]);
 
@@ -48,7 +46,7 @@ class CallTest
     {
         $model = new ViewModel(['foo' => 'foobar']);
 
-        $this->assertEquals('foobar', (new App)->call([$model, 'get'], [], function() { return 'foo'; }));
+        $this->assertEquals('foobar', (new App)->call([$model, 'get'], [], fn() => 'foo'));
     }
 
     /**
@@ -56,7 +54,7 @@ class CallTest
      */
     function test_plugin()
     {
-        $this->assertEquals('foo', (new App)->call(new Invoke(function() { return 'foo'; })));
+        $this->assertEquals('foo', (new App)->call(new Invoke(fn() => 'foo')));
     }
 
     /**
@@ -88,7 +86,7 @@ class CallTest
         $app = new App([
             'events' => [
                 'test_event' => [
-                    function() { return 'foo'; }
+                    fn() => 'foo'
                 ]
             ],
             'services' => [
@@ -106,9 +104,7 @@ class CallTest
     {
         $app = new App([
             'events' => [
-                'test_event' => [
-                    function() { return 'foo'; }
-                ]
+                'test_event' => [fn() => 'foo']
             ],
             'services' => [
                 'event\model' => Event::class
@@ -143,9 +139,7 @@ class CallTest
     {
         $app = new App([
             'services' => [
-                'foo' => function() {
-                    return function() { return 'foobar'; };
-                }
+                'foo' => fn() => fn() => 'foobar'
             ]
         ]);
 
@@ -159,8 +153,8 @@ class CallTest
     {
         $config = [
             'services' => [
-                'foo' => new Callback(function($bar) { return $this->foobar('foo' . $bar); }),
-                'foobar' => new Invoke(function($foobar) { return $foobar; }),
+                'foo' => new Callback(fn($bar) => $this->foobar('foo' . $bar)),
+                'foobar' => new Invoke(fn($foobar) => $foobar),
             ]
         ];
 

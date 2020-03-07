@@ -22,11 +22,7 @@ class ControllerTest
     {
         $app = new App([
             'services' => [
-                'controller' => function() {
-                    return function(HttpRequest $request, HttpResponse $response) {
-                        return $response;
-                    };
-                }
+                'controller' => fn() => fn(HttpRequest $request, HttpResponse $response) => $response
             ]
         ]);
 
@@ -38,9 +34,7 @@ class ControllerTest
 
         $response = new HttpResponse;
 
-        $next = function(HttpRequest $request, HttpResponse $response) {
-            return $response;
-        };
+        $next = fn(HttpRequest $request, HttpResponse $response) => $response;
 
         $this->assertEquals($response, $controller($request, $response, $next));
     }
@@ -52,11 +46,7 @@ class ControllerTest
     {
         $app = new App([
             'services' => [
-                'controller' => function() {
-                    return function() {
-                        return 'foo';
-                    };
-                }
+                'controller' => fn() => fn() => 'foo'
             ]
         ]);
 
@@ -68,9 +58,7 @@ class ControllerTest
 
         $response = new HttpResponse;
 
-        $next = function(HttpRequest $request, HttpResponse $response) {
-            return $response;
-        };
+        $next = fn(HttpRequest $request, HttpResponse $response) => $response;
 
         $response = $controller($request, $response, $next);
 
@@ -86,9 +74,7 @@ class ControllerTest
         $request = new HttpRequest;
         $response = new HttpResponse;
 
-        $next = function(HttpRequest $request, HttpResponse $response) {
-            return $response;
-        };
+        $next = fn(HttpRequest $request, HttpResponse $response) => $response;
 
         $this->assertEquals($response, $controller($request, $response, $next));
     }

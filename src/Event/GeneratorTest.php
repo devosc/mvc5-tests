@@ -109,13 +109,11 @@ class GeneratorTest
     {
         $app = new App([
             'services' => [
-                'test_event' => function() {
-                    return [
+                'test_event' => fn() => [
                         '@Mvc5\Test\Event\GeneratorTest::foo',
                         '@Mvc5\Test\Event\GeneratorTest::bar',
                         '@Mvc5\Test\Event\GeneratorTest::baz',
-                    ];
-                }
+                    ]
             ]
         ]);
 

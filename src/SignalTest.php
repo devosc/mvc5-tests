@@ -20,9 +20,7 @@ class SignalTest
      */
     function test_args()
     {
-        $function = function($args) {
-            return $args;
-        };
+        $function = fn($args) => $args;
 
         $this->assertEquals('bar', Signal::emit($function, ['bar']));
     }
@@ -32,9 +30,7 @@ class SignalTest
      */
     function test_args_empty()
     {
-        $function = function() {
-            return func_get_args();
-        };
+        $function = fn() => func_get_args();
 
         $this->assertEquals([], Signal::emit($function));
     }
@@ -44,9 +40,7 @@ class SignalTest
      */
     function test_args_named()
     {
-        $function = function($foo) {
-            return $foo;
-        };
+        $function = fn($foo) => $foo;
 
         $this->assertEquals('bar', Signal::emit($function, ['foo' => 'bar']));
     }
@@ -56,9 +50,7 @@ class SignalTest
      */
     function test_args_optional()
     {
-        $function = function($foo = null) {
-            return $foo;
-        };
+        $function = fn($foo = null) => $foo;
 
         $this->assertNull(Signal::emit($function));
     }
@@ -68,9 +60,7 @@ class SignalTest
      */
     function test_args_variadic()
     {
-        $function = function($foo, ...$args) {
-            return array_merge([$foo], $args);
-        };
+        $function = fn($foo, ...$args) => array_merge([$foo], $args);
 
         $this->assertEquals(['foo', 'bar'], Signal::emit($function, ['foo', 'bar']));
     }
@@ -80,9 +70,7 @@ class SignalTest
      */
     function test_args_variadic_named()
     {
-        $function = function($foo, ...$args) {
-            return array_merge([$foo], $args);
-        };
+        $function = fn($foo, ...$args) => array_merge([$foo], $args);
 
         $this->assertEquals(['bar', 'bat'], Signal::emit($function, ['foo' => 'bar', 'baz' => 'bat']));
     }
@@ -92,9 +80,7 @@ class SignalTest
      */
     function test_null_param()
     {
-        $function = function($foo) {
-            return !$foo ? 'bar' : $foo;
-        };
+        $function = fn($foo) => !$foo ? 'bar' : $foo;
 
         $this->assertEquals('bar', Signal::emit($function, ['foo' => null]));
     }
@@ -104,13 +90,9 @@ class SignalTest
      */
     function test_callback_missing_param()
     {
-        $function = function($foo) {
-            return $foo;
-        };
+        $function = fn($foo) => $foo;
 
-        $callback = function($name) {
-            return 'foo' == $name ? 'bar' : null;
-        };
+        $callback = fn($name) => 'foo' == $name ? 'bar' : null;
 
         $this->assertEquals('bar', Signal::emit($function, [], $callback));
     }
@@ -122,9 +104,7 @@ class SignalTest
     {
         $method = 'Mvc5\Service\Context::bind';
 
-        $callback = function($name) {
-            return Service::class == $name ? new App : null;
-        };
+        $callback = fn($name) => Service::class == $name ? new App : null;
 
         $this->assertInstanceOf(App::class, Signal::emit($method, ['foo' => 'bar'], $callback));
     }
@@ -202,9 +182,7 @@ class SignalTest
      */
     function test_argv()
     {
-        $function = function($argv) {
-            return $argv;
-        };
+        $function = fn($argv) => $argv;
 
         $this->assertEquals(['foo' => 'bar'], Signal::emit($function, ['foo' => 'bar']));
     }
@@ -214,9 +192,7 @@ class SignalTest
      */
     function test_with_argv()
     {
-        $function = function($foo, $argv) {
-            return ['foo' => $foo] + $argv;
-        };
+        $function = fn($foo, $argv) => ['foo' => $foo] + $argv;
 
         $args = ['foo' => 'bar', 'baz' => 'bat'];
 
@@ -228,7 +204,7 @@ class SignalTest
      */
     function test_with_argv_exception()
     {
-        $function = function($foo, $argv, $baz) {};
+        $function = fn($foo, $argv, $baz) => null;
 
         $args = ['foo' => 'bar', 'baz' => 'bat'];
 
@@ -246,9 +222,7 @@ class SignalTest
      */
     function test_variadic_argv()
     {
-        $function = function(...$argv) {
-            return $argv[0]->args();
-        };
+        $function = fn(...$argv) => $argv[0]->args();
 
         $this->assertEquals(['foo' => 'bar'], Signal::emit($function, ['foo' => 'bar']));
     }
@@ -258,9 +232,7 @@ class SignalTest
      */
     function test_with_variadic_argv()
     {
-        $function = function($foo, ...$argv) {
-            return ['foo' => $foo] + $argv[0]->args();
-        };
+        $function = fn($foo, ...$argv) => ['foo' => $foo] + $argv[0]->args();
 
         $args = ['foo' => 'bar', 'baz' => 'bat'];
 

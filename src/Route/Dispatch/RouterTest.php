@@ -230,9 +230,7 @@ class RouterTest
     {
         $config = $this->config([
             'middleware' => [
-                'route\match' => [function() {
-                    return new HttpResponse('foo');
-                }]
+                'route\match' => [fn() => new HttpResponse('foo')]
             ],
             'routes' => [
                 [Arg::PATH => '/']

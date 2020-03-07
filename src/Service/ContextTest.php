@@ -82,7 +82,7 @@ class ContextTest
      */
     function test_plugin()
     {
-        new Context(new App(['services' => ['foo' => function() { return 'bar'; }]]));
+        new Context(new App(['services' => ['foo' => fn() => 'bar']]));
 
         $this->assertEquals('bar', Context::plugin('foo'));
     }

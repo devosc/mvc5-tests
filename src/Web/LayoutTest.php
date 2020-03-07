@@ -26,9 +26,7 @@ class LayoutTest
         $request  = new HttpRequest;
         $response = new HttpResponse([Arg::BODY => new ViewModel]);
 
-        $next = function(HttpRequest $request, HttpResponse $response) {
-            return $response;
-        };
+        $next = fn(HttpRequest $request, HttpResponse $response) => $response;
 
         $response = $layout($request, $response, $next);
 

@@ -25,9 +25,7 @@ class ContextTest
         $response = new HttpResponse;
         $web      = new Context($app);
 
-        $next = function(HttpRequest $request, HttpResponse $response) {
-            return $response;
-        };
+        $next = fn(HttpRequest $request, HttpResponse $response) => $response;
 
         $this->assertEquals($response, $web($request, $response, $next));
         $this->assertEquals($app, _Context::service());

@@ -31,9 +31,7 @@ class FactoryTest
     {
         $app = new App([
             'services' => [
-                'bar' => function() {
-                    return function() { return 'baz'; };
-                },
+                'bar' => fn() => fn() => 'baz',
                 'factory' => new Plugin('bar')
             ]
         ]);

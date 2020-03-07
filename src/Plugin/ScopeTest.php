@@ -34,13 +34,8 @@ class ScopeTest
     function test_scope()
     {
         $plugins = [
-            'bar' => function() {
-                return 'foobar';
-            },
-            'foo' => function() {
-                /** @var Config $this */
-                return $this->get('bar');
-            },
+            'bar' => fn() => 'foobar',
+            'foo' => fn() => $this->get('bar'),
             'scope' => fn() => $this
         ];
 

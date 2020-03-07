@@ -23,9 +23,7 @@ class StatusTest
         $request  = new HttpRequest;
         $response = new HttpResponse;
 
-        $next = function(HttpRequest $request, HttpResponse $response) {
-            return $response;
-        };
+        $next = fn(HttpRequest $request, HttpResponse $response) => $response;
 
         $new = $status($request, $response, $next);
 

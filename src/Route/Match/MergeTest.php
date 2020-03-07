@@ -19,9 +19,7 @@ class MergeTest
      */
     protected function next()
     {
-        return function($route, $request) {
-            return $route;
-        };
+        return fn($route, $request) => $route;
     }
 
     /**

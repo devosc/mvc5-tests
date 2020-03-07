@@ -38,9 +38,7 @@ class ControllerTest
      */
     protected function next()
     {
-        return function($route, $request) {
-            return $request;
-        };
+        return fn($route, $request) => $request;
     }
 
     /**
@@ -143,7 +141,7 @@ class ControllerTest
     {
         $class = __NAMESPACE__ . '\\Home\Controller';
 
-        $loader = function($name) use($class) { return $class == $name ? new $class : null; };
+        $loader = fn($name) => $class == $name ? new $class : null;
 
         $controller = new Controller($loader);
         $route      = new Route([Arg::OPTIONS => [Arg::PREFIX => __NAMESPACE__ . '\\']]);

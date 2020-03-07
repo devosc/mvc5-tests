@@ -19,7 +19,7 @@ class ActionTest
     {
         $action = new Action(new App);
 
-        $this->assertEquals('foo', $action(function() { return 'foo'; }));
+        $this->assertEquals('foo', $action(fn() => 'foo'));
     }
 
     /**

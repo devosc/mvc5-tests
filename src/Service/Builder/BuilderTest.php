@@ -121,7 +121,7 @@ class BuilderTest
      */
     function test_variadic_constructor()
     {
-        $obj = Builder::create(Variadic::class, ['a', 'b', 'c'], function() {});
+        $obj = Builder::create(Variadic::class, ['a', 'b', 'c'], fn() => null);
 
         $this->assertEquals(['a', 'b', 'c'], $obj->args);
     }
@@ -131,7 +131,7 @@ class BuilderTest
      */
     function test_variadic_constructor_with_named_args()
     {
-        $obj = Builder::create(Variadic::class, ['foo' => 'a', 'bar' => 'b', 'baz' => 'c'], function() {});
+        $obj = Builder::create(Variadic::class, ['foo' => 'a', 'bar' => 'b', 'baz' => 'c'], fn() => null);
 
         $this->assertEquals(['a', 'b', 'c'], $obj->args);
     }

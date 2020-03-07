@@ -34,12 +34,8 @@ class MiddlewareTest
         $middleware = new Middleware(
             new App,
             [
-                function(HttpRequest $request, HttpResponse $response, callable $next) {
-                    return $next($request, $response);
-                },
-                function(HttpRequest $request, HttpResponse $response, callable $next) {
-                    return $next($request, $response);
-                }
+                fn(HttpRequest $request, HttpResponse $response, callable $next) => $next($request, $response),
+                fn(HttpRequest $request, HttpResponse $response, callable $next) => $next($request, $response)
             ]
         );
 

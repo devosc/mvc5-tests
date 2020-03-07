@@ -45,7 +45,7 @@ class FilterTest
      */
     function test_args_plugin()
     {
-        $plugin = new Args([function($foo) { return $foo; }]);
+        $plugin = new Args([fn($foo) => $foo]);
 
         $this->assertEquals('foo', (new App)->plugin(new Filter('foo', $plugin)));
     }
@@ -58,27 +58,14 @@ class FilterTest
         $app = new App([
             'filters' => [
                 'foo' => [
-                    function($foo) {
-                        return $foo;
-                    },
-
-                    function($foo, $baz) {
-                        return $foo . $baz;
-                    },
-
-                    function() {
-                        return false;
-                    },
-
-                    function($foo, $baz, $bar) {
-                        return $foo . $bar;
-                    }
+                    fn($foo) => $foo,
+                    fn($foo, $baz) => $foo . $baz,
+                    fn() => false,
+                    fn($foo, $baz, $bar) => $foo . $bar
                 ]
             ],
             'services' => [
-                'bar' => function() {
-                    return 'bar';
-                },
+                'bar' => fn() => 'bar',
                 'foo' => new Filter('foo', new Param('filters.foo'), ['bar'])
             ]
         ]);
@@ -94,12 +81,8 @@ class FilterTest
         $app = new App([
             'filters' => [
                 'foo' => [
-                    function($foo) {
-                        return $foo;
-                    },
-                    function($foo, $baz, $bar) {
-                        return $foo . $bar . $baz;
-                    }
+                    fn($foo) => $foo,
+                    fn($foo, $baz, $bar) => $foo . $bar . $baz
                 ]
             ],
         ]);
@@ -115,18 +98,12 @@ class FilterTest
         $app = new App([
             'filters' => [
                 'foo' => [
-                    function($foo, $o) {
-                        return $foo . $o;
-                    },
-                    function($foo, $baz, $bar) {
-                        return $foo . $bar . $baz;
-                    }
+                    fn($foo, $o) => $foo . $o,
+                    fn($foo, $baz, $bar) => $foo . $bar . $baz
                 ]
             ],
             'services' => [
-                'bar' => function() {
-                    return 'bar';
-                },
+                'bar' => fn() => 'bar',
             ]
         ]);
 
@@ -143,21 +120,10 @@ class FilterTest
         $app = new App([
             'filters' => [
                 'foo' => [
-                    function($foo) {
-                        return $foo;
-                    },
-
-                    function($foo, $baz) {
-                        return $foo . $baz;
-                    },
-
-                    function() {
-                        return null;
-                    },
-
-                    function($foo, $baz, $bar) {
-                        return $foo . $bar;
-                    }
+                    fn($foo) => $foo,
+                    fn($foo, $baz) => $foo . $baz,
+                    fn() => null,
+                    fn($foo, $baz, $bar) => $foo . $bar
                 ]
             ],
         ]);

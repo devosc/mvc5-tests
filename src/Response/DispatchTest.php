@@ -21,7 +21,7 @@ class DispatchTest
     {
         $dispatch = new Dispatch('foo', new HttpRequest, new HttpResponse);
 
-        $this->assertEquals('foo', $dispatch(function() { return 'foo'; }));
+        $this->assertEquals('foo', $dispatch(fn() => 'foo'));
     }
 
     /**
@@ -31,7 +31,7 @@ class DispatchTest
     {
         $dispatch = new Dispatch('foo', new HttpRequest, new HttpResponse);
 
-        $this->assertInstanceOf(HttpError::class, $dispatch(function() { return new HttpError; }));
+        $this->assertInstanceOf(HttpError::class, $dispatch(fn() => new HttpError));
     }
 
     /**
@@ -41,7 +41,7 @@ class DispatchTest
     {
         $dispatch = new Dispatch('foo', new HttpRequest, new HttpResponse);
 
-        $this->assertInstanceOf(HttpRequest::class, $dispatch(function($request) { return $request; }));
+        $this->assertInstanceOf(HttpRequest::class, $dispatch(fn($request) => $request));
     }
 
     /**
@@ -51,6 +51,6 @@ class DispatchTest
     {
         $dispatch = new Dispatch('foo', new HttpRequest, new HttpResponse);
 
-        $this->assertInstanceOf(HttpResponse::class, $dispatch(function($response) { return $response; }));
+        $this->assertInstanceOf(HttpResponse::class, $dispatch(fn($response) => $response));
     }
 }

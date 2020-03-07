@@ -21,13 +21,7 @@ class FacadeTest
     function test_call()
     {
         $app = new App([
-            'services' => [
-                'foo' => function() {
-                    return function() {
-                      return 'bar';
-                    };
-                }
-            ]
+            'services' => ['foo' => fn() => fn() => 'bar']
         ]);
 
         Context::bind($app);
@@ -111,11 +105,7 @@ class FacadeTest
     {
         $app = new App([
             'events' => [
-                'foo' => [
-                    function() {
-                        return 'bar';
-                    }
-                ]
+                'foo' => [fn() => 'bar']
             ]
         ]);
 

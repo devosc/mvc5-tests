@@ -33,7 +33,7 @@ class SharedTest
     {
         $app = new App;
 
-        $this->assertEquals('bar', $app->plugin(new Shared('foo', function() { return 'bar'; })));
+        $this->assertEquals('bar', $app->plugin(new Shared('foo', fn() => 'bar')));
         $this->assertEquals('bar', $app->get('foo'));
     }
 

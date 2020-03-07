@@ -56,8 +56,6 @@ class ScopedTest
      */
     function foo()
     {
-        return function() {
-            return $this;
-        };
+        return fn() => $this;
     }
 }

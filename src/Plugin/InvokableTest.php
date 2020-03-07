@@ -34,7 +34,7 @@ class InvokableTest
         $app = new App;
 
         $invokable = new Invokable(
-            new Call(new Invoke(function($foo, $bar, $baz) { return $foo . $bar . $baz; })), ['s']
+            new Call(new Invoke(fn($foo, $bar, $baz) => $foo . $bar . $baz)), ['s']
         );
 
         $callable = $app->plugin($invokable);
@@ -51,7 +51,7 @@ class InvokableTest
         $app = new App;
 
         $invokable = new Invokable(
-            new Call(new Invoke(function($foo, $bar, $baz) { return $foo . $bar . $baz; })), ['baz' => 's']
+            new Call(new Invoke(fn($foo, $bar, $baz) => $foo . $bar . $baz)), ['baz' => 's']
         );
 
         $callable = $app->plugin($invokable);
@@ -67,7 +67,7 @@ class InvokableTest
         $app = new App;
 
         $invokable = new Invokable(
-            new Call(new Invoke(function($foo, $bar, $baz) { return $foo . $bar . $baz; })), ['s']
+            new Call(new Invoke(fn($foo, $bar, $baz) => $foo . $bar . $baz)), ['s']
         );
 
         $callable = $app->plugin($invokable);

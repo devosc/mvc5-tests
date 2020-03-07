@@ -18,8 +18,8 @@ class LoggerTest
     {
         $logger = new Logger;
 
-        $this->assertEquals('foo', $logger(function() { return 'foo'; }));
-        $this->assertEquals('foo', $logger(function($message) { return $message; }));
+        $this->assertEquals('foo', $logger(fn() => 'foo'));
+        $this->assertEquals('foo', $logger(fn($message) => $message));
     }
 
     /**
@@ -29,7 +29,7 @@ class LoggerTest
     {
         $logger = new Logger;
 
-        $this->assertFalse($logger(function($throw_exception = false) { return $throw_exception; }));
+        $this->assertFalse($logger(fn($throw_exception = false) => $throw_exception));
     }
 
     /**
@@ -39,6 +39,6 @@ class LoggerTest
     {
         $logger = new Logger(true);
 
-        $this->assertTrue($logger(function($throw_exception) { return $throw_exception; }));
+        $this->assertTrue($logger(fn($throw_exception) => $throw_exception));
     }
 }

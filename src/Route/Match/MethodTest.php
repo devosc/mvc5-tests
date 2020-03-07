@@ -20,9 +20,7 @@ class MethodTest
      */
     protected function next()
     {
-        return function($route, $request) {
-            return $request;
-        };
+        return fn($route, $request) => $request;
     }
 
     /**

@@ -16,7 +16,7 @@ class CallbackTest
      */
     function test()
     {
-        $emitter = new Callback(function() { return 'Hello!'; });
+        $emitter = new Callback(fn() => 'Hello!');
 
         $emitter->emit();
 

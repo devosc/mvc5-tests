@@ -41,9 +41,7 @@ class CompositeTest
     {
         $app = new App([
             'services' => [
-                'foo' => function() {
-                    return ['bar' => new Value('baz')];
-                }
+                'foo' => fn() => ['bar' => new Value('baz')]
             ]
         ]);
 

@@ -20,7 +20,7 @@ class DispatchTest
     {
         $dispatch = new Dispatch;
 
-        $this->assertNull($dispatch(function(){ return null; }));
+        $this->assertNull($dispatch(fn() => null));
 
         $this->assertFalse($dispatch->stopped());
     }
@@ -32,7 +32,7 @@ class DispatchTest
     {
         $dispatch = new Dispatch;
 
-        $this->assertInstanceOf(Resolvable::class, $dispatch(function() { return new Config; }));
+        $this->assertInstanceOf(Resolvable::class, $dispatch(fn() => new Config));
 
         $this->assertFalse($dispatch->stopped());
     }
@@ -44,7 +44,7 @@ class DispatchTest
     {
         $dispatch = new Dispatch;
 
-        $this->assertEquals([], $dispatch(function(){ return []; }));
+        $this->assertEquals([], $dispatch(fn() => []));
 
         $this->assertTrue($dispatch->stopped());
     }

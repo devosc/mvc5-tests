@@ -23,7 +23,7 @@ class PluginTest
     {
         $app = new App(null, null, true);
 
-        $this->assertEquals($app, $app->plugin(function() { return $this; }));
+        $this->assertEquals($app, $app->plugin(fn() => $this));
     }
 
     /**
@@ -35,7 +35,7 @@ class PluginTest
 
         $app = new App(null, null, $config);
 
-        $this->assertEquals($config, $app->plugin(function() { return $this; }));
+        $this->assertEquals($config, $app->plugin(fn() => $this));
     }
 
     /**
@@ -43,7 +43,7 @@ class PluginTest
      */
     function test_closure_without_scope()
     {
-        $this->assertEquals($this, (new App)->plugin(function() { return $this; }));
+        $this->assertEquals($this, (new App)->plugin(fn() => $this));
     }
 
     /**
@@ -63,11 +63,7 @@ class PluginTest
     {
         $app = new App([
             'services' => [
-                'service\resolver' => function() {
-                    return function() {
-                        return 'bar';
-                    };
-                }
+                'service\resolver' => fn() => fn() => 'bar'
             ]
         ]);
 
@@ -97,7 +93,7 @@ class PluginTest
      */
     function test_invoke_with_provider()
     {
-        $app = new App(null, function() { return 'bar'; });
+        $app = new App(null, fn() => 'bar');
 
         $this->assertEquals('bar', $app('foo'));
     }

@@ -44,9 +44,7 @@ class ExpectTest
     {
         (new App)(new Expect(
             new Call('@Mvc5\Exception::runtime', ['test']),
-            new Call(function(\Throwable $e) {
-                $this->assertEquals('test', $e->getMessage());
-            })
+            new Call(fn(\Throwable $e) => $this->assertEquals('test', $e->getMessage()))
         ));
     }
 
@@ -57,7 +55,7 @@ class ExpectTest
     {
         $result = (new App)(new Expect(
             new Call(function() { throw new \Exception('foo'); }),
-            new Call(function(\Throwable $exception) { return $exception->getMessage(); }),
+            new Call(fn(\Throwable $exception) => $exception->getMessage()),
             true
         ));
 
@@ -71,7 +69,7 @@ class ExpectTest
     {
         $result = (new App)(new Expect(
             new Call(function() { throw new \Exception('foo'); }),
-            new Call(function(\Throwable $exception, $argv) { return $exception->getMessage() . $argv['bar']; }),
+            new Call(fn(\Throwable $exception, $argv) => $exception->getMessage() . $argv['bar']),
             true,
             true
         ), ['bar' => 'bar']);
@@ -85,7 +83,7 @@ class ExpectTest
     function test_named_args()
     {
         $result = (new App)(new Expect(
-            new Call(function($b, $a) { return $a . $b; }, ['b' => new Value('bar')])
+            new Call(fn($b, $a) => $a . $b, ['b' => new Value('bar')])
         ), ['a' => 'foo']);
 
         $this->assertEquals('foobar', $result);
@@ -96,7 +94,7 @@ class ExpectTest
      */
     function test_not_named_args()
     {
-        $result = (new App)(new Expect(new Call(function($a, $b) { return $a . $b; }, ['bar'])), ['foo']);
+        $result = (new App)(new Expect(new Call(fn($a, $b) => $a . $b, ['bar'])), ['foo']);
 
         $this->assertEquals('foobar', $result);
     }

@@ -16,7 +16,7 @@ class RenderTest
      */
     function test()
     {
-        $config = ['services' => ['render' => function() { return function($template) { return $template; }; }]];
+        $config = ['services' => ['render' => fn() => fn($template) => $template]];
 
         $plugin = new RenderPlugin(new App($config));
 

@@ -28,9 +28,7 @@ class RenderTest
         $request  = new HttpRequest;
         $response = new HttpResponse([Arg::BODY => new Model]);
 
-        $next = function(HttpRequest $request, HttpResponse $response) {
-            return $response;
-        };
+        $next = fn(HttpRequest $request, HttpResponse $response) => $response;
 
         $response = $render($request, $response, $next);
 

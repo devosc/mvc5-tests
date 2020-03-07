@@ -28,7 +28,7 @@ class EventTest
     {
         $event = new Event;
 
-        $this->assertEquals('bar', $event(function($bar, $foo) { return $foo; }, ['foo' => 'bar', 'bar' => 'baz']));
+        $this->assertEquals('bar', $event(fn($bar, $foo) => $foo, ['foo' => 'bar', 'bar' => 'baz']));
     }
 
     /**
@@ -38,7 +38,7 @@ class EventTest
     {
         $event = new Event;
 
-        $this->assertEquals('baz', $event(function($bar, $foo) { return $foo; }, ['bar', 'baz']));
+        $this->assertEquals('baz', $event(fn($bar, $foo) => $foo, ['bar', 'baz']));
     }
 
     /**
@@ -48,7 +48,7 @@ class EventTest
     {
         $event = new Event;
 
-        $event(function(Event $event) { $event->stop(); });
+        $event(fn(Event $event) => $event->stop());
 
         $this->assertTrue($event->stopped());
     }

@@ -28,7 +28,7 @@ class CallTest
      */
     function test_named()
     {
-        $call = new Call(function($foo, $bar) { return $foo . $bar; });
+        $call = new Call(fn($foo, $bar) => $foo . $bar);
 
         $this->assertEquals('foobar', (new App)->plugin($call, ['foo' => 'foo', 'bar' => 'bar']));
     }
@@ -38,7 +38,7 @@ class CallTest
      */
     function test_named_with_parent_args()
     {
-        $call = new Call(function($foo, $bar) { return $foo . $bar; }, ['bar' => 'bar']);
+        $call = new Call(fn($foo, $bar) => $foo . $bar, ['bar' => 'bar']);
 
         $this->assertEquals('foobar', (new App)->plugin($call, ['foo' => 'foo']));
     }
@@ -48,7 +48,7 @@ class CallTest
      */
     function test_no_args()
     {
-        $call = new Call(function() { return 'foobar'; });
+        $call = new Call(fn() => 'foobar');
 
         $this->assertEquals('foobar', (new App)->plugin($call));
     }
@@ -58,7 +58,7 @@ class CallTest
      */
     function test_not_named()
     {
-        $call = new Call(function($foo, $bar) { return $foo . $bar; });
+        $call = new Call(fn($foo, $bar) => $foo . $bar);
 
         $this->assertEquals('foobar', (new App)->plugin($call, ['foo', 'bar']));
     }
@@ -68,7 +68,7 @@ class CallTest
      */
     function test_not_named_with_parent_args()
     {
-        $call = new Call(function($foo, $bar) { return $foo . $bar; }, ['bar']);
+        $call = new Call(fn($foo, $bar) => $foo . $bar, ['bar']);
 
         $this->assertEquals('foobar', (new App)->plugin($call, ['foo']));
     }

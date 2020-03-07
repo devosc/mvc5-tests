@@ -17,7 +17,7 @@ class CallbackTest
      */
     function test()
     {
-        $scoped = new Callback(function(){});
+        $scoped = new Callback(fn() => null);
 
         $this->assertInstanceOf(\Closure::class, $scoped->closure());
         $this->assertFalse($scoped->scoped());
@@ -30,9 +30,7 @@ class CallbackTest
     {
         $app = new App(null, null, true);
 
-        $result = $app->call(new Callback(function() {
-            return $this;
-        }));
+        $result = $app->call(new Callback(fn() => $this));
 
         $this->assertTrue($result === $app);
     }
@@ -44,9 +42,7 @@ class CallbackTest
     {
         $app = new App;
 
-        $result = $app->call(new Callback(function() {
-            return $this;
-        }));
+        $result = $app->call(new Callback(fn() => $this));
 
         $this->assertTrue($result === $this);
     }

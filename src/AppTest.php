@@ -27,7 +27,7 @@ class AppTest
      */
     function test_array_access_with_provider()
     {
-        $app = new App([], function($name) { return 'foo' == $name ? 'bar' : null; });
+        $app = new App([], fn($name) => 'foo' == $name ? 'bar' : null);
 
         $this->assertEquals('bar', $app['foo']);
     }
@@ -54,7 +54,7 @@ class AppTest
      */
     function test_invoke_with_provider()
     {
-        $app = new App([], function() { return 'bar'; });
+        $app = new App([], fn() => 'bar');
 
         $this->assertEquals('bar', $app('foo'));
     }
@@ -76,38 +76,28 @@ class AppTest
     {
         $app = new App([
             Arg::SERVICES => [
-                'var3' => function() { return 'foobar'; },
+                'var3' => fn() => 'foobar',
                 'var2' => [Config::class, new Args(['var3' => new Plugin('var3')])],
-                'bat' => function($var2) {
-                    return $var2['var3'];
-                },
+                'bat' => fn($var2) => $var2['var3'],
                 Config::class => Config::class,
-                'v3' => function() { return '6'; },
+                'v3' => fn() => '6',
                 'v2' => [Config::class, new Args(['v3' => new Plugin('v3')])],
-                'var4' => function($v2) { return $v2['v3']; },
+                'var4' => fn($v2) => $v2['v3'],
                 'code' => 1,
                 'foo' => new Plugins([
                     'home' => 9,
                     'var2' => new Plugin(Config::class, [new Args(['var3' => new Provide('var4')])]),
-                    Config::class => function($argv) {
-                        return new Config($argv);
-                    },
+                    Config::class => fn($argv) => new Config($argv),
                     'code' => 2,
                     'bar' => new Plugins([
                         'code' => 5,
                         Config::class => new Provide(Config::class), //Provide from parent
-                        'test' => function($bat, $code, $home, $var2, Config $config) {
-                            return function($param, $param2, Config $config) use($bat, $code, $home, $var2) {
-                                return $bat . $code . $home . $param . $var2['var3'] . $param2;
-                            };
-                        },
-                        'baz' => function() {
-                            return function($param2) {
-                                /** @var \Mvc5\Service\Plugin $this */
+                        'test' => fn($bat, $code, $home, $var2, Config $config) =>
+                            fn($param, $param2, Config $config) =>
+                                $bat . $code . $home . $param . $var2['var3'] . $param2,
+                        'baz' => fn() => fn($param2) => $this->call('test', ['param' => '3', 'param2' => $param2])
 
-                                return $this->call('test', ['param' => '3', 'param2' => $param2]);
-                            };
-                        }
+
                     ])
                 ])
             ]
@@ -129,9 +119,7 @@ class AppTest
     {
         $app = new App([
             'services' => [
-                'bar' => function() {
-                    return $this;
-                },
+                'bar' => fn() => $this,
                 'foo' => new Plugin('bar')
             ]
         ], null, true);
@@ -149,9 +137,7 @@ class AppTest
 
         $app = new App([
             'services' => [
-                'bar' => function() {
-                    return $this;
-                },
+                'bar' => fn() => $this,
                 'foo' => new Plugin('bar')
             ]
         ], null, $config);
@@ -167,12 +153,8 @@ class AppTest
     {
         $app = new App([
             'services' => [
-                'bar' => new Callback(function() {
-                    return $this;
-                }),
-                'foo' => new Invoke(function() {
-                    return $this;
-                }),
+                'bar' => new Callback(fn() => $this),
+                'foo' => new Invoke(fn() => $this),
             ]
         ], null, true);
 
@@ -189,12 +171,8 @@ class AppTest
 
         $app = new App([
             'services' => [
-                'bar' => new Callback(function() {
-                    return $this;
-                }),
-                'foo' => new Invoke(function() {
-                    return $this;
-                }),
+                'bar' => new Callback(fn() => $this),
+                'foo' => new Invoke(fn() => $this),
             ]
         ], null, $config);
 
@@ -209,12 +187,8 @@ class AppTest
     {
         $app = new App([
             'services' => [
-                'bar' => new Callback(function() {
-                    return $this;
-                }),
-                'foo' => new Invoke(function() {
-                    return $this;
-                }),
+                'bar' => new Callback(fn() => $this),
+                'foo' => new Invoke(fn() => $this),
             ]
         ]);
 

@@ -24,9 +24,7 @@ class ServiceTest
         $request  = new HttpRequest;
         $response = new HttpResponse;
 
-        $next = function(HttpRequest $request, HttpResponse $response) {
-            return $response;
-        };
+        $next = fn(HttpRequest $request, HttpResponse $response) => $response;
 
         $this->assertEquals($response, $service($request, $response, $next));
     }

@@ -88,8 +88,7 @@ class BuildTest
     {
         $app = new App;
 
-        $this->assertInstanceOf(Config::class, $app->plugin('foo', [], function($name) {
-            return 'foo' == $name ? new Config : null;
-        }));
+        $this->assertInstanceOf(Config::class,
+            $app->plugin('foo', [], fn($name) => 'foo' == $name ? new Config : null));
     }
 }

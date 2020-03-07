@@ -107,7 +107,7 @@ class HydratorTest
     function test_call_plugin_and_pass_current_object_as_named_arg()
     {
         $plugin = new Hydrator(
-            Config::class, [['$config', function(Config $config){ $config['foo'] = 'bar'; }]]
+            Config::class, [['$config', fn(Config $config) => $config['foo'] = 'bar']]
         );
 
         $config = (new App)->plugin($plugin);

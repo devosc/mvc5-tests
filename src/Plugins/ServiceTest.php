@@ -65,7 +65,7 @@ class ServiceTest
         $service = new ServicePlugin(new App(['container' => $container]));
 
         $this->assertEquals('bar', $service->shared('foo'));
-        $this->assertEquals('bat', $service->shared('foobar', function() { return 'bat'; }));
+        $this->assertEquals('bat', $service->shared('foobar', fn() => 'bat'));
         $this->assertEquals('bat', $service->shared('foobar'));
         $this->assertEquals($container, $service->shared(['foo', 'baz']));
     }
@@ -78,9 +78,7 @@ class ServiceTest
         $app = new App([
             'events' => [
                 'foo' => [
-                    function($bar) {
-                        return $bar;
-                    }
+                    fn($bar) => $bar
                 ]
             ]
         ]);

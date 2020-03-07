@@ -28,9 +28,7 @@ class MiddlewareTest
      */
     protected function next()
     {
-        return function($route, $request) {
-            return $request;
-        };
+        return fn($route, $request) => $request;
     }
 
     /**
@@ -69,27 +67,22 @@ class MiddlewareTest
             'routes' => [[
                 'name'       => 'home',
                 'path'      => '/',
-                'middleware' => [function(HttpRequest $request, HttpResponse $response, callable $next) {
-                    return $next($request, $response->with('test', 'a'));
-                }],
+                'middleware' => [fn(HttpRequest $request, HttpResponse $response, callable $next) =>
+                    $next($request, $response->with('test', 'a'))],
                 'children' => [
                     [
                         'name'     => 'baz',
                         'path' => 'foo',
-                        'middleware' => [function(HttpRequest $request, HttpResponse $response, callable $next) {
-                            return $next($request, $response->with('test', $response['test'] . ', b'));
-                        }],
+                        'middleware' => [fn(HttpRequest $request, HttpResponse $response, callable $next) =>
+                            $next($request, $response->with('test', $response['test'] . ', b'))],
                         'children' => [
                             [
                                 'name'  => 'bat',
                                 'path' => '/bar',
                                 'middleware' => [
-                                    function(HttpRequest $request, HttpResponse $response, callable $next) {
-                                        return $next($request, $response->with('test', $response['test'] . ', c'));
-                                    },
-                                    function(HttpRequest $request, HttpResponse $response, callable $next) {
-                                        return $response['test'];
-                                    }
+                                    fn(HttpRequest $request, HttpResponse $response, callable $next) =>
+                                        $next($request, $response->with('test', $response['test'] . ', c')),
+                                    fn(HttpRequest $request, HttpResponse $response, callable $next) => $response['test']
                                 ],
                             ]
                         ]

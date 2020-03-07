@@ -32,7 +32,7 @@ class ServiceTest
     {
         $container = ['foo' => 'bar',  'baz' => 'bat'];
 
-        $app = new App(['services' => ['foobar' => function() { return 'bat'; }],  'container' => $container]);
+        $app = new App(['services' => ['foobar' => fn() => 'bat'],  'container' => $container]);
 
         $this->assertEquals('bar', $app->shared('foo'));
         $this->assertEquals($container + ['foobar' => 'bat'], $app->shared(['foo', 'baz', 'foobar']));
