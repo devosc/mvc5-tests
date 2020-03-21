@@ -52,7 +52,7 @@ class MiddlewareTest
     /**
      *
      */
-    function atest_middleware_path()
+    function test_middleware_path()
     {
         $config = [
             'middleware' => [
@@ -117,7 +117,7 @@ class MiddlewareTest
     /**
      *
      */
-    function atest_middleware_without_controller()
+    function test_middleware_without_controller()
     {
         $app         = new App(['services' => ['http\middleware' => [HttpMiddleware::class, 'service' => new Link]]]);
         $middleware  = new Match\Middleware($app);
@@ -135,7 +135,7 @@ class MiddlewareTest
     /**
      *
      */
-    function atest_no_middleware()
+    function test_no_middleware()
     {
         $app        = new App;
         $middleware = new Match\Middleware($app);
