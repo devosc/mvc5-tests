@@ -77,7 +77,7 @@ class ActionTest
     {
         $action  = new Action;
         $route   = new Route;
-        $request = new HttpRequest([Arg::CONTROLLER => 'foo']);
+        $request = new HttpRequest([Arg::CONTROLLER => 'foo', Arg::METHOD => 'GET']);
 
         /** @var HttpRequest $request */
 
@@ -93,7 +93,7 @@ class ActionTest
     {
         $action  = new Action;
         $route   = new Route;
-        $request = new HttpRequest;
+        $request = new HttpRequest([Arg::METHOD => 'GET']);
 
         $this->assertEquals($request, $action($route, $request, $this->next()));
     }
