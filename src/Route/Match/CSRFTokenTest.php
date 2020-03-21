@@ -83,7 +83,7 @@ class CSRFTokenTest
     {
         $match = new CSRFToken;
         $route   = new Route(['csr_token' => false]);
-        $request = new HttpRequest;
+        $request = new HttpRequest(['method' => 'GET']);
 
         $this->assertEquals($request, $match($route, $request, $this->next()));
     }

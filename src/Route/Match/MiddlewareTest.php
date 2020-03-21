@@ -105,7 +105,7 @@ class MiddlewareTest
         ];
 
         $app      = new App($config);
-        $request  = new HttpRequest([Arg::URI => [Arg::PATH => '/foo/bar']]);
+        $request  = new HttpRequest([Arg::METHOD => 'GET', Arg::URI => [Arg::PATH => '/foo/bar']]);
         $response = new HttpResponse;
 
         $request = $app->call('route\dispatch', [$request]);

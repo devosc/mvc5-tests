@@ -108,7 +108,7 @@ class RouterTest
      */
     function test_match_top()
     {
-        $request = $this->dispatch(new HttpRequest(['uri' => ['path' => '/']]));
+        $request = $this->dispatch(new HttpRequest(['method' => 'GET', 'uri' => ['path' => '/']]));
 
         $this->assertEquals('home', $request->name());
         $this->assertEquals('Home\Controller', $request->controller());
@@ -119,7 +119,7 @@ class RouterTest
      */
     function test_child_not_found()
     {
-        $request = $this->dispatch(new HttpRequest([Arg::URI => [Arg::PATH => '/foo/baz']]));
+        $request = $this->dispatch(new HttpRequest([Arg::METHOD => 'GET', Arg::URI => [Arg::PATH => '/foo/baz']]));
 
         $this->assertInstanceOf(NotFound::class, $request->error());
     }
@@ -129,7 +129,7 @@ class RouterTest
      */
     function test_child_route()
     {
-        $request = $this->dispatch(new HttpRequest([Arg::URI => [Arg::PATH => '/foo/bar']]));
+        $request = $this->dispatch(new HttpRequest([Arg::METHOD => 'GET', Arg::URI => [Arg::PATH => '/foo/bar']]));
 
         $this->assertEquals('app/bar', $request->name());
     }
@@ -161,7 +161,7 @@ class RouterTest
             'routes' => [['path' => '/']]
         ]);
 
-        $request = $this->dispatch(new HttpRequest([Arg::URI => [Arg::PATH => '/foo']]), $config);
+        $request = $this->dispatch(new HttpRequest([Arg::METHOD => 'GET', Arg::URI => [Arg::PATH => '/foo']]), $config);
 
         $this->assertInstanceOf(NotFound::class, $request->error());
     }
@@ -182,7 +182,7 @@ class RouterTest
             ]
         ]);
 
-        $request = $this->dispatch(new HttpRequest([Arg::URI => [Arg::PATH => '/foo/bar/baz']]), $config);
+        $request = $this->dispatch(new HttpRequest([Arg::METHOD => 'GET', Arg::URI => [Arg::PATH => '/foo/bar/baz']]), $config);
 
         $this->assertEquals('app/bar/baz', $request->name());
         $this->assertEquals(Bar\Baz\Controller::class, $request->controller());
@@ -204,7 +204,7 @@ class RouterTest
             ]])
         ]);
 
-        $request = $this->dispatch(new HttpRequest([Arg::URI => [Arg::PATH => '/foo/bars']]), $config);
+        $request = $this->dispatch(new HttpRequest([Arg::METHOD => 'GET', Arg::URI => [Arg::PATH => '/foo/bars']]), $config);
 
         $this->assertEquals(['controller' => 'foo', 'action' => 'bars', 'limit' => '15'], $request->params());
     }
@@ -216,7 +216,7 @@ class RouterTest
     {
         $config = $this->config(['routes' => [['name' => 'app', 'path' => '/']]]);
 
-        $request = $this->dispatch(new HttpRequest(['uri' => ['path' => '/']]), $config);
+        $request = $this->dispatch(new HttpRequest([Arg::METHOD => 'GET', 'uri' => ['path' => '/']]), $config);
 
         $this->assertEquals('app', $request->name());
         $this->assertEquals('/', $request->path());
