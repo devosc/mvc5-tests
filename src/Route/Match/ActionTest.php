@@ -41,6 +41,38 @@ class ActionTest
     /**
      *
      */
+    function test_action_head()
+    {
+        $action  = new Action;
+        $route   = new Route([Arg::ACTION => ['HEAD' => 'foo']]);
+        $request = new HttpRequest([Arg::METHOD => 'HEAD']);
+
+        /** @var HttpRequest $request */
+
+        $request = $action($route, $request, $this->next());
+
+        $this->assertEquals('foo', $request->controller());
+    }
+
+    /**
+     *
+     */
+    function test_action_head_with_get()
+    {
+        $action  = new Action;
+        $route   = new Route([Arg::ACTION => ['GET' => 'foo']]);
+        $request = new HttpRequest([Arg::METHOD => 'HEAD']);
+
+        /** @var HttpRequest $request */
+
+        $request = $action($route, $request, $this->next());
+
+        $this->assertEquals('foo', $request->controller());
+    }
+
+    /**
+     *
+     */
     function test_no_action_default_is_controller()
     {
         $action  = new Action;

@@ -38,11 +38,35 @@ class MethodTest
     /**
      *
      */
+    function test_matched_head()
+    {
+        $method  = new Method;
+        $request = new HttpRequest([Arg::METHOD => 'HEAD']);
+        $route   = new Route([Arg::METHOD => ['GET']]);
+
+        $this->assertEquals($request, $method($route, $request, $this->next()));
+    }
+
+    /**
+     *
+     */
     function test_not_matched()
     {
         $method  = new Method;
         $request = new HttpRequest([Arg::METHOD => 'POST']);
         $route   = new Route([Arg::METHOD => 'GET']);
+
+        $this->assertInstanceOf(MethodNotAllowed::class, $method($route, $request, $this->next()));
+    }
+
+    /**
+     *
+     */
+    function test_not_matched_head()
+    {
+        $method  = new Method;
+        $request = new HttpRequest([Arg::METHOD => 'HEAD']);
+        $route   = new Route([Arg::METHOD => 'POST']);
 
         $this->assertInstanceOf(MethodNotAllowed::class, $method($route, $request, $this->next()));
     }
