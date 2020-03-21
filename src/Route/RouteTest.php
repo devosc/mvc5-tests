@@ -29,7 +29,7 @@ class RouteTest
     {
         $route = new Route([Arg::ACTION => ['GET' => 'foo']]);
 
-        $this->assertEquals(['GET' => 'foo'], $route->action());
+        $this->assertEquals(['GET' => 'foo'], $route[Arg::ACTION]);
     }
 
     /**
