@@ -6,13 +6,14 @@
 namespace Mvc5\Test\View;
 
 use Mvc5\App;
-use Mvc5\Arg;
 use Mvc5\Plugin\Link;
 use Mvc5\Test\Test\TestCase;
 use Mvc5\View\Engine\PhpEngine;
 use Mvc5\View\Render;
 use Mvc5\ViewLayout;
 use Mvc5\ViewModel;
+
+use const Mvc5\CHILD_MODEL;
 
 class RenderTest
     extends TestCase
@@ -81,7 +82,7 @@ class RenderTest
         ]);
 
         $model  = new HomeModel('home');
-        $layout = new ViewLayout('layout', [Arg::CHILD_MODEL => $model]);
+        $layout = new ViewLayout('layout', [CHILD_MODEL => $model]);
 
         $this->assertEquals('<h1>Home</h1>', trim($app->call('render', [$layout])));
     }

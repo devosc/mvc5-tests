@@ -5,10 +5,11 @@
 
 namespace Mvc5\Test\Http;
 
-use Mvc5\Arg;
 use Mvc5\Http\HttpHeaders;
 use Mvc5\Http\HttpResponse;
 use Mvc5\Test\Test\TestCase;
+
+use const Mvc5\{ BODY, HEADERS, REASON, STATUS, VERSION };
 
 class ResponseTest
     extends TestCase
@@ -18,7 +19,7 @@ class ResponseTest
      */
     function test_body()
     {
-        $response = new HttpResponse([Arg::BODY => 'foo']);
+        $response = new HttpResponse([BODY => 'foo']);
 
         $this->assertEquals('foo', $response->body());
     }
@@ -28,7 +29,7 @@ class ResponseTest
      */
     function test_headers()
     {
-        $response = new HttpResponse([Arg::HEADERS => new HttpHeaders(['foo' => 'bar'])]);
+        $response = new HttpResponse([HEADERS => new HttpHeaders(['foo' => 'bar'])]);
 
         $this->assertEquals(['foo' => 'bar'], $response->headers()->all());
     }
@@ -38,7 +39,7 @@ class ResponseTest
      */
     function test_headers_array()
     {
-        $response = new HttpResponse([Arg::HEADERS => ['foo' => 'bar']]);
+        $response = new HttpResponse([HEADERS => ['foo' => 'bar']]);
 
         $this->assertEquals(['foo' => 'bar'], $response->headers()->all());
     }
@@ -48,7 +49,7 @@ class ResponseTest
      */
     function test_reason()
     {
-        $response = new HttpResponse([Arg::REASON => 'foo']);
+        $response = new HttpResponse([REASON => 'foo']);
 
         $this->assertEquals('foo', $response->reason());
     }
@@ -58,7 +59,7 @@ class ResponseTest
      */
     function test_status()
     {
-        $response = new HttpResponse([Arg::STATUS => 200]);
+        $response = new HttpResponse([STATUS => 200]);
 
         $this->assertEquals(200, $response->status());
     }
@@ -78,7 +79,7 @@ class ResponseTest
      */
     function test_version()
     {
-        $response = new HttpResponse([Arg::VERSION => '1.1']);
+        $response = new HttpResponse([VERSION => '1.1']);
 
         $this->assertEquals('1.1', $response->version());
     }

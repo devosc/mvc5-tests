@@ -5,7 +5,6 @@
 
 namespace Mvc5\Test;
 
-use Mvc5\Arg;
 use Mvc5\ArrayModel;
 use Mvc5\App;
 use Mvc5\Config;
@@ -18,6 +17,8 @@ use Mvc5\Plugin\Plugins;
 use Mvc5\Plugin\Provide;
 use Mvc5\Plugin\Value;
 use Mvc5\Test\Test\TestCase;
+
+use const Mvc5\SERVICES;
 
 class AppTest
     extends TestCase
@@ -38,7 +39,7 @@ class AppTest
     function test_config()
     {
         $config = [
-            Arg::SERVICES => [
+            SERVICES => [
                 'foo' => ['foobar'],
                 'config' => new \Mvc5\Plugin\Config
             ]
@@ -75,7 +76,7 @@ class AppTest
     function test_provider_and_scope()
     {
         $app = new App([
-            Arg::SERVICES => [
+            SERVICES => [
                 'var3' => fn() => 'foobar',
                 'var2' => [Config::class, new Args(['var3' => new Plugin('var3')])],
                 'bat' => fn($var2) => $var2['var3'],
@@ -211,7 +212,7 @@ class AppTest
      */
     function test_strict_with_config()
     {
-        $app = new App([Arg::SERVICES => ['ArrayObject' => 'ArrayObject']], null, null, true);
+        $app = new App([SERVICES => ['ArrayObject' => 'ArrayObject']], null, null, true);
 
         $this->assertEquals(new \ArrayObject, $app['ArrayObject']);
     }

@@ -5,11 +5,12 @@
 
 namespace Mvc5\Test\Request\Error;
 
-use Mvc5\Arg;
 use Mvc5\Http\Error\NotFound;
 use Mvc5\Request\Error;
 use Mvc5\Request\HttpRequest;
 use Mvc5\Test\Test\TestCase;
+
+use const Mvc5\{ CONTROLLER, ERROR, NAME };
 
 class ErrorTest
     extends TestCase
@@ -22,13 +23,13 @@ class ErrorTest
         $error = new Error('error', 'error/controller');
 
         $request = new HttpRequest([
-            Arg::NAME => 'home', Arg::CONTROLLER => 'Home\Controller', Arg::ERROR => new NotFound
+            NAME => 'home', CONTROLLER => 'Home\Controller', ERROR => new NotFound
         ]);
 
         $request = $error($request);
 
-        $this->assertEquals('error',            $request[Arg::NAME]);
-        $this->assertEquals('error/controller', $request[Arg::CONTROLLER]);
+        $this->assertEquals('error',            $request[NAME]);
+        $this->assertEquals('error/controller', $request[CONTROLLER]);
     }
 
     /**
@@ -39,12 +40,12 @@ class ErrorTest
         $error = new Error('error', 'error/controller');
 
         $request = new HttpRequest([
-            Arg::NAME => 'home', Arg::CONTROLLER => 'Home\Controller'
+            NAME => 'home', CONTROLLER => 'Home\Controller'
         ]);
 
         $request = $error($request);
 
-        $this->assertEquals('home',            $request[Arg::NAME]);
-        $this->assertEquals('Home\Controller', $request[Arg::CONTROLLER]);
+        $this->assertEquals('home',            $request[NAME]);
+        $this->assertEquals('Home\Controller', $request[CONTROLLER]);
     }
 }

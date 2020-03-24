@@ -5,7 +5,7 @@
 
 namespace Mvc5\Test\Route\Match;
 
-use Mvc5\Arg;
+use Closure;
 use Mvc5\Request\HttpRequest;
 use Mvc5\Route\Config as Route;
 use Mvc5\Route\Match\Merge;
@@ -15,9 +15,9 @@ class MergeTest
     extends TestCase
 {
     /**
-     * @return \Closure
+     * @return Closure
      */
-    protected function next()
+    protected function next() : Closure
     {
         return fn($route, $request) => $route;
     }
@@ -122,7 +122,7 @@ class MergeTest
         $new = $method($route, $request, $this->next());
 
         $this->assertNotEquals($route, $new);
-        $this->assertEquals(['a', 'b'], $new[Arg::MIDDLEWARE]);
+        $this->assertEquals(['a', 'b'], $new['middleware']);
     }
 
     /**

@@ -5,10 +5,11 @@
 
 namespace Mvc5\Test\Route\Definition;
 
-use Mvc5\Arg;
 use Mvc5\Route\Config;
 use Mvc5\Route\Route;
 use Mvc5\Test\Test\TestCase;
+
+use const Mvc5\{ CHILDREN, CONSTRAINTS, NAME, OPTIONS, PATH, REGEX, TOKENS };
 
 class BuildTest
     extends TestCase
@@ -20,18 +21,18 @@ class BuildTest
     protected function route(array $route = [])
     {
         return $route + [
-            Arg::CHILDREN    => ['foo' => ['path' => 'foo']],
-            Arg::CONSTRAINTS => null,
-            Arg::NAME        => null,
-            Arg::OPTIONS     => null,
-            Arg::PATH        => '/',
-            Arg::REGEX       => null,
-            Arg::TOKENS      => null
+            CHILDREN    => ['foo' => ['path' => 'foo']],
+            CONSTRAINTS => null,
+            NAME        => null,
+            OPTIONS     => null,
+            PATH        => '/',
+            REGEX       => null,
+            TOKENS      => null
         ];
     }
 
     /**
-     *
+     * @throws \Throwable
      */
     function test_custom_route()
     {
@@ -49,7 +50,7 @@ class BuildTest
     }
 
     /**
-     *
+     * @throws \Throwable
      */
     function test_no_route_or_regex_exception()
     {
@@ -61,13 +62,13 @@ class BuildTest
     }
 
     /**
-     *
+     * @throws \Throwable
      */
     function test_regex_only()
     {
         $build = new Build;
 
-        $route = $build->build([Arg::REGEX => '/']);
+        $route = $build->build([REGEX => '/']);
 
         $this->assertNull($route->name());
         $this->assertEquals('/', $route->regex());
@@ -78,7 +79,7 @@ class BuildTest
     }
 
     /**
-     *
+     * @throws \Throwable
      */
     function test_route()
     {
@@ -96,7 +97,7 @@ class BuildTest
     }
 
     /**
-     *
+     * @throws \Throwable
      */
     function test_route_object()
     {
@@ -115,7 +116,7 @@ class BuildTest
 
 
     /**
-     *
+     * @throws \Throwable
      */
     function test_host()
     {

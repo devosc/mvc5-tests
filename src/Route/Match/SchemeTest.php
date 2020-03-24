@@ -5,12 +5,13 @@
 
 namespace Mvc5\Test\Route\Match;
 
-use Mvc5\Arg;
 use Mvc5\Http\Error\BadRequest;
 use Mvc5\Request\HttpRequest;
 use Mvc5\Route\Config as Route;
 use Mvc5\Route\Match\Scheme;
 use Mvc5\Test\Test\TestCase;
+
+use const Mvc5\{ SCHEME, URI };
 
 class SchemeTest
     extends TestCase
@@ -28,8 +29,8 @@ class SchemeTest
      */
     function test_matched()
     {
-        $route   = new Route([Arg::SCHEME => 'http']);
-        $request = new HttpRequest([Arg::URI => [Arg::SCHEME => 'http']]);
+        $route   = new Route([SCHEME => 'http']);
+        $request = new HttpRequest([URI => [SCHEME => 'http']]);
         $scheme  = new Scheme;
 
         $this->assertEquals($request, $scheme($route, $request, $this->next()));
@@ -52,8 +53,8 @@ class SchemeTest
      */
     function test_not_matched()
     {
-        $route   = new Route([Arg::SCHEME => 'https']);
-        $request = new HttpRequest([Arg::URI => [Arg::SCHEME => 'http']]);
+        $route   = new Route([SCHEME => 'https']);
+        $request = new HttpRequest([URI => [SCHEME => 'http']]);
         $scheme  = new Scheme;
 
         $this->assertInstanceOf(BadRequest::class, $scheme($route, $request, $this->next()));

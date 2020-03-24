@@ -5,12 +5,13 @@
 
 namespace Mvc5\Test\Plugin;
 
-use Mvc5\Arg;
 use Mvc5\App;
 use Mvc5\Plugin\Args;
 use Mvc5\Plugin\Plugins;
 use Mvc5\Plugin\Link;
 use Mvc5\Test\Test\TestCase;
+
+use const Mvc5\SERVICES;
 
 class PluginsTest
     extends TestCase
@@ -23,7 +24,7 @@ class PluginsTest
         $plugin = new Plugins(['foo'], true, true, ['bar']);
 
         $this->assertEquals(App::class, $plugin->name());
-        $this->assertEquals([new Args([Arg::SERVICES => ['foo']]), new Link, true], $plugin->args());
+        $this->assertEquals([new Args([SERVICES => ['foo']]), new Link, true], $plugin->args());
         $this->assertEquals(['bar'], $plugin->calls());
         $this->assertEquals('item', $plugin->param());
         $this->assertFalse($plugin->merge());
@@ -37,7 +38,7 @@ class PluginsTest
         $plugin = new Plugins(['foo'], null, false, ['bar']);
 
         $this->assertEquals(App::class, $plugin->name());
-        $this->assertEquals([new Args([Arg::SERVICES => new Args(['foo'])]), null, false], $plugin->args());
+        $this->assertEquals([new Args([SERVICES => new Args(['foo'])]), null, false], $plugin->args());
         $this->assertEquals(['bar'], $plugin->calls());
         $this->assertEquals('item', $plugin->param());
         $this->assertFalse($plugin->merge());

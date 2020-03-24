@@ -6,12 +6,13 @@
 namespace Mvc5\Test\Resolver;
 
 use Mvc5\App;
-use Mvc5\Arg;
 use Mvc5\ArrayModel;
 use Mvc5\Config;
 use Mvc5\Container;
 use Mvc5\Plugin\Link;
 use Mvc5\Test\Test\TestCase;
+
+use const Mvc5\{ CONTAINER, EVENTS, SERVICES };
 
 class CloneTest
     extends TestCase
@@ -103,7 +104,7 @@ class CloneTest
     function test_with_container_object()
     {
         $app = new App([
-            Arg::CONTAINER => new Container(['a' => 'a1'])
+            CONTAINER => new Container(['a' => 'a1'])
         ]);
 
         $clone = clone $app;
@@ -124,7 +125,7 @@ class CloneTest
      */
     function test_with_events_object()
     {
-        $app = new App([Arg::EVENTS => new Config]);
+        $app = new App([EVENTS => new Config]);
 
         $clone = clone $app;
 
@@ -156,7 +157,7 @@ class CloneTest
      */
     function test_with_services_object()
     {
-        $app = new App([Arg::SERVICES => new Config]);
+        $app = new App([SERVICES => new Config]);
 
         $clone = clone $app;
 

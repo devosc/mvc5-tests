@@ -5,12 +5,13 @@
 
 namespace Mvc5\Test\Url;
 
-use Mvc5\Arg;
 use Mvc5\Http\HttpUri;
 use Mvc5\Request\HttpRequest;
 use Mvc5\Test\Test\TestCase;
 use Mvc5\Url\Generator;
 use Mvc5\Url\Plugin;
+
+use const Mvc5\{ CHILDREN, NAME, PARAMS, PARENT, URI, SCHEME, HOST, PATH, PORT };
 
 class PluginTest
     extends TestCase
@@ -20,7 +21,7 @@ class PluginTest
      */
     protected $route = [
         'app' => [
-            Arg::PATH => '/{controller}'
+            PATH => '/{controller}'
         ]
     ];
 
@@ -30,12 +31,12 @@ class PluginTest
     function test_absolute_global()
     {
         $request = new HttpRequest([
-            Arg::NAME => 'app',
-            Arg::PARAMS => ['controller' => 'foo'],
-            Arg::URI => [
-                Arg::SCHEME => 'http',
-                Arg::HOST => 'localhost',
-                Arg::PORT => 8080
+            NAME => 'app',
+            PARAMS => ['controller' => 'foo'],
+            URI => [
+                SCHEME => 'http',
+                HOST => 'localhost',
+                PORT => 8080
             ]
         ]);
 
@@ -50,12 +51,12 @@ class PluginTest
     function test_absolute_local()
     {
         $request = new HttpRequest([
-            Arg::NAME => 'app',
-            Arg::PARAMS => ['controller' => 'foo'],
-            Arg::URI => [
-                Arg::SCHEME => 'http',
-                Arg::HOST => 'localhost',
-                Arg::PORT => 8080
+            NAME => 'app',
+            PARAMS => ['controller' => 'foo'],
+            URI => [
+                SCHEME => 'http',
+                HOST => 'localhost',
+                PORT => 8080
             ]
         ]);
 
@@ -70,8 +71,8 @@ class PluginTest
     function test_current()
     {
         $request = new HttpRequest([
-            Arg::NAME => 'app',
-            Arg::PARAMS => ['controller' => 'foo']
+            NAME => 'app',
+            PARAMS => ['controller' => 'foo']
         ]);
 
         $url = new Plugin($request, new Generator($this->route));
@@ -95,7 +96,7 @@ class PluginTest
      */
     function test_no_route_config()
     {
-        $url = new Plugin(new HttpRequest([Arg::NAME => 'app']), new Generator($this->route));
+        $url = new Plugin(new HttpRequest([NAME => 'app']), new Generator($this->route));
 
         $this->assertEquals('/app.html?foo=bar#top', $url('/app.html', ['foo' => 'bar'], 'top'));
     }
@@ -105,7 +106,7 @@ class PluginTest
      */
     function test_slash_prefix()
     {
-        $url = new Plugin(new HttpRequest([Arg::NAME => 'app']), fn() => 'foobar');
+        $url = new Plugin(new HttpRequest([NAME => 'app']), fn() => 'foobar');
 
         $this->assertEquals('/app.html?foo=bar#top', $url('/app.html', ['foo' => 'bar'], 'top'));
     }
@@ -129,32 +130,32 @@ class PluginTest
     function test_parent()
     {
         $request = new HttpRequest([
-            Arg::NAME => 'app/foo/bar',
-            Arg::PARAMS => ['user' => 'phpdev', 'controller' => 'foo'],
-            Arg::PARENT => new HttpRequest([
-                Arg::NAME => 'app/foo',
-                Arg::PARAMS => ['user' => 'phpdev', 'controller' => 'foo'],
-                Arg::PARENT => new HttpRequest([
-                    Arg::NAME => 'app',
-                    Arg::PARAMS => ['user' => 'phpdev'],
+            NAME => 'app/foo/bar',
+            PARAMS => ['user' => 'phpdev', 'controller' => 'foo'],
+            PARENT => new HttpRequest([
+                NAME => 'app/foo',
+                PARAMS => ['user' => 'phpdev', 'controller' => 'foo'],
+                PARENT => new HttpRequest([
+                    NAME => 'app',
+                    PARAMS => ['user' => 'phpdev'],
                 ])
             ])
         ]);
 
         $route = [
             'app' => [
-                Arg::PATH => '/{user}',
-                Arg::CHILDREN => [
+                PATH => '/{user}',
+                CHILDREN => [
                     'foo' => [
-                        Arg::PATH => '/{controller}',
-                        Arg::CHILDREN => [
+                        PATH => '/{controller}',
+                        CHILDREN => [
                             'bar' => [
-                                Arg::PATH => '/bar'
+                                PATH => '/bar'
                             ]
                         ]
                     ],
                     'baz' => [
-                        Arg::PATH => '/{id}'
+                        PATH => '/{id}'
                     ]
                 ]
             ]

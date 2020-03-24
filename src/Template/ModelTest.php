@@ -5,9 +5,10 @@
 
 namespace Mvc5\Test\Template;
 
-use Mvc5\Arg;
 use Mvc5\Template\Model;
 use Mvc5\Test\Test\TestCase;
+
+use const Mvc5\TEMPLATE_MODEL;
 
 class ModelTest
     extends TestCase
@@ -92,8 +93,8 @@ class ModelTest
         $this->assertNotSame($result, $model);
         $this->assertEquals('foo', $model->template());
         $this->assertEquals('foo', $result->template());
-        $this->assertEquals([Arg::TEMPLATE_MODEL => 'foo'], $model->vars());
-        $this->assertEquals([Arg::TEMPLATE_MODEL => 'foo'] + $vars, $result->vars());
+        $this->assertEquals([TEMPLATE_MODEL => 'foo'], $model->vars());
+        $this->assertEquals([TEMPLATE_MODEL => 'foo'] + $vars, $result->vars());
     }
 
     /**

@@ -6,7 +6,6 @@
 namespace Mvc5\Test\Web;
 
 use Mvc5\App;
-use Mvc5\Arg;
 use Mvc5\Http\HttpRequest;
 use Mvc5\Http\HttpResponse;
 use Mvc5\Middleware;
@@ -18,6 +17,8 @@ use Mvc5\Route\Match\Path;
 use Mvc5\Route\Route;
 use Mvc5\Test\Test\TestCase;
 use Mvc5\Web\Route as WebRoute;
+
+use const Mvc5\NAME;
 
 class RouteTest
     extends TestCase
@@ -119,7 +120,7 @@ class RouteTest
         $request = $this->route($config, $request, $response, 'request');
 
         $this->assertInstanceOf(HttpRequest::class, $request);
-        $this->assertEquals('home', $request[Arg::NAME]);
+        $this->assertEquals('home', $request[NAME]);
     }
 
     /**

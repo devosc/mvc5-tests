@@ -5,32 +5,23 @@
 
 namespace Mvc5\Test\Route\Match;
 
-use Mvc5\Arg;
 use Mvc5\Http\Error\NotFound;
 use Mvc5\Request\HttpRequest;
 use Mvc5\Route\Config as Route;
 use Mvc5\Route\Match\Controller;
 use Mvc5\Test\Test\TestCase;
 
+use const Mvc5\{ ACTION, CONTROLLER, MIDDLEWARE, OPTIONS, PARAMS, PREFIX, SEPARATORS, STRICT, SUFFIX };
+
 class ControllerTest
     extends TestCase
 {
     /**
-     *
-     */
-    const ACTION = 'action';
-
-    /**
-     *
-     */
-    const CONTROLLER = 'controller';
-
-    /**
      * @var array
      */
     protected $options = [
-        Arg::PREFIX     => __NAMESPACE__ . '\\',
-        Arg::SEPARATORS => ['_' => '_', '-' => '\\'],
+        PREFIX     => __NAMESPACE__ . '\\',
+        SEPARATORS => ['_' => '_', '-' => '\\'],
     ];
 
     /**
@@ -47,14 +38,14 @@ class ControllerTest
     function test_controller_action()
     {
         $controller = new Controller;
-        $route      = new Route([Arg::OPTIONS => $this->options]);
-        $request    = new HttpRequest([Arg::PARAMS => [self::CONTROLLER => 'home', self::ACTION => 'view']]);
+        $route      = new Route([OPTIONS => $this->options]);
+        $request    = new HttpRequest([PARAMS => [CONTROLLER => 'home', ACTION => 'view']]);
 
-        $this->assertNull($request[Arg::CONTROLLER]);
+        $this->assertNull($request[CONTROLLER]);
 
         $request = $controller($route, $request, $this->next());
 
-        $this->assertEquals(Home\View\Controller::class, $request[Arg::CONTROLLER]);
+        $this->assertEquals(Home\View\Controller::class, $request[CONTROLLER]);
     }
 
     /**
@@ -63,14 +54,14 @@ class ControllerTest
     function test_controller_action_name_not_strict()
     {
         $controller = new Controller;
-        $route      = new Route([Arg::OPTIONS => $this->options]);
-        $request    = new HttpRequest([Arg::PARAMS => [self::CONTROLLER => 'home-news', self::ACTION => 'show_latest']]);
+        $route      = new Route([OPTIONS => $this->options]);
+        $request    = new HttpRequest([PARAMS => [CONTROLLER => 'home-news', ACTION => 'show_latest']]);
 
-        $this->assertNull($request[Arg::CONTROLLER]);
+        $this->assertNull($request[CONTROLLER]);
 
         $request = $controller($route, $request, $this->next());
 
-        $this->assertEquals(Home\News\Show_Latest\Controller::class, $request[Arg::CONTROLLER]);
+        $this->assertEquals(Home\News\Show_Latest\Controller::class, $request[CONTROLLER]);
     }
 
     /**
@@ -79,19 +70,19 @@ class ControllerTest
     function test_controller_action_name_strict()
     {
         $options = [
-            Arg::STRICT => true,
-            Arg::SUFFIX => '\controller'
+            STRICT => true,
+            SUFFIX => '\controller'
         ];
 
         $controller = new Controller(null, $options + $this->options);
         $route      = new Route;
-        $request    = new HttpRequest([Arg::PARAMS => [self::CONTROLLER => 'foo', self::ACTION => 'bar']]);
+        $request    = new HttpRequest([PARAMS => [CONTROLLER => 'foo', ACTION => 'bar']]);
 
-        $this->assertNull($request[Arg::CONTROLLER]);
+        $this->assertNull($request[CONTROLLER]);
 
         $request = $controller($route, $request, $this->next());
 
-        $this->assertEquals(foo\bar\controller::class, $request[Arg::CONTROLLER]);
+        $this->assertEquals(foo\bar\controller::class, $request[CONTROLLER]);
     }
 
     /**
@@ -100,14 +91,14 @@ class ControllerTest
     function test_controller_class_exists()
     {
         $controller = new Controller;
-        $route      = new Route([Arg::OPTIONS => [Arg::PREFIX => __NAMESPACE__ . '\\']]);
-        $request    = new HttpRequest([Arg::PARAMS => [self::CONTROLLER => 'home']]);
+        $route      = new Route([OPTIONS => [PREFIX => __NAMESPACE__ . '\\']]);
+        $request    = new HttpRequest([PARAMS => [CONTROLLER => 'home']]);
 
-        $this->assertNull($request[Arg::CONTROLLER]);
+        $this->assertNull($request[CONTROLLER]);
 
         $request = $controller($route, $request, $this->next());
 
-        $this->assertEquals(Home\Controller::class, $request[Arg::CONTROLLER]);
+        $this->assertEquals(Home\Controller::class, $request[CONTROLLER]);
     }
 
     /**
@@ -117,7 +108,7 @@ class ControllerTest
     {
         $controller = new Controller;
         $route      = new Route;
-        $request    = new HttpRequest([Arg::CONTROLLER => 'foo']);
+        $request    = new HttpRequest([CONTROLLER => 'foo']);
 
         $this->assertEquals($request, $controller($route, $request, $this->next()));
     }
@@ -129,7 +120,7 @@ class ControllerTest
     {
         $controller = new Controller;
         $route      = new Route;
-        $request    = new HttpRequest([Arg::PARAMS => [self::CONTROLLER => 'foo']]);
+        $request    = new HttpRequest([PARAMS => [CONTROLLER => 'foo']]);
 
         $this->assertEquals(new NotFound, $controller($route, $request, $this->next()));
     }
@@ -144,14 +135,14 @@ class ControllerTest
         $loader = fn($name) => $class == $name ? new $class : null;
 
         $controller = new Controller($loader);
-        $route      = new Route([Arg::OPTIONS => [Arg::PREFIX => __NAMESPACE__ . '\\']]);
-        $request    = new HttpRequest([Arg::PARAMS => [self::CONTROLLER => 'home']]);
+        $route      = new Route([OPTIONS => [PREFIX => __NAMESPACE__ . '\\']]);
+        $request    = new HttpRequest([PARAMS => [CONTROLLER => 'home']]);
 
-        $this->assertNull($request[Arg::CONTROLLER]);
+        $this->assertNull($request[CONTROLLER]);
 
         $request = $controller($route, $request, $this->next());
 
-        $this->assertInstanceOf(Home\Controller::class, $request[Arg::CONTROLLER]);
+        $this->assertInstanceOf(Home\Controller::class, $request[CONTROLLER]);
     }
 
     /**
@@ -160,19 +151,19 @@ class ControllerTest
     function test_custom_action_and_controller_name()
     {
         $options = [
-            Arg::ACTION     => 'bar',
-            Arg::CONTROLLER => 'foo',
+            ACTION     => 'bar',
+            CONTROLLER => 'foo',
         ];
 
         $controller = new Controller;
-        $route      = new Route([Arg::OPTIONS => $options + $this->options]);
-        $request    = new HttpRequest([Arg::PARAMS => ['foo' => 'home', 'bar' => 'view']]);
+        $route      = new Route([OPTIONS => $options + $this->options]);
+        $request    = new HttpRequest([PARAMS => ['foo' => 'home', 'bar' => 'view']]);
 
-        $this->assertNull($request[Arg::CONTROLLER]);
+        $this->assertNull($request[CONTROLLER]);
 
         $request = $controller($route, $request, $this->next());
 
-        $this->assertEquals(Home\View\Controller::class, $request[Arg::CONTROLLER]);
+        $this->assertEquals(Home\View\Controller::class, $request[CONTROLLER]);
     }
 
     /**
@@ -181,8 +172,8 @@ class ControllerTest
     function test_invalid_action()
     {
         $controller = new Controller;
-        $route      = new Route([Arg::OPTIONS => $this->options]);
-        $request    = new HttpRequest([Arg::PARAMS => [self::CONTROLLER => 'home', self::ACTION => '-_-']]);
+        $route      = new Route([OPTIONS => $this->options]);
+        $request    = new HttpRequest([PARAMS => [CONTROLLER => 'home', ACTION => '-_-']]);
 
         $this->assertNull($controller($route, $request, $this->next()));
     }
@@ -193,8 +184,8 @@ class ControllerTest
     function test_invalid_controller()
     {
         $controller = new Controller;
-        $route      = new Route([Arg::OPTIONS => $this->options]);
-        $request    = new HttpRequest([Arg::PARAMS => [self::CONTROLLER => '-']]);
+        $route      = new Route([OPTIONS => $this->options]);
+        $request    = new HttpRequest([PARAMS => [CONTROLLER => '-']]);
 
         $this->assertNull($controller($route, $request, $this->next()));
     }
@@ -217,7 +208,7 @@ class ControllerTest
     function test_middleware_and_no_controller_param()
     {
         $controller = new Controller;
-        $route      = new Route([Arg::MIDDLEWARE => ['a']]);
+        $route      = new Route([MIDDLEWARE => ['a']]);
         $request    = new HttpRequest;
 
         $this->assertEquals($request, $controller($route, $request, $this->next()));

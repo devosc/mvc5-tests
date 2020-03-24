@@ -5,12 +5,13 @@
 
 namespace Mvc5\Test\Status;
 
-use Mvc5\Arg;
 use Mvc5\Http\Error\ServerError;
 use Mvc5\Http\HttpRequest;
 use Mvc5\Http\HttpResponse;
 use Mvc5\Response\Status;
 use Mvc5\Test\Test\TestCase;
+
+use const Mvc5\{ ERROR, HTTP_OK, REASON, STATUS };
 
 class StatusTest
     extends TestCase
@@ -22,10 +23,10 @@ class StatusTest
     {
         $status = new Status;
 
-        $response = $status(new HttpRequest([Arg::ERROR => new ServerError]), new HttpResponse);
+        $response = $status(new HttpRequest([ERROR => new ServerError]), new HttpResponse);
 
-        $this->assertEquals('500',                   $response[Arg::STATUS]);
-        $this->assertEquals('Internal Server Error', $response[Arg::REASON]);
+        $this->assertEquals('500',                   $response[STATUS]);
+        $this->assertEquals('Internal Server Error', $response[REASON]);
     }
 
     /**
@@ -37,7 +38,7 @@ class StatusTest
 
         $response = $status(new HttpRequest, new HttpResponse);
 
-        $this->assertEquals(Arg::HTTP_OK, $response[Arg::STATUS]);
-        $this->assertEquals('OK',         $response[Arg::REASON]);
+        $this->assertEquals(HTTP_OK, $response[STATUS]);
+        $this->assertEquals('OK',         $response[REASON]);
     }
 }

@@ -5,28 +5,29 @@
 
 namespace Mvc5\Test\Route;
 
-use Mvc5\Arg;
 use Mvc5\Config;
 use Mvc5\Route\Config as Route;
 use Mvc5\Route\Generator;
 use Mvc5\Test\Test\TestCase;
 
+use const Mvc5\{ CHILDREN, CONSTRAINTS, NAME, OPTIONS, PATH, REGEX, TOKENS };
+
 class GeneratorTest
     extends TestCase
 {
     /**
-     *
+     * @throws \Throwable
      */
     function test_route_array()
     {
         $route = [
-            Arg::CHILDREN    => [],
-            Arg::CONSTRAINTS => [],
-            Arg::NAME        => null,
-            Arg::OPTIONS     => [],
-            Arg::PATH        => '/',
-            Arg::REGEX       => null,
-            Arg::TOKENS      => null
+            CHILDREN    => [],
+            CONSTRAINTS => [],
+            NAME        => null,
+            OPTIONS     => [],
+            PATH        => '/',
+            REGEX       => null,
+            TOKENS      => null
         ];
 
         $generator = new Generator;
@@ -35,18 +36,18 @@ class GeneratorTest
     }
 
     /**
-     *
+     * @throws \Throwable
      */
     function test_route_object()
     {
         $route = new Config([
-            Arg::CHILDREN    => [],
-            Arg::CONSTRAINTS => [],
-            Arg::NAME        => null,
-            Arg::OPTIONS     => [],
-            Arg::PATH        => '/',
-            Arg::REGEX       => null,
-            Arg::TOKENS      => null
+            CHILDREN    => [],
+            CONSTRAINTS => [],
+            NAME        => null,
+            OPTIONS     => [],
+            PATH        => '/',
+            REGEX       => null,
+            TOKENS      => null
         ]);
 
         $generator = new Generator;

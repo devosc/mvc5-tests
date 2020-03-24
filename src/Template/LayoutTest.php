@@ -5,9 +5,10 @@
 
 namespace Mvc5\Test\Template;
 
-use Mvc5\Arg;
 use Mvc5\Template\Layout;
 use Mvc5\Test\Test\TestCase;
+
+use const Mvc5\CHILD_MODEL;
 
 class LayoutTest
     extends TestCase
@@ -17,7 +18,7 @@ class LayoutTest
      */
     function test_model()
     {
-        $layout = new Layout(null, [Arg::CHILD_MODEL => 'foo']);
+        $layout = new Layout(null, [CHILD_MODEL => 'foo']);
 
         $this->assertEquals('foo', $layout->model());
     }

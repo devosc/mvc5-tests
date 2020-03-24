@@ -6,12 +6,13 @@
 namespace Mvc5\Test\Config;
 
 use Mvc5\App;
-use Mvc5\Arg;
 use Mvc5\Config;
 use Mvc5\Model;
 use Mvc5\Plugin\Scope;
 use Mvc5\Plugin\Value;
 use Mvc5\Test\Test\TestCase;
+
+use const Mvc5\{ CONTAINER, SERVICES };
 
 class ConfigTest
     extends TestCase
@@ -61,7 +62,7 @@ class ConfigTest
      */
     function test_get_isset_app_container()
     {
-        $config = new Config(new App([Arg::CONTAINER => ['foo' => 'bar']]));
+        $config = new Config(new App([CONTAINER => ['foo' => 'bar']]));
 
         $this->assertEquals('bar', $config->get('foo'));
     }
@@ -71,7 +72,7 @@ class ConfigTest
      */
     function test_get_isset_app_services()
     {
-        $config = new Config(new App([Arg::SERVICES => ['foo' => new Value('bar')]]));
+        $config = new Config(new App([SERVICES => ['foo' => new Value('bar')]]));
 
         $this->assertEquals('bar', $config->get('foo'));
     }

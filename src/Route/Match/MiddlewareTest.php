@@ -6,7 +6,6 @@
 namespace Mvc5\Test\Route\Match;
 
 use Mvc5\App;
-use Mvc5\Arg;
 use Mvc5\Http\HttpMiddleware;
 use Mvc5\Middleware;
 use Mvc5\Plugin\Link;
@@ -20,6 +19,8 @@ use Mvc5\Route\Generator;
 use Mvc5\Route\Match;
 use Mvc5\Test\Test\TestCase;
 
+use const Mvc5\{ METHOD, PATH, URI };
+
 class MiddlewareTest
     extends TestCase
 {
@@ -32,7 +33,7 @@ class MiddlewareTest
     }
 
     /**
-     *
+     * @throws \Throwable
      */
     function test_middleware()
     {
@@ -50,7 +51,7 @@ class MiddlewareTest
     }
 
     /**
-     *
+     * @throws \Throwable
      */
     function test_middleware_path()
     {
@@ -105,7 +106,7 @@ class MiddlewareTest
         ];
 
         $app      = new App($config);
-        $request  = new HttpRequest([Arg::METHOD => 'GET', Arg::URI => [Arg::PATH => '/foo/bar']]);
+        $request  = new HttpRequest([METHOD => 'GET', URI => [PATH => '/foo/bar']]);
         $response = new HttpResponse;
 
         $request = $app->call('route\dispatch', [$request]);
@@ -115,7 +116,7 @@ class MiddlewareTest
     }
 
     /**
-     *
+     * @throws \Throwable
      */
     function test_middleware_without_controller()
     {

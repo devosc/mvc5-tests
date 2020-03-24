@@ -5,7 +5,6 @@
 
 namespace Mvc5\Test\Route\Dispatch;
 
-use Mvc5\Arg;
 use Mvc5\App;
 use Mvc5\Config;
 use Mvc5\Http\Error\NotFound;
@@ -24,6 +23,8 @@ use Mvc5\Route\Match\Merge;
 use Mvc5\Route\Match\Method;
 use Mvc5\Response\HttpResponse;
 use Mvc5\Test\Test\TestCase;
+
+use const Mvc5\{ CHILDREN, DEFAULTS, METHOD, PATH, REGEX, URI };
 
 class RouterTest
     extends TestCase
@@ -104,7 +105,7 @@ class RouterTest
     }
 
     /**
-     *
+     * @throws \Throwable
      */
     function test_match_top()
     {
@@ -115,27 +116,27 @@ class RouterTest
     }
 
     /**
-     *
+     * @throws \Throwable
      */
     function test_child_not_found()
     {
-        $request = $this->dispatch(new HttpRequest([Arg::METHOD => 'GET', Arg::URI => [Arg::PATH => '/foo/baz']]));
+        $request = $this->dispatch(new HttpRequest([METHOD => 'GET', URI => [PATH => '/foo/baz']]));
 
         $this->assertInstanceOf(NotFound::class, $request->error());
     }
 
     /**
-     *
+     * @throws \Throwable
      */
     function test_child_route()
     {
-        $request = $this->dispatch(new HttpRequest([Arg::METHOD => 'GET', Arg::URI => [Arg::PATH => '/foo/bar']]));
+        $request = $this->dispatch(new HttpRequest([METHOD => 'GET', URI => [PATH => '/foo/bar']]));
 
         $this->assertEquals('app/bar', $request->name());
     }
 
     /**
-     *
+     * @throws \Throwable
      */
     function test_error()
     {
@@ -143,7 +144,7 @@ class RouterTest
             'routes' => [['path' => '/', 'method' => 'GET']]]
         );
 
-        $request = new HttpRequest([Arg::METHOD => 'POST']);
+        $request = new HttpRequest([METHOD => 'POST']);
 
         $result = $this->dispatch($request, $config);
 
@@ -153,7 +154,7 @@ class RouterTest
     }
 
     /**
-     *
+     * @throws \Throwable
      */
     function test_not_found()
     {
@@ -161,13 +162,13 @@ class RouterTest
             'routes' => [['path' => '/']]
         ]);
 
-        $request = $this->dispatch(new HttpRequest([Arg::METHOD => 'GET', Arg::URI => [Arg::PATH => '/foo']]), $config);
+        $request = $this->dispatch(new HttpRequest([METHOD => 'GET', URI => [PATH => '/foo']]), $config);
 
         $this->assertInstanceOf(NotFound::class, $request->error());
     }
 
     /**
-     *
+     * @throws \Throwable
      */
     function test_parent_controller_options()
     {
@@ -182,41 +183,41 @@ class RouterTest
             ]
         ]);
 
-        $request = $this->dispatch(new HttpRequest([Arg::METHOD => 'GET', Arg::URI => [Arg::PATH => '/foo/bar/baz']]), $config);
+        $request = $this->dispatch(new HttpRequest([METHOD => 'GET', URI => [PATH => '/foo/bar/baz']]), $config);
 
         $this->assertEquals('app/bar/baz', $request->name());
         $this->assertEquals(Bar\Baz\Controller::class, $request->controller());
     }
 
     /**
-     *
+     * @throws \Throwable
      */
     function test_parent_params()
     {
         $config = $this->config([
             'routes' => new Route([[
-                Arg::REGEX => '/(?P<controller>[a-zA-Z0-9]+)',
-                Arg::DEFAULTS => ['limit' => '10'],
-                Arg::CHILDREN => [
-                    [Arg::REGEX => '/(?P<foobar>bar)', Arg::DEFAULTS => ['limit' => '5']],
-                    [Arg::REGEX => '/(?P<action>bars)', Arg::DEFAULTS => ['limit' => '15']]
+                REGEX => '/(?P<controller>[a-zA-Z0-9]+)',
+                DEFAULTS => ['limit' => '10'],
+                CHILDREN => [
+                    [REGEX => '/(?P<foobar>bar)', DEFAULTS => ['limit' => '5']],
+                    [REGEX => '/(?P<action>bars)', DEFAULTS => ['limit' => '15']]
                 ]
             ]])
         ]);
 
-        $request = $this->dispatch(new HttpRequest([Arg::METHOD => 'GET', Arg::URI => [Arg::PATH => '/foo/bars']]), $config);
+        $request = $this->dispatch(new HttpRequest([METHOD => 'GET', URI => [PATH => '/foo/bars']]), $config);
 
         $this->assertEquals(['controller' => 'foo', 'action' => 'bars', 'limit' => '15'], $request->params());
     }
 
     /**
-     *
+     * @throws \Throwable
      */
     function test_request()
     {
         $config = $this->config(['routes' => [['name' => 'app', 'path' => '/']]]);
 
-        $request = $this->dispatch(new HttpRequest([Arg::METHOD => 'GET', 'uri' => ['path' => '/']]), $config);
+        $request = $this->dispatch(new HttpRequest([METHOD => 'GET', 'uri' => ['path' => '/']]), $config);
 
         $this->assertEquals('app', $request->name());
         $this->assertEquals('/', $request->path());
@@ -224,7 +225,7 @@ class RouterTest
     }
 
     /**
-     *
+     * @throws \Throwable
      */
     function test_return_response()
     {
@@ -233,7 +234,7 @@ class RouterTest
                 'route\match' => [fn() => new HttpResponse('foo')]
             ],
             'routes' => [
-                [Arg::PATH => '/']
+                [PATH => '/']
             ]
         ]);
 

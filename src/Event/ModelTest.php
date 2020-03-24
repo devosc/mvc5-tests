@@ -5,10 +5,11 @@
 
 namespace Mvc5\Test\Event;
 
-use Mvc5\Arg;
 use Mvc5\Event;
 use Mvc5\Resolver\Dispatch as ResolverDispatch;
 use Mvc5\Test\Test\TestCase;
+
+use const Mvc5\SERVICE_RESOLVER;
 
 class ModelTest
     extends TestCase
@@ -40,7 +41,7 @@ class ModelTest
     {
         $event = new ResolverDispatch;
 
-        $this->assertEquals(Arg::SERVICE_RESOLVER, $event->name());
+        $this->assertEquals(SERVICE_RESOLVER, $event->name());
     }
 
     /**

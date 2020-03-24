@@ -5,19 +5,21 @@
 
 namespace Mvc5\Test\Route\Match;
 
-use Mvc5\Arg;
+use Closure;
 use Mvc5\Request\HttpRequest;
 use Mvc5\Route\Config as Route;
 use Mvc5\Route\Match\Path;
 use Mvc5\Test\Test\TestCase;
 
+use const Mvc5\{ CHILDREN, MATCHED, PARAMS, PATH, REGEX, ROUTE, URI };
+
 class PathTest
     extends TestCase
 {
     /**
-     * @return \Closure
+     * @return Closure
      */
-    protected function next()
+    protected function next() : Closure
     {
         return fn($route, $request) => $request;
     }
@@ -29,7 +31,7 @@ class PathTest
     {
         $route   = new Route;
         $path    = new Path;
-        $request = new HttpRequest([Arg::URI => [Arg::PATH => 'foo']]);
+        $request = new HttpRequest([URI => [PATH => 'foo']]);
 
         $this->assertNull($path($route, $request, $this->next()));
     }
@@ -39,15 +41,15 @@ class PathTest
      */
     function test_matched()
     {
-        $route   = new Route([Arg::REGEX => 'foo']);
+        $route   = new Route([REGEX => 'foo']);
         $path    = new Path;
-        $request = new HttpRequest([Arg::URI => [Arg::PATH => 'foo']]);
+        $request = new HttpRequest([URI => [PATH => 'foo']]);
 
         $new = $path($route, $request, $this->next());
 
         $this->assertNotEquals($request, $new);
-        $this->assertTrue($new[Arg::MATCHED]);
-        $this->assertNotNull($new[Arg::ROUTE]);
+        $this->assertTrue($new[MATCHED]);
+        $this->assertNotNull($new[ROUTE]);
     }
 
     /**
@@ -55,16 +57,16 @@ class PathTest
      */
     function test_match_named_params()
     {
-        $config = [Arg::REGEX => '/(?P<controller>[a-zA-Z0-9]+)(?:/(?P<action>[a-zA-Z0-9]+$))?'];
+        $config = [REGEX => '/(?P<controller>[a-zA-Z0-9]+)(?:/(?P<action>[a-zA-Z0-9]+$))?'];
 
         $route   = new Route($config);
         $path    = new Path;
-        $request = new HttpRequest([Arg::URI => [Arg::PATH => '/home/foo']]);
+        $request = new HttpRequest([URI => [PATH => '/home/foo']]);
 
         $new = $path($route, $request, $this->next());
 
-        $this->assertTrue($new[Arg::MATCHED]);
-        $this->assertEquals(['controller' => 'home', 'action' => 'foo'], $new[Arg::PARAMS]);
+        $this->assertTrue($new[MATCHED]);
+        $this->assertEquals(['controller' => 'home', 'action' => 'foo'], $new[PARAMS]);
     }
 
     /**
@@ -72,9 +74,9 @@ class PathTest
      */
     function test_not_matched()
     {
-        $route   = new Route([Arg::REGEX => 'bar']);
+        $route   = new Route([REGEX => 'bar']);
         $path    = new Path;
-        $request = new HttpRequest([Arg::URI => [Arg::PATH => 'foo']]);
+        $request = new HttpRequest([URI => [PATH => 'foo']]);
 
         $this->assertNull($path($route, $request, $this->next()));
     }
@@ -84,19 +86,19 @@ class PathTest
      */
     function test_partial_match_with_child_routes()
     {
-        $route   = new Route([Arg::REGEX => 'foo', Arg::CHILDREN => ['bar' => []]]);
+        $route   = new Route([REGEX => 'foo', CHILDREN => ['bar' => []]]);
         $path    = new Path;
 
-        $request = new HttpRequest([Arg::URI => [Arg::PATH => 'foobar']]);
+        $request = new HttpRequest([URI => [PATH => 'foobar']]);
 
-        $this->assertNull($request[Arg::ROUTE]);
-        $this->assertNull($request[Arg::MATCHED]);
+        $this->assertNull($request[ROUTE]);
+        $this->assertNull($request[MATCHED]);
 
         $new = $path($route, $request, $this->next());
 
         $this->assertNotEquals($request, $new);
-        $this->assertEquals(3, $new[Arg::MATCHED]);
-        $this->assertNotNull($new[Arg::ROUTE]);
+        $this->assertEquals(3, $new[MATCHED]);
+        $this->assertNotNull($new[ROUTE]);
     }
 
     /**
@@ -104,9 +106,9 @@ class PathTest
      */
     function test_partial_match_without_child_routes()
     {
-        $route   = new Route([Arg::REGEX => 'foo']);
+        $route   = new Route([REGEX => 'foo']);
         $path    = new Path;
-        $request = new HttpRequest([Arg::URI => [Arg::PATH => 'foobar']]);
+        $request = new HttpRequest([URI => [PATH => 'foobar']]);
 
         $this->assertNull($path($route, $request, $this->next()));
     }

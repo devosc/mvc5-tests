@@ -6,11 +6,12 @@
 namespace Mvc5\Test\Web;
 
 use Mvc5\App;
-use Mvc5\Arg;
 use Mvc5\Http\HttpRequest;
 use Mvc5\Http\HttpResponse;
 use Mvc5\Test\Test\TestCase;
 use Mvc5\Web\Controller;
+
+use const Mvc5\{ BODY, CONTROLLER };
 
 class ControllerTest
     extends TestCase
@@ -29,7 +30,7 @@ class ControllerTest
         $controller = new Controller($app);
 
         $request = new HttpRequest([
-            Arg::CONTROLLER => 'controller'
+            CONTROLLER => 'controller'
         ]);
 
         $response = new HttpResponse;
@@ -53,7 +54,7 @@ class ControllerTest
         $controller = new Controller($app);
 
         $request  = new HttpRequest([
-            Arg::CONTROLLER => 'controller'
+            CONTROLLER => 'controller'
         ]);
 
         $response = new HttpResponse;
@@ -62,7 +63,7 @@ class ControllerTest
 
         $response = $controller($request, $response, $next);
 
-        $this->assertEquals('foo', $response[Arg::BODY]);
+        $this->assertEquals('foo', $response[BODY]);
     }
 
     /**

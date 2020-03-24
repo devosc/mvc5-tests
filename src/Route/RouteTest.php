@@ -5,9 +5,11 @@
 
 namespace Mvc5\Test\Route;
 
-use Mvc5\Arg;
 use Mvc5\Route\Config as Route;
 use Mvc5\Test\Test\TestCase;
+
+use const Mvc5\{ ACTION, CHILDREN, CONSTRAINTS, CONTROLLER, METHOD, NAME, OPTIONS,
+    PATH, PORT, REGEX, SCHEME, TOKENS, WILDCARD };
 
 class RouteTest
     extends TestCase
@@ -17,7 +19,7 @@ class RouteTest
      */
     function test_action()
     {
-        $route = new Route([Arg::ACTION => ['GET' => 'foo']]);
+        $route = new Route([ACTION => ['GET' => 'foo']]);
 
         $this->assertEquals('foo', $route->action('GET'));
     }
@@ -27,9 +29,9 @@ class RouteTest
      */
     function test_actions()
     {
-        $route = new Route([Arg::ACTION => ['GET' => 'foo']]);
+        $route = new Route([ACTION => ['GET' => 'foo']]);
 
-        $this->assertEquals(['GET' => 'foo'], $route[Arg::ACTION]);
+        $this->assertEquals(['GET' => 'foo'], $route[ACTION]);
     }
 
     /**
@@ -37,7 +39,7 @@ class RouteTest
      */
     function test_child_exists()
     {
-        $route = new Route([Arg::CHILDREN => ['bar' => ['name' => 'baz']]]);
+        $route = new Route([CHILDREN => ['bar' => ['name' => 'baz']]]);
 
         $this->assertEquals(['name' => 'baz'], $route->child('bar'));
     }
@@ -47,7 +49,7 @@ class RouteTest
      */
     function test_children_isset()
     {
-        $route = new Route([Arg::CHILDREN => ['foo' => 'bar']]);
+        $route = new Route([CHILDREN => ['foo' => 'bar']]);
 
         $this->assertEquals(['foo' => 'bar'], $route->children());
     }
@@ -77,7 +79,7 @@ class RouteTest
      */
     function test_constraints_exists()
     {
-        $route = new Route([Arg::CONSTRAINTS => ['foo' => 'bar']]);
+        $route = new Route([CONSTRAINTS => ['foo' => 'bar']]);
 
         $this->assertEquals(['foo' => 'bar'], $route->constraints());
     }
@@ -97,7 +99,7 @@ class RouteTest
      */
     function test_controller()
     {
-        $route = new Route([Arg::CONTROLLER => 'foo']);
+        $route = new Route([CONTROLLER => 'foo']);
 
         $this->assertEquals('foo', $route->controller());
     }
@@ -147,7 +149,7 @@ class RouteTest
      */
     function test_method_exists()
     {
-        $route = new Route([Arg::METHOD => 'foo']);
+        $route = new Route([METHOD => 'foo']);
 
         $this->assertEquals('foo', $route->method());
     }
@@ -167,7 +169,7 @@ class RouteTest
      */
     function test_name()
     {
-        $route = new Route([Arg::NAME => 'foo']);
+        $route = new Route([NAME => 'foo']);
 
         $this->assertEquals('foo', $route->name());
     }
@@ -177,7 +179,7 @@ class RouteTest
      */
     function test_options_exists()
     {
-        $route = new Route([Arg::OPTIONS => ['foo' => 'bar']]);
+        $route = new Route([OPTIONS => ['foo' => 'bar']]);
 
         $this->assertEquals(['foo' => 'bar'], $route->options());
     }
@@ -197,7 +199,7 @@ class RouteTest
      */
     function test_path()
     {
-        $route = new Route([Arg::PATH => 'foo']);
+        $route = new Route([PATH => 'foo']);
 
         $this->assertEquals('foo', $route->path());
     }
@@ -207,7 +209,7 @@ class RouteTest
      */
     function test_port_exists()
     {
-        $route = new Route([Arg::PORT => 80]);
+        $route = new Route([PORT => 80]);
 
         $this->assertEquals(80, $route->port());
     }
@@ -227,7 +229,7 @@ class RouteTest
      */
     function test_regex()
     {
-        $route = new Route([Arg::REGEX => 'foo']);
+        $route = new Route([REGEX => 'foo']);
 
         $this->assertEquals('foo', $route->regex());
     }
@@ -237,7 +239,7 @@ class RouteTest
      */
     function test_scheme()
     {
-        $route = new Route([Arg::SCHEME => 'foo']);
+        $route = new Route([SCHEME => 'foo']);
 
         $this->assertEquals('foo', $route->scheme());
     }
@@ -247,7 +249,7 @@ class RouteTest
      */
     function test_tokens_exists()
     {
-        $route = new Route([Arg::TOKENS => ['foo' => 'bar']]);
+        $route = new Route([TOKENS => ['foo' => 'bar']]);
 
         $this->assertEquals(['foo' => 'bar'], $route->tokens());
     }
@@ -267,7 +269,7 @@ class RouteTest
      */
     function test_wildcard_exists()
     {
-        $route = new Route([Arg::WILDCARD => true]);
+        $route = new Route([WILDCARD => true]);
 
         $this->assertEquals(true, $route->wildcard());
     }

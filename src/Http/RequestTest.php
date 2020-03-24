@@ -5,11 +5,12 @@
 
 namespace Mvc5\Test\Http;
 
-use Mvc5\Arg;
 use Mvc5\Http\HttpUri;
 use Mvc5\Http\Uri;
 use Mvc5\Http\HttpRequest;
 use Mvc5\Test\Test\TestCase;
+
+use const Mvc5\{ BODY, HEADERS, METHOD, PATH, URI, VERSION };
 
 class RequestTest
     extends TestCase
@@ -19,7 +20,7 @@ class RequestTest
      */
     function test_body()
     {
-        $request = new HttpRequest([Arg::BODY => 'foo']);
+        $request = new HttpRequest([BODY => 'foo']);
 
         $this->assertEquals('foo', $request->body());
     }
@@ -29,7 +30,7 @@ class RequestTest
      */
     function test_headers()
     {
-        $request = new HttpRequest([Arg::HEADERS => ['foo' => 'bar']]);
+        $request = new HttpRequest([HEADERS => ['foo' => 'bar']]);
 
         $this->assertEquals(['foo' => 'bar'], $request->headers()->all());
     }
@@ -39,7 +40,7 @@ class RequestTest
      */
     function test_method()
     {
-        $request = new HttpRequest([Arg::METHOD => 'GET']);
+        $request = new HttpRequest([METHOD => 'GET']);
 
         $this->assertEquals('GET', $request->method());
     }
@@ -49,7 +50,7 @@ class RequestTest
      */
     function test_uri()
     {
-        $request = new HttpRequest([Arg::URI => new HttpUri([Arg::PATH => 'foo'])]);
+        $request = new HttpRequest([URI => new HttpUri([PATH => 'foo'])]);
 
         $this->assertInstanceOf(Uri::class, $request->uri());
 
@@ -61,7 +62,7 @@ class RequestTest
      */
     function test_uri_array()
     {
-        $request = new HttpRequest([Arg::URI => [Arg::PATH => 'foo']]);
+        $request = new HttpRequest([URI => [PATH => 'foo']]);
 
         $this->assertInstanceOf(Uri::class, $request->uri());
 
@@ -73,7 +74,7 @@ class RequestTest
      */
     function test_uri_string()
     {
-        $request = new HttpRequest([Arg::URI => 'foo']);
+        $request = new HttpRequest([URI => 'foo']);
 
         $this->assertInstanceOf(Uri::class, $request->uri());
 
@@ -95,7 +96,7 @@ class RequestTest
      */
     function test_version()
     {
-        $request = new HttpRequest([Arg::VERSION => '1.1']);
+        $request = new HttpRequest([VERSION => '1.1']);
 
         $this->assertEquals('1.1', $request->version());
     }

@@ -5,11 +5,12 @@
 
 namespace Mvc5\Test\Request\Service;
 
-use Mvc5\Arg;
 use Mvc5\Config;
 use Mvc5\Http\HttpRequest;
 use Mvc5\Request\Service\Share;
 use Mvc5\Test\Test\TestCase;
+
+use const Mvc5\REQUEST;
 
 class ShareTest
     extends TestCase
@@ -25,6 +26,6 @@ class ShareTest
 
         $service(new HttpRequest);
 
-        $this->assertInstanceOf(HttpRequest::class, $config[Arg::REQUEST]);
+        $this->assertInstanceOf(HttpRequest::class, $config[REQUEST]);
     }
 }

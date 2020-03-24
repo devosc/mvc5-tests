@@ -5,9 +5,10 @@
 
 namespace Mvc5\Test\Route;
 
-use Mvc5\Arg;
 use Mvc5\User\Model as User;
 use Mvc5\Test\Test\TestCase;
+
+use const Mvc5\{ AUTHENTICATED, USERNAME };
 
 class UserTest
     extends TestCase
@@ -17,10 +18,10 @@ class UserTest
      */
     function test()
     {
-        $user = new User([Arg::AUTHENTICATED => true, Arg::USERNAME => 'foo']);
+        $user = new User([AUTHENTICATED => true, USERNAME => 'foo']);
 
-        $this->assertEquals(true, $user[Arg::AUTHENTICATED]);
-        $this->assertEquals('foo', $user[Arg::USERNAME]);
+        $this->assertEquals(true, $user[AUTHENTICATED]);
+        $this->assertEquals('foo', $user[USERNAME]);
         $this->assertEquals(true, $user->authenticated());
         $this->assertEquals('foo', $user->username());
     }
@@ -32,8 +33,8 @@ class UserTest
     {
         $user = new User;
 
-        $this->assertEquals(null, $user[Arg::AUTHENTICATED]);
-        $this->assertEquals(null, $user[Arg::USERNAME]);
+        $this->assertEquals(null, $user[AUTHENTICATED]);
+        $this->assertEquals(null, $user[USERNAME]);
         $this->assertEquals(false, $user->authenticated());
         $this->assertEquals(null, $user->username());
     }
