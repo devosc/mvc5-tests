@@ -9,7 +9,7 @@ use Mvc5\Cookie\HttpCookies;
 use Mvc5\Test\Test\TestCase;
 use PHPUnit\Framework\Error\Notice;
 
-use const Mvc5\Cookie\Config\EXPIRE_TIME;
+use const Mvc5\COOKIE_EXPIRE_TIME;
 
 class HttpCookiesTest
     extends TestCase
@@ -114,7 +114,7 @@ class HttpCookiesTest
     function test_without()
     {
         $cookie = ['name' => 'foo', 'value' => 'bar'];
-        $expired = ['name' => 'foo', 'value' => '', 'expires' => EXPIRE_TIME];
+        $expired = ['name' => 'foo', 'value' => '', 'expires' => COOKIE_EXPIRE_TIME];
 
         $cookies = new HttpCookies(['foo' => $cookie]);
 
@@ -132,7 +132,7 @@ class HttpCookiesTest
     {
         $cookie = ['name' => 'foo', 'value' => 'bar'];
 
-        $expired = ['name' => 'foo', 'value' => '', 'expires' => EXPIRE_TIME,
+        $expired = ['name' => 'foo', 'value' => '', 'expires' => COOKIE_EXPIRE_TIME,
             'path' => null, 'domain' => null, 'secure' => null, 'httponly' => null, 'samesite' => null];
 
         $cookies = new HttpCookies(['foo' => $cookie]);
@@ -150,7 +150,7 @@ class HttpCookiesTest
     function test_without_associative_array()
     {
         $cookie = ['name' => 'foo', 'value' => 'bar'];
-        $expired = ['name' => 'foo', 'value' => '', 'expires' => EXPIRE_TIME];
+        $expired = ['name' => 'foo', 'value' => '', 'expires' => COOKIE_EXPIRE_TIME];
 
         $cookies = new HttpCookies(['foo' => $cookie]);
 
@@ -167,7 +167,7 @@ class HttpCookiesTest
     function test_without_associative_array_with_options()
     {
         $cookie = ['name' => 'foo', 'value' => 'bar', 'options' => ['path' => '/']];
-        $expired = ['name' => 'foo', 'value' => '', 'options' => ['path' => '/', 'expires' => EXPIRE_TIME]];
+        $expired = ['name' => 'foo', 'value' => '', 'options' => ['path' => '/', 'expires' => COOKIE_EXPIRE_TIME]];
 
         $cookies = new HttpCookies(['foo' => $cookie]);
 
