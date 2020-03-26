@@ -3,7 +3,7 @@
  *
  */
 
-namespace Mvc5\Test\Status;
+namespace Mvc5\Test\Response\Status;
 
 use Mvc5\Http\Error\ServerError;
 use Mvc5\Http\HttpRequest;

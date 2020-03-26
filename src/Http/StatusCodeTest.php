@@ -3,7 +3,7 @@
  *
  */
 
-namespace Mvc5\Test\Http\Status;
+namespace Mvc5\Test\Http;
 
 use Mvc5\Http\StatusCode;
 use Mvc5\Test\Test\TestCase;

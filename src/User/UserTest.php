@@ -3,7 +3,7 @@
  *
  */
 
-namespace Mvc5\Test\Route;
+namespace Mvc5\Test\User;
 
 use Mvc5\User\Model as User;
 use Mvc5\Test\Test\TestCase;

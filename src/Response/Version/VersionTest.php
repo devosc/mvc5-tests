@@ -3,7 +3,7 @@
  *
  */
 
-namespace Mvc5\Test\Version;
+namespace Mvc5\Test\Response\Version;
 
 use Mvc5\Http\HttpRequest;
 use Mvc5\Http\HttpResponse;
