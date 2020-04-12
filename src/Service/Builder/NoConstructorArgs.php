@@ -7,7 +7,7 @@ namespace Mvc5\Test\Service\Builder;
 
 use Mvc5\Model;
 
-class NoConstructorArgs
+final class NoConstructorArgs
 {
     /**
      *

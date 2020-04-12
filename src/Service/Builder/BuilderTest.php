@@ -13,7 +13,7 @@ use Mvc5\Route\Dispatch;
 use Mvc5\Route\Match\Path;
 use Mvc5\Test\Test\TestCase;
 
-class BuilderTest
+final class BuilderTest
     extends TestCase
 {
     /**

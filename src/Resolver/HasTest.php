@@ -8,7 +8,7 @@ namespace Mvc5\Test\Resolver;
 use Mvc5\App;
 use Mvc5\Test\Test\TestCase;
 
-class HasTest
+final class HasTest
     extends TestCase
 {
     /**

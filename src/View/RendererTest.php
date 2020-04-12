@@ -11,7 +11,7 @@ use Mvc5\View\Engine\PhpEngine;
 use Mvc5\View\Render;
 use Mvc5\View\Renderer;
 
-class RendererTest
+final class RendererTest
     extends TestCase
 {
     /**

@@ -10,7 +10,7 @@ use Mvc5\Config;
 use Mvc5\Plugin\Scoped;
 use Mvc5\Test\Test\TestCase;
 
-class ScopedTest
+final class ScopedTest
     extends TestCase
 {
     /**

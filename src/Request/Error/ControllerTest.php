@@ -19,7 +19,7 @@ use const Mvc5\{ ERROR_MODEL, RESPONSE_JSON_ERROR };
 /**
  *
  */
-class ControllerTest
+final class ControllerTest
     extends TestCase
 {
     /**

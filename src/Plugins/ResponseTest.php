@@ -11,7 +11,7 @@ use Mvc5\Response\JsonResponse;
 use Mvc5\Response\RedirectResponse;
 use Mvc5\Test\Test\TestCase;
 
-class ResponseTest
+final class ResponseTest
     extends TestCase
 {
     /**

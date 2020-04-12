@@ -10,7 +10,7 @@ use Mvc5\Config;
 use Mvc5\Plugin\Register;
 use Mvc5\Test\Test\TestCase;
 
-class RegisterTest
+final class RegisterTest
     extends TestCase
 {
     /**

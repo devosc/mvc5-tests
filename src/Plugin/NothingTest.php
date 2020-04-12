@@ -9,7 +9,7 @@ use Mvc5\App;
 use Mvc5\Plugin\Nothing;
 use Mvc5\Test\Test\TestCase;
 
-class NothingTest
+final class NothingTest
     extends TestCase
 {
     /**

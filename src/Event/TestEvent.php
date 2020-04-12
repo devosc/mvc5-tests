@@ -8,7 +8,7 @@ namespace Mvc5\Test\Event;
 use Mvc5\Event\Event;
 use Mvc5\Event\EventModel;
 
-class TestEvent
+final class TestEvent
     implements Event
 {
     /**

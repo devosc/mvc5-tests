@@ -14,7 +14,7 @@ use Mvc5\Test\Test\TestCase;
 
 use const Mvc5\{ CONTAINER, EVENTS, SERVICES };
 
-class CloneTest
+final class CloneTest
     extends TestCase
 {
     /**

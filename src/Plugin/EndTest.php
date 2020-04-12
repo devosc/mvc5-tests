@@ -12,7 +12,7 @@ use Mvc5\Plugin\Call;
 use Mvc5\Plugin\Value;
 use Mvc5\Test\Test\TestCase;
 
-class EndTest
+final class EndTest
     extends TestCase
 {
     /**

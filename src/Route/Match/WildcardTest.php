@@ -13,7 +13,7 @@ use Mvc5\Test\Test\TestCase;
 
 use const Mvc5\{ MATCHED, OPTIONS, PARAMS, WILDCARD };
 
-class WildcardTest
+final class WildcardTest
     extends TestCase
 {
     /**

@@ -9,7 +9,7 @@ use Mvc5\Exception;
 use Mvc5\Exception\DomainException;
 use Mvc5\Test\Test\TestCase;
 
-class DomainTest
+final class DomainTest
     extends TestCase
 {
     /**

@@ -8,7 +8,7 @@ namespace Mvc5\Test\Plugin;
 use Mvc5\Plugin\Controller;
 use Mvc5\Test\Test\TestCase;
 
-class ControllerTest
+final class ControllerTest
     extends TestCase
 {
     /**

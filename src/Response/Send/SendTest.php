@@ -10,7 +10,7 @@ use Mvc5\Response\HttpResponse;
 use Mvc5\Response\Send;
 use Mvc5\Test\Test\TestCase;
 
-class SendTest
+final class SendTest
     extends TestCase
 {
     /**

@@ -12,7 +12,7 @@ use Mvc5\Plugin\Value;
 use Mvc5\Plugin\Shared;
 use Mvc5\Test\Test\TestCase;
 
-class SharedTest
+final class SharedTest
     extends TestCase
 {
     /**

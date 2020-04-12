@@ -10,7 +10,7 @@ use Mvc5\Http\HttpResponse;
 use Mvc5\Test\Test\TestCase;
 use Mvc5\Web\Error;
 
-class ErrorTest
+final class ErrorTest
     extends TestCase
 {
     /**

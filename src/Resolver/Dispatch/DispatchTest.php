@@ -10,7 +10,7 @@ use Mvc5\Resolver\Dispatch;
 use Mvc5\Resolvable;
 use Mvc5\Test\Test\TestCase;
 
-class DispatchTest
+final class DispatchTest
     extends TestCase
 {
     /**

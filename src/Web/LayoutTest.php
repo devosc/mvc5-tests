@@ -14,7 +14,7 @@ use Mvc5\ViewModel;
 
 use const Mvc5\BODY;
 
-class LayoutTest
+final class LayoutTest
     extends TestCase
 {
     /**

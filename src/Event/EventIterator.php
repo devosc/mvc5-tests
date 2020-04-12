@@ -12,7 +12,7 @@ use Mvc5\Config\Model;
 use Mvc5\Event\Event;
 use Mvc5\Event\EventModel;
 
-class EventIterator
+final class EventIterator
     implements \Countable, Event, \Iterator
 {
     /**

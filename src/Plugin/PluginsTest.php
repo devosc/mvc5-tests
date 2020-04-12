@@ -13,7 +13,7 @@ use Mvc5\Test\Test\TestCase;
 
 use const Mvc5\SERVICES;
 
-class PluginsTest
+final class PluginsTest
     extends TestCase
 {
     /**

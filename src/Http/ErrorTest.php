@@ -10,7 +10,7 @@ use Mvc5\Test\Test\TestCase;
 
 use const Mvc5\{ CODE, DESCRIPTION, ERRORS, MESSAGE, STATUS };
 
-class ErrorTest
+final class ErrorTest
     extends TestCase
 {
     /**

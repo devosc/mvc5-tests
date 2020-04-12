@@ -11,7 +11,7 @@ use Mvc5\Test\Test\TestCase;
 use const Mvc5\{ ACTION, CHILDREN, CONSTRAINTS, CONTROLLER, METHOD, NAME, OPTIONS,
     PATH, PORT, REGEX, SCHEME, TOKENS, WILDCARD };
 
-class RouteTest
+final class RouteTest
     extends TestCase
 {
     /**

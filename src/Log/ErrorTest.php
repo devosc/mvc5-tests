@@ -8,7 +8,7 @@ namespace Mvc5\Test\Log;
 use Mvc5\Log\ErrorLog;
 use Mvc5\Test\Test\TestCase;
 
-class ErrorTest
+final class ErrorTest
     extends TestCase
 {
     /**

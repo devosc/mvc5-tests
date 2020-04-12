@@ -9,7 +9,7 @@ use Mvc5\App;
 use Mvc5\Test\Test\TestCase;
 use Mvc5\View\SharedLayout;
 
-class SharedLayoutTest
+final class SharedLayoutTest
     extends TestCase
 {
     /**

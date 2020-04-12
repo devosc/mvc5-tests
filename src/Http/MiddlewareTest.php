@@ -11,7 +11,7 @@ use Mvc5\Http\HttpRequest;
 use Mvc5\Http\HttpResponse;
 use Mvc5\Test\Test\TestCase;
 
-class MiddlewareTest
+final class MiddlewareTest
     extends TestCase
 {
     /**

@@ -10,7 +10,7 @@ use Mvc5\Config;
 use Mvc5\Plugin\Session;
 use Mvc5\Test\Test\TestCase;
 
-class SessionTest
+final class SessionTest
     extends TestCase
 {
     /**

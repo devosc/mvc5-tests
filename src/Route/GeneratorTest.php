@@ -12,7 +12,7 @@ use Mvc5\Test\Test\TestCase;
 
 use const Mvc5\{ CHILDREN, CONSTRAINTS, NAME, OPTIONS, PATH, REGEX, TOKENS };
 
-class GeneratorTest
+final class GeneratorTest
     extends TestCase
 {
     /**

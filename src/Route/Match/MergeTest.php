@@ -11,7 +11,7 @@ use Mvc5\Route\Config as Route;
 use Mvc5\Route\Match\Merge;
 use Mvc5\Test\Test\TestCase;
 
-class MergeTest
+final class MergeTest
     extends TestCase
 {
     /**

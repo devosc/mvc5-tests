@@ -12,7 +12,7 @@ use Mvc5\Service\Context as _Context;
 use Mvc5\Test\Test\TestCase;
 use Mvc5\Web\Context;
 
-class ContextTest
+final class ContextTest
     extends TestCase
 {
     /**

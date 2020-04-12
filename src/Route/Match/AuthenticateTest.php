@@ -14,7 +14,7 @@ use Mvc5\Route\Match\Authenticate;
 use Mvc5\Route\Config as Route;
 use Mvc5\Test\Test\TestCase;
 
-class AuthenticateTest
+final class AuthenticateTest
     extends TestCase
 {
     /**

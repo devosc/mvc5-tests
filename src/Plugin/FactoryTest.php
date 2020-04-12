@@ -10,7 +10,7 @@ use Mvc5\Plugin\Factory;
 use Mvc5\Plugin\Plugin;
 use Mvc5\Test\Test\TestCase;
 
-class FactoryTest
+final class FactoryTest
     extends TestCase
 {
     /**

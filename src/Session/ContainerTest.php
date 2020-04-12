@@ -13,7 +13,7 @@ use Mvc5\Test\Test\TestCase;
 /**
  * @runTestsInSeparateProcesses 
  */
-class ContainerTest
+final class ContainerTest
     extends TestCase
 {
     /**

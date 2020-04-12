@@ -8,7 +8,7 @@ namespace Mvc5\Test\Log;
 use Mvc5\Log\Logger;
 use Mvc5\Test\Test\TestCase;
 
-class LoggerTest
+final class LoggerTest
     extends TestCase
 {
     /**

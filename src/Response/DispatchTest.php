@@ -11,7 +11,7 @@ use Mvc5\Response\HttpResponse;
 use Mvc5\Response\Dispatch;
 use Mvc5\Test\Test\TestCase;
 
-class DispatchTest
+final class DispatchTest
     extends TestCase
 {
     /**

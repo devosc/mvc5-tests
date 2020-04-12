@@ -9,7 +9,7 @@ use Mvc5\Plugin\Scoped;
 use Mvc5\Plugin\ScopedCall;
 use Mvc5\Test\Test\TestCase;
 
-class ScopedCallTest
+final class ScopedCallTest
     extends TestCase
 {
     /**

@@ -9,7 +9,7 @@ use Mvc5\Exception;
 use Mvc5\Exception\RuntimeException;
 use Mvc5\Test\Test\TestCase;
 
-class RuntimeTest
+final class RuntimeTest
     extends TestCase
 {
     /**

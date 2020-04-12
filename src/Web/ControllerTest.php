@@ -13,7 +13,7 @@ use Mvc5\Web\Controller;
 
 use const Mvc5\{ BODY, CONTROLLER };
 
-class ControllerTest
+final class ControllerTest
     extends TestCase
 {
     /**

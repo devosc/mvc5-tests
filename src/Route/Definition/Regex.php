@@ -7,7 +7,7 @@ namespace Mvc5\Test\Route\Definition;
 
 use Mvc5\Route\Definition\Regex as _Regex;
 
-class Regex
+final class Regex
 {
     /**
      *

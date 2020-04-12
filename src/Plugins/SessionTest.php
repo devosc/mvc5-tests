@@ -10,7 +10,7 @@ use Mvc5\Session\PHPSession;
 use Mvc5\Plugin\Hydrator;
 use Mvc5\Test\Test\TestCase;
 
-class SessionTest
+final class SessionTest
     extends TestCase
 {
     /**

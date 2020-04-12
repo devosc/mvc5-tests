@@ -26,7 +26,7 @@ use Mvc5\Test\Test\TestCase;
 
 use const Mvc5\{ CHILDREN, DEFAULTS, METHOD, PATH, REGEX, URI };
 
-class RouterTest
+final class RouterTest
     extends TestCase
 {
     /**

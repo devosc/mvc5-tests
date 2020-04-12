@@ -15,7 +15,7 @@ use Mvc5\Test\Test\TestCase;
 use const Mvc5\{ARGS, CLIENT_ADDRESS, CONTROLLER, COOKIES, DATA, ERROR, FILES,
     HEADERS, HOST, METHOD, NAME, PARAMS, PATH, PORT, QUERY, ROUTE, SCHEME, SERVER, SESSION, URI, USER, USER_AGENT };
 
-class RequestTest
+final class RequestTest
     extends TestCase
 {
     /**

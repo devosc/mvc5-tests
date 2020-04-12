@@ -13,7 +13,7 @@ use Mvc5\Test\Test\TestCase;
 
 use const Mvc5\{ ACTION, CONTROLLER, MIDDLEWARE, OPTIONS, PARAMS, PREFIX, SEPARATORS, STRICT, SUFFIX };
 
-class ControllerTest
+final class ControllerTest
     extends TestCase
 {
     /**

@@ -13,7 +13,7 @@ use Mvc5\Test\Test\TestCase;
 
 use const Mvc5\{ CHILDREN, MATCHED, PARAMS, PATH, REGEX, ROUTE, URI };
 
-class PathTest
+final class PathTest
     extends TestCase
 {
     /**

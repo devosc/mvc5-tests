@@ -8,7 +8,7 @@ namespace Mvc5\Test\Session;
 use Mvc5\Session\Config\PHPSession;
 use Mvc5\Session\Session;
 
-class Invalid
+final class Invalid
     implements Session
 {
     /**

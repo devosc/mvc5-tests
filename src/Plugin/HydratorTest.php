@@ -17,7 +17,7 @@ use Mvc5\Template\Layout\Assign as AssignLayout;
 use Mvc5\ViewLayout;
 use Mvc5\ViewModel;
 
-class HydratorTest
+final class HydratorTest
     extends TestCase
 {
     /**

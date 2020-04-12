@@ -7,7 +7,7 @@ namespace Mvc5\Test\Route\Definition;
 
 use Mvc5\Test\Test\TestCase;
 
-class TokensTest
+final class TokensTest
     extends TestCase
 {
     /**

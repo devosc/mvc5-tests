@@ -7,7 +7,7 @@ namespace Mvc5\Test\Route\Definition;
 
 use Mvc5\Route\Definition\Build as _Build;
 
-class Build
+final class Build
 {
     /**
      *

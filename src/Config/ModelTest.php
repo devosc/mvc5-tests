@@ -8,7 +8,7 @@ namespace Mvc5\Test\Config;
 use Mvc5\Model;
 use Mvc5\Test\Test\TestCase;
 
-class ModelTest
+final class ModelTest
     extends TestCase
 {
     /**

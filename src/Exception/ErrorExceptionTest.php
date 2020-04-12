@@ -8,7 +8,7 @@ namespace Mvc5\Test\Exception;
 use Mvc5\Exception;
 use Mvc5\Test\Test\TestCase;
 
-class ErrorExceptionTest
+final class ErrorExceptionTest
     extends TestCase
 {
     /**

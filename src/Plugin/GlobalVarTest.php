@@ -9,7 +9,7 @@ use Mvc5\App;
 use Mvc5\Plugin\GlobalVar;
 use Mvc5\Test\Test\TestCase;
 
-class GlobalVarTest
+final class GlobalVarTest
     extends TestCase
 {
     /**

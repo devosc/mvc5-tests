@@ -10,7 +10,7 @@ use Mvc5\Test\Test\TestCase;
 
 use const Mvc5\{ FRAGMENT, HOST, PASS, PATH, PORT, QUERY, SCHEME, USER };
 
-class UriTest
+final class UriTest
     extends TestCase
 {
     /**

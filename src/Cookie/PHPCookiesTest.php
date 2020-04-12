@@ -16,7 +16,7 @@ use const Mvc5\COOKIE_EXPIRE_TIME;
 use function Mvc5\Cookie\Config\cookie;
 use function Mvc5\Cookie\Config\options;
 
-class PHPCookiesTest
+final class PHPCookiesTest
     extends TestCase
 {
     /**

@@ -7,7 +7,7 @@ namespace Mvc5\Test\View;
 
 use Mvc5\ViewModel;
 
-class HomeModel
+final class HomeModel
     extends ViewModel
 {
     /**

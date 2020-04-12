@@ -8,7 +8,7 @@ namespace Mvc5\Test\Config;
 use Mvc5\Overload;
 use Mvc5\Test\Test\TestCase;
 
-class OverloadTest
+final class OverloadTest
     extends TestCase
 {
     /**

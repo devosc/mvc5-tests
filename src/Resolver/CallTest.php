@@ -14,7 +14,7 @@ use Mvc5\Plugin\Link;
 use Mvc5\Plugin\Value;
 use Mvc5\Test\Test\TestCase;
 
-class CallTest
+final class CallTest
     extends TestCase
 {
     /**

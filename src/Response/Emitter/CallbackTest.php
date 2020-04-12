@@ -8,7 +8,7 @@ namespace Mvc5\Test\Response\Emitter;
 use Mvc5\Response\Emitter\Callback;
 use Mvc5\Test\Test\TestCase;
 
-class CallbackTest
+final class CallbackTest
     extends TestCase
 {
     /**

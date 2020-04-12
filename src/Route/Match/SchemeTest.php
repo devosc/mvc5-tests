@@ -13,7 +13,7 @@ use Mvc5\Test\Test\TestCase;
 
 use const Mvc5\{ SCHEME, URI };
 
-class SchemeTest
+final class SchemeTest
     extends TestCase
 {
     /**

@@ -10,7 +10,7 @@ use Mvc5\Test\Test\TestCase;
 
 use const Mvc5\{ AUTHENTICATED, USERNAME };
 
-class UserTest
+final class UserTest
     extends TestCase
 {
     /**

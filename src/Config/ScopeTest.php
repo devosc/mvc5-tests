@@ -11,7 +11,7 @@ use Mvc5\Test\Test\TestCase;
 
 use const Mvc5\SERVICES;
 
-class ScopeTest
+final class ScopeTest
     extends TestCase
 {
     /**

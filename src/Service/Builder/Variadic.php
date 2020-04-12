@@ -5,7 +5,7 @@
 
 namespace Mvc5\Test\Service\Builder;
 
-class Variadic
+final class Variadic
 {
     /**
      * @var array

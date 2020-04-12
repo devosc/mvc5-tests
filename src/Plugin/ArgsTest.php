@@ -11,7 +11,7 @@ use Mvc5\Plugin\Args;
 use Mvc5\Plugin\Plugin;
 use Mvc5\Test\Test\TestCase;
 
-class ArgsTest
+final class ArgsTest
     extends TestCase
 {
     /**

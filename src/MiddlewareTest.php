@@ -10,7 +10,7 @@ use Mvc5\Config;
 use Mvc5\Middleware;
 use Mvc5\Test\Test\TestCase;
 
-class MiddlewareTest
+final class MiddlewareTest
     extends TestCase
 {
     /**

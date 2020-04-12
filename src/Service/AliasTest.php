@@ -13,7 +13,7 @@ use Mvc5\ViewModel;
 /**
  * @runTestsInSeparateProcesses
  */
-class AliasTest
+final class AliasTest
     extends TestCase
 {
     /**

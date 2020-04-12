@@ -11,7 +11,7 @@ use Mvc5\Test\Test\TestCase;
 
 use const Mvc5\SERVICE_RESOLVER;
 
-class ModelTest
+final class ModelTest
     extends TestCase
 {
     /**

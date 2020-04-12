@@ -9,7 +9,7 @@ use Mvc5\Plugin\Plugin;
 use Mvc5\Plugin\Response;
 use Mvc5\Test\Test\TestCase;
 
-class ResponseTest
+final class ResponseTest
     extends TestCase
 {
     /**

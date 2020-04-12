@@ -9,7 +9,7 @@ use Mvc5\App;
 use Mvc5\Config;
 use Mvc5\Test\Test\TestCase;
 
-class BuildTest
+final class BuildTest
     extends TestCase
 {
     /**

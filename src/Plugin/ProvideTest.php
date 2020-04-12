@@ -9,7 +9,7 @@ use Mvc5\App;
 use Mvc5\Plugin\Provide;
 use Mvc5\Test\Test\TestCase;
 
-class ProvideTest
+final class ProvideTest
     extends TestCase
 {
     /**

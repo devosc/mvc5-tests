@@ -8,7 +8,7 @@ namespace Mvc5\Test\Response\Emitter;
 use Mvc5\Response\Emitter\PassThru;
 use Mvc5\Test\Test\TestCase;
 
-class PassThruTest
+final class PassThruTest
     extends TestCase
 {
     /**

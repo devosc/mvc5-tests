@@ -9,7 +9,7 @@ use Mvc5\Http\HttpUri;
 use Mvc5\Url\Assemble;
 use Mvc5\Test\Test\TestCase;
 
-class AssembleTest
+final class AssembleTest
     extends TestCase
 {
     /**

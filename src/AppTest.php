@@ -20,7 +20,7 @@ use Mvc5\Test\Test\TestCase;
 
 use const Mvc5\SERVICES;
 
-class AppTest
+final class AppTest
     extends TestCase
 {
     /**

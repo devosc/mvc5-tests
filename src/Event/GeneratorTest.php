@@ -12,7 +12,7 @@ use Mvc5\Event\Event;
 use Mvc5\Iterator;
 use Mvc5\Test\Test\TestCase;
 
-class GeneratorTest
+final class GeneratorTest
     extends TestCase
 {
     /**

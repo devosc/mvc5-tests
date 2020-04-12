@@ -14,7 +14,7 @@ use Mvc5\Test\Test\TestCase;
 
 use const Mvc5\{ HOST, PARAMS, OPTIONAL, URI };
 
-class HostTest
+final class HostTest
     extends TestCase
 {
     /**

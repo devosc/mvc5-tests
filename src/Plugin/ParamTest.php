@@ -9,7 +9,7 @@ use Mvc5\App;
 use Mvc5\Plugin\Param;
 use Mvc5\Test\Test\TestCase;
 
-class ParamTest
+final class ParamTest
     extends TestCase
 {
     /**

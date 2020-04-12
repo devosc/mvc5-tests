@@ -13,7 +13,7 @@ use Mvc5\Plugin\Plugin;
 use Mvc5\Plugin\Value;
 use Mvc5\Test\Test\TestCase;
 
-class FilterTest
+final class FilterTest
     extends TestCase
 {
     /**

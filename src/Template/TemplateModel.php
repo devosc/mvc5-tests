@@ -7,7 +7,7 @@ namespace Mvc5\Test\Template;
 
 use Mvc5\Template\Model;
 
-class TemplateModel
+final class TemplateModel
     extends Model
 {
     /**

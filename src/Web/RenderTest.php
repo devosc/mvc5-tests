@@ -16,7 +16,7 @@ use Mvc5\Web\Render;
 
 use const Mvc5\BODY;
 
-class RenderTest
+final class RenderTest
     extends TestCase
 {
     /**

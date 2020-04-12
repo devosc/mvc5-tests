@@ -9,7 +9,7 @@ use Mvc5\App;
 use Mvc5\Plugin\Plug;
 use Mvc5\Test\Test\TestCase;
 
-class PlugTest
+final class PlugTest
     extends TestCase
 {
     /**

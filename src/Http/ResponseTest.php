@@ -11,7 +11,7 @@ use Mvc5\Test\Test\TestCase;
 
 use const Mvc5\{ BODY, HEADERS, REASON, STATUS, VERSION };
 
-class ResponseTest
+final class ResponseTest
     extends TestCase
 {
     /**

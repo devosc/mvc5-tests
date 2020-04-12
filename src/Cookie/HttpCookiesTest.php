@@ -11,7 +11,7 @@ use PHPUnit\Framework\Error\Notice;
 
 use const Mvc5\COOKIE_EXPIRE_TIME;
 
-class HttpCookiesTest
+final class HttpCookiesTest
     extends TestCase
 {
     /**

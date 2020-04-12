@@ -10,7 +10,7 @@ use Mvc5\Request\Exception;
 use Mvc5\Request\HttpRequest;
 use Mvc5\Test\Test\TestCase;
 
-class ExceptionTest
+final class ExceptionTest
     extends TestCase
 {
     /**

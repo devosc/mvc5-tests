@@ -8,7 +8,7 @@ namespace Mvc5\Test\View;
 use Mvc5\ViewModel;
 use Mvc5\View\Model;
 
-class Controller
+final class Controller
 {
     /**
      *

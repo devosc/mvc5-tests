@@ -12,7 +12,7 @@ use Mvc5\Plugin\Invokable;
 use Mvc5\Plugin\Plugin;
 use Mvc5\Test\Test\TestCase;
 
-class InvokableTest
+final class InvokableTest
     extends TestCase
 {
     /**

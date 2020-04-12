@@ -9,7 +9,7 @@ use Mvc5\Http\HttpHeaders;
 use Mvc5\Response\RedirectResponse;
 use Mvc5\Test\Test\TestCase;
 
-class RedirectTest
+final class RedirectTest
     extends TestCase
 {
     /**

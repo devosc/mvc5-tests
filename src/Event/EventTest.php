@@ -8,7 +8,7 @@ namespace Mvc5\Test\Event;
 use Mvc5\Event;
 use Mvc5\Test\Test\TestCase;
 
-class EventTest
+final class EventTest
     extends TestCase
 {
     /**

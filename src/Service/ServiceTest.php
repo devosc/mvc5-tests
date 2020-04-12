@@ -8,7 +8,7 @@ namespace Mvc5\Test\Service;
 use Mvc5\App;
 use Mvc5\Test\Test\TestCase;
 
-class ServiceTest
+final class ServiceTest
     extends TestCase
 {
     /**

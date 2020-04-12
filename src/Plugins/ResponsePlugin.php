@@ -8,7 +8,7 @@ namespace Mvc5\Test\Plugins;
 use Mvc5\Plugins\Response;
 use Mvc5\Plugins\Service;
 
-class ResponsePlugin
+final class ResponsePlugin
 {
     /**
      *

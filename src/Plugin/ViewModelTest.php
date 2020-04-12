@@ -9,7 +9,7 @@ use Mvc5\ViewModel as _ViewModel;
 use Mvc5\Plugin\ViewModel;
 use Mvc5\Test\Test\TestCase;
 
-class ViewModelTest
+final class ViewModelTest
     extends TestCase
 {
     /**

@@ -9,7 +9,7 @@ use Mvc5\App;
 use Mvc5\Plugin\NullValue;
 use Mvc5\Test\Test\TestCase;
 
-class NullValueTest
+final class NullValueTest
     extends TestCase
 {
     /**

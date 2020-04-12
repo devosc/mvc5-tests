@@ -11,7 +11,7 @@ use Mvc5\Route\Config as Route;
 use Mvc5\Route\Match\CSRFToken;
 use Mvc5\Test\Test\TestCase;
 
-class CSRFTokenTest
+final class CSRFTokenTest
     extends TestCase
 {
     /**

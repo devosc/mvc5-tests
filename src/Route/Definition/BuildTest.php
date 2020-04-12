@@ -11,7 +11,7 @@ use Mvc5\Test\Test\TestCase;
 
 use const Mvc5\{ CHILDREN, CONSTRAINTS, NAME, OPTIONS, PATH, REGEX, TOKENS };
 
-class BuildTest
+final class BuildTest
     extends TestCase
 {
     /**

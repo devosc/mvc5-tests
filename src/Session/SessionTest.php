@@ -11,7 +11,7 @@ use Mvc5\Test\Test\TestCase;
 /**
  * @runTestsInSeparateProcesses 
  */
-class SessionTest
+final class SessionTest
     extends TestCase
 {
     /**

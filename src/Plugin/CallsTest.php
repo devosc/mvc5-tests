@@ -11,7 +11,7 @@ use Mvc5\Plugin\Calls;
 use Mvc5\Plugin\Plugin;
 use Mvc5\Test\Test\TestCase;
 
-class CallsTest
+final class CallsTest
     extends TestCase
 {
     /**

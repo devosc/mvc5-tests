@@ -10,7 +10,7 @@ use Mvc5\Iterator;
 
 use Mvc5\Test\Test\TestCase;
 
-class IteratorTest
+final class IteratorTest
     extends TestCase
 {
     /**

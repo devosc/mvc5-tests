@@ -8,7 +8,7 @@ namespace Mvc5\Test\Url;
 use Mvc5\Test\Test\TestCase;
 use Mvc5\Url\Generator;
 
-class GeneratorTest
+final class GeneratorTest
     extends TestCase
 {
     /**

@@ -10,7 +10,7 @@ use Mvc5\ArrayModel;
 use Mvc5\Plugin\Config;
 use Mvc5\Test\Test\TestCase;
 
-class ConfigTest
+final class ConfigTest
     extends TestCase
 {
     /**

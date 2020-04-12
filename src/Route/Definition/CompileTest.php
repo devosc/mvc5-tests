@@ -9,7 +9,7 @@ use Mvc5\Route\Definition\Compiler;
 use Mvc5\Route\Generator;
 use Mvc5\Test\Test\TestCase;
 
-class CompileTest
+final class CompileTest
     extends TestCase
 {
     /**

@@ -12,7 +12,7 @@ use Mvc5\Test\Test\TestCase;
 /**
  * @runTestsInSeparateProcesses
  */
-class ContextTest
+final class ContextTest
     extends TestCase
 {
     /**

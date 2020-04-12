@@ -12,7 +12,7 @@ use Mvc5\Signal;
 use Mvc5\ViewModel;
 use Mvc5\Test\Test\TestCase;
 
-class SignalTest
+final class SignalTest
     extends TestCase
 {
     /**

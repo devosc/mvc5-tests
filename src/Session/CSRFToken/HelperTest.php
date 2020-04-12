@@ -14,7 +14,7 @@ use Mvc5\Test\Test\TestCase;
 /**
  *
  */
-class HelperTest
+final class HelperTest
     extends TestCase
 {
     /**

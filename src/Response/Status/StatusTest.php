@@ -13,7 +13,7 @@ use Mvc5\Test\Test\TestCase;
 
 use const Mvc5\{ ERROR, HTTP_OK, REASON, STATUS };
 
-class StatusTest
+final class StatusTest
     extends TestCase
 {
     /**

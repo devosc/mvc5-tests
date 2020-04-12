@@ -9,7 +9,7 @@ use Mvc5\ViewModel;
 use Mvc5\Plugins\View;
 use Mvc5\Plugins\Service;
 
-class ViewModelController
+final class ViewModelController
 {
     /**
      *

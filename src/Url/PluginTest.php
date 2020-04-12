@@ -13,7 +13,7 @@ use Mvc5\Url\Plugin;
 
 use const Mvc5\{ CHILDREN, NAME, PARAMS, PARENT, URI, SCHEME, HOST, PATH, PORT };
 
-class PluginTest
+final class PluginTest
     extends TestCase
 {
     /**

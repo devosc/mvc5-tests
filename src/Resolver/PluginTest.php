@@ -13,7 +13,7 @@ use Mvc5\Plugin\Plug;
 use Mvc5\Plugin\Plugin;
 use Mvc5\Test\Test\TestCase;
 
-class PluginTest
+final class PluginTest
     extends TestCase
 {
     /**

@@ -9,7 +9,7 @@ use Mvc5\App;
 use Mvc5\Plugin\Callback;
 use Mvc5\Test\Test\TestCase;
 
-class CallbackTest
+final class CallbackTest
     extends TestCase
 {
     /**

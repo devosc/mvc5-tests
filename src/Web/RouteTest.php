@@ -20,7 +20,7 @@ use Mvc5\Web\Route as WebRoute;
 
 use const Mvc5\NAME;
 
-class RouteTest
+final class RouteTest
     extends TestCase
 {
     /**

@@ -9,7 +9,7 @@ use Mvc5\App;
 use Mvc5\Resolver\Unresolvable;
 use Mvc5\Test\Test\TestCase;
 
-class UnresolvableTest
+final class UnresolvableTest
     extends TestCase
 {
     /**

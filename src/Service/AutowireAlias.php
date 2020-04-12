@@ -7,7 +7,7 @@ namespace Mvc5\Test\Service;
 
 use TestView;
 
-class AutowireAlias
+final class AutowireAlias
 {
     /**
      * @var TestView

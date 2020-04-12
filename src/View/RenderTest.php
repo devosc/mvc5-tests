@@ -15,7 +15,7 @@ use Mvc5\ViewModel;
 
 use const Mvc5\CHILD_MODEL;
 
-class RenderTest
+final class RenderTest
     extends TestCase
 {
     /**

@@ -12,7 +12,7 @@ use Mvc5\Test\Test\TestCase;
 /**
  * @runTestsInSeparateProcesses
  */
-class FacadeTest
+final class FacadeTest
     extends TestCase
 {
     /**

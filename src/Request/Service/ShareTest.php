@@ -12,7 +12,7 @@ use Mvc5\Test\Test\TestCase;
 
 use const Mvc5\REQUEST;
 
-class ShareTest
+final class ShareTest
     extends TestCase
 {
     /**

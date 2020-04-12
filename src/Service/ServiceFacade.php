@@ -7,7 +7,7 @@ namespace Mvc5\Test\Service;
 
 use Mvc5\Service\Facade;
 
-class ServiceFacade
+final class ServiceFacade
 {
     /**
      *

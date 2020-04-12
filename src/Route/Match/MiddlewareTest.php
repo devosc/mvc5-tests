@@ -21,7 +21,7 @@ use Mvc5\Test\Test\TestCase;
 
 use const Mvc5\{ METHOD, PATH, URI };
 
-class MiddlewareTest
+final class MiddlewareTest
     extends TestCase
 {
     /**

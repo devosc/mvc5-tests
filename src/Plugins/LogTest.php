@@ -9,7 +9,7 @@ use Mvc5\App;
 use Mvc5\Log\ErrorLog;
 use Mvc5\Test\Test\TestCase;
 
-class LogTest
+final class LogTest
     extends TestCase
 {
     /**

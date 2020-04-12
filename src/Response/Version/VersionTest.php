@@ -12,7 +12,7 @@ use Mvc5\Test\Test\TestCase;
 
 use const Mvc5\VERSION;
 
-class VersionTest
+final class VersionTest
     extends TestCase
 {
     /**

@@ -8,7 +8,7 @@ namespace Mvc5\Test\Session;
 use Mvc5\Session\Messages;
 use Mvc5\Test\Test\TestCase;
 
-class MessagesTest
+final class MessagesTest
     extends TestCase
 {
     /**

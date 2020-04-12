@@ -10,7 +10,7 @@ use Mvc5\ViewModel;
 use Mvc5\Test\Test\TestCase;
 use Mvc5\Template\Layout\Assign;
 
-class AssignTest
+final class AssignTest
     extends TestCase
 {
     /**

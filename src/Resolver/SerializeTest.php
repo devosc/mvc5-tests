@@ -9,7 +9,7 @@ use Mvc5\App;
 use Mvc5\Session\PHPSession;
 use Mvc5\Test\Test\TestCase;
 
-class SerializeTest
+final class SerializeTest
     extends TestCase
 {
     /**

@@ -12,7 +12,7 @@ use Mvc5\Test\Test\TestCase;
 
 use const Mvc5\{ BODY, HEADERS, METHOD, PATH, URI, VERSION };
 
-class RequestTest
+final class RequestTest
     extends TestCase
 {
     /**

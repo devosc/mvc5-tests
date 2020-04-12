@@ -8,7 +8,7 @@ namespace Mvc5\Test\Plugins;
 use Mvc5\Plugins\Messages;
 use Mvc5\Plugins\Service;
 
-class MessagesPlugin
+final class MessagesPlugin
 {
     /**
      *

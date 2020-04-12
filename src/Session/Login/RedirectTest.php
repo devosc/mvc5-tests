@@ -14,7 +14,7 @@ use Mvc5\Test\Test\TestCase;
 /**
  * @runTestsInSeparateProcesses
  */
-class RedirectTest
+final class RedirectTest
     extends TestCase
 {
     /**

@@ -9,7 +9,7 @@ use Mvc5\Plugin\Link;
 use Mvc5\Plugin\Service;
 use Mvc5\Test\Test\TestCase;
 
-class ServiceTest
+final class ServiceTest
     extends TestCase
 {
     /**

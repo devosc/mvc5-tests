@@ -8,7 +8,7 @@ namespace Mvc5\Test\View;
 use Mvc5\Test\Test\TestCase;
 use Mvc5\ViewModel;
 
-class ModelTest
+final class ModelTest
     extends TestCase
 {
     /**

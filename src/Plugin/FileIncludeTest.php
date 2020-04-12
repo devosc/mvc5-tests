@@ -9,7 +9,7 @@ use Mvc5\App;
 use Mvc5\Plugin\FileInclude;
 use Mvc5\Test\Test\TestCase;
 
-class FileIncludeTest
+final class FileIncludeTest
     extends TestCase
 {
     /**

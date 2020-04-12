@@ -12,7 +12,7 @@ use Mvc5\Test\Test\TestCase;
 
 use const Mvc5\{ CONTROLLER, ERROR, NAME };
 
-class ErrorTest
+final class ErrorTest
     extends TestCase
 {
     /**

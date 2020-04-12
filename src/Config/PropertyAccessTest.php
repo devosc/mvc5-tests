@@ -8,7 +8,7 @@ namespace Mvc5\Test\Config;
 use Mvc5\Config;
 use Mvc5\Test\Test\TestCase;
 
-class PropertyAccessTest
+final class PropertyAccessTest
     extends TestCase
 {
     /**

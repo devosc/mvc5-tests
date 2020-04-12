@@ -10,7 +10,7 @@ use Mvc5\Plugin\App;
 use Mvc5\Plugin\Link;
 use Mvc5\Test\Test\TestCase;
 
-class AppTest
+final class AppTest
     extends TestCase
 {
     /**

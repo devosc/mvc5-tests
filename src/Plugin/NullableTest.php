@@ -12,7 +12,7 @@ use Mvc5\Plugin\Nullable;
 use Mvc5\Plugin\Shared;
 use Mvc5\Test\Test\TestCase;
 
-class NullableTest
+final class NullableTest
     extends TestCase
 {
     /**

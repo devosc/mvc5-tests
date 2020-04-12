@@ -18,7 +18,7 @@ use const Mvc5\{ EXCEPTION_LAYOUT, RESPONSE_JSON_EXCEPTION };
 /**
  *
  */
-class ControllerTest
+final class ControllerTest
     extends TestCase
 {
     /**

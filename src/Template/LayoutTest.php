@@ -10,7 +10,7 @@ use Mvc5\Test\Test\TestCase;
 
 use const Mvc5\CHILD_MODEL;
 
-class LayoutTest
+final class LayoutTest
     extends TestCase
 {
     /**

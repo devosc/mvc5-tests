@@ -12,7 +12,7 @@ use Mvc5\Plugin\Plugin;
 use Mvc5\Plugin\Scope;
 use Mvc5\Test\Test\TestCase;
 
-class ScopeTest
+final class ScopeTest
     extends TestCase
 {
     /**

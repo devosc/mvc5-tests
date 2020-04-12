@@ -9,7 +9,7 @@ use Mvc5\Exception;
 use Mvc5\Exception\InvalidArgumentException;
 use Mvc5\Test\Test\TestCase;
 
-class InvalidArgumentTest
+final class InvalidArgumentTest
     extends TestCase
 {
     /**

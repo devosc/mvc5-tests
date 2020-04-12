@@ -12,7 +12,7 @@ use Mvc5\Plugin\Plugin;
 use Mvc5\Test\Test\TestCase;
 use Mvc5\ViewModel;
 
-class ChildTest
+final class ChildTest
     extends TestCase
 {
     /**

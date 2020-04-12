@@ -8,7 +8,7 @@ namespace Mvc5\Test\Request\Exception;
 use Mvc5\Request\Exception\ViewLayout;
 use Mvc5\Test\Test\TestCase;
 
-class ExceptionLayoutTest
+final class ExceptionLayoutTest
     extends TestCase
 {
     /**
