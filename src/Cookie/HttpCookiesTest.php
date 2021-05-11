@@ -7,7 +7,7 @@ namespace Mvc5\Test\Cookie;
 
 use Mvc5\Cookie\HttpCookies;
 use Mvc5\Test\Test\TestCase;
-use PHPUnit\Framework\Error\Notice;
+use PHPUnit\Framework\Exception;
 
 use const Mvc5\COOKIE_EXPIRE_TIME;
 
@@ -189,9 +189,9 @@ final class HttpCookiesTest
 
             $cookies->without([]);
 
-        } catch(Notice $e) {
+        } catch(Exception $e) {
 
-            $this->assertEquals('Undefined offset: 0', $e->getMessage());
+            $this->assertEquals('Undefined array key 0', $e->getMessage());
 
         }
     }
@@ -207,9 +207,9 @@ final class HttpCookiesTest
 
             $cookies->without(['value' => '']);
 
-        } catch(Notice $e) {
+        } catch(Exception $e) {
 
-            $this->assertEquals('Undefined index: name', $e->getMessage());
+            $this->assertEquals('Undefined array key "name"', $e->getMessage());
 
         }
     }
