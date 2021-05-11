@@ -21,7 +21,7 @@ final class NullValueTest
 
         $this->assertNull($app->plugin('bar'));
 
-        $this->expectExceptionMessage('Class foo does not exist');
+        $this->expectExceptionMessage('Class "foo" does not exist');
 
         $app->plugin('foo');
     }

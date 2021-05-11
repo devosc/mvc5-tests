@@ -100,7 +100,7 @@ final class InvokableTest
 
         } catch(\Throwable $exception) {
             $this->assertEquals(
-                "Maximum function nesting level of '" . $level . "' reached, aborting!", $exception->getMessage()
+                "Xdebug has detected a possible infinite loop, and aborted your script with a stack depth of '" . $level . "' frames", $exception->getMessage()
             );
         }
     }
@@ -129,7 +129,7 @@ final class InvokableTest
 
         } catch(\Throwable $exception) {
             $this->assertEquals(
-                "Maximum function nesting level of '" . $level . "' reached, aborting!", $exception->getMessage()
+                "Xdebug has detected a possible infinite loop, and aborted your script with a stack depth of '" . $level . "' frames", $exception->getMessage()
             );
         }
     }
